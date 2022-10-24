@@ -1,0 +1,70 @@
+<configuration>
+    <!-- 로그가 저장될 경로 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+
+    <!-- log file path -->
+    <springProperty name="LOG_PATH" source="logging.file.path"/>
+    <!-- log file name -->
+    <springProperty name="LOG_FILE_NAME" source="logging.file.name"/>
+
+
+    <!-- 파일로 로그를 작성할 때 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${LOG_FILE_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${LOG_FILE_NAME}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative] %-5level ${PID:-} --- [%15.15thread] %-40.40logger{36} :
+                %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- 콘솔에서 로그를 작성할 때 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--  <pattern>%msg%n</pattern> -->
+            <pattern>"[%d{yyyy-MM-dd HH:mm:ss}:%-3relative] %clr(%-5level) %clr(${PID:-}){magenta} %clr(---){faint}
+                %clr([%15.15thread]){faint} %clr(%-40.40logger{36}){cyan} %clr(:){faint} %msg%n"
+            </pattern>
+        </encoder>
+    </appender>
+
+<!--    &lt;!&ndash; 프로그램에서 적용될 로그 레벨 &ndash;&gt;-->
+<!--    <root level="INFO">-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--    </root>-->
+    <!-- spring profile별 로그 설정 -->
+    <!--  local 환경  -->
+    <springProfile name="local">
+        <root level="info">
+            <!--     참조할 appender - STDOUT -->
+            <appender-ref ref="STDOUT" />
+        </root>
+    </springProfile>
+    <!--  dev 환경  -->
+    <springProfile name="dev">
+        <root level="debug">
+            <!--     참조할 appender - STDOUT -->
+            <appender-ref ref="STDOUT" />
+        </root>
+        <logger name="org.springframework.web" level="debug">
+            <!--     참조할 appender - FILE -->
+            <appender-ref ref="FILE" />
+        </logger>
+    </springProfile>
+    <!--  real 환경  -->
+    <springProfile name="real1, real2">
+        <root level="info">
+            <!--     참조할 appender - STDOUT -->
+            <appender-ref ref="STDOUT" />
+        </root>
+        <logger name="org.springframework.web" level="debug">
+            <!--     참조할 appender - FILE -->
+            <appender-ref ref="FILE" />
+        </logger>
+    </springProfile>
+
+</configuration>
