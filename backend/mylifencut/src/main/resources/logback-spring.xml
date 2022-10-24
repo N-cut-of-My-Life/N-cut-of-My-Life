@@ -1,4 +1,4 @@
-<configuration>
+<configuration scan="true" scanPeriod="60 seconds">
     <!-- 로그가 저장될 경로 -->
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
 
