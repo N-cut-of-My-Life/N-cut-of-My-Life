@@ -2,15 +2,16 @@
   <video muted autoplay loop playbackRate="1.0">
       <source src="../assets/space.mp4" type="video/mp4">
   </video>
+  <div class="menu-box">
+    <div class="text-box">
+      <div class="title">인생 N컷</div>
+      <div class="subtitle">당신을 기록하는 우주여행</div>
+      <div class="title-ment">우주선을 타고 추억을 떠올려봐요!</div>
+    </div>
 
-  <div class="text-box">
-    <div class="title">인생 N컷</div>
-    <div class="subtitle">당신을 기록하는 우주여행</div>
-    <div class="title-ment">우주선을 타고 추억을 떠올려봐요!</div>
-  </div>
-
-  <div class="login-btn">
-    카카오 로그인
+    <div class="login-btn">
+      카카오 로그인
+    </div>
   </div>
 </template>
 
@@ -38,38 +39,28 @@ video {
   background-size: cover;
 }
 .text-box {
-  position: absolute;
-  top: 10%;
-  left: 38%;
+  text-align: center;
 }
 .title {
   color: aliceblue;
   font-size: 5rem;
-  text-align: center;
 }
 .subtitle {
   color: #E2636A;
   font-size: 2rem;
-  text-align: center;
-  margin-top: 3%;
 }
 .title-ment {
   color: aliceblue;
   font-size: 1rem;
-  text-align: center;
-  margin-top: 3%;
 }
 .login-btn {
-  position: absolute;
-  bottom: 10%;
-  left: 45%;
+  text-align: center;
   background-color: #FEF01B;
   border-radius: 10px;
   font-family: 'kakao';
   font-size: 1.5rem;
-  width: auto;
+  width: 10%;
   height: auto;
-  z-index: -1;
   padding: 0 10px 0 10px;
   cursor: pointer;
 }
@@ -80,6 +71,15 @@ video {
   display: inline-block;
   width: 1rem;
   height: 1rem;
+}
+
+.menu-box{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 90vh;
+  margin-top: 5vh
 
 }
 </style>
