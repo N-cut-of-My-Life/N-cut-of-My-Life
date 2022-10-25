@@ -6,7 +6,7 @@
     <div class="text-box">
       <div class="title">인생 N컷</div>
       <div class="subtitle">당신을 기록하는 우주여행</div>
-      <div class="title-ment">우주선을 타고 추억을 떠올려봐요!</div>
+      <div class="title-ment">우주선을 타고 추억을 떠올려보아요!</div>
     </div>
 
     <div class="login-btn">
@@ -48,10 +48,12 @@ video {
 .subtitle {
   color: #E2636A;
   font-size: 2rem;
+  margin-top: 8%;
 }
 .title-ment {
   color: aliceblue;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  margin-top: 4%;
 }
 .login-btn {
   text-align: center;
@@ -78,8 +80,8 @@ video {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 90vh;
-  margin-top: 5vh
-
+  height: 69vh;
+  padding-top: 7%;
+  padding-bottom: 7%;
 }
 </style>
