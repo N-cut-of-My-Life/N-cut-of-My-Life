@@ -1,6 +1,6 @@
 <template>
-  <video muted autoplay loop playbackRate="1.0">
-    <source src="../assets/space.mp4" type="video/mp4">
+  <video muted autoplay loop playbackRate="0.7">
+    <source src="@/assets/space.mp4" type="video/mp4">
   </video>
   <div class="menu-box">
     <div class="text-box">
