@@ -1,6 +1,6 @@
 <template>
   <video muted autoplay loop playbackRate="1.0">
-    <source src="../assets/intro_video.mp4" type="video/mp4">
+    <source src="@/assets/intro_video.mp4" type="video/mp4">
   </video>
   <h1>인트로 드가자</h1>
 </template>
