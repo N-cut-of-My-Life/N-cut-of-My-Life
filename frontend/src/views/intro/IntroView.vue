@@ -27,10 +27,6 @@
   src: url('@/fonts/KakaoBold.ttf') format('truetype');
 }
 
-body {
-  margin: 0;
-}
-
 video {
   position: fixed;
   right: 0;
