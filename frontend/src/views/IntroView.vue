@@ -1,6 +1,6 @@
 <template>
   <video muted autoplay loop playbackRate="1.0">
-      <source src="../assets/space.mp4" type="video/mp4">
+    <source src="../assets/space.mp4" type="video/mp4">
   </video>
   <div class="menu-box">
     <div class="text-box">
@@ -10,13 +10,15 @@
     </div>
 
     <div class="login-btn">
-      카카오 로그인
+      <router-link :to="{ name: 'introfirstpage' }" class="nav-link" style="text-decoration: none; color: inherit;">
+        카카오 로그인
+      </router-link>
     </div>
+
   </div>
 </template>
 
 <script setup>
-
 </script>
 
 <style scoped>
@@ -24,37 +26,44 @@
   font-family: 'kakao';
   src: url('@/fonts/KakaoBold.ttf') format('truetype');
 }
+
 body {
   margin: 0;
 }
+
 video {
   position: fixed;
-  right: 0; 
+  right: 0;
   bottom: 0;
-  min-width: 100%; 
+  min-width: 100%;
   min-height: 100%;
-  width: auto; 
-  height: auto; 
+  width: auto;
+  height: auto;
   z-index: -100;
   background-size: cover;
 }
+
 .text-box {
   text-align: center;
 }
+
 .title {
   color: aliceblue;
   font-size: 5rem;
 }
+
 .subtitle {
   color: #E2636A;
   font-size: 2rem;
   margin-top: 8%;
 }
+
 .title-ment {
   color: aliceblue;
   font-size: 1.2rem;
   margin-top: 4%;
 }
+
 .login-btn {
   text-align: center;
   background-color: #FEF01B;
@@ -66,16 +75,17 @@ video {
   padding: 0 10px 0 10px;
   cursor: pointer;
 }
-.login-btn::before{
+
+.login-btn::before {
   content: "";
-  background-image:url("@/assets/kakao_logo.png");
+  background-image: url("@/assets/kakao_logo.png");
   background-size: 100% 100%;
   display: inline-block;
   width: 1rem;
   height: 1rem;
 }
 
-.menu-box{
+.menu-box {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
