@@ -1,7 +1,7 @@
 <template>
-    <div class="jumbotron">
-        <div class="title">ㅇㅇㅇ님의 여행 일지</div>
-    </div>
+  <div class="jumbotron">
+    <div class="title">ㅇㅇㅇ님의 여행 일지</div>
+  </div>
 </template>
 
 <script setup>
@@ -10,7 +10,7 @@
 
 <style scoped>
 body {
-    margin: 0;
+  margin: 0;
 }
 .title {
     text-align: center;

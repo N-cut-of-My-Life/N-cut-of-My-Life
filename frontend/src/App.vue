@@ -26,4 +26,8 @@ export default {
   font-family: 'NanumBarunGothic';
   src: url('@/fonts/NanumBarunGothic.ttf') format('truetype');
 }
+
+body {
+  margin: 0;
+}
 </style>
