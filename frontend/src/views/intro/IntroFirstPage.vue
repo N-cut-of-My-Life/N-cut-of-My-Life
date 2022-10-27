@@ -16,7 +16,7 @@
   </div>
   <div class="box">
     <div class="start-btn">
-      <router-link :to="{ name: 'introstory' }" class="nav-link" style="text-decoration: none; color: inherit;">
+      <router-link :to="{ name: 'introstory1' }" class="nav-link" style="text-decoration: none; color: inherit;">
         여행 시작하기
       </router-link>
     </div>
