@@ -1,6 +1,17 @@
 <template>
+  <PageLoader />
   <router-view/>
 </template>
+
+<script>
+import PageLoader from "@/load/PageLoader.vue";
+
+export default {
+  components: {
+    PageLoader,
+  },
+};
+</script>
 
 <style>
 #app {
