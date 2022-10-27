@@ -11,7 +11,7 @@
 
     <div class="login-btn">
       <router-link :to="{ name: 'introfirstpage' }" class="nav-link" style="text-decoration: none; color: inherit;">
-        카카오 로그인
+        &nbsp;카카오 로그인
       </router-link>
     </div>
 
@@ -66,13 +66,13 @@ video {
   border-radius: 10px;
   font-family: 'kakao';
   font-size: 1.5rem;
-  width: 10%;
+  width: 12%;
   height: auto;
   padding: 0 10px 0 10px;
   cursor: pointer;
 }
 
-.login-btn::before {
+.nav-link::before {
   content: "";
   background-image: url("@/assets/kakao_logo.png");
   background-size: 100% 100%;
@@ -86,7 +86,7 @@ video {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 69vh;
+  height: 100vh;
   padding-top: 7%;
   padding-bottom: 7%;
   /* 테스트 */
