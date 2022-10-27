@@ -1,4 +1,4 @@
 package com.ssafy.mylifencut.answer.dto;
 
-public class UserLoginResponse {
+public class GalleryResponse {
 }
