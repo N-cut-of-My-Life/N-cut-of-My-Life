@@ -36,6 +36,11 @@ const routes = [
     name: "planetlist",
     component: () => import("@/views/planets/PlanetList.vue"),
   },
+  {
+    path: "/musicplanet",
+    name: "musicplanet",
+    component: () => import("@/views/planets/MusicPlanet.vue"),
+  },
 ]
 
 const router = createRouter({
