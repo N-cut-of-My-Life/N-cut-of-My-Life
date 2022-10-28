@@ -1,13 +1,13 @@
 <template>
   <div class="bg">
-    <img class="planet" src="../../assets/planet/1.png" alt="">
-    <img class="planet" src="../../assets/planet/2.png" alt="">
-    <img class="planet" src="../../assets/planet/3.png" alt="">
-    <img class="planet" src="../../assets/planet/4.png" alt="" @click="gotoPage({name:'musicplanet'})"/>
-    <img class="planet" src="../../assets/planet/5.png" alt="">
-    <img class="planet" src="../../assets/planet/6.png" alt="">
-    <img class="planet" src="../../assets/planet/7.png" alt="">
-    <img class="planet" src="../../assets/planet/8.png" alt="">
+    <div class="planet"></div>
+    <div class="planet"></div>
+    <div class="planet"></div>
+    <img class="planet" src="../../assets/planet/music.png" alt="" @click="gotoPage({name:'musicplanet'})"/>
+    <div class="planet"></div>
+    <div class="planet"></div>
+    <div class="planet"></div>
+    <img class="planet" src="../../assets/planet/blink.png" alt="">
     <img class="stars" src="../../assets/planet/stars.png" alt="">
     <img class="stars_line blink_star" src="../../assets/planet/stars-line.png" alt="">
     <img class="teapot" src="../../assets/planet/teapot.png" alt="">
@@ -48,8 +48,6 @@ h1{
 }
 .planet{
   display:block;
-  max-width: 15%;
-  height: auto;
   position: absolute;
   border-radius: 50%;
   left: 50%;
@@ -94,78 +92,161 @@ h1{
 
 .stars_line:hover + .stars{
   filter:none;
+  -webkit-filter: none;
 }
-.stars:hover{
+.stars:hover {
   filter:none;
+  -webkit-filter: none;
 }
 .stars_line:hover + .teapot{
   display: block;
-} 
+}
 
 .planet:nth-child(1) {
-  margin-left: -52.355px;
-  margin-top: -49.7px;
+  width:256px;
+  height:256px;
+  max-width: 20%;
+  max-height: auto;
+  background: #666 url("../../assets/planet/dearme.png") repeat-x 0% 0%;
+  background-size: 512px 256px;
+  margin-left: -128px;
+  margin-top: -128px;
   filter: grayscale(100%); 
   -webkit-filter: grayscale(100%);
-  animation: rotation_1 200s infinite linear;
+  animation: rotation_1 20s infinite linear;
+  cursor:pointer;
 }
 
 .planet:nth-child(2) {
-  margin-left: -52.35px;
-  margin-top: -55.62px;
+  width:256px;
+  height:256px;
+  max-width: 20%;
+  max-height: auto;
+  background: #666 url("../../assets/planet/weep.png") repeat-x 0% 0%;
+  background-size: 512px 256px;
+  margin-left: -128px;
+  margin-top: -128px;
   filter: grayscale(100%); 
   -webkit-filter: grayscale(100%);
-  animation: rotation_2 200s infinite linear;
+  animation: rotation_2 20s infinite linear;
+  cursor:pointer;
 }
 .planet:nth-child(3) {
-  margin-left: -52.35px;
-  margin-top: -52.35px;
+  width:256px;
+  height:256px;
+  max-width: 20%;
+  max-height: auto;
+  background: #666 url("../../assets/planet/haho.png") repeat-x 0% 0%;
+  background-size: 512px 256px;
+  margin-left: -128px;
+  margin-top: -128px;
   filter: grayscale(100%); 
   -webkit-filter: grayscale(100%);
-  animation: rotation_3 200s infinite linear;
+  animation: rotation_3 20s infinite linear;
+  cursor:pointer;
 }
 .planet:nth-child(4) {
+  max-width: 15%;
+  height: auto;
   margin-left: -78.5px;
   margin-top: -78.5px;
   filter: grayscale(100%); 
   -webkit-filter: grayscale(100%);
-  animation: rotation_4 200s infinite linear;
+  animation: rotation_4 20s infinite linear;
+  cursor:pointer;
 }
 .planet:nth-child(5) {
-  margin-left: -52.35px;
-  margin-top: -49.7px;
+  width:256px;
+  height:256px;
+  max-width: 20%;
+  max-height: auto;
+  background: #666 url("../../assets/planet/didnt.png") repeat-x 0% 0%;
+  background-size: 512px 256px;
+  margin-left: -128px;
+  margin-top: -128px;
   filter: grayscale(100%); 
   -webkit-filter: grayscale(100%);
-  animation: rotation_5 200s infinite linear;
+  animation: rotation_5 20s infinite linear;
+  cursor:pointer;
 }
 .planet:nth-child(6) {
-  margin-left: -52.35px;
-  margin-top: -52.35px;
+  width:256px;
+  height:256px;
+  max-width: 20%;
+  max-height: auto;
+  background: #666 url("../../assets/planet/dearyou.png") repeat-x 0% 0%;
+  background-size: 512px 256px;
+  margin-left: -128px;
+  margin-top: -128px;
   filter: grayscale(100%); 
   -webkit-filter: grayscale(100%);
-  animation: rotation_6 200s infinite linear;
+  animation: rotation_6 20s infinite linear;
+  cursor:pointer;
 }
 .planet:nth-child(7) {
-  margin-left: -52.35px;
-  margin-top: -48.88px;
+  width:256px;
+  height:256px;
+  max-width: 20%;
+  max-height: auto;
+  background: #666 url("../../assets/planet/forget.png") repeat-x 0% 0%;
+  background-size: 512px 256px;
+  margin-left: -128px;
+  margin-top: -128px;
   filter: grayscale(100%); 
   -webkit-filter: grayscale(100%);
-  animation: rotation_7 200s infinite linear;
+  animation: rotation_7 20s infinite linear;
+  cursor:pointer;
 }
 .planet:nth-child(8) {
-  /* transform: rotate(315deg) translate(175%) rotate(-315deg); */
+  max-width: 15%;
+  height: auto;
   margin-left: -52.35px;
   margin-top: -46.3px;
   filter: grayscale(100%); 
-  animation: rotation_8 200s infinite linear;
   -webkit-filter: grayscale(100%);
+  animation: rotation_8 20s infinite linear;
+  cursor:pointer;
 }
 
-.planet:hover {
-  -webkit-filter: none;
+.planet:nth-child(1):hover {
+   -webkit-filter: none;
     filter: none;
-    cursor:pointer;
+    box-shadow: 0 0 20px yellow;
 }
+.planet:nth-child(2):hover {
+   -webkit-filter: none;
+    filter: none;
+    box-shadow: 0 0 20px yellow;
+}
+.planet:nth-child(3):hover {
+   -webkit-filter: none;
+    filter: none;
+    box-shadow: 0 0 20px yellow;
+}
+.planet:nth-child(4):hover {
+   -webkit-filter: none;
+    filter: none;
+}
+.planet:nth-child(5):hover {
+   -webkit-filter: none;
+    filter: none;
+    box-shadow: 0 0 20px yellow;
+}
+.planet:nth-child(6):hover {
+   -webkit-filter: none;
+    filter: none;
+    box-shadow: 0 0 20px yellow;
+}
+.planet:nth-child(7):hover {
+   -webkit-filter: none;
+    filter: none;
+    box-shadow: 0 0 20px yellow;
+}
+.planet:nth-child(8):hover {
+   -webkit-filter: none;
+    filter: none;
+}
+
 
 @keyframes blinker {
   50% {
@@ -174,73 +255,73 @@ h1{
 }
 
 @keyframes rotation_1 {
-  0% {
-    transform: rotate(0deg) translate(340%);
-    background-position: -849px 0; }
+  from {
+    transform: scale(0.6) rotate(0deg) translate(400%) rotate(30deg);
+    background-position: 0 0;}
 
-  100% {
-    transform: rotate(0deg) translate(340%);
-    background-position: 0 0; } 
+  to {
+    transform: scale(0.6) rotate(0deg) translate(400%)rotate(30deg);
+    background-position: -511px 0; } 
 }
 @keyframes rotation_2 {
-  0% {
-    transform: rotate(30deg) translate(220%) rotate(-30deg);
-    background-position: -849px 0; }
+  from {
+    transform: scale(0.65) rotate(30deg) translate(320%) rotate(0deg);
+    background-position: 0 0; }
 
-  100% {
-    transform: rotate(30deg) translate(220%) rotate(-30deg);
-    background-position: 0 0; } 
+  to {
+    transform: scale(0.65) rotate(30deg) translate(320%) rotate(0deg);
+    background-position: -511px 0; } 
 }
 @keyframes rotation_3 {
-  0% {
-    transform: rotate(90deg) translate(100%) rotate(-90deg);
-    background-position: -849px 0; }
+  from {
+    transform: scale(0.8) rotate(70deg) translate(130%) rotate(0deg);
+    background-position: 0 0; }
 
-  100% {
-    transform: rotate(90deg) translate(100%) rotate(-90deg);
-    background-position: 0 0; } 
+  to {
+    transform: scale(0.8) rotate(70deg) translate(130%) rotate(0deg);
+    background-position: -511px 0; } 
 }
 @keyframes rotation_4 {
   from {
-    transform: rotate(140deg) translate(150%) rotate(0deg);
+    transform: scale(1) rotate(160deg) translate(200%) rotate(0deg);
   }
   to {
-    transform: rotate(140deg) translate(150%) rotate(359deg);
+    transform: scale(1) rotate(160deg) translate(200%) rotate(359deg);
   }
 }
 @keyframes rotation_5 {
-  0% {
-    transform: rotate(180deg) translate(340%) rotate(-180deg);
-    background-position: -849px 0; }
+  from {
+    transform: scale(0.5) rotate(180deg) translate(500%) rotate(15deg);
+    background-position: 0 0; }
 
-  100% {
-    transform: rotate(180deg) translate(340%) rotate(-180deg);
-    background-position: 0 0; } 
+  to {
+    transform: scale(0.5) rotate(180deg) translate(500%) rotate(15deg);
+    background-position: -511px 0; } 
 }
 @keyframes rotation_6 {
-  0% {
-    transform: rotate(215deg) translate(225%) rotate(-215deg);
-    background-position: -849px 0; }
+  from {
+    transform: scale(1) rotate(200deg) translate(200%) rotate(0deg);
+    background-position: 0 0; }
 
-  100% {
-    transform: rotate(215deg) translate(225%) rotate(-215deg);
-    background-position: 0 0; } 
+  to {
+    transform: scale(1) rotate(200deg) translate(200%) rotate(0deg);
+    background-position: -511px 0; } 
 }
 @keyframes rotation_7 {
-  0% {
-    transform: rotate(270deg) translate(175%) rotate(-270deg);
-    background-position: -849px 0; }
+  from {
+    transform: scale(0.7) rotate(250deg) translate(155%) rotate(0deg);
+    background-position: 0 0; }
 
-  100% {
-    transform: rotate(270deg) translate(175%) rotate(-270deg);
-    background-position: 0 0; } 
+  to {
+    transform: scale(0.7) rotate(250deg) translate(155%) rotate(0deg);
+    background-position: -511px 0; } 
 }
 @keyframes rotation_8 {
   from {
-    transform: rotate(315deg) translate(175%) rotate(0deg);
+    transform: scale(1) rotate(315deg) translate(175%) rotate(0deg);
   }
   to {
-    transform: rotate(315deg) translate(175%) rotate(359deg);
+    transform: scale(1) rotate(315deg) translate(175%) rotate(359deg);
   }
 }
 </style>
