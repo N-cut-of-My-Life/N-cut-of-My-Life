@@ -24,21 +24,32 @@
   </b-navbar>
   <br/><br/><br/><br/><br/>
   <div class="img-box">
-    <img src="@/assets/astronaut_riding.png" class="img-rocket"/>
+    <img src="@/assets/astronaut_riding.png" class="img-rocket rocket-bounce"/>
   </div>
   <br/><br/><br/><br/>
   <div class="box">
-    <div class="start-btn">
-      <router-link :to="{ name: 'introstory1' }" class="nav-link">
-        여행 시작하기
-      </router-link>
+    <div class="start-btn" @click="rocketLaunch">
+      <!-- <router-link :to="{ name: 'introstory1' }" class="nav-link"> -->
+      여행 시작하기
+      <!-- </router-link> -->
     </div>
   </div>
 </template>
 
 <script setup>
-// import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
+const rocketLaunch = () => {
+  const rocket = document.querySelector('.img-rocket')
+  rocket.classList.remove('rocket-bounce')
+  rocket.classList.add('rocket-launch')
+  rocket.addEventListener('animationend', (event) => {
+    if(event.animationName.includes('launch')){
+      router.push({ name: 'introstory1'})
+    }
+});
+}
 </script>
 
 <style scoped>
@@ -63,17 +74,19 @@ body {
   text-align: center;
 }
 .img-rocket{
-  width:40%;
-  /* animation: launch 3s; */
-  animation: bounce .75s infinite alternate;
-  -webkit-animation: bounce .75s infinite alternate;
-  animation-fill-mode: forwards;
+  width:40%;  
 }
 .rocket-launch{
   animation-name: shake, launch;
-  animation-delay: 0s, 3s;
-  animation-duration: 3s, 12s;
+  animation-delay: 0s, 1s;
+  animation-duration: 0.75s, 2s;
   animation-timing-function: ease-in, ease-in-out;
+  animation-fill-mode: forwards;
+}
+.rocket-bounce {
+  animation: bounce .75s infinite alternate;
+  -webkit-animation: bounce .75s infinite alternate;
+  
 }
 @keyframes bounce{
   from{
