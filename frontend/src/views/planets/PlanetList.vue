@@ -3,7 +3,7 @@
     <img class="planet" src="../../assets/planet/1.png" alt="">
     <img class="planet" src="../../assets/planet/2.png" alt="">
     <img class="planet" src="../../assets/planet/3.png" alt="">
-    <img class="planet" src="../../assets/planet/4.png" alt="">
+    <img class="planet" src="../../assets/planet/4.png" alt="" @click="gotoPage({name:'musicplanet'})"/>
     <img class="planet" src="../../assets/planet/5.png" alt="">
     <img class="planet" src="../../assets/planet/6.png" alt="">
     <img class="planet" src="../../assets/planet/7.png" alt="">
@@ -15,8 +15,14 @@
   </div>
 </template>
 
-<script setup>
-
+<script>
+export default{
+  methods:{
+    gotoPage(link){
+      this.$router.push(link)
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -82,6 +88,7 @@ h1{
   top: 50%;
   margin-top: -41px;
   margin-left : -20.34px;
+  cursor:pointer;
   }
 
 
@@ -157,6 +164,7 @@ h1{
 .planet:hover {
   -webkit-filter: none;
     filter: none;
+    cursor:pointer;
 }
 
 @keyframes blinker {
