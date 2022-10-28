@@ -29,9 +29,7 @@
   <br/><br/><br/><br/>
   <div class="box">
     <div class="start-btn" @click="rocketLaunch">
-      <!-- <router-link :to="{ name: 'introstory1' }" class="nav-link"> -->
       여행 시작하기
-      <!-- </router-link> -->
     </div>
   </div>
 </template>
@@ -40,6 +38,7 @@
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
+// 클릭 시 로켓 발사
 const rocketLaunch = () => {
   const rocket = document.querySelector('.img-rocket')
   rocket.classList.remove('rocket-bounce')
@@ -79,7 +78,7 @@ body {
 .rocket-launch{
   animation-name: shake, launch;
   animation-delay: 0s, 1s;
-  animation-duration: 0.75s, 2s;
+  animation-duration: 0.75s, 1.5s;
   animation-timing-function: ease-in, ease-in-out;
   animation-fill-mode: forwards;
 }
