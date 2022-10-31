@@ -14,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.ssafy.mylifencut.answer.AnswerConstant;
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
+import com.ssafy.mylifencut.answer.dto.AnswerRequest;
 import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
 import com.ssafy.mylifencut.article.domain.Article;
@@ -33,7 +34,7 @@ class AnswerServiceTest {
 		doReturn(Answer.builder().build()).when(answerRepository).save(any(Answer.class));
 		//when
 		final InvalidStateException result = assertThrows(InvalidStateException.class,
-			() -> answerService.createAnswer());
+			() -> answerService.createAnswer(any()));
 		//then
 		assertEquals(result.getMessage(), AnswerConstant.INVALID_STATE_ERROR_MESSAGE);
 	}
@@ -42,11 +43,15 @@ class AnswerServiceTest {
 	@DisplayName("답변등록 - 성공")
 	public void createAnswer() {
 		//given
-		doReturn(newAnswer()).when(answerRepository).save(any(Answer.class));
-		//when
-		final Answer result = answerService.createAnswer(answerRequest);
-		//then
 		Answer answer = newAnswer();
+		doReturn(answer).when(answerRepository).save(any(Answer.class));
+
+		//when
+		AnswerRequest answerRequest = new AnswerRequest(0, answer.getQuestionId(), answer.getContents(),
+			answer.getState());
+		final Answer result = answerService.createAnswer(answerRequest);
+
+		//then
 		assertNotNull(result);
 		assertEquals(answer.getId(), result.getId());
 		assertEquals(answer.getArticle(), result.getArticle());
