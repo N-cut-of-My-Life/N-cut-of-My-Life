@@ -12,12 +12,14 @@ import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@Getter
 public class Answer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
