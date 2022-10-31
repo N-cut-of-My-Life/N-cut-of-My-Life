@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.ssafy.mylifencut.answer.dto.AnswerRequest;
 import com.ssafy.mylifencut.article.domain.Article;
 
 import lombok.AllArgsConstructor;
@@ -37,4 +38,15 @@ public class Answer {
 
 	@Enumerated(EnumType.STRING)
 	private State state;
+
+	public static Answer from(AnswerRequest answerRequest, Article article) {
+
+		return Answer.builder()
+			.article(article)
+			.contents(answerRequest.getContents())
+			.questionId(answerRequest.getQuestionId())
+			.contents(answerRequest.getContents())
+			.state(answerRequest.getState())
+			.build();
+	}
 }
