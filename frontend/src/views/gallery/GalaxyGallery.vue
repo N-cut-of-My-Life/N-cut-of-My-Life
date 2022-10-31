@@ -1,63 +1,63 @@
 <template>
   <div class="jumbotron">
     <div class="title">은 하 갤 러 리</div>
-    
     <!-- masonry 영역 ver2 -->
-     <section class="gallery">
-        <div class="grid-container">
-          <div class="grid-item">
-              <img class="content" src='https://picsum.photos/500/300' alt="blakcpink">
-          </div>
-          <div class="grid-item">
-              <img class="content" src='https://picsum.photos/500/800' alt="blakcpink">
-          </div>
-          <div class="grid-item">
-              <img class="content" src='https://picsum.photos/500/304' alt="blakcpink">
-          </div>
-          <div class="grid-item">
-              <img class="content" src='https://picsum.photos/500/700' alt="blakcpink">
-          </div>
-          <div class="grid-item">
-              <img class="content" src='https://picsum.photos/500/402' alt="blakcpink">
-          </div>
-          <div class="grid-item">
-              <img class="content" src='https://picsum.photos/500/300' alt="blakcpink">
-          </div>
-          <div class="grid-item">
-              <img class="content" src='https://picsum.photos/500/700' alt="blakcpink">
-          </div>
-          <div class="grid-item">
-              <img class="content" src='https://picsum.photos/500/850' alt="blakcpink">
-          </div>
-          <div class="grid-item">
-              <img class="content" src='https://picsum.photos/500/420' alt="blakcpink">
-          </div>
-          <div class="grid-item">
-              <img class="content" src='https://picsum.photos/500/380' alt="blakcpink">
-          </div>
-          <div class="grid-item">
-              <img class="content" src='https://picsum.photos/500/300' alt="blakcpink">
-          </div>
-          <div class="grid-item">
-              <img class="content" src='https://picsum.photos/500/660' alt="blakcpink">
-          </div>
-          <div class="grid-item">
-              <img class="content" src='https://picsum.photos/500/700' alt="blakcpink">
-          </div>
-          <div class="grid-item">
-              <img class="content" src='https://picsum.photos/500/200' alt="blakcpink">
-          </div>
-          <div class="grid-item">
-              <img class="content" src='https://picsum.photos/500/250' alt="blakcpink">
-          </div>
+    <section class="gallery">
+      <div class="grid-container">
+        <div class="grid-item">
+          <img class="content" src='https://picsum.photos/500/300' alt="blakcpink">
         </div>
-      </section>
+        <div class="grid-item">
+          <img class="content" src='https://picsum.photos/500/800' alt="blakcpink">
+        </div>
+        <div class="grid-item">
+          <img class="content" src='https://picsum.photos/500/304' alt="blakcpink">
+        </div>
+        <div class="grid-item">
+          <img class="content" src='https://picsum.photos/500/700' alt="blakcpink">
+        </div>
+        <div class="grid-item">
+          <img class="content" src='https://picsum.photos/500/402' alt="blakcpink">
+        </div>
+        <div class="grid-item">
+          <img class="content" src='https://picsum.photos/500/300' alt="blakcpink">
+        </div>
+        <div class="grid-item">
+          <img class="content" src='https://picsum.photos/500/700' alt="blakcpink">
+        </div>
+        <div class="grid-item">
+          <img class="content" src='https://picsum.photos/500/850' alt="blakcpink">
+        </div>
+        <div class="grid-item">
+          <img class="content" src='https://picsum.photos/500/420' alt="blakcpink">
+        </div>
+        <div class="grid-item">
+          <img class="content" src='https://picsum.photos/500/380' alt="blakcpink">
+        </div>
+        <div class="grid-item">
+          <img class="content" src='https://picsum.photos/500/300' alt="blakcpink">
+        </div>
+        <div class="grid-item">
+          <img class="content" src='https://picsum.photos/500/660' alt="blakcpink">
+        </div>
+        <div class="grid-item">
+          <img class="content" src='https://picsum.photos/500/700' alt="blakcpink">
+        </div>
+        <div class="grid-item">
+          <img class="content" src='https://picsum.photos/500/200' alt="blakcpink">
+        </div>
+        <div class="grid-item">
+          <img class="content" src='https://picsum.photos/500/250' alt="blakcpink">
+        </div>
+      </div>
+    </section>  
 
   </div>
 </template>
 
 <script setup>
 import imagesLoaded from 'imagesloaded'
+import { onMounted } from 'vue'
 
 const resizeGridItems = () => {
     const items = document.querySelectorAll('.grid-item')
@@ -77,7 +77,10 @@ const resizeGridItems = () => {
     })
 }
 
-window.addEventListener('load',resizeGridItems)
+// window.addEventListener('load',resizeGridItems)
+onMounted(() => {
+  resizeGridItems();
+})
 window.addEventListener('resize',resizeGridItems)
 </script>
 
