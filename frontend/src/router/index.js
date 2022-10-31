@@ -46,6 +46,36 @@ const routes = [
     name: "dreamplanet",
     component: () => import("@/views/planets/DreamPlanet.vue"),
   },
+  {
+    path: "/happyplanet",
+    name: "happyplanet",
+    component: () => import("@/views/planets/HappyPlanet.vue"),
+  },
+  {
+    path: "/sadplanet",
+    name: "sadplanet",
+    component: () => import("@/views/planets/SadPlanet.vue"),
+  },
+  {
+    path: "/genieplanet",
+    name: "genieplanet",
+    component: () => import("@/views/planets/GeniePlanet.vue"),
+  },
+  {
+    path: "/preciousplanet",
+    name: "preciousplanet",
+    component: () => import("@/views/planets/PreciousPlanet.vue"),
+  },
+  {
+    path: "/regretplanet",
+    name: "regretplanet",
+    component: () => import("@/views/planets/RegretPlanet.vue"),
+  },
+  {
+    path: "/treasureplanet",
+    name: "treasureplanet",
+    component: () => import("@/views/planets/TreasurePlanet.vue"),
+  },
 ]
 
 const router = createRouter({
