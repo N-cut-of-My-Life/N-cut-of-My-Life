@@ -5,16 +5,16 @@
   </video>
   <div class="bg">
     <div class="planet"></div>
-    <div class="planet"></div>
-    <div class="planet"></div>
+    <div class="planet" @click="gotoPage({ name: 'sadplanet'})"></div>
+    <div class="planet" @click="gotoPage({ name: 'happyplanet'})"></div>
     <img class="planet" src="../../assets/planet/music.png" alt="" @click="gotoPage({ name: 'musicplanet' })" />
     <div class="planet" @click="gotoPage({ name: 'dreamplanet'})"></div>
-    <div class="planet"></div>
-    <div class="planet"></div>
-    <img class="planet" src="../../assets/planet/blink.png" alt="">
+    <div class="planet" @click="gotoPage({ name: 'regretplanet'})"></div>
+    <div class="planet" @click="gotoPage({ name: 'preciousplanet'})"></div>
+    <img class="planet" src="../../assets/planet/blink.png" alt="" @click="gotoPage({ name: 'treasureplanet' })" />
     <img class="stars" src="../../assets/planet/stars.png" alt="">
     <img class="stars_line blink_star" src="../../assets/planet/stars-line.png" alt="">
-    <img class="teapot" src="../../assets/planet/teapot.png" alt="">
+    <img class="teapot" src="../../assets/planet/teapot.png" alt="" @click="gotoPage({ name: 'genieplanet' })" />
   </div>
 </template>
 
@@ -125,6 +125,7 @@ video {
 }
 
 .planet:nth-child(1) {
+  display: none;
   width: 256px;
   height: 256px;
   max-width: 20%;
