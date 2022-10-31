@@ -25,7 +25,6 @@ class AnswerRepositoryTest {
 	public void createAnswer() {
 		//given
 		final User user = User.builder()
-			.id(1)
 			.articles(Collections.emptyList())
 			.email("test@email.com")
 			.name("테스트")
@@ -33,14 +32,12 @@ class AnswerRepositoryTest {
 
 		final LocalDateTime nowTime = LocalDateTime.now();
 		final Article article = Article.builder()
-			.id(1)
 			.user(user)
 			.answers(Collections.emptyList())
 			.createDate(nowTime)
 			.build();
 
 		final Answer answer = Answer.builder()
-			.id(1)
 			.article(article)
 			.questionId(1)
 			.contents("답변 내용")
@@ -49,7 +46,6 @@ class AnswerRepositoryTest {
 
 		final Answer savedAnswer = answerRepository.save(answer);
 		assertNotNull(savedAnswer);
-		assertEquals(savedAnswer.getId(), 1);
 		assertEquals(savedAnswer.getArticle(), article);
 		assertEquals(savedAnswer.getQuestionId(), 1);
 		assertEquals(savedAnswer.getContents(), "답변 내용");
