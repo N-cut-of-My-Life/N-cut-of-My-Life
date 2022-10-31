@@ -46,7 +46,7 @@ class AnswerServiceTest {
 		//given
 		Answer answer = newAnswer();
 		AnswerResponse answerResponse = AnswerResponse.of(answer);
-		doReturn(answerResponse).when(answerRepository).save(any(Answer.class));
+		doReturn(answer).when(answerRepository).save(any(Answer.class));
 
 		//when
 		AnswerRequest answerRequest = new AnswerRequest(0, answer.getQuestionId(), answer.getContents(),
