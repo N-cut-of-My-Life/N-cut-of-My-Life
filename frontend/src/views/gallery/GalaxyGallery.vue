@@ -59,7 +59,6 @@ const items = [
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    height: 100vh;
     width: 100%;
     margin:0;
     padding:0;
