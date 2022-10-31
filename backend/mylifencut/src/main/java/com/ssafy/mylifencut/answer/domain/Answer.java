@@ -26,8 +26,8 @@ public class Answer {
 	private Integer id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User user;
+	@JoinColumn(name = "article_id")
+	private Article article;
 
 	private Integer questionId;
 
