@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.ssafy.mylifencut.article.domain.Article;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
