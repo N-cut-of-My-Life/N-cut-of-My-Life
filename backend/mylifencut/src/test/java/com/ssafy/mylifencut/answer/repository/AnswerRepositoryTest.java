@@ -3,6 +3,7 @@ package com.ssafy.mylifencut.answer.repository;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
+import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.user.domain.User;
 
 @DataJpaTest
@@ -24,6 +26,7 @@ class AnswerRepositoryTest {
 		//given
 		final User user = User.builder()
 			.id(1)
+			.articles(Collections.emptyList())
 			.email("test@email.com")
 			.name("테스트")
 			.build();
@@ -32,7 +35,8 @@ class AnswerRepositoryTest {
 		final Article article = Article.builder()
 			.id(1)
 			.user(user)
-			.createdate(nowTime)
+			.answers(Collections.emptyList())
+			.createDate(nowTime)
 			.build();
 
 		final Answer answer = Answer.builder()
