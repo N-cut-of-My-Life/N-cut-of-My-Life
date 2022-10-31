@@ -9,6 +9,7 @@ import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.AnswerRequest;
 import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
+import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -24,13 +25,12 @@ public class AnswerService {
 
 		return BaseResponse.from(true, "답변이 등록되었습니다.");
 	}
-
 	@Transactional
 	public Answer createAnswer(AnswerRequest answerRequest) {
-		Answer result = answerRepository.save(answer);
+		Answer result = answerRepository.save(Answer.from(answerRequest, Article.builder().build()));
 		if (result.getQuestionId() != 9 && result.getState().equals(State.OPEN)) {
 			throw new InvalidStateException(AnswerConstant.INVALID_STATE_ERROR_MESSAGE);
 		}
-		return null;
+		return result;
 	}
 }
