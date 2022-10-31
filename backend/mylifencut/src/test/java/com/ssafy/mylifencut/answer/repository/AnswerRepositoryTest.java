@@ -2,6 +2,8 @@ package com.ssafy.mylifencut.answer.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
+import com.ssafy.mylifencut.user.domain.User;
 
 @DataJpaTest
 class AnswerRepositoryTest {
@@ -25,9 +28,16 @@ class AnswerRepositoryTest {
 			.name("테스트")
 			.build();
 
-		final Answer answer = Answer.builder()
+		final LocalDateTime nowTime = LocalDateTime.now();
+		final Article article = Article.builder()
 			.id(1)
 			.user(user)
+			.createdate(nowTime)
+			.build();
+
+		final Answer answer = Answer.builder()
+			.id(1)
+			.article(article)
 			.questionId(1)
 			.contents("답변 내용")
 			.state(State.CLOSE)
@@ -36,7 +46,7 @@ class AnswerRepositoryTest {
 		final Answer savedAnswer = answerRepository.save(answer);
 		assertNotNull(savedAnswer);
 		assertEquals(savedAnswer.getId(), 1);
-		assertEquals(savedAnswer.getUser(), user);
+		assertEquals(savedAnswer.getArticle(), article);
 		assertEquals(savedAnswer.getQuestionId(), 1);
 		assertEquals(savedAnswer.getContents(), "답변 내용");
 		assertEquals(savedAnswer.getState(), State.CLOSE);
