@@ -44,21 +44,21 @@ class AnswerServiceTest {
 	public void createAnswer() {
 		//given
 		Answer answer = newAnswer();
-		doReturn(answer).when(answerRepository).save(any(Answer.class));
+		AnswerResponse answerResponse = AnswerResponse.of(answer);
+		doReturn(answerResponse).when(answerRepository).save(any(Answer.class));
 
 		//when
 		AnswerRequest answerRequest = new AnswerRequest(0, answer.getQuestionId(), answer.getContents(),
 			answer.getState());
-		final Answer result = answerService.createAnswer(answerRequest);
+		final AnswerResponse result = answerService.createAnswer(answerRequest);
 
 		//then
 		assertNotNull(result);
-		assertEquals(answer.getId(), result.getId());
-		assertEquals(answer.getArticle(), result.getArticle());
-		assertEquals(answer.getQuestionId(), result.getQuestionId());
-		assertEquals(answer.getContents(), result.getContents());
-		assertEquals(answer.getState(), result.getState());
-
+		assertEquals(answerResponse.getId(), result.getId());
+		assertEquals(answerResponse.getArticle(), result.getArticle());
+		assertEquals(answerResponse.getQuestionId(), result.getQuestionId());
+		assertEquals(answerResponse.getContents(), result.getContents());
+		assertEquals(answerResponse.getState(), result.getState());
 	}
 
 	private Answer newAnswer() {
