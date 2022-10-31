@@ -4,7 +4,7 @@
     </div>
     <img :src="images[currentImage]" />
     <div class="other">
-        <b-button @click="gotoPage({ name: 'planetlist' })" class="button" size="sm">다른 행성 가기</b-button>
+        <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm"><strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
     </div>
     <div class="jump">
         <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
@@ -39,11 +39,11 @@ export default {
     data() {
         return {
             images: [
-                require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_1.png'),
-                require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_2.png'),
-                require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_3.png'),
-                require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_4.png'),
-                require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_5.png'),
+                require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_1.svg'),
+                require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_2.svg'),
+                require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_3.svg'),
+                require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_4.svg'),
+                require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_5.svg'),
             ],
             currentImage: 0
         }
@@ -67,6 +67,13 @@ export default {
 </script>
 
 <style scoped>
+.button_prev {
+    background-color:#ffffff;
+    color: #141414;
+    border-radius: 0.8vw;
+    border-color: #ffffff;
+}
+
 body {
     margin: 0;
 }
@@ -82,11 +89,12 @@ img {
 }
 
 .title {
-    padding-left: 1%;
+    padding-right: 1%;
     padding-top: 1%;
     color: aliceblue;
     font-size: 1.5vw;
     font-weight: 400;
+    text-align: right;
 }
 
 .jumbotron {
@@ -112,11 +120,9 @@ img {
 
 .other {
     position: absolute;
-    left: 5%;
-    bottom: 5%;
+    left: 1%;
+    top: 2.5%;
     margin: auto;
-    text-align: right;
-    font-size: 3rem;
 }
 
 .last {
