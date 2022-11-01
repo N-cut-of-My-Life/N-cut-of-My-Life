@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.mylifencut.answer.dto.AnswerRequest;
 import com.ssafy.mylifencut.answer.service.AnswerService;
-import com.ssafy.mylifencut.common.dto.BaseResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +20,6 @@ public class AnswerController {
 	private final AnswerService answerService;
 	@PostMapping
 	public ResponseEntity<?> createAnswer(@RequestBody final AnswerRequest answerRequest) {
-		answerService.createAnswer(answerRequest);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(answerService.createAnswer(answerRequest), HttpStatus.OK);
 	}
 }
