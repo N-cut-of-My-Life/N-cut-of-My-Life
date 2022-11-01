@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -101,6 +102,11 @@ class AnswerControllerTest {
 			.getResponse()
 			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 
-		assertEquals(answerResponse, response.getData());
+		Map map = (Map)response.getData();
+		assertEquals((double)answerResponse.getId(), map.get("id"));
+		assertEquals((double)answerResponse.getArticleId(), map.get("articleId"));
+		assertEquals((double)answerResponse.getQuestionId(), map.get("questionId"));
+		assertEquals(answerResponse.getContents(), map.get("contents"));
+		assertEquals(answerResponse.getState().toString(), map.get("state"));
 	}
 }
