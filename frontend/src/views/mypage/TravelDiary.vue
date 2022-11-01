@@ -10,8 +10,12 @@
       </section>
 
       <section class="diary-part">
-        <div class="last-word">마지막 말</div>
-        <div class="letter">편지</div>
+        <div class="last-word">
+          <img src="@/assets/post_paper.png" class="last-word-img">
+        </div>
+        <div class="letter">
+          <img src="@/assets/mailbox.png" class="letter-img">
+        </div>
         <div class="list">여행기록</div>
         <div class="journal">
           <img src="@/assets/space_diary.png" class="journal-img">
@@ -93,17 +97,14 @@ body {
   gap: 10px;
 }
 .last-word {
-  border: 2px solid black;
-  background-color: aliceblue;
-  border-radius: 20px;
-  padding: 5px;
+  display: flex;
+  justify-content: center;
 }
-.letter {
-  border: 2px solid black;
-  background-color: aliceblue;
-  border-radius: 20px;
-  padding: 5px;
+.last-word-img {
+  width: 100%;
+  z-index: 1;
 }
+
 .list {
   grid-column: 1/-1;
   font-size: 2rem;
@@ -115,5 +116,14 @@ body {
 .journal-img:hover {
   scale: 1.05;
 }
-
+.letter {
+  display: flex;
+  justify-content: center;
+}
+.letter-img {
+  width: 45%;
+}
+.letter-img:hover {
+  scale: 1.1;
+}
 </style>
