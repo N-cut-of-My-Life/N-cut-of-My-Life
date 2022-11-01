@@ -175,7 +175,7 @@ body {
 
 .last {
     position: absolute;
-    bottom: 75%;
+    bottom: 12%;
     left: 45%;
     margin: auto;
 }
@@ -197,7 +197,8 @@ body {
 .button_2 {
     border-radius: 0.8vw;
     /* border-color: #81c6e8; */
-    background-color: #ab55bf;
+    border:none;
+    background-color: #9cb4cc;
     position: relative;
     margin: 300px auto 0;
 }

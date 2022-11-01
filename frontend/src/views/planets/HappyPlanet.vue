@@ -15,21 +15,42 @@
             다음
         </b-button>
     </div>
-    <div class="last">
+    <div class="last" data-bs-dismiss="modal" aria-label="Close">
         <b-button v-if="currentImage === (images.length - 1)" class="button_2" size="md">
-            <div class="wave">
-                <!-- <span style="--i: 1">꿈</span>
-                <span style="--i: 2">&nbsp;</span>
-                <span style="--i: 3">맡</span>
-                <span style="--i: 4">기</span>
-                <span style="--i: 5">러</span>
-                <span style="--i: 6">&nbsp;</span>
-                <span style="--i: 7">가</span>
-                <span style="--i: 8">기</span>
-                <span style="--i: 9">!</span> -->
+            <div class="wave" v-b-modal.modal-happy>
+                <span style="--i: 1">가</span>
+                <span style="--i: 2">장</span>
+                <span style="--i: 3">&nbsp;</span>
+                <span style="--i: 4">행</span>
+                <span style="--i: 5">복</span>
+                <span style="--i: 6">했</span>
+                <span style="--i: 7">던</span>
+                <span style="--i: 8">&nbsp;</span>
+                <span style="--i: 9">순</span>
+                <span style="--i: 10">간</span>
+                <span style="--i: 11">&nbsp;</span>
+                <span style="--i: 12">적</span>
+                <span style="--i: 13">으</span>
+                <span style="--i: 14">러</span>
+                <span style="--i: 15">&nbsp;</span>
+                <span style="--i: 16">가</span>
+                <span style="--i: 17">기</span>
+                <span style="--i: 18">!</span>
             </div>
         </b-button>
     </div>
+
+    <b-modal id="modal-happy" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+        <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">가장 행복했던 순간을 이 곳에 적어주세요!</div><br />
+        <b-container ref="form">
+            <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color: #f7eadb;">
+            </b-form-textarea>
+        </b-container><br/>
+        <b-button data-bs-dismiss="modal" aria-label="Close"
+            style="color: #ffffff; background-color: #a1a1a1; border: none; border-radius: 1vw;">취소</b-button>&nbsp;
+        <b-button text @click="submit" style="color: #ffffff; background-color: #bb9f7f; border: none; border-radius: 1vw;">저장
+        </b-button>
+    </b-modal>
 </template>
 
 <script>
@@ -37,10 +58,9 @@ export default {
     data() {
         return {
             images: [
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_1.svg'),
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_2.svg'),
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_3.svg'),
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_4.svg'),
+                require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_1.svg'),
+                require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_2.svg'),
+                require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_3.svg'),
             ],
             currentImage: 0
         }
@@ -72,8 +92,8 @@ img {
     position: absolute;
     /* top: 0;
     left: 0; */
-    right: 24%;
-    bottom: 18%;
+    right: 40%;
+    bottom: 15%;
     /* height: 50%; */
     margin: auto;
 }
@@ -88,7 +108,7 @@ img {
 }
 
 .jumbotron {
-    background: url("@/assets/PlanetBackground/happy.svg") no-repeat center center fixed;
+    background: url("@/assets/PlanetBackground/haha.svg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -117,16 +137,16 @@ img {
 
 .last {
     position: absolute;
-    bottom: 50%;
-    left: 45%;
+    bottom:20%;
+    left: 9%;
     margin: auto;
 }
 
 .button {
-    background-color: #a28dc4;
+    background-color: #90a17d;
     color: #ffffff;
     border-radius: 0.8vw;
-    border-color: #a28dc4;
+    border:none;
 }
 
 .button_prev {
@@ -139,7 +159,8 @@ img {
 .button_2 {
     border-radius: 0.8vw;
     /* border-color: #81c6e8; */
-    background-color: #81c6e8;
+    border:none;
+    background-color: orange;
     position: relative;
     margin: 300px auto 0;
 }
@@ -171,5 +192,19 @@ img {
     20% {
         transform: translateY(-10px);
     }
+}
+</style>
+<style>
+#modal-happy .modal-content {
+    background-color: #e6bb88;
+    ;
+}
+
+#modal-happy .modal-header {
+    /* border-bottom: #1f1f1f; */
+}
+
+#modal-happy .modal-header .btn-close {
+    color: white;
 }
 </style>
