@@ -32,10 +32,19 @@ class AnswerServiceTest {
 	@DisplayName("답변등록 - 공개여부를 선택할 수 없는 답변의 상태가 OPEN일 때")
 	public void invalidState() {
 		//given
-		doReturn(Answer.builder().build()).when(answerRepository).save(any(Answer.class));
+		final Answer invalidAnswer = Answer.builder()
+			.id(0)
+			.questionId(1)
+			.contents("잘못됨")
+			.state(State.OPEN)
+			.article(Article.builder().build())
+			.build();
+
+		doReturn(invalidAnswer).when(answerRepository).save(any(Answer.class));
 		//when
-		final InvalidStateException result = assertThrows(InvalidStateException.class,
-			() -> answerService.createAnswer(any()));
+		final InvalidStateException result = assertThrows(InvalidStateException.class, () -> answerService.createAnswer(
+			new AnswerRequest(1, invalidAnswer.getQuestionId(), invalidAnswer.getContents(),
+				invalidAnswer.getState())));
 		//then
 		assertEquals(result.getMessage(), AnswerConstant.INVALID_STATE_ERROR_MESSAGE);
 	}
@@ -56,7 +65,7 @@ class AnswerServiceTest {
 		//then
 		assertNotNull(result);
 		assertEquals(answerResponse.getId(), result.getId());
-		assertEquals(answerResponse.getArticle(), result.getArticle());
+		assertEquals(answerResponse.getArticleId(), result.getArticleId());
 		assertEquals(answerResponse.getQuestionId(), result.getQuestionId());
 		assertEquals(answerResponse.getContents(), result.getContents());
 		assertEquals(answerResponse.getState(), result.getState());
