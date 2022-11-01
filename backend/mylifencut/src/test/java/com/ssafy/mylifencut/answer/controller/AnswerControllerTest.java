@@ -1,7 +1,10 @@
 package com.ssafy.mylifencut.answer.controller;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,6 +23,7 @@ import com.google.gson.Gson;
 import com.ssafy.mylifencut.answer.AnswerConstant;
 import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.AnswerRequest;
+import com.ssafy.mylifencut.answer.dto.AnswerResponse;
 import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.service.AnswerService;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
@@ -44,7 +48,7 @@ class AnswerControllerTest {
 
 	@Test
 	@DisplayName("답변 등록 실패 - 잘못된 행성에 공개여부 선택 된 경우")
-	public void createAnswer() throws Exception {
+	public void invalidState() throws Exception {
 		// given
 		final String url = "/answer";
 		final AnswerRequest answerRequest =
@@ -62,5 +66,40 @@ class AnswerControllerTest {
 
 		// then
 		resultActions.andExpect(status().isBadRequest());
+	}
+
+	@Test
+	@DisplayName("답변 등록 성공")
+	public void createAnswer() throws Exception {
+		// given
+		final String url = "/answer";
+		final AnswerRequest answerRequest =
+			new AnswerRequest(1, 1, "답변 등록", State.CLOSE);
+		final AnswerResponse answerResponse = AnswerResponse.builder()
+			.id(1)
+			.articleId(1)
+			.questionId(answerRequest.getQuestionId())
+			.contents(answerRequest.getContents())
+			.state(answerRequest.getState())
+			.build();
+		doReturn(answerResponse)
+			.when(answerService)
+			.createAnswer(answerRequest);
+
+		// when
+		final ResultActions resultActions = mockMvc.perform(
+			MockMvcRequestBuilders.post(url)
+				.content(gson.toJson(answerRequest))
+				.contentType(MediaType.APPLICATION_JSON)
+		);
+
+		// then
+		resultActions.andExpect(status().isOk());
+
+		final AnswerResponse response = gson.fromJson(resultActions.andReturn()
+			.getResponse()
+			.getContentAsString(StandardCharsets.UTF_8), AnswerResponse.class);
+
+		assertEquals(answerResponse, response);
 	}
 }
