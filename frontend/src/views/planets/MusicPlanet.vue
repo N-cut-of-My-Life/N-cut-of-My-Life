@@ -141,7 +141,7 @@ img {
 
 .button_2 {
     border-radius: 0.8vw;
-    border-color: orange;
+    border:none;
     background-color: orange;
 }
 

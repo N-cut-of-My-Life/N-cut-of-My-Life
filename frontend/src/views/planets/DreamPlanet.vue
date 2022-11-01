@@ -152,7 +152,7 @@ img {
 
 .button_2 {
     border-radius: 0.8vw;
-    /* border-color: #81c6e8; */
+    border:none;
     background-color: #81c6e8;
     position: relative;
     margin: 300px auto 0;
