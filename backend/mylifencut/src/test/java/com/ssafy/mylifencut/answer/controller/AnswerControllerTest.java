@@ -27,6 +27,7 @@ import com.ssafy.mylifencut.answer.dto.AnswerResponse;
 import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.service.AnswerService;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
+import com.ssafy.mylifencut.common.dto.BaseResponse;
 
 @ExtendWith(MockitoExtension.class)
 class AnswerControllerTest {
@@ -96,10 +97,10 @@ class AnswerControllerTest {
 		// then
 		resultActions.andExpect(status().isOk());
 
-		final AnswerResponse response = gson.fromJson(resultActions.andReturn()
+		final BaseResponse response = gson.fromJson(resultActions.andReturn()
 			.getResponse()
-			.getContentAsString(StandardCharsets.UTF_8), AnswerResponse.class);
+			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 
-		assertEquals(answerResponse, response);
+		assertEquals(answerResponse, response.getData());
 	}
 }
