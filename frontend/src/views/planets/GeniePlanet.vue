@@ -2,9 +2,13 @@
     <div class="jumbotron">
         <div class="title">지니 행성</div>
     </div>
-    <img :src="images[currentImage]" />
+    <div class="img-box">
+        <img src="@/assets/genie_charac.png" class="img-genie genie-bounce" />
+    </div>
+    <img class="bubble" :src="images[currentImage]" />
     <div class="other">
-        <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm"><strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
+        <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
+            <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
     </div>
     <div class="jump">
         <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
@@ -15,21 +19,34 @@
             다음
         </b-button>
     </div>
-    <div class="last">
+    <div class="last" data-bs-dismiss="modal" aria-label="Close">
         <b-button v-if="currentImage === (images.length - 1)" class="button_2" size="md">
-            <div class="wave">
-                <!-- <span style="--i: 1">꿈</span>
-                <span style="--i: 2">&nbsp;</span>
-                <span style="--i: 3">맡</span>
-                <span style="--i: 4">기</span>
-                <span style="--i: 5">러</span>
-                <span style="--i: 6">&nbsp;</span>
-                <span style="--i: 7">가</span>
-                <span style="--i: 8">기</span>
-                <span style="--i: 9">!</span> -->
+            <div class="wave" v-b-modal.modal-genie>
+                <span style="--i: 1">소</span>
+                <span style="--i: 2">원</span>
+                <span style="--i: 3">&nbsp;</span>
+                <span style="--i: 4">적</span>
+                <span style="--i: 5">으</span>
+                <span style="--i: 6">러</span>
+                <span style="--i: 7">&nbsp;</span>
+                <span style="--i: 8">가</span>
+                <span style="--i: 9">기</span>
+                <span style="--i: 10">!</span>
             </div>
         </b-button>
     </div>
+
+    <b-modal id="modal-genie" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+        <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">당신의 소원을 적어주세요!</div><br />
+        <b-container ref="form">
+            <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color:#e3ecfc">
+            </b-form-textarea>
+        </b-container><br/>
+        <b-button data-bs-dismiss="modal" aria-label="Close"
+            style="color: #ffffff; background-color: #a1a1a1; border: none; border-radius: 1vw;">취소</b-button>&nbsp;
+        <b-button text @click="submit" style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
+        </b-button>
+    </b-modal>
 </template>
 
 <script>
@@ -37,10 +54,11 @@ export default {
     data() {
         return {
             images: [
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_1.svg'),
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_2.svg'),
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_3.svg'),
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_4.svg'),
+                require('@/assets/PlanetSpeech/GenieSpeech/genie_bubble_1.svg'),
+                require('@/assets/PlanetSpeech/GenieSpeech/genie_bubble_2.svg'),
+                require('@/assets/PlanetSpeech/GenieSpeech/genie_bubble_3.svg'),
+                require('@/assets/PlanetSpeech/GenieSpeech/genie_bubble_4.svg'),
+                require('@/assets/PlanetSpeech/GenieSpeech/genie_bubble_5.svg'),
             ],
             currentImage: 0
         }
@@ -64,16 +82,55 @@ export default {
 </script>
 
 <style scoped>
+.img-box {
+    text-align: center;
+}
+
+.img-genie {
+    width: 20%;
+    position: absolute;
+    /* top: 0;
+    left: 0; */
+    right: 15%;
+    bottom: 3%;
+    /* height: 50%; */
+    margin: auto;
+}
+
+.genie-bounce {
+    animation: bounce .75s infinite alternate;
+    -webkit-animation: bounce .75s infinite alternate;
+
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(-5px);
+    }
+}
+
+@-webkit-keyframes bounce {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(-5px);
+    }
+}
+
 body {
     margin: 0;
 }
 
-img {
+.bubble {
     position: absolute;
-    /* top: 0;
-    left: 0; */
-    right: 24%;
-    bottom: 18%;
+    right: 26%;
+    top: 20%;
     /* height: 50%; */
     margin: auto;
 }
@@ -97,6 +154,7 @@ img {
     width: 100%;
     margin: 0;
     padding: 0;
+    opacity: 0.8;
 }
 
 .jump {
@@ -117,7 +175,7 @@ img {
 
 .last {
     position: absolute;
-    bottom: 50%;
+    bottom: 75%;
     left: 45%;
     margin: auto;
 }
@@ -130,7 +188,7 @@ img {
 }
 
 .button_prev {
-    background-color:#ffffff;
+    background-color: #ffffff;
     color: #141414;
     border-radius: 0.8vw;
     border-color: #ffffff;
@@ -139,7 +197,7 @@ img {
 .button_2 {
     border-radius: 0.8vw;
     /* border-color: #81c6e8; */
-    background-color: #81c6e8;
+    background-color: #ab55bf;
     position: relative;
     margin: 300px auto 0;
 }
@@ -171,5 +229,20 @@ img {
     20% {
         transform: translateY(-10px);
     }
+}
+</style>
+
+<style>
+#modal-genie .modal-content {
+    background-color: #b1afff;
+    ;
+}
+
+#modal-genie .modal-header {
+    /* border-bottom: #1f1f1f; */
+}
+
+#modal-genie .modal-header .btn-close {
+    color: white;
 }
 </style>

@@ -3,6 +3,11 @@
   <video muted autoplay loop playbackRate="1.0">
     <source src="@/assets/intro_video.mp4" type="video/mp4">
   </video>
+  <div class="other">
+        <b-button @click="gotoPage({ name: 'introfirstpage' })" class="button_prev" size="sm">
+            <strong>&lt;</strong>&nbsp;&nbsp;돌아가기
+        </b-button>
+    </div>
   <div class="bg">
     <div class="planet"></div>
     <div class="planet" @click="gotoPage({ name: 'sadplanet'})"></div>
@@ -54,6 +59,19 @@ video {
   animation: blinker 1s linear infinite;
 }
 
+.button_prev {
+    background-color: #ffffff;
+    color: #141414;
+    border-radius: 0.8vw;
+    border-color: #ffffff;
+}
+
+.other {
+    position: absolute;
+    left: 1%;
+    top: 2.5%;
+    margin: auto;
+}
 
 /* .bg{
   background-image: url("../../assets/planet/bg.png");
@@ -98,7 +116,7 @@ video {
 }
 
 .teapot {
-  display: none;
+  /* display:none; */
   max-width: 16%;
   height: auto;
   position: absolute;

@@ -4,7 +4,9 @@
     </div>
     <img :src="images[currentImage]" />
     <div class="other">
-        <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm"><strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
+        <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
+            <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
+        </b-button>
     </div>
     <div class="jump">
         <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
@@ -15,9 +17,9 @@
             다음
         </b-button>
     </div>
-    <div class="last">
+    <div class="last" data-bs-dismiss="modal" aria-label="Close">
         <b-button v-if="currentImage === (images.length - 1)" class="button_2" size="md">
-            <div class="wave">
+            <div class="wave" v-b-modal.modal-dream>
                 <span style="--i: 1">꿈</span>
                 <span style="--i: 2">&nbsp;</span>
                 <span style="--i: 3">맡</span>
@@ -30,6 +32,18 @@
             </div>
         </b-button>
     </div>
+
+    <b-modal id="modal-dream" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+        <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">아쉽게 이루지 못한 꿈을 이 곳에 적어주세요!</div><br />
+        <b-container ref="form">
+            <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color: #eceffa;">
+            </b-form-textarea>
+        </b-container><br/>
+        <b-button data-bs-dismiss="modal" aria-label="Close"
+            style="color: #ffffff; background-color: #a1a1a1; border: none; border-radius: 1vw;">취소</b-button>&nbsp;
+        <b-button text @click="submit" style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
+        </b-button>
+    </b-modal>
 </template>
 
 <script>
@@ -130,7 +144,7 @@ img {
 }
 
 .button_prev {
-    background-color:#ffffff;
+    background-color: #ffffff;
     color: #141414;
     border-radius: 0.8vw;
     border-color: #ffffff;
@@ -171,5 +185,19 @@ img {
     20% {
         transform: translateY(-10px);
     }
+}
+</style>
+<style>
+#modal-dream .modal-content {
+    background-color: #b8cff8;
+    ;
+}
+
+#modal-dream .modal-header {
+    /* border-bottom: #1f1f1f; */
+}
+
+#modal-dream .modal-header .btn-close {
+    color: white;
 }
 </style>
