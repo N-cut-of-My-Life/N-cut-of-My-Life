@@ -65,7 +65,7 @@ class AnswerServiceTest {
 		//then
 		assertNotNull(result);
 		assertEquals(answerResponse.getId(), result.getId());
-		assertEquals(answerResponse.getArticle(), result.getArticle());
+		assertEquals(answerResponse.getArticleId(), result.getArticleId());
 		assertEquals(answerResponse.getQuestionId(), result.getQuestionId());
 		assertEquals(answerResponse.getContents(), result.getContents());
 		assertEquals(answerResponse.getState(), result.getState());
