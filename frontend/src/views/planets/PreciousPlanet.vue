@@ -18,15 +18,17 @@
     <div class="last">
         <b-button v-if="currentImage === (images.length - 1)" class="button_2" size="md">
             <div class="wave">
-                <!-- <span style="--i: 1">꿈</span>
-                <span style="--i: 2">&nbsp;</span>
-                <span style="--i: 3">맡</span>
-                <span style="--i: 4">기</span>
-                <span style="--i: 5">러</span>
-                <span style="--i: 6">&nbsp;</span>
-                <span style="--i: 7">가</span>
+                <span style="--i: 1">소</span>
+                <span style="--i: 2">중</span>
+                <span style="--i: 3">한</span>
+                <span style="--i: 4">&nbsp;</span>
+                <span style="--i: 5">사</span>
+                <span style="--i: 6">람</span>
+                <span style="--i: 7">&nbsp;</span>
                 <span style="--i: 8">기</span>
-                <span style="--i: 9">!</span> -->
+                <span style="--i: 9">록</span>
+                <span style="--i: 10">하</span>
+                <span style="--i: 11">기</span>
             </div>
         </b-button>
     </div>
@@ -37,10 +39,9 @@ export default {
     data() {
         return {
             images: [
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_1.svg'),
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_2.svg'),
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_3.svg'),
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_4.svg'),
+                require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_1.svg'),
+                require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_2.svg'),
+                require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_3.svg'),
             ],
             currentImage: 0
         }
@@ -72,8 +73,8 @@ img {
     position: absolute;
     /* top: 0;
     left: 0; */
-    right: 24%;
-    bottom: 18%;
+    right: 15%;
+    bottom: 20%;
     /* height: 50%; */
     margin: auto;
 }
