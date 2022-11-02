@@ -37,7 +37,7 @@ public class UserServiceTest {
 
 	@Test
 	@DisplayName("카카오 로그인 - 사용자 정보 받아오기 실패")
-	public void getEmailFromKakaoFail() {
+	public void getUserInfoFromKakaoFail() {
 		// given
 		final String token = "INVALID_TOKEN";
 
