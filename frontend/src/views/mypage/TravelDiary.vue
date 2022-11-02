@@ -1,28 +1,39 @@
 <template>
   <div class="jumbotron">
-    <div class="title">ㅇㅇㅇ님의 여행 일지</div>
+    <div class="title">My Page</div>
     <main class="content">
       <section class="profile-part">
-        <div class="prof image">
-          <img src="@/assets/kakao_logo.png" alt="" class="tmp-image">
+        <div class="prof-photo-box">
+          <img src="@/assets/astronaut_riding.png" class="prof-photo">
         </div>
-        <div class="prof info">개인정보 자리</div>
+        <div class="prof-id">test123@naver.com</div>
+        <div class="prof-journal-title">OO님의 여행일지</div>
+        <div class="prof-journals">
+          <div class="journal">
+            <img src="@/assets/space_diary.png" class="journal-img">
+          </div>
+          <div class="journal">
+            <img src="@/assets/space_diary.png" class="journal-img">
+          </div>
+        </div>
       </section>
 
       <section class="diary-part">
-        <div class="last-word">
-          <img src="@/assets/post_paper.png" class="last-word-img">
+        <!-- 상위 2개 아이템들 -->
+        <div class="upper-items">
+          <div class="last-word">
+            <img src="@/assets/post_paper.png" class="last-word-img">
+            <div class="text-on-img">나에게 하는 마지막 한마디</div>
+          </div>
+          <div class="letter">
+            <img src="@/assets/mailbox.png" class="letter-img">
+          </div>
         </div>
-        <div class="letter">
-          <img src="@/assets/mailbox.png" class="letter-img">
+        <!-- 일지 상세 -->
+        <div class="diary-detail">
+          이곳이 디테일 공간이니라
         </div>
-        <div class="list">여행기록</div>
-        <div class="journal">
-          <img src="@/assets/space_diary.png" class="journal-img">
-        </div>
-        <div class="journal">
-          <img src="@/assets/space_diary.png" class="journal-img">
-        </div>
+        
         
       </section>
     </main>
@@ -34,9 +45,33 @@
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'MaplestoryOTFBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ONE-Mobile-POP';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 body {
   margin: 0;
 }
+.jumbotron {
+  background: url("@/assets/travel_diary.svg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+  margin:0;
+  padding:0;
+}
+
 .title {
     text-align: center;
     padding-top: 3%;
@@ -45,85 +80,107 @@ body {
     font-weight: 600;
 }
 
-.jumbotron {
-    background: url("@/assets/travel_diary.svg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    height: 100vh;
-    width: 100%;
-    margin:0;
-    padding:0;
-}
-
 .content {
-  margin: 2%;
   display: flex;
   justify-content: space-between;
   width: 80vw;
   height: 80vh;
-  margin: 5vh auto;
+  margin: 2vh auto;
   
 }
+
+/* 왼쪽 파트 */
 .profile-part {
   width: 37.5%;
-  display: grid;
-  grid-template-rows: .4fr .3fr;
-  gap: 10px;
-}
-.prof {
-  margin: 10px;
-  padding: 5px;
-  border: 2px solid black;
-  border-radius: 20px;
-}
-.image {
-  background-color: aliceblue;
-}
-.tmp-image {
-  width: 25%;
-  margin: 0 auto;
-}
-.info {
-  background-color: aqua;
-
-}
-.diary-part {
-  width: 48.75%;
-  display: grid;
-  grid-template-rows: 1fr 0.2fr 3fr;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-.last-word {
   display: flex;
-  justify-content: center;
-}
-.last-word-img {
-  width: 100%;
-  z-index: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5%;
+
 }
 
-.list {
-  grid-column: 1/-1;
-  font-size: 2rem;
-  color: white;
+.prof-photo-box {
+  width: 40%;
+  height: 30%;
+  border-radius: 70%;
+  overflow: hidden;
 }
+
+.prof-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+}
+
+.prof-id {
+  font-family: 'MaplestoryOTFBold';
+  text-align: center;
+  color: rgb(224, 227, 230);
+}
+
+.prof-journal-title {
+  font-family: 'MapleStoryOTFBold';
+  font-size: 2rem;
+}
+
+.prof-journals {
+  display: flex;
+}
+
 .journal-img {
   width: 100%;
 }
+
 .journal-img:hover {
   scale: 1.05;
 }
-.letter {
+
+/* 오른쪽 파트 */
+.diary-part {
+  width: 52%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.upper-items {
+  display: flex;
+}
+
+.last-word {
+  position: relative;
+  text-align: center;
   display: flex;
   justify-content: center;
 }
-.letter-img {
-  width: 45%;
+
+.last-word-img {
+  width: 90%;
 }
+
+.text-on-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'ONE-Mobile-POP';
+}
+
+.letter {
+  /* display: flex;
+  justify-content: center; */
+  margin-left: auto;
+}
+
+.letter-img {
+  width: 100%;
+}
+
 .letter-img:hover {
   scale: 1.1;
+}
+
+.diary-detail {
+  
 }
 </style>
