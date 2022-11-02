@@ -68,8 +68,8 @@ public class MyPageRepositoryTest {
 		articleRepository.save(article2);
 
 		//when
-		user.addArticles(article1);
-		user.addArticles(article2);
+		user.addArticle(article1);
+		user.addArticle(article2);
 		final User savedUser = userRepository.save(user);
 
 		//then
