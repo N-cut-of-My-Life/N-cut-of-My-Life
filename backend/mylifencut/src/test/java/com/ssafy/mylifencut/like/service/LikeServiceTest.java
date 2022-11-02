@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.like.domain.IsLike;
+import com.ssafy.mylifencut.like.dto.IsLikeResponse;
 import com.ssafy.mylifencut.like.exception.LikeErrorResult;
 import com.ssafy.mylifencut.like.exception.alreadyLikeException;
 import com.ssafy.mylifencut.like.repository.LikeRepository;
@@ -48,11 +49,11 @@ class LikeServiceTest {
 		doReturn(null).when(likeRepository).findByUserIdAndAnswerId(userId, answerId);
 		doReturn(isLike()).when(likeRepository).save(any(IsLike.class));
 		//when
-		final IsLike result = likeService.createLike(userId, answerId);
+		final IsLikeResponse result = likeService.createLike(userId, answerId);
 		//then
 		assertThat(result.getId()).isNotNull();
-		assertThat(result.getUser().getId()).isEqualTo(1);
-		assertThat(result.getAnswer().getId()).isEqualTo(3);
+		assertThat(result.getUser_id()).isEqualTo(1);
+		assertThat(result.getAnswer_id()).isEqualTo(3);
 	}
 
 	private IsLike isLike() {
