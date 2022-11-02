@@ -98,7 +98,6 @@ public class UserService {
 		} catch (IOException e) {
 			throw new InvalidAccessTokenException(INVALID_ACCESS_TOKEN_ERROR_MESSAGE);
 		}
-		return null;
 	}
 
 	private String getResult(HttpURLConnection conn) throws IOException {
