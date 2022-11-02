@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,40 +16,31 @@ import com.ssafy.mylifencut.article.repository.ArticleRepository;
 import com.ssafy.mylifencut.user.domain.User;
 
 @DataJpaTest
-public class MyPageRepositoryTest {
-
-	@Autowired
-	private UserRepository userRepository;
-
+public class ArticleRepositoryTest {
 	@Autowired
 	private ArticleRepository articleRepository;
 
 	@Test
 	public void repositoryIsNotNull() {
-		assertNotNull(userRepository);
+		assertNotNull(articleRepository);
 	}
 
 	@Test
 	@DisplayName("마이페이지에서 과거 기록 리스트가 없을 때(사이즈가 0이어야함) - 성공")
 	public void RetrieveMyPageEmpty() {
 		//given
-		final User user = user();
+		final List<Article> articles;
 
 		//when
-		final User savedUser = userRepository.save(user);
+		articles = articleRepository.findByUserId(1);
 
 		//then
-		assertNotNull(savedUser);
-
-		final Optional<User> foundUser = userRepository.findById(savedUser.getId());
-		assertTrue(foundUser.isPresent());
-		assertNotNull(foundUser.get());
-		assertEquals(savedUser.getId(), foundUser.get().getId());
-		assertEquals(foundUser.get().getArticles().size(), 0);
+		assertNotNull(articles);
+		assertEquals(articles.size(), 0);
 	}
 
 	@Test
-	@DisplayName("마이페이지에서 과거 기록 사이즈가 2이어야함 - 성공")
+	@DisplayName("마이페이지에서 article을 저장 후 조회 - 성공")
 	public void RetrieveMyPageSizeTwo() {
 		//given
 		final User user = user();
@@ -64,25 +54,21 @@ public class MyPageRepositoryTest {
 			.answers(Collections.emptyList())
 			.createDate(LocalDateTime.now())
 			.build();
-		articleRepository.save(article1);
-		articleRepository.save(article2);
 
 		//when
-		user.addArticle(article1);
-		user.addArticle(article2);
-		final User savedUser = userRepository.save(user);
+		Article savedArticle1 = articleRepository.save(article1);
+		Article savedArticle2 = articleRepository.save(article2);
+
+		savedArticle1.getUser().addArticle(article1);
+		savedArticle2.getUser().addArticle(article2);
 
 		//then
-		assertNotNull(savedUser);
-		final Optional<User> foundUser = userRepository.findById(savedUser.getId());
-		assertTrue(foundUser.isPresent());
-		assertNotNull(foundUser.get());
-		assertEquals(savedUser.getId(), foundUser.get().getId());
-
-		final List<Article> articles = foundUser.get().getArticles();
+		final List<Article> articles = articleRepository.findAll();
+		assertNotNull(articles);
 		assertEquals(articles.size(), 2);
+
 		for (Article article : articles) {
-			assertEquals(article.getUser().getId(), savedUser.getId());
+			assertEquals(article.getUser().getName(), user.getName());
 		}
 	}
 
