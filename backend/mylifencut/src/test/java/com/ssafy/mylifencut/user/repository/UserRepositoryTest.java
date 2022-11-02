@@ -19,14 +19,17 @@ public class UserRepositoryTest {
 	@Test
 	@DisplayName("회원 저장 성공")
 	public void register() {
+		// given
 		final User user = User.builder()
 			.name("홍길동")
 			.email("ssafy@email.com")
 			.articles(Collections.emptyList())
 			.build();
 
+		// when
 		final User result = userRepository.save(user);
 
+		// then
 		assertEquals(user.getName(), result.getName());
 		assertEquals(user.getEmail(), result.getEmail());
 		assertEquals(user.getArticles(), result.getArticles());
