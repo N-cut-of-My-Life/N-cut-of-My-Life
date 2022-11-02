@@ -1,5 +1,6 @@
 package com.ssafy.mylifencut.answer.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -43,8 +44,9 @@ public class Answer {
 	@Enumerated(EnumType.STRING)
 	private State state;
 
+	@Builder.Default
 	@OneToMany(mappedBy = "answer")
-	private List<IsLike> likes;
+	private List<IsLike> likes = new ArrayList<>();
 
 	public static Answer from(AnswerRequest answerRequest, Article article) {
 
