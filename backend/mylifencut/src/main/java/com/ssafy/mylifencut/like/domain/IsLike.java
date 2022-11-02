@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.ssafy.mylifencut.answer.domain.Answer;
+import com.ssafy.mylifencut.user.domain.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @Getter
-public class isLike {
+public class IsLike {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +30,9 @@ public class isLike {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "answer_id")
 	private Answer answer;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
 
 }

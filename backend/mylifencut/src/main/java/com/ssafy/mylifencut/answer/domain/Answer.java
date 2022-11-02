@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 
 import com.ssafy.mylifencut.answer.dto.AnswerRequest;
 import com.ssafy.mylifencut.article.domain.Article;
-import com.ssafy.mylifencut.like.domain.isLike;
+import com.ssafy.mylifencut.like.domain.IsLike;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,7 +44,7 @@ public class Answer {
 	private State state;
 
 	@OneToMany(mappedBy = "answer")
-	private List<isLike> likes;
+	private List<IsLike> likes;
 
 	public static Answer from(AnswerRequest answerRequest, Article article) {
 
