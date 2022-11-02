@@ -12,10 +12,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.ssafy.mylifencut.answer.domain.Answer;
+import com.ssafy.mylifencut.like.LikeConstant;
 import com.ssafy.mylifencut.like.domain.IsLike;
 import com.ssafy.mylifencut.like.dto.IsLikeResponse;
-import com.ssafy.mylifencut.like.exception.LikeErrorResult;
-import com.ssafy.mylifencut.like.exception.alreadyLikeException;
+import com.ssafy.mylifencut.like.exception.AlreadyLikeException;
 import com.ssafy.mylifencut.like.repository.LikeRepository;
 import com.ssafy.mylifencut.user.domain.User;
 
@@ -36,10 +36,10 @@ class LikeServiceTest {
 		//given
 		doReturn(IsLike.builder().build()).when(likeRepository).findByUserIdAndAnswerId(userId, answerId);
 		//when
-		final alreadyLikeException result = assertThrows(alreadyLikeException.class,
+		final AlreadyLikeException result = assertThrows(AlreadyLikeException.class,
 			() -> likeService.createLike(userId, answerId));
 		//then
-		assertThat(result.getErrorResult()).isEqualTo(LikeErrorResult.ALREADY_LIKE);
+		assertThat(result.getMessage()).isEqualTo(LikeConstant.ALEADY_LIKE_EXIST_MESSAGE);
 	}
 
 	@Test
@@ -58,7 +58,7 @@ class LikeServiceTest {
 
 	private IsLike isLike() {
 		return IsLike.builder()
-			.Id(1)
+			.id(1)
 			.user(User.builder().id(userId).build())
 			.answer(Answer.builder().id(answerId).build())
 			.build();
