@@ -11,10 +11,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.like.domain.IsLike;
 import com.ssafy.mylifencut.like.exception.LikeErrorResult;
 import com.ssafy.mylifencut.like.exception.alreadyLikeException;
 import com.ssafy.mylifencut.like.repository.LikeRepository;
+import com.ssafy.mylifencut.user.domain.User;
 
 @ExtendWith(MockitoExtension.class)
 class LikeServiceTest {
@@ -37,6 +39,28 @@ class LikeServiceTest {
 			() -> likeService.createLike(userId, answerId));
 		//then
 		assertThat(result.getErrorResult()).isEqualTo(LikeErrorResult.ALREADY_LIKE);
+	}
+
+	@Test
+	@DisplayName("좋아요 추가 성공")
+	public void addLike() {
+		//given
+		doReturn(null).when(likeRepository).findByUserIdAndAnswerId(userId, answerId);
+		doReturn(isLike()).when(likeRepository).save(any(IsLike.class));
+		//when
+		final IsLike result = likeService.createLike(userId, answerId);
+		//then
+		assertThat(result.getId()).isNotNull();
+		assertThat(result.getUser().getId()).isEqualTo(1);
+		assertThat(result.getAnswer().getId()).isEqualTo(3);
+	}
+
+	private IsLike isLike() {
+		return IsLike.builder()
+			.Id(1)
+			.user(User.builder().id(userId).build())
+			.answer(Answer.builder().id(answerId).build())
+			.build();
 	}
 
 }
