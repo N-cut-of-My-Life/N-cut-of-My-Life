@@ -46,6 +46,6 @@ public class UserRepositoryTest {
 		final Optional<User> result = userRepository.findByEmail(email);
 
 		//then
-		assertNull(result);
+		assertFalse(result.isPresent());
 	}
 }
