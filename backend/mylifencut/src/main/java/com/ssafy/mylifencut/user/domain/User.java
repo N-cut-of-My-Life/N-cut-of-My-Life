@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.ssafy.mylifencut.article.domain.Article;
+import com.ssafy.mylifencut.like.domain.IsLike;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,4 +32,7 @@ public class User {
 	private String email;
 
 	private String name;
+
+	@OneToMany(mappedBy = "user")
+	private List<IsLike> likes;
 }
