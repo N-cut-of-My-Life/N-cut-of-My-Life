@@ -38,7 +38,7 @@ public class UserRepositoryTest {
 
 	@Test
 	@DisplayName("이메일로 회원 여부 검사 - 신규회원")
-	public void checkUserByEmail() {
+	public void findUserByEmailFail() {
 		// given
 		final String email = "ssafy@email.com";
 
@@ -47,5 +47,26 @@ public class UserRepositoryTest {
 
 		//then
 		assertFalse(result.isPresent());
+	}
+
+	@Test
+	@DisplayName("이메일로 회원 여부 검사 - 기존회원")
+	public void findUserByEmailSuccess() {
+		// given
+		final User user = User.builder()
+			.name("홍길동")
+			.email("ssafy@email.com")
+			.articles(Collections.emptyList())
+			.build();
+		final User savedUser = userRepository.save(user);
+
+		//when
+		final Optional<User> result = userRepository.findByEmail(savedUser.getEmail());
+
+		//then
+		assertTrue(result.isPresent());
+		assertEquals(savedUser.getName(), result.get().getName());
+		assertEquals(savedUser.getEmail(), result.get().getEmail());
+		assertEquals(savedUser.getArticles(), result.get().getArticles());
 	}
 }
