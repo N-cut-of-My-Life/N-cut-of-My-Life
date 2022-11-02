@@ -15,21 +15,41 @@
             다음
         </b-button>
     </div>
-    <div class="last">
+    <div class="last" data-bs-dismiss="modal" aria-label="Close">
         <b-button v-if="currentImage === (images.length - 1)" class="button_2" size="md">
-            <div class="wave">
-                <!-- <span style="--i: 1">꿈</span>
-                <span style="--i: 2">&nbsp;</span>
-                <span style="--i: 3">맡</span>
-                <span style="--i: 4">기</span>
-                <span style="--i: 5">러</span>
-                <span style="--i: 6">&nbsp;</span>
-                <span style="--i: 7">가</span>
-                <span style="--i: 8">기</span>
-                <span style="--i: 9">!</span> -->
+            <div class="wave" v-b-modal.modal-treasure>
+                <span style="--i: 1">가</span>
+                <span style="--i: 2">장</span>
+                <span style="--i: 3">&nbsp;</span>
+                <span style="--i: 4">소</span>
+                <span style="--i: 5">중</span>
+                <span style="--i: 6">한</span>
+                <span style="--i: 7">&nbsp;</span>
+                <span style="--i: 8">물</span>
+                <span style="--i: 9">건</span>
+                <span style="--i: 10">&nbsp;</span>
+                <span style="--i: 11">적</span>
+                <span style="--i: 12">으</span>
+                <span style="--i: 13">러</span>
+                <span style="--i: 14">&nbsp;</span>
+                <span style="--i: 15">가</span>
+                <span style="--i: 16">기</span>
+                <span style="--i: 17">!</span>
             </div>
         </b-button>
     </div>
+
+    <b-modal id="modal-treasure" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+        <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">당신의 가장 소중한 물건을 적어주세요!</div><br />
+        <b-container ref="form">
+            <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color:#e3ecfc">
+            </b-form-textarea>
+        </b-container><br/>
+        <b-button data-bs-dismiss="modal" aria-label="Close"
+            style="color: #ffffff; background-color: #a1a1a1; border: none; border-radius: 1vw;">취소</b-button>&nbsp;
+        <b-button text @click="submit" style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
+        </b-button>
+    </b-modal>
 </template>
 
 <script>
@@ -37,10 +57,11 @@ export default {
     data() {
         return {
             images: [
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_1.svg'),
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_2.svg'),
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_3.svg'),
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_4.svg'),
+                require('@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_1.svg'),
+                require('@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_2.svg'),
+                require('@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_3.svg'),
+                require('@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_4.svg'),
+                require('@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_5.svg'),
             ],
             currentImage: 0
         }
@@ -70,10 +91,8 @@ body {
 
 img {
     position: absolute;
-    /* top: 0;
-    left: 0; */
-    right: 24%;
-    bottom: 18%;
+    left: 9%;
+    bottom: 10%;
     /* height: 50%; */
     margin: auto;
 }
@@ -117,7 +136,7 @@ img {
 
 .last {
     position: absolute;
-    bottom: 50%;
+    bottom: 8%;
     left: 45%;
     margin: auto;
 }
@@ -138,8 +157,8 @@ img {
 
 .button_2 {
     border-radius: 0.8vw;
-    /* border-color: #81c6e8; */
-    background-color: #81c6e8;
+    border:none;
+    background-color:#bb9f7f;
     position: relative;
     margin: 300px auto 0;
 }
@@ -171,5 +190,20 @@ img {
     20% {
         transform: translateY(-10px);
     }
+}
+</style>
+
+<style>
+#modal-treasure .modal-content {
+    background-color: #b1afff;
+    ;
+}
+
+#modal-treasure .modal-header {
+    /* border-bottom: #1f1f1f; */
+}
+
+#modal-treasure .modal-header .btn-close {
+    color: white;
 }
 </style>
