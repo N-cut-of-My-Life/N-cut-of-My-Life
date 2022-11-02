@@ -25,13 +25,27 @@ public class UserServiceTest {
 	@DisplayName("카카오 로그인 - 카카오 엑세스 토큰 오류")
 	public void getKakaoAccessTokenFail() {
 		// given
-		final String token = "asdf";
+		final String token = "INVALID_TOKEN";
 
 		// when
 		final InvalidAccessTokenException result = assertThrows(InvalidAccessTokenException.class, () ->
 			userService.getAccessToken(token));
 
 		// then
+		assertEquals(result.getMessage(), UserConstant.INVALID_ACCESS_TOKEN_ERROR_MESSAGE);
+	}
+
+	@Test
+	@DisplayName("카카오 로그인 - 사용자 정보 받아오기 실패")
+	public void getEmailFromKakaoFail() {
+		// given
+		final String token = "INVALID_TOKEN";
+
+		// when
+		final InvalidAccessTokenException result = assertThrows(InvalidAccessTokenException.class, () ->
+			userService.getKakaoInfo());
+
+		//then
 		assertEquals(result.getMessage(), UserConstant.INVALID_ACCESS_TOKEN_ERROR_MESSAGE);
 	}
 }
