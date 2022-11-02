@@ -13,7 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.article.domain.Article;
-import com.ssafy.mylifencut.like.domain.isLike;
+import com.ssafy.mylifencut.like.domain.IsLike;
 import com.ssafy.mylifencut.user.domain.User;
 
 @DataJpaTest
@@ -23,7 +23,7 @@ class LikeRepositoryTest {
 	private LikeRepository likeRepository;
 
 	@Test
-	@DisplayName("Create Like")
+	@DisplayName("좋아요 추가 테스트")
 	public void CreateLike() {
 		//given
 		final User user = User.builder()
@@ -45,11 +45,11 @@ class LikeRepositoryTest {
 			.state(State.CLOSE)
 			.build();
 
-		final isLike like = isLike.builder()
+		final IsLike like = IsLike.builder()
 			.answer(answer)
 			.build();
 		//when
-		final isLike result = likeRepository.save(like);
+		final IsLike result = likeRepository.save(like);
 		//then
 		assertNotNull(result);
 		assertEquals(result.getId(), like.getId());
