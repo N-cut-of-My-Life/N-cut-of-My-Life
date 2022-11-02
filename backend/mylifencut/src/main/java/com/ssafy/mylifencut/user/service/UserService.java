@@ -91,7 +91,10 @@ public class UserService {
 			//Gson 라이브러리로 JSON파싱
 			JsonElement element = JsonParser.parseString(result);
 
-			return element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString();
+			return UserInfo.builder()
+				.email(element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString())
+				.name(element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("nickname").getAsString())
+				.build();
 		} catch (IOException e) {
 			throw new InvalidAccessTokenException(INVALID_ACCESS_TOKEN_ERROR_MESSAGE);
 		}
