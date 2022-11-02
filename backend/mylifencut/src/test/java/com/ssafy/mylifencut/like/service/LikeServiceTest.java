@@ -39,7 +39,7 @@ class LikeServiceTest {
 		final AlreadyLikeException result = assertThrows(AlreadyLikeException.class,
 			() -> likeService.createLike(userId, answerId));
 		//then
-		assertThat(result.getMessage()).isEqualTo(LikeConstant.ALEADY_LIKE_EXIST_MESSAGE);
+		assertThat(result.getMessage()).isEqualTo(LikeConstant.ALREADY_LIKE_EXIST_ERROR_MESSAGE);
 	}
 
 	@Test
