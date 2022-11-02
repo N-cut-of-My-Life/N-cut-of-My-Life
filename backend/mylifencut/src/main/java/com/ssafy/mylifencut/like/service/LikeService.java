@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.like.domain.IsLike;
+import com.ssafy.mylifencut.like.dto.IsLikeResponse;
 import com.ssafy.mylifencut.like.exception.LikeErrorResult;
 import com.ssafy.mylifencut.like.exception.alreadyLikeException;
 import com.ssafy.mylifencut.like.repository.LikeRepository;
@@ -17,7 +18,7 @@ public class LikeService {
 
 	private final LikeRepository likeRepository;
 
-	public IsLike createLike(Integer userId, Integer answerId) {
+	public IsLikeResponse createLike(Integer userId, Integer answerId) {
 		final IsLike result = likeRepository.findByUserIdAndAnswerId(userId, answerId);
 		if (result != null) {
 			throw new alreadyLikeException(LikeErrorResult.ALREADY_LIKE);
@@ -26,6 +27,10 @@ public class LikeService {
 			.user(User.builder().id(userId).build())
 			.answer(Answer.builder().id(answerId).build())
 			.build();
-		return likeRepository.save(isLike);
+
+		final IsLike savedIsLike = likeRepository.save(isLike);
+		IsLikeResponse isLikeResponse = IsLikeResponse.of(savedIsLike);
+
+		return isLikeResponse;
 	}
 }
