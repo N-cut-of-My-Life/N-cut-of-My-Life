@@ -43,7 +43,7 @@ public class UserServiceTest {
 
 		// when
 		final InvalidAccessTokenException result = assertThrows(InvalidAccessTokenException.class, () ->
-			userService.getKakaoInfo());
+			userService.getKakaoInfo(token));
 
 		//then
 		assertEquals(result.getMessage(), UserConstant.INVALID_ACCESS_TOKEN_ERROR_MESSAGE);
