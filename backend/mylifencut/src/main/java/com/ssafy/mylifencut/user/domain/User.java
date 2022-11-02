@@ -33,4 +33,8 @@ public class User {
 	private String email;
 
 	private String name;
+
+	public void addArticle(Article article) {
+		this.articles.add(article);
+	}
 }
