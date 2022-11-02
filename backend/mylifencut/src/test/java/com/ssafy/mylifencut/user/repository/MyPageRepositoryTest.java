@@ -14,11 +14,22 @@ public class MyPageRepositoryTest {
 	private UserRepository userRepository;
 
 	@Test
-	@DisplayName("마이페이지에서 과거 기록들 전체 조회 성공")
+	@DisplayName("마이페이지에서 과거 기록 사이즈가 0이어야함")
 	public void RetrieveMyPage() {
 		//given
-		final User foundUser = userRepository.findById(5);
+		final User user = User.builder()
+			.email("test@email.com")
+			.name("이름")
+			.build();
+
+		//when
+		final User savedUser = userRepository.save(user);
+
+		//then
+		assertNotNull(savedUser);
+		final User foundUser = userRepository.findById(savedUser.getId());
 		assertNotNull(foundUser);
-		assertEquals(foundUser.getId(), 5);
+		assertEquals(savedUser.getId(), foundUser.getId());
+		assertEquals(foundUser.getArticles().size(), 0);
 	}
 }
