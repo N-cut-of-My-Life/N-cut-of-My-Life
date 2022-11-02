@@ -1,8 +1,10 @@
 package com.ssafy.mylifencut.article.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,12 +32,13 @@ public class Article {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@Builder.Default
 	@OneToMany(mappedBy = "article")
-	private List<Answer> answers;
+	private List<Answer> answers = new ArrayList<>();
 
 	private LocalDateTime createDate;
 }
