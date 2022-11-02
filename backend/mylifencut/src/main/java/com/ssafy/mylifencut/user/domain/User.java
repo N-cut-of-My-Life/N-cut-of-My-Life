@@ -35,8 +35,9 @@ public class User {
 
 	private String name;
 
+	@Builder.Default
 	@OneToMany(mappedBy = "user")
-	private List<IsLike> likes;
+	private List<IsLike> likes = new ArrayList<>();
 
 	public void addArticle(Article article) {
 		this.articles.add(article);
