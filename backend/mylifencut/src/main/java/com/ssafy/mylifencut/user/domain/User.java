@@ -1,5 +1,6 @@
 package com.ssafy.mylifencut.user.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -25,10 +26,15 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@Builder.Default
 	@OneToMany(mappedBy = "user")
-	private List<Article> articles;
+	private List<Article> articles = new ArrayList<>();
 
 	private String email;
 
 	private String name;
+
+	public void addArticle(Article article) {
+		this.articles.add(article);
+	}
 }
