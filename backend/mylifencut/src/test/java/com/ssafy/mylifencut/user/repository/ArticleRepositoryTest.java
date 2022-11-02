@@ -41,7 +41,7 @@ public class ArticleRepositoryTest {
 
 	@Test
 	@DisplayName("마이페이지에서 article을 저장 후 조회 - 성공")
-	public void RetrieveMyPageSizeTwo() {
+	public void SaveArticleAndRetrieve() {
 		//given
 		final User user = user();
 		final Article article1 = Article.builder()
