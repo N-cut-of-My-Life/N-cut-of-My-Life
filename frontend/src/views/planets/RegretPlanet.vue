@@ -15,21 +15,31 @@
             다음
         </b-button>
     </div>
-    <div class="last">
+    <div class="last" data-bs-dismiss="modal" aria-label="Close">
         <b-button v-if="currentImage === (images.length - 1)" class="button_2" size="md">
-            <div class="wave">
-                <!-- <span style="--i: 1">꿈</span>
-                <span style="--i: 2">&nbsp;</span>
-                <span style="--i: 3">맡</span>
-                <span style="--i: 4">기</span>
-                <span style="--i: 5">러</span>
-                <span style="--i: 6">&nbsp;</span>
-                <span style="--i: 7">가</span>
-                <span style="--i: 8">기</span>
-                <span style="--i: 9">!</span> -->
+            <div class="wave" v-b-modal.modal-regret>
+                <span style="--i: 1">후</span>
+                <span style="--i: 2">회</span>
+                <span style="--i: 3">&nbsp;</span>
+                <span style="--i: 4">버</span>
+                <span style="--i: 5">리</span>
+                <span style="--i: 6">기</span>
+                <span style="--i: 7">!</span>
             </div>
         </b-button>
     </div>
+
+    <b-modal id="modal-regret" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+        <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">가장 후회되는 일을 적어주세요!</div><br />
+        <b-container ref="form">
+            <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color:#e3ecfc">
+            </b-form-textarea>
+        </b-container><br/>
+        <b-button data-bs-dismiss="modal" aria-label="Close"
+            style="color: #ffffff; background-color: #a1a1a1; border: none; border-radius: 1vw;">취소</b-button>&nbsp;
+        <b-button text @click="submit" style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
+        </b-button>
+    </b-modal>
 </template>
 
 <script>
@@ -37,10 +47,8 @@ export default {
     data() {
         return {
             images: [
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_1.svg'),
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_2.svg'),
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_3.svg'),
-                // require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_4.svg'),
+                require('@/assets/PlanetSpeech/RegretSpeech/regret_bubble_1.svg'),
+                require('@/assets/PlanetSpeech/RegretSpeech/regret_bubble_2.svg'),
             ],
             currentImage: 0
         }
@@ -70,11 +78,8 @@ body {
 
 img {
     position: absolute;
-    /* top: 0;
-    left: 0; */
-    right: 24%;
-    bottom: 18%;
-    /* height: 50%; */
+    right: 15%;
+    bottom: 24%;
     margin: auto;
 }
 
@@ -117,8 +122,8 @@ img {
 
 .last {
     position: absolute;
-    bottom: 50%;
-    left: 45%;
+    bottom: 52%;
+    left: 37.5%;
     margin: auto;
 }
 
@@ -139,7 +144,7 @@ img {
 .button_2 {
     border-radius: 0.8vw;
     /* border-color: #81c6e8; */
-    background-color: #81c6e8;
+    background-color: #9cb4cc;
     position: relative;
     margin: 300px auto 0;
 }
@@ -171,5 +176,20 @@ img {
     20% {
         transform: translateY(-10px);
     }
+}
+</style>
+
+<style>
+#modal-regret .modal-content {
+    background-color: #b1afff;
+    ;
+}
+
+#modal-regret .modal-header {
+    /* border-bottom: #1f1f1f; */
+}
+
+#modal-regret .modal-header .btn-close {
+    color: white;
 }
 </style>
