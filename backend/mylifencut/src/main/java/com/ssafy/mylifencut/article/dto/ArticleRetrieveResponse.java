@@ -14,14 +14,14 @@ import lombok.Getter;
 @Getter
 @Builder
 @EqualsAndHashCode
-public class ArticleResponse {
+public class ArticleRetrieveResponse {
 	private Integer id;
 	private User user;
 	private List<Answer> answers;
 	private LocalDateTime createDate;
 
-	public static ArticleResponse of(Article article) {
-		return ArticleResponse.builder()
+	public static ArticleRetrieveResponse of(Article article) {
+		return ArticleRetrieveResponse.builder()
 			.id(article.getId())
 			.user(article.getUser())
 			.answers(article.getAnswers())
