@@ -74,4 +74,33 @@ class AnswerRepositoryTest {
 		//then
 		assertThat(result.size()).isEqualTo(0);
 	}
+
+	@Test
+	@DisplayName("갤러리 조회 성공 ")
+	public void readGallery() {
+		//given
+		final Answer answer = Answer.builder()
+			.questionId(1)
+			.contents("답변 내용")
+			.state(State.OPEN)
+			.build();
+		final Answer answer2 = Answer.builder()
+			.questionId(2)
+			.contents("답변 내용입니다.")
+			.state(State.OPEN)
+			.build();
+		final Answer answer3 = Answer.builder()
+			.questionId(3)
+			.contents("답변 내용이지롱.")
+			.state(State.CLOSE)
+			.build();
+		answerRepository.save(answer);
+		answerRepository.save(answer2);
+		answerRepository.save(answer3);
+		//when
+		List<Answer> result = answerRepository.findByState(State.OPEN);
+		//then
+		assertThat(result.size()).isEqualTo(2);
+	}
+
 }
