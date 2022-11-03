@@ -1,9 +1,11 @@
 package com.ssafy.mylifencut.answer.repository;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,7 @@ import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.user.domain.User;
 
 @DataJpaTest
+@DisplayName("답변 Repository Test")
 class AnswerRepositoryTest {
 	@Autowired
 	private AnswerRepository answerRepository;
@@ -50,5 +53,25 @@ class AnswerRepositoryTest {
 		assertEquals(savedAnswer.getQuestionId(), 1);
 		assertEquals(savedAnswer.getContents(), "답변 내용");
 		assertEquals(savedAnswer.getState(), State.CLOSE);
+	}
+
+	@Test
+	@DisplayName("갤러리 조회 실패 - 등록된 답변이 없음")
+	public void answerListSizeZero() {
+		//given
+		//when
+		List<Answer> result = answerRepository.findAll();
+		//then
+		assertThat(result.size()).isEqualTo(0);
+	}
+
+	@Test
+	@DisplayName("갤러리 조회 실패 - 등록된 답변의 상태가 OPEN인 답변이 없음")
+	public void notExistAnswerStateOpen() {
+		//given
+		//when
+		List<Answer> result = answerRepository.findByState(State.OPEN);
+		//then
+		assertThat(result.size()).isEqualTo(0);
 	}
 }
