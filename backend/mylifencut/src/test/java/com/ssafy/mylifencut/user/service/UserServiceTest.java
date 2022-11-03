@@ -126,7 +126,7 @@ public class UserServiceTest {
 
 	@Test
 	@DisplayName("카카오 로그인 - 기존유저 로그인")
-	public void loginExistingUser() {
+	public void loginExistingUserSuccess() {
 		// given
 		final UserInfo userInfo = newUserInfo();
 		final User user = User.builder()
