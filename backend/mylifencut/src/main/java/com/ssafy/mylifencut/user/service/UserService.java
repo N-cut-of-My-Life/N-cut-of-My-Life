@@ -36,8 +36,8 @@ public class UserService {
 	private final String kakao_redirectUri;
 
 	public String getAccessToken(String code) {
-		String access_Token = "";
-		String refresh_Token = "";
+		String access_Token;
+		String refresh_Token;
 		String reqURL = "https://kauth.kakao.com/oauth/token";
 
 		try {
@@ -51,8 +51,7 @@ public class UserService {
 			//POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 			String sb = "grant_type=authorization_code" + "&client_id=" + kakao_restApiKey + "&redirect_uri="
-				+ kakao_redirectUri
-				+ "&code=" + code;
+				+ kakao_redirectUri + "&code=" + code;
 			bw.flush();
 			bw.close();
 
