@@ -14,10 +14,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.ssafy.mylifencut.article.ArticleConstant;
 import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.article.dto.ArticleRetrieveResponse;
 import com.ssafy.mylifencut.article.repository.ArticleRepository;
+import com.ssafy.mylifencut.user.UserConstant;
 import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
 import com.ssafy.mylifencut.user.repository.UserRepository;
@@ -45,7 +45,7 @@ class ArticleServiceTest {
 			, () -> articleService.retrieveArticles(userId));
 
 		//then
-		assertEquals(result.getMessage(), ArticleConstant.NOT_FOUND_USER_ERROR_MESSAGE);
+		assertEquals(result.getMessage(), UserConstant.USER_NOT_FOUND_ERROR_MESSAGE);
 	}
 
 	@Test
@@ -78,15 +78,13 @@ class ArticleServiceTest {
 	@DisplayName("[여행일지 등록 실패] - 존재하지 않는 userId일 때")
 	public void registerArticle() {
 		//given
-		final int userId = 5;
-		doReturn(Optional.empty()).when(userRepository).findById(userId);
+		doReturn(Optional.empty()).when(userRepository).findById(anyInt());
 
 		//when
 		final UserNotFoundException result = assertThrows(UserNotFoundException.class
-			, () -> articleService.retrieveArticles(userId));
+			, () -> articleService.createArticle(any(ArticleRegisterRequest.class)));
 
 		//then
-		assertEquals(result.getMessage(), ArticleConstant.NOT_FOUND_USER_ERROR_MESSAGE);
-		articleService.createArticle(articleRegisterRequest);
+		assertEquals(result.getMessage(), UserConstant.USER_NOT_FOUND_ERROR_MESSAGE);
 	}
 }
