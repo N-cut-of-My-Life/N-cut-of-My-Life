@@ -8,10 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.ssafy.mylifencut.article.domain.Article;
-import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.like.domain.IsLike;
+import com.ssafy.mylifencut.user.dto.UserInfo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 @EqualsAndHashCode
+@Table(name = "member")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
