@@ -1,6 +1,7 @@
 package com.ssafy.mylifencut.user.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.ssafy.mylifencut.user.UserConstant;
+import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.user.exception.InvalidAccessTokenException;
 import com.ssafy.mylifencut.user.repository.UserRepository;
 
@@ -47,5 +49,22 @@ public class UserServiceTest {
 
 		//then
 		assertEquals(result.getMessage(), UserConstant.INVALID_ACCESS_TOKEN_ERROR_MESSAGE);
+	}
+
+	@Test
+	@DisplayName("카카오 로그인 - 사용자 정보로 신규유저 여부 확인(신규유저)")
+	public void isNewUser() {
+		// given
+		final UserInfo userInfo = UserInfo.builder()
+			.email("ssafy@emali.com")
+			.name("홍길동")
+			.build();
+		doReturn(false).when(userRepository).findByEmail(userInfo.getEmail());
+
+		// when
+		final boolean result = userService.isNewUser(userInfo);
+
+		// then
+		assertFalse(result);
 	}
 }
