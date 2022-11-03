@@ -33,7 +33,7 @@
         </b-button>
     </div>
 
-    <b-modal id="modal-dream" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+    <b-modal data-bs-dismiss="modal" aria-label="Close" id="modal-dream" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
         <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">아쉽게 이루지 못한 꿈을 이 곳에 적어주세요!</div><br />
         <b-container ref="form">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color: #eceffa;">
@@ -163,13 +163,7 @@ img {
     background-color: #81c6e8;
     position: relative;
     margin: 300px auto 0;
-}
-
-.button {
-    background-color: #a28dc4;
-    color: #ffffff;
-    border-radius: 0.8vw;
-    border-color: #a28dc4;
+    transition: all 0.3s ease-in-out 0s;
 }
 
 .button_prev {
@@ -177,20 +171,6 @@ img {
     color: #141414;
     border-radius: 0.8vw;
     border-color: #ffffff;
-}
-
-.button_2 {
-    border-radius: 1vw;
-    border: none;
-    background-color: #bb9f7f;
-    position: relative;
-    margin: 300px auto 0;
-
-    letter-spacing: 2px;
-    font-size: 1.3vw;
-    transition: all 0.3s ease-in-out 0s;
-    cursor: pointer;
-    outline: none;
 }
 
 .button_2::before {

@@ -43,7 +43,7 @@
         </b-button>
     </div>
 
-    <b-modal id="modal-treasure" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+    <b-modal data-bs-dismiss="modal" aria-label="Close" id="modal-treasure" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
         <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">당신의 가장 소중한 물건을 적어주세요!</div><br />
         <b-container ref="form">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
@@ -178,11 +178,9 @@ img {
     position: relative;
     margin: 300px auto 0;
 
-    letter-spacing: 2px;
     font-size: 1.3vw;
     transition: all 0.3s ease-in-out 0s;
     cursor: pointer;
-    outline: none;
 }
 
 .button_2::before {
