@@ -14,7 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.ssafy.mylifencut.answer.dto.AnswerRequest;
+import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
 import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.like.domain.IsLike;
 
@@ -48,14 +48,14 @@ public class Answer {
 	@OneToMany(mappedBy = "answer")
 	private List<IsLike> likes = new ArrayList<>();
 
-	public static Answer from(AnswerRequest answerRequest, Article article) {
+	public static Answer from(AnswerRegisterRequest answerRegisterRequest, Article article) {
 
 		return Answer.builder()
 			.article(article)
-			.contents(answerRequest.getContents())
-			.questionId(answerRequest.getQuestionId())
-			.contents(answerRequest.getContents())
-			.state(answerRequest.getState())
+			.contents(answerRegisterRequest.getContents())
+			.questionId(answerRegisterRequest.getQuestionId())
+			.contents(answerRegisterRequest.getContents())
+			.state(answerRegisterRequest.getState())
 			.build();
 	}
 }

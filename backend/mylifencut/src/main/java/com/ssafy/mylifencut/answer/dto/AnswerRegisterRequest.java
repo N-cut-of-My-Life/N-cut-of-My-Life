@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class AnswerRequest {
+public class AnswerRegisterRequest {
 	private Integer userId;
 	private Integer questionId;
 	private String contents;
