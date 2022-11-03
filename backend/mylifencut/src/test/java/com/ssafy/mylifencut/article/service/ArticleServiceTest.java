@@ -1,5 +1,7 @@
 package com.ssafy.mylifencut.article.service;
 
+import static com.ssafy.mylifencut.article.ArticleConstant.*;
+import static com.ssafy.mylifencut.user.UserConstant.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -16,11 +18,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.article.dto.ArticleRegisterRequest;
 import com.ssafy.mylifencut.article.dto.ArticleRetrieveResponse;
+import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnough;
 import com.ssafy.mylifencut.article.repository.ArticleRepository;
-import com.ssafy.mylifencut.user.UserConstant;
 import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
 import com.ssafy.mylifencut.user.repository.UserRepository;
@@ -48,7 +51,7 @@ class ArticleServiceTest {
 			, () -> articleService.retrieveArticles(userId));
 
 		//then
-		assertEquals(result.getMessage(), UserConstant.USER_NOT_FOUND_ERROR_MESSAGE);
+		assertEquals(result.getMessage(), USER_NOT_FOUND_ERROR_MESSAGE);
 	}
 
 	@Test
@@ -91,6 +94,28 @@ class ArticleServiceTest {
 		);
 
 		//then
-		assertEquals(result.getMessage(), UserConstant.USER_NOT_FOUND_ERROR_MESSAGE);
+		assertEquals(result.getMessage(), USER_NOT_FOUND_ERROR_MESSAGE);
+	}
+
+	@Test
+	@DisplayName("[여행일지 등록 실패] - 답변 리스트 개수가 3개 미만일때")
+	public void registerArticle_answersSizeIsNotEnoughError() {
+		//given
+		doReturn(Optional.of(User.builder().build())).when(userRepository).findById(anyInt());
+
+		final List<Answer> answers = new ArrayList<>();
+		for (int i = 0; i < ANSWERS_MIN_SIZE - 1; i++) {
+			answers.add(Answer.builder().build());
+		}
+
+		//when
+		final AnswersSizeIsNotEnough result = assertThrows(AnswersSizeIsNotEnough.class
+			, () -> articleService.createArticle(new ArticleRegisterRequest(
+				1, User.builder().id(1).build(), answers, LocalDateTime.now())
+			)
+		);
+
+		//then
+		assertEquals(result.getMessage(), ARTICLE_ANSWERS_SIZE_IS_NOT_ENOUGH_ERROR_MESSAGE);
 	}
 }
