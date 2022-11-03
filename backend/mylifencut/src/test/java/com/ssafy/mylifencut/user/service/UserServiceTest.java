@@ -81,7 +81,7 @@ public class UserServiceTest {
 		doReturn(user).when(userRepository).save(user);
 
 		// when
-		final boolean result = userService.join(userInfo);
+		final User result = userService.join(userInfo);
 
 		//then
 		assertEquals(user.getId(), result.getId());
