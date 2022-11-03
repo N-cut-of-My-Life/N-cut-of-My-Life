@@ -161,11 +161,9 @@ img {
     background-color: #9cb4cc;
     position: relative;
     margin: 300px auto 0;
-    letter-spacing: 2px;
-    font-size: 1.3vw;
     transition: all 0.3s ease-in-out 0s;
+    font-size: 1.3vw;
     cursor: pointer;
-    outline: none;
 }
 
 .button_2::before {

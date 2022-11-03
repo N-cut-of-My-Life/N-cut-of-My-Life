@@ -178,11 +178,9 @@ img {
     position: relative;
     margin: 300px auto 0;
 
-    letter-spacing: 2px;
     font-size: 1.3vw;
     transition: all 0.3s ease-in-out 0s;
     cursor: pointer;
-    outline: none;
 }
 
 .button_2::before {
