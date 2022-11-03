@@ -118,4 +118,8 @@ public class UserService {
 
 		return result.toString();
 	}
+
+	public boolean isNewUser(UserInfo userInfo) {
+		return userRepository.findByEmail(userInfo.getEmail()).isPresent();
+	}
 }
