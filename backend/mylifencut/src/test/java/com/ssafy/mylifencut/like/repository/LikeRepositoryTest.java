@@ -24,7 +24,7 @@ class LikeRepositoryTest {
 
 	@Test
 	@DisplayName("좋아요 추가 테스트")
-	public void CreateLike() {
+	public void createLike() {
 		//given
 		final User user = User.builder()
 			.articles(Collections.emptyList())
@@ -54,6 +54,37 @@ class LikeRepositoryTest {
 		assertNotNull(result);
 		assertEquals(result.getId(), like.getId());
 		assertEquals(result.getAnswer(), answer);
+	}
+
+	@Test
+	@DisplayName("좋아요 삭제 테스트")
+	public void deleteLike() {
+		//given
+		final User user = User.builder()
+			.articles(Collections.emptyList())
+			.email("test@email.com")
+			.name("테스트")
+			.build();
+		final LocalDateTime nowTime = LocalDateTime.now();
+		final Article article = Article.builder()
+			.user(user)
+			.answers(Collections.emptyList())
+			.createDate(nowTime)
+			.build();
+		final Answer answer = Answer.builder()
+			.article(article)
+			.questionId(1)
+			.contents("답변 내용")
+			.state(State.CLOSE)
+			.build();
+		final IsLike like = IsLike.builder()
+			.answer(answer)
+			.user(user)
+			.build();
+		final IsLike isLike = likeRepository.save(like);
+		//when
+		likeRepository.delete(isLike);
+		//then
 	}
 
 }
