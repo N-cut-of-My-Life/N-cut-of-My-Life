@@ -15,8 +15,8 @@
             다음
         </b-button>
     </div>
-    <div class="last" data-bs-dismiss="modal" aria-label="Close">
-        <b-button v-if="currentImage === (images.length - 1)" class="button_2" size="md">
+    <div v-if="currentImage === (images.length - 1)" class="last" data-bs-dismiss="modal" aria-label="Close">
+        <b-button v-show="elementVisible" class="button_2" size="md">
             <div class="wave" v-b-modal.modal-treasure>
                 <span style="--i: 1">가</span>
                 <span style="--i: 2">장</span>
@@ -63,7 +63,13 @@ export default {
                 require('@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_4.svg'),
                 require('@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_5.svg'),
             ],
-            currentImage: 0
+            currentImage: 0,
+            elementVisible: false
+        }
+    },
+    updated() {
+        if(this.currentImage==(this.images.length-1)){
+            setTimeout(() => this.elementVisible = true, 2000)
         }
     },
     methods: {
