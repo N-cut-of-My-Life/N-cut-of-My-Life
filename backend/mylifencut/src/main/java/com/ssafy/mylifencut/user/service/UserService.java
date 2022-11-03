@@ -1,7 +1,5 @@
 package com.ssafy.mylifencut.user.service;
 
-import static com.ssafy.mylifencut.user.UserConstant.*;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -68,7 +66,7 @@ public class UserService {
 			log.info("refresh_token : " + refresh_Token);
 
 		} catch (IOException e) {
-			throw new InvalidAccessTokenException(INVALID_ACCESS_TOKEN_ERROR_MESSAGE);
+			throw new InvalidAccessTokenException();
 		}
 
 		return access_Token;
@@ -96,7 +94,7 @@ public class UserService {
 				.name(element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("nickname").getAsString())
 				.build();
 		} catch (IOException e) {
-			throw new InvalidAccessTokenException(INVALID_ACCESS_TOKEN_ERROR_MESSAGE);
+			throw new InvalidAccessTokenException();
 		}
 	}
 
