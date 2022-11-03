@@ -36,7 +36,7 @@
         </b-button>
     </div>
 
-    <b-modal id="modal-genie" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+    <b-modal data-bs-dismiss="modal" aria-label="Close" id="modal-genie" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
         <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">당신의 소원을 적어주세요!</div><br />
         <b-container ref="form">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color:#e3ecfc">
