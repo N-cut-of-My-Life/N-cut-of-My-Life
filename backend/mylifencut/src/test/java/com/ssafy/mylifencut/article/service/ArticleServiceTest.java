@@ -3,8 +3,7 @@ package com.ssafy.mylifencut.article.service;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,8 +12,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.ssafy.mylifencut.article.domain.Article;
+import com.ssafy.mylifencut.article.ArticleConstant;
+import com.ssafy.mylifencut.article.exception.NotFoundUserException;
 import com.ssafy.mylifencut.article.repository.ArticleRepository;
+import com.ssafy.mylifencut.user.repository.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("여행일지 service 테스트코드")
@@ -24,13 +25,15 @@ class ArticleServiceTest {
 	@Mock
 	private ArticleRepository articleRepository;
 
+	@Mock
+	private UserRepository userRepository;
+
 	@Test
 	@DisplayName("[여행일지 조회 실패] - 존재하지않는 UserId일 때")
 	public void notFoundUserError() {
 		//given
-		final List<Article> articles = Collections.emptyList();
 		final int userId = 5;
-		doReturn(articles).when(articleRepository.findByUserId(userId));
+		doReturn(Optional.empty()).when(userRepository).findById(userId);
 
 		//when
 		final NotFoundUserException result = assertThrows(NotFoundUserException.class
