@@ -57,14 +57,15 @@ class ArticleServiceTest {
 		final User user = User.builder()
 			.name(userName)
 			.build();
-		doReturn(Optional.of(user)).when(userRepository).findById(userId);
-
 		final List<Article> articles = new ArrayList<>();
 		articles.add(Article.builder().user(user).build());
 		articles.add(Article.builder().user(user).build());
-		doReturn(articles).when(articleRepository).findAllByUserId(userId);
 
 		//when
+		doReturn(Optional.of(user)).when(userRepository).findById(userId);
+		doReturn(articles).when(articleRepository).findAllByUserId(userId);
+
+		//then
 		final List<ArticleResponse> result = articleService.retrieveArticles(userId);
 		assertNotNull(result);
 		assertEquals(result.size(), 2);
