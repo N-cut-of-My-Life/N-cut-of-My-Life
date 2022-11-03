@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.ssafy.mylifencut.article.domain.Article;
 
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
-	List<Article> findByUserId(int userId);
+	List<Article> findAllByUserId(int userId);
 }

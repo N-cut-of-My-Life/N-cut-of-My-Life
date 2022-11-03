@@ -21,7 +21,7 @@ public class LikeService {
 	public IsLikeResponse createLike(Integer userId, Integer answerId) {
 		final IsLike result = likeRepository.findByUserIdAndAnswerId(userId, answerId);
 		if (result != null) {
-			throw new AlreadyLikeException(LikeConstant.ALEADY_LIKE_EXIST_MESSAGE);
+			throw new AlreadyLikeException(LikeConstant.ALREADY_LIKE_EXIST_ERROR_MESSAGE);
 		}
 		final IsLike isLike = IsLike.builder()
 			.user(User.builder().id(userId).build())

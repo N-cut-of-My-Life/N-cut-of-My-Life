@@ -31,7 +31,7 @@ public class ArticleRepositoryTest {
 		final List<Article> articles;
 
 		//when
-		articles = articleRepository.findByUserId(1);
+		articles = articleRepository.findAllByUserId(1);
 
 		//then
 		assertNotNull(articles);
