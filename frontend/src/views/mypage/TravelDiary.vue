@@ -21,9 +21,14 @@
       <section class="diary-part">
         <!-- 상위 2개 아이템들 -->
         <div class="upper-items">
-          <div class="last-word-front">
-            <img src="@/assets/post_paper.png" class="last-word-img">
-            <div class="text-on-img">나에게 하는 마지막 한마디</div>
+          <div class="flip flip-vertical">
+            <div class="front">
+              <img src="@/assets/post_paper.png">
+              <h1 class="text-shadow">나에게 전하는 한마디</h1>
+            </div>
+            <div class="back">
+              <p>나는 항상 최고야!!!!! 짜릿해!!!! dmgkgkdgksdkgkgaskg</p>
+            </div>
           </div>
           <div class="letter">
             <img src="@/assets/mailbox.png" class="letter-img">
@@ -167,7 +172,102 @@ body {
   display: flex;
 }
 
-.last-word-front {
+h1 {
+  font-size: 2.2em;
+}
+
+.flip {
+  position: relative;
+}
+.flip > .front,
+.flip > .back {
+  display: block;
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-duration: 2s;
+  transition-property: transform, opacity;
+}
+.flip > .front {
+  transform: rotateY(0deg);
+}
+.flip > .back {
+  position: absolute;
+  opacity: 0;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  transform: rotateY(-180deg);
+}
+.flip:hover > .front {
+  transform: rotateY(180deg);
+}
+
+.flip:hover > .back {
+  opacity: 1;
+  transform: rotateY(0deg);
+}
+.flip.flip-vertical > .back {
+  transform: rotateX(-180deg);
+}
+.flip.flip-vertical:hover > .front {
+  transform: rotateX(180deg);
+}
+
+.flip.flip-vertical:hover > .front .text-shadow{
+  transform: rotateX(180deg);
+  opacity: 0;
+}
+.flip.flip-vertical:hover > .back {
+  transform: rotateX(0deg);
+}
+
+.flip {
+  position: relative;
+  display: inline-block;
+  margin-right: 2px;
+  margin-top: 1em;
+  width: 25vw;
+}
+.flip > .front,
+.flip > .back {
+  display: block;
+  color: white;
+  width: inherit;
+  background-size: cover !important;
+  background-position: center !important;
+  height: 220px;
+  /* padding: 1em 2em; */
+  /* background: #313131;
+  border-radius: 10px; */
+}
+
+.flip > .front img {
+  width: 100%;
+  position: relative;
+}
+
+.flip > .front p,
+.flip > .back p {
+  font-family: 'ONE-Mobile-POP';
+  font-size: 1.5rem;
+  line-height: 160%;
+  color: #999;
+  width: 100%;
+  position: absolute;
+  top: 35%;
+  left: 30%;
+  transform: translateX(-18%);
+  word-wrap: break-word;
+}
+
+.text-shadow {
+  font-family: 'MapleStoryOTFBold';
+  color: black;
+  position: absolute;
+  top: 40%;
+  left: 10%;
+}
+/* .last-word-front {
   position: relative;
   text-align: center;
   display: flex;
@@ -184,16 +284,17 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   font-family: 'ONE-Mobile-POP';
-}
+} */
 
 .letter {
   /* display: flex;
   justify-content: center; */
   margin-left: auto;
+  margin-top: -3em
 }
 
 .letter-img {
-  width: 100%;
+  width: 15vw;
 }
 
 .letter-img:hover {
@@ -246,4 +347,6 @@ body {
   max-width: 100%;
   border-radius: 2px;
 }
+
+
 </style>
