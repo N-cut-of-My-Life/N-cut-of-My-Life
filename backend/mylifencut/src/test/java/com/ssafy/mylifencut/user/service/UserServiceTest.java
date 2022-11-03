@@ -58,7 +58,7 @@ public class UserServiceTest {
 	@DisplayName("카카오 로그인 - 사용자 정보로 신규유저 여부 확인(신규유저)")
 	public void isNewUser() {
 		// given
-		final UserInfo userInfo = getUserInfo();
+		final UserInfo userInfo = newUserInfo();
 		doReturn(Optional.empty()).when(userRepository).findByEmail(userInfo.getEmail());
 
 		// when
@@ -69,10 +69,31 @@ public class UserServiceTest {
 	}
 
 	@Test
+	@DisplayName("카카오 로그인 - 신규유저 유저 회원가입")
+	public void loginNewUser() {
+		// given
+		final UserInfo userInfo = newUserInfo();
+		final User user = User.builder()
+			.id(1)
+			.email(userInfo.getEmail())
+			.name(userInfo.getName())
+			.build();
+		doReturn(user).when(userRepository).save(user);
+
+		// when
+		final boolean result = userService.join(userInfo);
+
+		//then
+		assertEquals(user.getId(), result.getId());
+		assertEquals(user.getEmail(), result.getEmail());
+		assertEquals(user.getName(), result.getName());
+	}
+
+	@Test
 	@DisplayName("카카오 로그인 - 사용자 정보로 신규유저 여부 확인(기존유저)")
 	public void isExistingUser() {
 		// given
-		final UserInfo userInfo = getUserInfo();
+		final UserInfo userInfo = newUserInfo();
 		final User user = User.builder().build();
 		doReturn(Optional.of(user)).when(userRepository).findByEmail(userInfo.getEmail());
 
@@ -83,7 +104,10 @@ public class UserServiceTest {
 		assertTrue(result);
 	}
 
-	public UserInfo getUserInfo() {
-		return UserInfo.builder().email("ssafy@emali.com").name("홍길동").build();
+	public UserInfo newUserInfo() {
+		return UserInfo.builder()
+			.email("ssafy@emali.com")
+			.name("홍길동")
+			.build();
 	}
 }
