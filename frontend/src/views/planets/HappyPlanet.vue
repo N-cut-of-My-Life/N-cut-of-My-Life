@@ -4,7 +4,8 @@
     </div>
     <img :src="images[currentImage]" />
     <div class="other">
-        <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm"><strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
+        <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
+            <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
     </div>
     <div class="jump">
         <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
@@ -15,8 +16,8 @@
             다음
         </b-button>
     </div>
-    <div class="last" data-bs-dismiss="modal" aria-label="Close">
-        <b-button v-if="currentImage === (images.length - 1)" class="button_2" size="md">
+    <div v-if="currentImage === (images.length - 1)" class="last" data-bs-dismiss="modal" aria-label="Close">
+        <b-button v-show="elementVisible" class="button_2" size="md">
             <div class="wave" v-b-modal.modal-happy>
                 <span style="--i: 1">가</span>
                 <span style="--i: 2">장</span>
@@ -43,12 +44,14 @@
     <b-modal id="modal-happy" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
         <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">가장 행복했던 순간을 이 곳에 적어주세요!</div><br />
         <b-container ref="form">
-            <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color: #f7eadb;">
+            <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
+                style="border-radius: 1vw; background-color: #f7eadb;">
             </b-form-textarea>
-        </b-container><br/>
+        </b-container><br />
         <b-button data-bs-dismiss="modal" aria-label="Close"
             style="color: #ffffff; background-color: #a1a1a1; border: none; border-radius: 1vw;">취소</b-button>&nbsp;
-        <b-button text @click="submit" style="color: #ffffff; background-color: #bb9f7f; border: none; border-radius: 1vw;">저장
+        <b-button text @click="submit"
+            style="color: #ffffff; background-color: #bb9f7f; border: none; border-radius: 1vw;">저장
         </b-button>
     </b-modal>
 </template>
@@ -62,7 +65,13 @@ export default {
                 require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_2.svg'),
                 require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_3.svg'),
             ],
-            currentImage: 0
+            currentImage: 0,
+            elementVisible: false
+        }
+    },
+    updated() {
+        if(this.currentImage==(this.images.length-1)){
+            setTimeout(() => this.elementVisible = true, 2000)
         }
     },
     methods: {
@@ -137,7 +146,7 @@ img {
 
 .last {
     position: absolute;
-    bottom:20%;
+    bottom: 20%;
     left: 9%;
     margin: auto;
 }
@@ -146,11 +155,11 @@ img {
     background-color: #90a17d;
     color: #ffffff;
     border-radius: 0.8vw;
-    border:none;
+    border: none;
 }
 
 .button_prev {
-    background-color:#ffffff;
+    background-color: #ffffff;
     color: #141414;
     border-radius: 0.8vw;
     border-color: #ffffff;
@@ -159,7 +168,7 @@ img {
 .button_2 {
     border-radius: 0.8vw;
     /* border-color: #81c6e8; */
-    border:none;
+    border: none;
     background-color: orange;
     position: relative;
     margin: 300px auto 0;
