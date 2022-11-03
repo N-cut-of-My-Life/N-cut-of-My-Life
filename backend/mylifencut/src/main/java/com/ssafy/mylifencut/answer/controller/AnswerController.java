@@ -33,9 +33,9 @@ public class AnswerController {
 			HttpStatus.OK);
 	}
 
-	@PostMapping("/{answer_id}/{user_id}")
-	public ResponseEntity<?> createLike(@PathVariable("answer_id") Integer answerId,
-		@PathVariable("user_id") Integer userId) {
+	@PostMapping("/{answer_Id}/{user_Id}")
+	public ResponseEntity<?> createLike(@PathVariable("answer_Id") Integer answerId,
+		@PathVariable("user_Id") Integer userId) {
 		return new ResponseEntity<>(
 			BaseResponse.from(true, CREATE_LIKE_SUCCESS_MESSAGE, likeService.createLike(userId, answerId)),
 			HttpStatus.OK);
