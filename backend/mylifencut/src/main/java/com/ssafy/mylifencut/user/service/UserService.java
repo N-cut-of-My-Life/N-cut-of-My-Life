@@ -61,6 +61,7 @@ public class UserService {
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 			String sb = "grant_type=authorization_code" + "&client_id=" + kakao_restApiKey + "&redirect_uri="
 				+ kakao_redirectUri + "&code=" + code;
+			bw.write(sb);
 			bw.flush();
 			bw.close();
 
