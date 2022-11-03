@@ -33,7 +33,7 @@
             </div>
         </b-button>
     </div>
-    <b-modal id="modal-precious" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+    <b-modal data-bs-dismiss="modal" aria-label="Close" id="modal-precious" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
       <b-popover target="addon">
         사진을 올려주세요!
       </b-popover>
