@@ -30,6 +30,7 @@ import com.ssafy.mylifencut.answer.service.AnswerService;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.like.LikeConstant;
+import com.ssafy.mylifencut.like.dto.IsLikeResponse;
 import com.ssafy.mylifencut.like.exception.AlreadyLikeException;
 import com.ssafy.mylifencut.like.service.LikeService;
 
@@ -113,7 +114,6 @@ class AnswerControllerTest {
 		assertEquals(answerResponse.getContents(), map.get("contents"));
 		assertEquals(answerResponse.getState().toString(), map.get("state"));
 	}
-
 	@Test
 	@DisplayName("좋아요 추가 실패 - 이미 좋아요가 추가된 답변에 좋아요 등록")
 	public void alreadyLike() throws Exception {
@@ -134,5 +134,34 @@ class AnswerControllerTest {
 		//then
 		resultActions.andExpect(status().isBadRequest());
 
+	}
+
+	@Test
+	@DisplayName("좋아요 추가 성공")
+	public void createLike() throws Exception {
+		//given
+		final String url = "/answer/3/1";
+		final Integer answerId = 3;
+		final Integer userId = 1;
+		final IsLikeResponse isLikeResponse = IsLikeResponse.builder()
+			.id(1)
+			.answer_id(answerId)
+			.user_id(userId)
+			.build();
+		doReturn(isLikeResponse).when(likeService).createLike(userId, answerId);
+		//when
+		final ResultActions resultActions = mockMvc.perform(
+			MockMvcRequestBuilders.post(url)
+				.contentType(MediaType.APPLICATION_JSON)
+		);
+		//then
+		resultActions.andExpect(status().isOk());
+		final BaseResponse response = gson.fromJson(resultActions.andReturn()
+			.getResponse()
+			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+		Map map = (Map)response.getData();
+		assertEquals((double)isLikeResponse.getId(), map.get("id"));
+		assertEquals((double)isLikeResponse.getAnswer_id(), map.get("answer_id"));
+		assertEquals((double)isLikeResponse.getUser_id(), map.get("user_id"));
 	}
 }
