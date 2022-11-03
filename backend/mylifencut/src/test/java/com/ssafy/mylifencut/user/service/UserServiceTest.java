@@ -120,13 +120,12 @@ public class UserServiceTest {
 		doReturn(Optional.of(user)).when(userRepository).findByEmail(email);
 
 		// when
-		Optional<User> result = userService.login(userInfo);
+		User result = userService.login(userInfo);
 
 		// then
-		assertTrue(result.isPresent());
-		assertEquals(user.getId(), result.get().getId());
-		assertEquals(user.getEmail(), result.get().getEmail());
-		assertEquals(user.getName(), result.get().getName());
+		assertEquals(user.getId(), result.getId());
+		assertEquals(user.getEmail(), result.getEmail());
+		assertEquals(user.getName(), result.getName());
 
 	}
 
