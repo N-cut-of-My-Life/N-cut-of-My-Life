@@ -21,7 +21,7 @@
       <section class="diary-part">
         <!-- 상위 2개 아이템들 -->
         <div class="upper-items">
-          <div class="last-word">
+          <div class="last-word-front">
             <img src="@/assets/post_paper.png" class="last-word-img">
             <div class="text-on-img">나에게 하는 마지막 한마디</div>
           </div>
@@ -30,8 +30,28 @@
           </div>
         </div>
         <!-- 일지 상세 -->
-        <div class="diary-detail">
-          이곳이 디테일 공간이니라
+        <div class="strip">
+          <div class="film">
+            <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
+          </div>
+          <div class="film">
+            <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
+          </div>
+          <div class="film">
+            <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
+          </div>
+        </div>
+        
+        <div class="strip">
+          <div class="film">
+            <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
+          </div>
+          <div class="film">
+            <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
+          </div>
+          <div class="film">
+            <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
+          </div>
         </div>
         
         
@@ -147,7 +167,7 @@ body {
   display: flex;
 }
 
-.last-word {
+.last-word-front {
   position: relative;
   text-align: center;
   display: flex;
@@ -180,7 +200,50 @@ body {
   scale: 1.1;
 }
 
-.diary-detail {
+.strip {
+  display: flex;
+}
+
+.strip + .strip {
+  margin-top: 1rem;
+}
+
+.film {
+  aspect-ratio: 16 / 9;
+  background: #000;
+  background-image: linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff);
+
+  background-repeat: no-repeat;
+  background-position: 5% 5%, 15% 5%, 25% 5%, 35% 5%, 45% 5%, 55% 5%, 65% 5%,
+    75% 5%, 85% 5%, 95% 5%, 5% 95%, 15% 95%, 25% 95%, 35% 95%, 45% 95%, 55% 95%,
+    65% 95%, 75% 95%, 85% 95%, 95% 95%;
+
+  background-size: 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%,
+    5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%,
+    5% 8%, 5% 8%;
+}
+
+.film__frame {
+  padding: 13% 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   
+}
+
+.film img {
+  max-width: 100%;
+  border-radius: 2px;
 }
 </style>
