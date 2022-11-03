@@ -33,8 +33,8 @@ public class UserServiceTest {
 		final String token = "INVALID_TOKEN";
 
 		// when
-		final InvalidAccessTokenException result = assertThrows(InvalidAccessTokenException.class, () ->
-			userService.getAccessToken(token));
+		final InvalidAccessTokenException result = assertThrows(InvalidAccessTokenException.class,
+			() -> userService.getAccessToken(token));
 
 		// then
 		assertEquals(result.getMessage(), UserConstant.INVALID_ACCESS_TOKEN_ERROR_MESSAGE);
@@ -47,8 +47,8 @@ public class UserServiceTest {
 		final String token = "INVALID_TOKEN";
 
 		// when
-		final InvalidAccessTokenException result = assertThrows(InvalidAccessTokenException.class, () ->
-			userService.getUserInfo(token));
+		final InvalidAccessTokenException result = assertThrows(InvalidAccessTokenException.class,
+			() -> userService.getUserInfo(token));
 
 		//then
 		assertEquals(result.getMessage(), UserConstant.INVALID_ACCESS_TOKEN_ERROR_MESSAGE);
@@ -58,10 +58,7 @@ public class UserServiceTest {
 	@DisplayName("카카오 로그인 - 사용자 정보로 신규유저 여부 확인(신규유저)")
 	public void isNewUser() {
 		// given
-		final UserInfo userInfo = UserInfo.builder()
-			.email("ssafy@emali.com")
-			.name("홍길동")
-			.build();
+		final UserInfo userInfo = getUserInfo();
 		doReturn(Optional.empty()).when(userRepository).findByEmail(userInfo.getEmail());
 
 		// when
@@ -75,10 +72,7 @@ public class UserServiceTest {
 	@DisplayName("카카오 로그인 - 사용자 정보로 신규유저 여부 확인(기존유저)")
 	public void isExistingUser() {
 		// given
-		final UserInfo userInfo = UserInfo.builder()
-			.email("ssafy@emali.com")
-			.name("홍길동")
-			.build();
+		final UserInfo userInfo = getUserInfo();
 		final User user = User.builder().build();
 		doReturn(Optional.of(user)).when(userRepository).findByEmail(userInfo.getEmail());
 
@@ -87,5 +81,9 @@ public class UserServiceTest {
 
 		// then
 		assertTrue(result);
+	}
+
+	public UserInfo getUserInfo() {
+		return UserInfo.builder().email("ssafy@emali.com").name("홍길동").build();
 	}
 }
