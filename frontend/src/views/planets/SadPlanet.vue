@@ -42,20 +42,20 @@
     </div>
     <img :src="images[currentImage]" />
     <div class="other">
-        <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm"><strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
+        <b-button @click="gotoPage({ name: 'planetlist' })" variant="primary" class="button_prev" size="sm"><strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
     </div>
     <div class="jump">
-        <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
+        <b-button @click="previousImage()" variant="primary" class="button" size="sm" :disabled="currentImage === 0">
             뒤로
         </b-button>
         &nbsp;
-        <b-button @click="nextImage()" class="button" size="sm" :disabled="currentImage === (images.length - 1)">
+        <b-button @click="nextImage()" variant="primary" class="button" size="sm" :disabled="currentImage === (images.length - 1)">
             다음
         </b-button>
     </div>
-    <div class="last">
-        <b-button v-if="currentImage === (images.length - 1)" class="button_2" size="md">
-            <div class="wave">
+    <div class="last" data-bs-dismiss="modal" aria-label="Close">
+        <b-button v-if="currentImage === (images.length - 1)" variant="primary" class="button_2" size="md">
+            <div class="wave" v-b-modal.modal-sad>
                 <span style="--i: 1">슬</span>
                 <span style="--i: 2">펐</span>
                 <span style="--i: 3">던</span>
@@ -66,9 +66,21 @@
                 <span style="--i: 8">남</span>
                 <span style="--i: 9">기</span>
                 <span style="--i: 10">기</span>
+                <span style="--i: 11">!</span>
             </div>
         </b-button>
     </div>
+    <b-modal id="modal-sad" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+      <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">슬펐던 기억들을 이곳에 적어주세요!</div><br />
+      <b-container ref="form">
+          <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color: #CFD4DF;">
+          </b-form-textarea>
+      </b-container><br/>
+      <b-button data-bs-dismiss="modal" aria-label="Close"
+          style="color: #ffffff; background-color: #a1a1a1; border: none; border-radius: 1vw;">취소</b-button>&nbsp;
+      <b-button text @click="submit" style="color: #ffffff; background-color: #25316D; border: none; border-radius: 1vw;">저장
+      </b-button>
+    </b-modal>
 </template>
 
 <script>
@@ -162,7 +174,7 @@ img {
 }
 
 .button {
-    background-color: #a28dc4;
+    background-color: #08155B;
     color: #ffffff;
     border-radius: 0.8vw;
     border-color: #a28dc4;
@@ -178,7 +190,7 @@ img {
 .button_2 {
     border-radius: 0.8vw;
     /* border-color: #81c6e8; */
-    background-color: #81c6e8;
+    background-color: #25316D;
     position: relative;
     margin: 300px auto 0;
 }
@@ -475,5 +487,11 @@ img {
     20% {
         transform: translateY(-10px);
     }
+}
+</style>
+<style>
+#modal-sad .modal-content {
+    background-color: #5F6F94;
+    ;
 }
 </style>
