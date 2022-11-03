@@ -116,7 +116,7 @@ class AnswerControllerTest {
 
 	@Test
 	@DisplayName("좋아요 추가 실패 - 이미 좋아요가 추가된 답변에 좋아요 등록")
-	public void nonExistAnswer_addLike() throws Exception {
+	public void alreadyLike() throws Exception {
 
 		//given
 		final String url = "/answer/3/1";
