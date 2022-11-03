@@ -35,6 +35,15 @@ public class UserService {
 	@Value("${oauth2.kakao.redirectUri}")
 	private final String kakao_redirectUri;
 
+	public Integer kakaoLogin(String token) {
+		UserInfo userInfo = getUserInfo(getAccessToken(token));
+
+		User user = userRepository.findByEmail(userInfo.getEmail())
+			.orElse(join(userInfo));
+
+		return user.getId();
+	}
+
 	public String getAccessToken(String code) {
 		String access_Token;
 		String refresh_Token;
