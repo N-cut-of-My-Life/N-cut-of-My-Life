@@ -67,7 +67,7 @@ public class UserServiceTest {
 		doReturn(Optional.empty()).when(userRepository).findByEmail(userInfo.getEmail());
 
 		// when
-		final boolean result = userService.isNewUser(userInfo);
+		final boolean result = userService.isExistingUser(userInfo);
 
 		// then
 		assertFalse(result);
@@ -103,7 +103,7 @@ public class UserServiceTest {
 		doReturn(Optional.of(user)).when(userRepository).findByEmail(userInfo.getEmail());
 
 		// when
-		final boolean result = userService.isNewUser(userInfo);
+		final boolean result = userService.isExistingUser(userInfo);
 
 		// then
 		assertTrue(result);
