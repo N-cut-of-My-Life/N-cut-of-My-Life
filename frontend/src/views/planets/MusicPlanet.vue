@@ -4,7 +4,8 @@
     </div>
     <img :src="images[currentImage]" />
     <div class="other">
-        <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm"><strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
+        <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
+            <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
     </div>
     <div class="jump">
         <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
@@ -15,8 +16,8 @@
             다음
         </b-button>
     </div>
-    <div class="last">
-        <b-button v-if="currentImage === (images.length - 1)" class="button_2" size="md">
+    <div v-if="currentImage === (images.length - 1)" class="last">
+        <b-button v-show="elementVisible" class="button_2" size="md">
             <div class="wave">
                 <span style="--i: 1">음</span>
                 <span style="--i: 2">악</span>
@@ -45,7 +46,8 @@ export default {
                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_4.svg'),
                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_5.svg'),
             ],
-            currentImage: 0
+            currentImage: 0,
+            elementVisible: false
         }
     },
     methods: {
@@ -61,14 +63,19 @@ export default {
 
         gotoPage(link) {
             this.$router.push(link)
+        },
+    },
+    updated() {
+        if(this.currentImage==(this.images.length-1)){
+            setTimeout(() => this.elementVisible = true, 2000)
         }
-    }
+    },
 }
 </script>
 
 <style scoped>
 .button_prev {
-    background-color:#ffffff;
+    background-color: #ffffff;
     color: #141414;
     border-radius: 0.8vw;
     border-color: #ffffff;
@@ -141,7 +148,7 @@ img {
 
 .button_2 {
     border-radius: 0.8vw;
-    border:none;
+    border: none;
     background-color: orange;
 }
 
