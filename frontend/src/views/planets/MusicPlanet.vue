@@ -149,20 +149,6 @@ img {
     border-radius: 0.8vw;
     border-color: #f0b7a7;
 }
-
-.button_2 {
-    border-radius: 0.8vw;
-    border: none;
-    background-color: orange;
-}
-
-.button {
-    background-color: #a28dc4;
-    color: #ffffff;
-    border-radius: 0.8vw;
-    border-color: #a28dc4;
-}
-
 .button_prev {
     background-color: #ffffff;
     color: #141414;
@@ -173,15 +159,10 @@ img {
 .button_2 {
     border-radius: 1vw;
     border: none;
-    background-color: #bb9f7f;
+    background-color: orange;
     position: relative;
     margin: 300px auto 0;
-
-    letter-spacing: 2px;
-    font-size: 1.3vw;
     transition: all 0.3s ease-in-out 0s;
-    cursor: pointer;
-    outline: none;
 }
 
 .button_2::before {
