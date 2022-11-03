@@ -145,6 +145,20 @@ public class UserServiceTest {
 		assertEquals(user.getName(), result.getName());
 	}
 
+	@Test
+	@DisplayName("카카오 로그인 - 실패")
+	public void kakaoLoginFail() {
+		// given
+		String token = "INVALID_TOKEN";
+
+		// when
+		InvalidKakaoAccessTokenException result = assertThrows(InvalidKakaoAccessTokenException.class,
+			() -> userService.kakaoLogin(token));
+
+		// then
+		assertEquals(result.getMessage(), INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE);
+	}
+
 	public UserInfo newUserInfo() {
 		return UserInfo.builder()
 			.email(email)
