@@ -29,6 +29,9 @@ import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.service.AnswerService;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
+import com.ssafy.mylifencut.like.LikeConstant;
+import com.ssafy.mylifencut.like.exception.AlreadyLikeException;
+import com.ssafy.mylifencut.like.service.LikeService;
 
 @ExtendWith(MockitoExtension.class)
 class AnswerControllerTest {
@@ -37,6 +40,10 @@ class AnswerControllerTest {
 	private AnswerController answerController;
 	@Mock
 	private AnswerService answerService;
+
+	@Mock
+	private LikeService likeService;
+
 	private MockMvc mockMvc;
 	private Gson gson;
 
@@ -58,18 +65,15 @@ class AnswerControllerTest {
 		doThrow(new InvalidStateException(AnswerConstant.INVALID_STATE_ERROR_MESSAGE))
 			.when(answerService)
 			.createAnswer(answerRequest);
-
 		// when
 		final ResultActions resultActions = mockMvc.perform(
 			MockMvcRequestBuilders.post(url)
 				.content(gson.toJson(answerRequest))
 				.contentType(MediaType.APPLICATION_JSON)
 		);
-
 		// then
 		resultActions.andExpect(status().isBadRequest());
 	}
-
 	@Test
 	@DisplayName("답변 등록 성공")
 	public void createAnswer() throws Exception {
@@ -108,5 +112,27 @@ class AnswerControllerTest {
 		assertEquals((double)answerResponse.getQuestionId(), map.get("questionId"));
 		assertEquals(answerResponse.getContents(), map.get("contents"));
 		assertEquals(answerResponse.getState().toString(), map.get("state"));
+	}
+
+	@Test
+	@DisplayName("좋아요 추가 실패 - 이미 좋아요가 추가된 답변에 좋아요 등록")
+	public void alreadyLike() throws Exception {
+
+		//given
+		final String url = "/answer/3/1";
+		final Integer answerId = 3;
+		final Integer userId = 1;
+
+		doThrow(new AlreadyLikeException(LikeConstant.ALREADY_LIKE_EXIST_ERROR_MESSAGE))
+			.when(likeService)
+			.createLike(userId, answerId);
+		//when
+		final ResultActions resultActions = mockMvc.perform(
+			MockMvcRequestBuilders.post(url)
+				.contentType(MediaType.APPLICATION_JSON)
+		);
+		//then
+		resultActions.andExpect(status().isBadRequest());
+
 	}
 }
