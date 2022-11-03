@@ -3,6 +3,8 @@ package com.ssafy.mylifencut.user.service;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,7 +61,7 @@ public class UserServiceTest {
 			.email("ssafy@emali.com")
 			.name("홍길동")
 			.build();
-		doReturn(false).when(userRepository).findByEmail(userInfo.getEmail());
+		doReturn(Optional.empty()).when(userRepository).findByEmail(userInfo.getEmail());
 
 		// when
 		final boolean result = userService.isNewUser(userInfo);
