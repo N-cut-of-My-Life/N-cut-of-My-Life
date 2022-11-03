@@ -78,7 +78,7 @@ public class UserServiceTest {
 			.email(userInfo.getEmail())
 			.name(userInfo.getName())
 			.build();
-		doReturn(user).when(userRepository).save(user);
+		doReturn(user).when(userRepository).save(any(User.class));
 
 		// when
 		final User result = userService.join(userInfo);
