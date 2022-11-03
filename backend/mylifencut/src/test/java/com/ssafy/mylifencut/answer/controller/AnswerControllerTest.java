@@ -21,10 +21,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.google.gson.Gson;
-import com.ssafy.mylifencut.answer.AnswerConstant;
 import com.ssafy.mylifencut.answer.domain.State;
-import com.ssafy.mylifencut.answer.dto.AnswerRequest;
-import com.ssafy.mylifencut.answer.dto.AnswerResponse;
+import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
+import com.ssafy.mylifencut.answer.dto.AnswerRegisterResponse;
 import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.service.AnswerService;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
@@ -60,15 +59,15 @@ class AnswerControllerTest {
 	public void invalidState() throws Exception {
 		// given
 		final String url = "/answer";
-		final AnswerRequest answerRequest =
-			new AnswerRequest(1, 1, "답변 등록", State.OPEN);
-		doThrow(new InvalidStateException(AnswerConstant.INVALID_STATE_ERROR_MESSAGE))
+		final AnswerRegisterRequest answerRegisterRequest =
+			new AnswerRegisterRequest(1, 1, "답변 등록", State.OPEN);
+		doThrow(new InvalidStateException())
 			.when(answerService)
-			.createAnswer(answerRequest);
+			.createAnswer(answerRegisterRequest);
 		// when
 		final ResultActions resultActions = mockMvc.perform(
 			MockMvcRequestBuilders.post(url)
-				.content(gson.toJson(answerRequest))
+				.content(gson.toJson(answerRegisterRequest))
 				.contentType(MediaType.APPLICATION_JSON)
 		);
 		// then
@@ -79,23 +78,23 @@ class AnswerControllerTest {
 	public void createAnswer() throws Exception {
 		// given
 		final String url = "/answer";
-		final AnswerRequest answerRequest =
-			new AnswerRequest(1, 1, "답변 등록", State.CLOSE);
-		final AnswerResponse answerResponse = AnswerResponse.builder()
+		final AnswerRegisterRequest answerRegisterRequest =
+			new AnswerRegisterRequest(1, 1, "답변 등록", State.CLOSE);
+		final AnswerRegisterResponse answerRegisterResponse = AnswerRegisterResponse.builder()
 			.id(1)
 			.articleId(1)
-			.questionId(answerRequest.getQuestionId())
-			.contents(answerRequest.getContents())
-			.state(answerRequest.getState())
+			.questionId(answerRegisterRequest.getQuestionId())
+			.contents(answerRegisterRequest.getContents())
+			.state(answerRegisterRequest.getState())
 			.build();
-		doReturn(answerResponse)
+		doReturn(answerRegisterResponse)
 			.when(answerService)
-			.createAnswer(answerRequest);
+			.createAnswer(answerRegisterRequest);
 
 		// when
 		final ResultActions resultActions = mockMvc.perform(
 			MockMvcRequestBuilders.post(url)
-				.content(gson.toJson(answerRequest))
+				.content(gson.toJson(answerRegisterRequest))
 				.contentType(MediaType.APPLICATION_JSON)
 		);
 
@@ -107,11 +106,11 @@ class AnswerControllerTest {
 			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 
 		Map map = (Map)response.getData();
-		assertEquals((double)answerResponse.getId(), map.get("id"));
-		assertEquals((double)answerResponse.getArticleId(), map.get("articleId"));
-		assertEquals((double)answerResponse.getQuestionId(), map.get("questionId"));
-		assertEquals(answerResponse.getContents(), map.get("contents"));
-		assertEquals(answerResponse.getState().toString(), map.get("state"));
+		assertEquals((double)answerRegisterResponse.getId(), map.get("id"));
+		assertEquals((double)answerRegisterResponse.getArticleId(), map.get("articleId"));
+		assertEquals((double)answerRegisterResponse.getQuestionId(), map.get("questionId"));
+		assertEquals(answerRegisterResponse.getContents(), map.get("contents"));
+		assertEquals(answerRegisterResponse.getState().toString(), map.get("state"));
 	}
 
 	@Test
