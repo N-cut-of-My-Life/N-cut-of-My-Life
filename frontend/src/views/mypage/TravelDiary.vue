@@ -27,7 +27,7 @@
               <h1 class="text-shadow">나에게 전하는 한마디</h1>
             </div>
             <div class="back">
-              <p>나는 항상 최고야!!!!! 짜릿해!!!! dmgkgkdgksdkgkgaskg</p>
+              <p>누구보다 빠르게 난 남들과는 다르게 색다르게</p>
             </div>
           </div>
           <div class="letter">
@@ -252,7 +252,7 @@ h1 {
   font-size: 1.5rem;
   line-height: 160%;
   color: #999;
-  width: 100%;
+  width: 75%;
   position: absolute;
   top: 35%;
   left: 30%;
