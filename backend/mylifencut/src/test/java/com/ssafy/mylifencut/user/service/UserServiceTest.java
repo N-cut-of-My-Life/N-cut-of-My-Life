@@ -1,5 +1,6 @@
 package com.ssafy.mylifencut.user.service;
 
+import static com.ssafy.mylifencut.user.UserConstant.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -16,6 +17,7 @@ import com.ssafy.mylifencut.user.UserConstant;
 import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.user.exception.InvalidAccessTokenException;
+import com.ssafy.mylifencut.user.exception.UserNotFoundException;
 import com.ssafy.mylifencut.user.repository.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -108,7 +110,22 @@ public class UserServiceTest {
 	}
 
 	@Test
-	@DisplayName("카카오 로그인 - 로그인")
+	@DisplayName("카카오 로그인 - 로그인 실패")
+	public void loginExistingUserFail() {
+		// given
+		final UserInfo userInfo = newUserInfo();
+		doReturn(Optional.empty()).when(userRepository).findByEmail(email);
+
+		// when
+		UserNotFoundException result = assertThrows(UserNotFoundException.class,
+			() -> userService.login(userInfo));
+
+		// then
+		assertEquals(result.getMessage(), USER_NOT_FOUND_ERROR_MESSAGE);
+	}
+
+	@Test
+	@DisplayName("카카오 로그인 - 기존유저 로그인")
 	public void loginExistingUser() {
 		// given
 		final UserInfo userInfo = newUserInfo();
@@ -126,7 +143,6 @@ public class UserServiceTest {
 		assertEquals(user.getId(), result.getId());
 		assertEquals(user.getEmail(), result.getEmail());
 		assertEquals(user.getName(), result.getName());
-
 	}
 
 	public UserInfo newUserInfo() {
