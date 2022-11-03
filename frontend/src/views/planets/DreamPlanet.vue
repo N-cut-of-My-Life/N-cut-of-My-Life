@@ -17,8 +17,8 @@
             다음
         </b-button>
     </div>
-    <div class="last" data-bs-dismiss="modal" aria-label="Close">
-        <b-button v-if="currentImage === (images.length - 1)" class="button_2" size="md">
+    <div v-if="currentImage === (images.length - 1)" class="last" data-bs-dismiss="modal" aria-label="Close">
+        <b-button v-show="elementVisible" class="button_2" size="md">
             <div class="wave" v-b-modal.modal-dream>
                 <span style="--i: 1">꿈</span>
                 <span style="--i: 2">&nbsp;</span>
@@ -56,7 +56,14 @@ export default {
                 require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_3.svg'),
                 require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_4.svg'),
             ],
-            currentImage: 0
+            currentImage: 0,
+            elementVisible: false
+        }
+    },
+    // created로 하면 생명주기가 더 앞 순위이기에 페이지가 열리고 바로 카운트된다.
+    updated() {
+        if(this.currentImage==(this.images.length-1)){
+            setTimeout(() => this.elementVisible = true, 2000)
         }
     },
     methods: {

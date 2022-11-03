@@ -4,7 +4,9 @@
     </div>
     <img :src="images[currentImage]" />
     <div class="other">
-        <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm"><strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
+        <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
+            <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
+        </b-button>
     </div>
     <div class="jump">
         <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
@@ -15,8 +17,8 @@
             다음
         </b-button>
     </div>
-    <div class="last" data-bs-dismiss="modal" aria-label="Close">
-        <b-button v-if="currentImage === (images.length - 1)" class="button_2" size="md">
+    <div v-if="currentImage === (images.length - 1)" class="last" data-bs-dismiss="modal" aria-label="Close">
+        <b-button v-show="elementVisible" class="button_2" size="md">
             <div class="wave" v-b-modal.modal-regret>
                 <span style="--i: 1">후</span>
                 <span style="--i: 2">회</span>
@@ -32,12 +34,14 @@
     <b-modal id="modal-regret" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
         <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">가장 후회되는 일을 적어주세요!</div><br />
         <b-container ref="form">
-            <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color:#e3ecfc">
+            <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
+                style="border-radius: 1vw; background-color:#e3ecfc">
             </b-form-textarea>
-        </b-container><br/>
+        </b-container><br />
         <b-button data-bs-dismiss="modal" aria-label="Close"
             style="color: #ffffff; background-color: #a1a1a1; border: none; border-radius: 1vw;">취소</b-button>&nbsp;
-        <b-button text @click="submit" style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
+        <b-button text @click="submit"
+            style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
         </b-button>
     </b-modal>
 </template>
@@ -50,7 +54,13 @@ export default {
                 require('@/assets/PlanetSpeech/RegretSpeech/regret_bubble_1.svg'),
                 require('@/assets/PlanetSpeech/RegretSpeech/regret_bubble_2.svg'),
             ],
-            currentImage: 0
+            currentImage: 0,
+            elementVisible: false
+        }
+    },
+    updated() {
+        if(this.currentImage==(this.images.length-1)){
+            setTimeout(() => this.elementVisible = true, 2000)
         }
     },
     methods: {
@@ -135,7 +145,7 @@ img {
 }
 
 .button_prev {
-    background-color:#ffffff;
+    background-color: #ffffff;
     color: #141414;
     border-radius: 0.8vw;
     border-color: #ffffff;
