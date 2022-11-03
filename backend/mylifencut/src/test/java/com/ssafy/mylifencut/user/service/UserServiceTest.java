@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.ssafy.mylifencut.user.UserConstant;
+import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.user.exception.InvalidAccessTokenException;
 import com.ssafy.mylifencut.user.repository.UserRepository;
@@ -68,5 +69,23 @@ public class UserServiceTest {
 
 		// then
 		assertFalse(result);
+	}
+
+	@Test
+	@DisplayName("카카오 로그인 - 사용자 정보로 신규유저 여부 확인(기존유저)")
+	public void isExistingUser() {
+		// given
+		final UserInfo userInfo = UserInfo.builder()
+			.email("ssafy@emali.com")
+			.name("홍길동")
+			.build();
+		final User user = User.builder().build();
+		doReturn(Optional.of(user)).when(userRepository).findByEmail(userInfo.getEmail());
+
+		// when
+		final boolean result = userService.isNewUser(userInfo);
+
+		// then
+		assertTrue(result);
 	}
 }
