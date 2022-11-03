@@ -29,7 +29,6 @@ import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.service.AnswerService;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
-import com.ssafy.mylifencut.like.LikeConstant;
 import com.ssafy.mylifencut.like.dto.IsLikeResponse;
 import com.ssafy.mylifencut.like.exception.AlreadyLikeException;
 import com.ssafy.mylifencut.like.service.LikeService;
@@ -123,7 +122,7 @@ class AnswerControllerTest {
 		final Integer answerId = 3;
 		final Integer userId = 1;
 
-		doThrow(new AlreadyLikeException(LikeConstant.ALREADY_LIKE_EXIST_ERROR_MESSAGE))
+		doThrow(new AlreadyLikeException())
 			.when(likeService)
 			.createLike(userId, answerId);
 		//when
