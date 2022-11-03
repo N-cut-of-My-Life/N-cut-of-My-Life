@@ -31,13 +31,16 @@ import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.like.dto.IsLikeResponse;
 import com.ssafy.mylifencut.like.exception.AlreadyLikeException;
+import com.ssafy.mylifencut.like.exception.NotExistLikeException;
 import com.ssafy.mylifencut.like.service.LikeService;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("답변 관련 테스트")
 class AnswerControllerTest {
 
 	@InjectMocks
 	private AnswerController answerController;
+
 	@Mock
 	private AnswerService answerService;
 
@@ -116,7 +119,6 @@ class AnswerControllerTest {
 	@Test
 	@DisplayName("좋아요 추가 실패 - 이미 좋아요가 추가된 답변에 좋아요 등록")
 	public void alreadyLike() throws Exception {
-
 		//given
 		final String url = "/answer/3/1";
 		final Integer answerId = 3;
@@ -162,5 +164,37 @@ class AnswerControllerTest {
 		assertEquals((double)isLikeResponse.getId(), map.get("id"));
 		assertEquals((double)isLikeResponse.getAnswer_id(), map.get("answer_id"));
 		assertEquals((double)isLikeResponse.getUser_id(), map.get("user_id"));
+	}
+
+	@Test
+	@DisplayName("좋아요 삭제 실패 - 좋아요가 눌리지 않은 답변에 좋아요 삭제 시도")
+	public void notExistLike() throws Exception {
+		//given
+		final String url = "/answer/3/1";
+		final Integer answerId = 3;
+		final Integer userId = 1;
+		doThrow(new NotExistLikeException())
+			.when(likeService)
+			.deleteLike(userId, answerId);
+		//when
+		final ResultActions resultActions = mockMvc.perform(
+			MockMvcRequestBuilders.delete(url)
+				.contentType(MediaType.APPLICATION_JSON)
+		);
+		//then
+		resultActions.andExpect(status().isBadRequest());
+	}
+
+	@Test
+	@DisplayName("좋아요 삭제 성공")
+	public void deleteLike() throws Exception {
+		//given
+		final String url = "/answer/3/1";
+		//when
+		final ResultActions resultActions = mockMvc.perform(
+			MockMvcRequestBuilders.delete(url)
+		);
+		//then
+		resultActions.andExpect(status().isNoContent());
 	}
 }
