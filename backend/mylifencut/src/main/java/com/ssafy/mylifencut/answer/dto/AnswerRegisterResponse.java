@@ -2,7 +2,6 @@ package com.ssafy.mylifencut.answer.dto;
 
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
-import com.ssafy.mylifencut.article.domain.Article;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -11,15 +10,15 @@ import lombok.Getter;
 @Getter
 @Builder
 @EqualsAndHashCode
-public class AnswerResponse {
+public class AnswerRegisterResponse {
 	private int id;
 	private Integer articleId;
 	private Integer questionId;
 	private String contents;
 	private State state;
 
-	public static AnswerResponse of(Answer answer) {
-		return AnswerResponse.builder()
+	public static AnswerRegisterResponse of(Answer answer) {
+		return AnswerRegisterResponse.builder()
 			.id(answer.getId())
 			.articleId(answer.getArticle().getId())
 			.questionId(answer.getQuestionId())

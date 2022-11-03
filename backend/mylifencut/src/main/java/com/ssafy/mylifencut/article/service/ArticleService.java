@@ -5,10 +5,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.ssafy.mylifencut.article.ArticleConstant;
 import com.ssafy.mylifencut.article.dto.ArticleRetrieveResponse;
-import com.ssafy.mylifencut.article.exception.NotFoundUserException;
 import com.ssafy.mylifencut.article.repository.ArticleRepository;
+import com.ssafy.mylifencut.user.exception.UserNotFoundException;
 import com.ssafy.mylifencut.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,7 @@ public class ArticleService {
 
 	public List<ArticleRetrieveResponse> retrieveArticles(int userId) {
 		userRepository.findById(userId)
-			.orElseThrow(() -> new NotFoundUserException(ArticleConstant.NOT_FOUND_USER_ERROR_MESSAGE));
+			.orElseThrow(UserNotFoundException::new);
 
 		return articleRepository.findAllByUserId(userId).stream()
 			.map(ArticleRetrieveResponse::of)

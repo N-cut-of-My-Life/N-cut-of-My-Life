@@ -16,10 +16,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.ssafy.mylifencut.article.ArticleConstant;
 import com.ssafy.mylifencut.article.domain.Article;
-import com.ssafy.mylifencut.article.dto.ArticleResponse;
-import com.ssafy.mylifencut.article.exception.NotFoundUserException;
+import com.ssafy.mylifencut.article.dto.ArticleRetrieveResponse;
 import com.ssafy.mylifencut.article.repository.ArticleRepository;
 import com.ssafy.mylifencut.user.domain.User;
+import com.ssafy.mylifencut.user.exception.UserNotFoundException;
 import com.ssafy.mylifencut.user.repository.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -41,7 +41,7 @@ class ArticleServiceTest {
 		doReturn(Optional.empty()).when(userRepository).findById(userId);
 
 		//when
-		final NotFoundUserException result = assertThrows(NotFoundUserException.class
+		final UserNotFoundException result = assertThrows(UserNotFoundException.class
 			, () -> articleService.retrieveArticles(userId));
 
 		//then
@@ -66,11 +66,27 @@ class ArticleServiceTest {
 		doReturn(articles).when(articleRepository).findAllByUserId(userId);
 
 		//then
-		final List<ArticleResponse> result = articleService.retrieveArticles(userId);
+		final List<ArticleRetrieveResponse> result = articleService.retrieveArticles(userId);
 		assertNotNull(result);
 		assertEquals(result.size(), 2);
-		for (ArticleResponse response : result) {
+		for (ArticleRetrieveResponse response : result) {
 			assertEquals(response.getUser().getName(), userName);
 		}
+	}
+
+	@Test
+	@DisplayName("[여행일지 등록 실패] - 존재하지 않는 userId일 때")
+	public void registerArticle() {
+		//given
+		final int userId = 5;
+		doReturn(Optional.empty()).when(userRepository).findById(userId);
+
+		//when
+		final UserNotFoundException result = assertThrows(UserNotFoundException.class
+			, () -> articleService.retrieveArticles(userId));
+
+		//then
+		assertEquals(result.getMessage(), ArticleConstant.NOT_FOUND_USER_ERROR_MESSAGE);
+		articleService.createArticle(articleRegisterRequest);
 	}
 }
