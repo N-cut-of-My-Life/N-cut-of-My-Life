@@ -26,6 +26,9 @@ public class UserServiceTest {
 	@Mock
 	private UserRepository userRepository;
 
+	private final String email = "ssafy@email.com";
+	private final String name = "홍길동";
+
 	@Test
 	@DisplayName("카카오 로그인 - 카카오 엑세스 토큰 오류")
 	public void getKakaoAccessTokenFail() {
@@ -104,10 +107,33 @@ public class UserServiceTest {
 		assertTrue(result);
 	}
 
+	@Test
+	@DisplayName("카카오 로그인 - 로그인")
+	public void loginExistingUser() {
+		// given
+		final UserInfo userInfo = newUserInfo();
+		final User user = User.builder()
+			.id(1)
+			.email(email)
+			.name(name)
+			.build();
+		doReturn(Optional.of(user)).when(userRepository).findByEmail(email);
+
+		// when
+		Optional<User> result = userService.login(userInfo);
+
+		// then
+		assertTrue(result.isPresent());
+		assertEquals(user.getId(), result.get().getId());
+		assertEquals(user.getEmail(), result.get().getEmail());
+		assertEquals(user.getName(), result.get().getName());
+
+	}
+
 	public UserInfo newUserInfo() {
 		return UserInfo.builder()
-			.email("ssafy@emali.com")
-			.name("홍길동")
+			.email(email)
+			.name(name)
 			.build();
 	}
 }
