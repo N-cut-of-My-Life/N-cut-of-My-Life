@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.user.exception.InvalidAccessTokenException;
 import com.ssafy.mylifencut.user.repository.UserRepository;
@@ -120,5 +121,9 @@ public class UserService {
 
 	public boolean isNewUser(UserInfo userInfo) {
 		return userRepository.findByEmail(userInfo.getEmail()).isPresent();
+	}
+
+	public User join(UserInfo userInfo) {
+		return userRepository.save(User.from(userInfo));
 	}
 }
