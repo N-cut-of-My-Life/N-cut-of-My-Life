@@ -16,7 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.ssafy.mylifencut.user.UserConstant;
 import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.dto.UserInfo;
-import com.ssafy.mylifencut.user.exception.InvalidAccessTokenException;
+import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
 import com.ssafy.mylifencut.user.repository.UserRepository;
 
@@ -38,11 +38,11 @@ public class UserServiceTest {
 		final String token = "INVALID_TOKEN";
 
 		// when
-		final InvalidAccessTokenException result = assertThrows(InvalidAccessTokenException.class,
+		final InvalidKakaoAccessTokenException result = assertThrows(InvalidKakaoAccessTokenException.class,
 			() -> userService.getAccessToken(token));
 
 		// then
-		assertEquals(result.getMessage(), UserConstant.INVALID_ACCESS_TOKEN_ERROR_MESSAGE);
+		assertEquals(result.getMessage(), UserConstant.INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE);
 	}
 
 	@Test
@@ -52,11 +52,11 @@ public class UserServiceTest {
 		final String token = "INVALID_TOKEN";
 
 		// when
-		final InvalidAccessTokenException result = assertThrows(InvalidAccessTokenException.class,
+		final InvalidKakaoAccessTokenException result = assertThrows(InvalidKakaoAccessTokenException.class,
 			() -> userService.getUserInfo(token));
 
 		//then
-		assertEquals(result.getMessage(), UserConstant.INVALID_ACCESS_TOKEN_ERROR_MESSAGE);
+		assertEquals(result.getMessage(), UserConstant.INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE);
 	}
 
 	@Test

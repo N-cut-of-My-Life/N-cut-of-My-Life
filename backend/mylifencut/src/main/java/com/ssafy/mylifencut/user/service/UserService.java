@@ -15,7 +15,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.dto.UserInfo;
-import com.ssafy.mylifencut.user.exception.InvalidAccessTokenException;
+import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
 import com.ssafy.mylifencut.user.repository.UserRepository;
 
@@ -67,7 +67,7 @@ public class UserService {
 			log.info("refresh_token : " + refresh_Token);
 
 		} catch (IOException e) {
-			throw new InvalidAccessTokenException();
+			throw new InvalidKakaoAccessTokenException();
 		}
 
 		return access_Token;
@@ -95,7 +95,7 @@ public class UserService {
 				.name(element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("nickname").getAsString())
 				.build();
 		} catch (IOException e) {
-			throw new InvalidAccessTokenException();
+			throw new InvalidKakaoAccessTokenException();
 		}
 	}
 
