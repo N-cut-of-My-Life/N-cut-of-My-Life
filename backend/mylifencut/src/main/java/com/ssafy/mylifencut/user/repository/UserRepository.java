@@ -1,4 +1,4 @@
-package com.ssafy.mylifencut.article.repository;
+package com.ssafy.mylifencut.user.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
