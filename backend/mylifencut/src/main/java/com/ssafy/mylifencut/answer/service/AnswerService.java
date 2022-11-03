@@ -3,11 +3,10 @@ package com.ssafy.mylifencut.answer.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ssafy.mylifencut.answer.AnswerConstant;
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
-import com.ssafy.mylifencut.answer.dto.AnswerRequest;
-import com.ssafy.mylifencut.answer.dto.AnswerResponse;
+import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
+import com.ssafy.mylifencut.answer.dto.AnswerRegisterResponse;
 import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
 import com.ssafy.mylifencut.article.domain.Article;
@@ -22,18 +21,18 @@ public class AnswerService {
 
 	private final AnswerRepository answerRepository;
 
-	public BaseResponse register(AnswerRequest answerRequest) {
+	public BaseResponse register(AnswerRegisterRequest answerRegisterRequest) {
 
 		return BaseResponse.from(true, "답변이 등록되었습니다.");
 	}
 
 	@Transactional
-	public AnswerResponse createAnswer(AnswerRequest answerRequest) {
-		Answer result = answerRepository.save(Answer.from(answerRequest, Article.builder().build()));
-		AnswerResponse answerResponse = AnswerResponse.of(result);
+	public AnswerRegisterResponse createAnswer(AnswerRegisterRequest answerRegisterRequest) {
+		Answer result = answerRepository.save(Answer.from(answerRegisterRequest, Article.builder().build()));
+		AnswerRegisterResponse answerRegisterResponse = AnswerRegisterResponse.of(result);
 		if (result.getQuestionId() != 9 && result.getState().equals(State.OPEN)) {
-			throw new InvalidStateException(AnswerConstant.INVALID_STATE_ERROR_MESSAGE);
+			throw new InvalidStateException();
 		}
-		return answerResponse;
+		return answerRegisterResponse;
 	}
 }

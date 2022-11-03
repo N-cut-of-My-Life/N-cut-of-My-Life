@@ -1,4 +1,4 @@
-package com.ssafy.mylifencut.user.repository;
+package com.ssafy.mylifencut.article.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.ssafy.mylifencut.article.domain.Article;
-import com.ssafy.mylifencut.article.repository.ArticleRepository;
 import com.ssafy.mylifencut.user.domain.User;
 
 @DataJpaTest
@@ -32,7 +31,7 @@ public class ArticleRepositoryTest {
 		final List<Article> articles;
 
 		//when
-		articles = articleRepository.findByUserId(1);
+		articles = articleRepository.findAllByUserId(1);
 
 		//then
 		assertNotNull(articles);
