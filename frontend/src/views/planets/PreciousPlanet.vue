@@ -2,22 +2,22 @@
     <div class="jumbotron">
         <div class="title">넌너무소중 행성</div>
     </div>
-    <img :src="images[currentImage]" />
+    <img class="bubble" :src="images[currentImage]" />
     <div class="other">
-        <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm"><strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
+        <b-button @click="gotoPage({ name: 'planetlist' })" variant="warning" class="button_prev" size="sm"><strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
     </div>
     <div class="jump">
-        <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
+        <b-button @click="previousImage()" variant="warning" class="button" size="sm" :disabled="currentImage === 0">
             뒤로
         </b-button>
         &nbsp;
-        <b-button @click="nextImage()" class="button" size="sm" :disabled="currentImage === (images.length - 1)">
+        <b-button @click="nextImage()" variant="warning" class="button" size="sm" :disabled="currentImage === (images.length - 1)">
             다음
         </b-button>
     </div>
-    <div class="last">
-        <b-button v-if="currentImage === (images.length - 1)" class="button_2" size="md">
-            <div class="wave">
+    <div v-if="currentImage === (images.length - 1)" class="last">
+        <b-button v-show="elementVisible" variant="warning" class="button_2" size="md">
+            <div class="wave" v-b-modal.modal-precious>
                 <span style="--i: 1">소</span>
                 <span style="--i: 2">중</span>
                 <span style="--i: 3">한</span>
@@ -29,9 +29,24 @@
                 <span style="--i: 9">록</span>
                 <span style="--i: 10">하</span>
                 <span style="--i: 11">기</span>
+                <span style="--i: 12">!</span>
             </div>
         </b-button>
     </div>
+    <b-modal id="modal-precious" centered no-stacking hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+      <b-popover target="addon">
+        사진을 올려주세요!
+      </b-popover>
+      <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_happy.svg" style="cursor:pointer; float: right;"/>
+      <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">소중한 사람과의 추억을 기록해보세요!</div>
+      <b-container ref="form" style="margin-bottom:3.8%">
+          <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color: #FDFCFA;">
+          </b-form-textarea>
+      </b-container>
+      <b-button text @click="submit" style="color: #ffffff; background-color: #C6753E; border: none; border-radius: 1vw;">저장
+      </b-button>
+      <b-button class='img-btn' id="addon"><img class="upload" src="@\assets\enter-image-upload.svg"></b-button>
+    </b-modal>
 </template>
 
 <script>
@@ -43,7 +58,8 @@ export default {
                 require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_2.svg'),
                 require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_3.svg'),
             ],
-            currentImage: 0
+            currentImage: 0,
+            elementVisible: false
         }
     },
     methods: {
@@ -60,7 +76,12 @@ export default {
         gotoPage(link) {
             this.$router.push(link)
         }
-    }
+    },
+    updated() {
+        if(this.currentImage==(this.images.length-1)){
+            setTimeout(() => this.elementVisible = true, 2000)
+        }
+    },
 }
 </script>
 
@@ -69,7 +90,7 @@ body {
     margin: 0;
 }
 
-img {
+.bubble {
     position: absolute;
     /* top: 0;
     left: 0; */
@@ -124,11 +145,16 @@ img {
 }
 
 .button {
-    background-color: #a28dc4;
-    color: #ffffff;
+    background-color: #9B3D54;
+    color: #F4DFCA;
     border-radius: 0.8vw;
     border-color: #a28dc4;
 }
+
+.x_button {
+    width: 4%;
+}
+
 
 .button_prev {
     background-color:#ffffff;
@@ -140,12 +166,57 @@ img {
 .button_2 {
     border-radius: 0.8vw;
     /* border-color: #81c6e8; */
-    background-color: #81c6e8;
+    background-color: #C6753E;
     position: relative;
     margin: 300px auto 0;
+    transition: all 0.3s ease-in-out 0s;
 }
 
+.button_2::before {
+    content: '';
+    border-radius: 1000px;
+    min-width: calc(220px + 12px);
+    min-height: calc(60px + 12px);
+    box-shadow: 0 0 60px #ffffff;;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+    transition: all .3s ease-in-out 0s;
+    animation: ring 1.5s infinite;
+}
 
+.button_2:hover,
+.button_2:focus {
+    color: #313133;
+    transform: translateY(-6px);
+}
+
+.button_2:hover::before,
+.button_2:focus::before {
+    opacity: 1;
+}
+
+.button_2:hover::after,
+.button_2:focus::after {
+    animation: none;
+    display: none;
+}
+
+@keyframes ring {
+    0% {
+        width: fit-content;
+        height: fit-content;
+        opacity: 1;
+    }
+
+    100% {
+        width: fit-content;
+        height: fit-content;
+        opacity: 0;
+    }
+}
 .wave {
     position: relative;
     /* -webkit-box-reflect: below -1px linear-gradient(transparent, #FFFFFF); */
@@ -161,6 +232,16 @@ img {
     animation-delay: calc(0.1s * var(--i));
 }
 
+.img-btn {
+  left: 0%;
+  bottom:0%;
+  background-color: transparent;
+  border: none;
+  position:absolute;
+}
+.img-btn:active {
+  background-color: transparent;
+}
 @keyframes wave {
 
     0%,
@@ -170,7 +251,12 @@ img {
     }
 
     20% {
-        transform: translateY(-10px);
+        transform: translateY(-3px);
     }
+}
+</style>
+<style>
+#modal-precious .modal-content {
+    background-color: #F5E2CE;
 }
 </style>

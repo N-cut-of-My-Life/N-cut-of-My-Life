@@ -9,6 +9,7 @@ import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.like.exception.AlreadyLikeException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
+import com.ssafy.mylifencut.like.exception.NotExistLikeException;
 
 @RestControllerAdvice
 public class ExceptionAdvice {
@@ -32,5 +33,11 @@ public class ExceptionAdvice {
 			BaseResponse.from(false, exception.getMessage()),
 			HttpStatus.BAD_REQUEST
 		);
+
+	@ExceptionHandler(NotExistLikeException.class)
+	public ResponseEntity<?> notExistLikeException(NotExistLikeException exception) {
+		return new ResponseEntity<>(
+			BaseResponse.from(false, exception.getMessage()),
+			HttpStatus.BAD_REQUEST);
 	}
 }

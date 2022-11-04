@@ -30,10 +30,10 @@ public class UserService {
 	private final UserRepository userRepository;
 
 	@Value("${oauth2.kakao.restApiKey}")
-	private final String kakao_restApiKey;
+	private String kakao_restApiKey;
 
 	@Value("${oauth2.kakao.redirectUri}")
-	private final String kakao_redirectUri;
+	private String kakao_redirectUri;
 
 	public Integer kakaoLogin(String token) {
 		UserInfo userInfo = getUserInfo(getAccessToken(token));

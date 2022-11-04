@@ -2,7 +2,7 @@
     <div class="jumbotron">
         <div class="title">이루지못 행성</div>
     </div>
-    <img :src="images[currentImage]" />
+    <img class="bubble" :src="images[currentImage]" />
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
@@ -17,7 +17,7 @@
             다음
         </b-button>
     </div>
-    <div v-if="currentImage === (images.length - 1)" class="last" data-bs-dismiss="modal" aria-label="Close">
+    <div v-if="currentImage === (images.length - 1)" class="last">
         <b-button v-show="elementVisible" class="button_2" size="md">
             <div class="wave" v-b-modal.modal-dream>
                 <span style="--i: 1">꿈</span>
@@ -33,14 +33,13 @@
         </b-button>
     </div>
 
-    <b-modal id="modal-dream" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
-        <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">아쉽게 이루지 못한 꿈을 이 곳에 적어주세요!</div><br />
+    <b-modal centered no-stacking id="modal-dream" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg" style="cursor:pointer; float: right;"/>
+        <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">아쉽게 이루지 못한 꿈을 이 곳에 적어주세요!</div>
         <b-container ref="form">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color: #eceffa;">
             </b-form-textarea>
-        </b-container><br/>
-        <b-button data-bs-dismiss="modal" aria-label="Close"
-            style="color: #ffffff; background-color: #a1a1a1; border: none; border-radius: 1vw;">취소</b-button>&nbsp;
+        </b-container>
         <b-button text @click="submit" style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
         </b-button>
     </b-modal>
@@ -89,7 +88,7 @@ body {
     margin: 0;
 }
 
-img {
+.bubble {
     position: absolute;
     /* top: 0;
     left: 0; */
@@ -163,8 +162,65 @@ img {
     background-color: #81c6e8;
     position: relative;
     margin: 300px auto 0;
+    transition: all 0.3s ease-in-out 0s;
 }
 
+.x_button {
+    width: 4%;
+}
+
+.button_prev {
+    background-color: #ffffff;
+    color: #141414;
+    border-radius: 0.8vw;
+    border-color: #ffffff;
+}
+
+.button_2::before {
+    content: '';
+    border-radius: 1000px;
+    min-width: calc(190px + 12px);
+    min-height: calc(60px + 12px);
+    box-shadow: 0 0 60px #ffffff;;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+    transition: all .3s ease-in-out 0s;
+    animation: ring 1.5s infinite;
+}
+
+.button_2:hover,
+.button_2:focus {
+    color: #313133;
+    transform: translateY(-6px);
+}
+
+.button_2:hover::before,
+.button_2:focus::before {
+    opacity: 1;
+}
+
+.button_2:hover::after,
+.button_2:focus::after {
+    animation: none;
+    display: none;
+}
+
+@keyframes ring {
+    0% {
+        width: fit-content;
+        height: fit-content;
+        opacity: 1;
+    }
+
+    100% {
+        width: fit-content;
+        height: fit-content;
+        opacity: 0;
+    }
+}
 
 .wave {
     position: relative;
@@ -190,7 +246,7 @@ img {
     }
 
     20% {
-        transform: translateY(-10px);
+        transform: translateY(-3px);
     }
 }
 </style>

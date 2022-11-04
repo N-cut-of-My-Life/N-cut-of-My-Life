@@ -2,7 +2,7 @@
     <div class="jumbotron">
         <div class="title">괜히글 행성</div>
     </div>
-    <img :src="images[currentImage]" />
+    <img class="bubble" :src="images[currentImage]" />
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
@@ -18,8 +18,8 @@
         </b-button>
     </div>
     <div v-if="currentImage === (images.length - 1)" class="last" data-bs-dismiss="modal" aria-label="Close">
-        <b-button v-show="elementVisible" class="button_2" size="md">
-            <div class="wave" v-b-modal.modal-regret>
+        <b-button v-show="elementVisible" class="button_2" size="md" v-b-modal.modal-regret>
+            <div class="wave">
                 <span style="--i: 1">후</span>
                 <span style="--i: 2">회</span>
                 <span style="--i: 3">&nbsp;</span>
@@ -31,16 +31,15 @@
         </b-button>
     </div>
 
-    <b-modal id="modal-regret" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
-        <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">가장 후회되는 일을 적어주세요!</div><br />
-        <b-container ref="form">
+    <b-modal id="modal-regret" hide-header hide-footer centered no-stacking style="text-align: center; border-radius: 1vw;">
+        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg" style="cursor:pointer; float: right;"/>
+        <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">가장 후회되는 일을 적어주세요!</div>
+        <b-container ref="form" style="margin-bottom:3.8%">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
                 style="border-radius: 1vw; background-color:#e3ecfc">
             </b-form-textarea>
-        </b-container><br />
-        <b-button data-bs-dismiss="modal" aria-label="Close"
-            style="color: #ffffff; background-color: #a1a1a1; border: none; border-radius: 1vw;">취소</b-button>&nbsp;
-        <b-button text @click="submit"
+        </b-container>
+        <b-button @click="submit()"
             style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
         </b-button>
     </b-modal>
@@ -82,11 +81,15 @@ export default {
 </script>
 
 <style scoped>
+html, body {
+  height: 100%;
+}
+
 body {
     margin: 0;
 }
 
-img {
+.bubble {
     position: absolute;
     right: 15%;
     bottom: 24%;
@@ -133,7 +136,7 @@ img {
 .last {
     position: absolute;
     bottom: 52%;
-    left: 37.5%;
+    left: 37%;
     margin: auto;
 }
 
@@ -151,14 +154,66 @@ img {
     border-color: #ffffff;
 }
 
+.x_button {
+    width: 4%;
+}
+
 .button_2 {
     border-radius: 0.8vw;
     /* border-color: #81c6e8; */
     background-color: #9cb4cc;
     position: relative;
     margin: 300px auto 0;
+    transition: all 0.3s ease-in-out 0s;
+    font-size: 1.3vw;
+    cursor: pointer;
 }
 
+.button_2::before {
+    content: '';
+    border-radius: 1000px;
+    min-width: calc(160px + 12px);
+    min-height: calc(60px + 12px);
+    box-shadow: 0 0 60px #ffffff;;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+    transition: all .3s ease-in-out 0s;
+    animation: ring 1.5s infinite;
+}
+
+.button_2:hover,
+.button_2:focus {
+    color: #313133;
+    transform: translateY(-6px);
+}
+
+.button_2:hover::before,
+.button_2:focus::before {
+    opacity: 1;
+}
+
+.button_2:hover::after,
+.button_2:focus::after {
+    animation: none;
+    display: none;
+}
+
+@keyframes ring {
+    0% {
+        width: fit-content;
+        height: fit-content;
+        opacity: 1;
+    }
+
+    100% {
+        width: fit-content;
+        height: fit-content;
+        opacity: 0;
+    }
+}
 
 .wave {
     position: relative;
@@ -184,7 +239,7 @@ img {
     }
 
     20% {
-        transform: translateY(-10px);
+        transform: translateY(-3px);
     }
 }
 </style>
