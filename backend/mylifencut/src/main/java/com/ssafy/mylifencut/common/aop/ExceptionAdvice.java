@@ -11,7 +11,7 @@ import com.ssafy.mylifencut.common.exception.BadRequestException;
 @RestControllerAdvice
 public class ExceptionAdvice {
 	@ExceptionHandler(BadRequestException.class)
-	public ResponseEntity<BaseResponse> alreadyLikeException(BadRequestException exception) {
+	public ResponseEntity<BaseResponse> badRequestException(BadRequestException exception) {
 		return new ResponseEntity<>(
 			BaseResponse.from(false, exception.getMessage()),
 			HttpStatus.BAD_REQUEST
