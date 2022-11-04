@@ -19,7 +19,7 @@
             다음
         </b-button>
     </div>
-    <div v-if="currentImage === (images.length - 1)" class="last" data-bs-dismiss="modal" aria-label="Close">
+    <div v-if="currentImage === (images.length - 1)" class="last">
         <b-button v-show="elementVisible" class="button_2" size="md">
             <div class="wave" v-b-modal.modal-genie>
                 <span style="--i: 1">소</span>
@@ -36,14 +36,13 @@
         </b-button>
     </div>
 
-    <b-modal data-bs-dismiss="modal" aria-label="Close" id="modal-genie" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
-        <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">당신의 소원을 적어주세요!</div><br />
-        <b-container ref="form">
+    <b-modal centered no-stacking id="modal-genie" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg" style="cursor:pointer; float: right;"/>
+        <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">당신의 소원을 적어주세요!</div>
+        <b-container ref="form" style="margin-bottom:3.8%">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color:#e3ecfc">
             </b-form-textarea>
-        </b-container><br/>
-        <b-button data-bs-dismiss="modal" aria-label="Close"
-            style="color: #ffffff; background-color: #a1a1a1; border: none; border-radius: 1vw;">취소</b-button>&nbsp;
+        </b-container>
         <b-button text @click="submit" style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
         </b-button>
     </b-modal>
@@ -177,6 +176,10 @@ body {
     left: 1%;
     top: 2.5%;
     margin: auto;
+}
+
+.x_button {
+    width: 4%;
 }
 
 .last {

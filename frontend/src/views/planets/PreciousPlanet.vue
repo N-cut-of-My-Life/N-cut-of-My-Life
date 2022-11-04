@@ -2,7 +2,7 @@
     <div class="jumbotron">
         <div class="title">넌너무소중 행성</div>
     </div>
-    <img :src="images[currentImage]" />
+    <img class="bubble" :src="images[currentImage]" />
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" variant="warning" class="button_prev" size="sm"><strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
     </div>
@@ -15,7 +15,7 @@
             다음
         </b-button>
     </div>
-    <div v-if="currentImage === (images.length - 1)" class="last" data-bs-dismiss="modal" aria-label="Close">
+    <div v-if="currentImage === (images.length - 1)" class="last">
         <b-button v-show="elementVisible" variant="warning" class="button_2" size="md">
             <div class="wave" v-b-modal.modal-precious>
                 <span style="--i: 1">소</span>
@@ -33,20 +33,19 @@
             </div>
         </b-button>
     </div>
-    <b-modal data-bs-dismiss="modal" aria-label="Close" id="modal-precious" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+    <b-modal id="modal-precious" centered no-stacking hide-header hide-footer style="text-align: center; border-radius: 1vw;">
       <b-popover target="addon">
         사진을 올려주세요!
       </b-popover>
-      <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">소중한 사람과의 추억을 기록해보세요!</div><br />
-      <b-container ref="form">
+      <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_happy.svg" style="cursor:pointer; float: right;"/>
+      <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">소중한 사람과의 추억을 기록해보세요!</div>
+      <b-container ref="form" style="margin-bottom:3.8%">
           <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color: #FDFCFA;">
           </b-form-textarea>
-      </b-container><br/>
-      <b-button data-bs-dismiss="modal" aria-label="Close"
-          style="color: #ffffff; background-color: #a1a1a1; border: none; border-radius: 1vw;">취소</b-button>&nbsp;
+      </b-container>
       <b-button text @click="submit" style="color: #ffffff; background-color: #C6753E; border: none; border-radius: 1vw;">저장
       </b-button>
-      <b-button class='img-btn' id="addon"><img src="@\assets\enter-image-upload.svg"></b-button>
+      <b-button class='img-btn' id="addon"><img class="upload" src="@\assets\enter-image-upload.svg"></b-button>
     </b-modal>
 </template>
 
@@ -91,7 +90,7 @@ body {
     margin: 0;
 }
 
-img {
+.bubble {
     position: absolute;
     /* top: 0;
     left: 0; */
@@ -151,6 +150,11 @@ img {
     border-radius: 0.8vw;
     border-color: #a28dc4;
 }
+
+.x_button {
+    width: 4%;
+}
+
 
 .button_prev {
     background-color:#ffffff;
@@ -229,10 +233,11 @@ img {
 }
 
 .img-btn {
-  right: 50%;
-  top:1rem;
+  left: 0%;
+  bottom:0%;
   background-color: transparent;
   border: none;
+  position:absolute;
 }
 .img-btn:active {
   background-color: transparent;
