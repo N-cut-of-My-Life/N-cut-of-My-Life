@@ -2,7 +2,9 @@ package com.ssafy.mylifencut.user.exception;
 
 import static com.ssafy.mylifencut.user.UserConstant.*;
 
-public class UserNotFoundException extends RuntimeException {
+import com.ssafy.mylifencut.common.exception.BadRequestException;
+
+public class UserNotFoundException extends BadRequestException {
 	public UserNotFoundException() {
 		super(USER_NOT_FOUND_ERROR_MESSAGE);
 	}
