@@ -28,14 +28,14 @@ public class AnswerController {
 	private final LikeService likeService;
 
 	@PostMapping
-	public ResponseEntity<?> createAnswer(@RequestBody final AnswerRequest answerRequest) {
+	public ResponseEntity<BaseResponse> createAnswer(@RequestBody final AnswerRequest answerRequest) {
 		return new ResponseEntity<>(
 			BaseResponse.from(true, CREATE_ANSWER_SUCCESS_MESSAGE, answerService.createAnswer(answerRequest)),
 			HttpStatus.OK);
 	}
 
 	@PostMapping("/{answerId}/{userId}")
-	public ResponseEntity<?> createLike(@PathVariable("answerId") Integer answerId,
+	public ResponseEntity<BaseResponse> createLike(@PathVariable("answerId") Integer answerId,
 		@PathVariable("userId") Integer userId) {
 		return new ResponseEntity<>(
 			BaseResponse.from(true, CREATE_LIKE_SUCCESS_MESSAGE, likeService.createLike(userId, answerId)),
@@ -43,7 +43,7 @@ public class AnswerController {
 	}
 
 	@DeleteMapping("/{answerId}/{userId}")
-	public ResponseEntity<?> deleteLike(@PathVariable("answerId") Integer answerId,
+	public ResponseEntity<BaseResponse> deleteLike(@PathVariable("answerId") Integer answerId,
 		@PathVariable("userId") Integer userId) {
 		likeService.deleteLike(userId, answerId);
 		return new ResponseEntity<>(
