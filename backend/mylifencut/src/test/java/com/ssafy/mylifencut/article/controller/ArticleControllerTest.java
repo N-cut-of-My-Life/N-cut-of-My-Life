@@ -41,7 +41,7 @@ class ArticleControllerTest {
 	@BeforeEach
 	public void init() {
 		gson = new Gson();
-		mockMvc = MockMvcBuilders.standaloneSetup(answerController)
+		mockMvc = MockMvcBuilders.standaloneSetup(articleController)
 			.setControllerAdvice(new ExceptionAdvice())
 			.build();
 	}
