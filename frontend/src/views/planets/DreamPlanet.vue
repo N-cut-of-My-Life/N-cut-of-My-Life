@@ -33,14 +33,19 @@
         </b-button>
     </div>
 
-    <b-modal centered no-stacking id="modal-dream" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
-        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg" style="cursor:pointer; float: right;"/>
-        <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">아쉽게 이루지 못한 꿈을 이 곳에 적어주세요!</div>
+    <b-modal centered no-stacking id="modal-dream" hide-header hide-footer
+        style="text-align: center; border-radius: 1vw;">
+        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg"
+            style="cursor:pointer; float: right;" />
+        <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">아쉽게 이루지 못한 꿈을 이 곳에 적어주세요!
+        </div>
         <b-container ref="form">
-            <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color: #eceffa;">
+            <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
+                style="border-radius: 1vw; background-color: #eceffa;">
             </b-form-textarea>
         </b-container>
-        <b-button text @click="submit" style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
+        <b-button text @click="submit"
+            style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
         </b-button>
     </b-modal>
 </template>
@@ -61,7 +66,7 @@ export default {
     },
     // created로 하면 생명주기가 더 앞 순위이기에 페이지가 열리고 바로 카운트된다.
     updated() {
-        if(this.currentImage==(this.images.length-1)){
+        if (this.currentImage == (this.images.length - 1)) {
             setTimeout(() => this.elementVisible = true, 2000)
         }
     },
@@ -158,7 +163,7 @@ body {
 
 .button_2 {
     border-radius: 0.8vw;
-    border:none;
+    border: none;
     background-color: #81c6e8;
     position: relative;
     margin: 300px auto 0;
@@ -181,7 +186,8 @@ body {
     border-radius: 1000px;
     min-width: calc(190px + 12px);
     min-height: calc(60px + 12px);
-    box-shadow: 0 0 60px #ffffff;;
+    box-shadow: 0 0 60px #ffffff;
+    ;
     position: absolute;
     top: 50%;
     left: 50%;

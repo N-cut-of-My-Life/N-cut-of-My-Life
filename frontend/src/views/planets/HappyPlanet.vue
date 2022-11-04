@@ -2,6 +2,9 @@
     <div class="jumbotron">
         <div class="title">하하호호 행성</div>
     </div>
+    <!-- <vue-audio :file="audios[currentAudio]" autoplay/> -->
+    <audio loop autoplay controls :src="audios[currentAudio]">
+    </audio>
     <img class="story" :src="images[currentImage]" />
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
@@ -44,7 +47,8 @@
 
     <b-modal centered no-stacking id="modal-happy" hide-header hide-footer
         style="text-align: center; border-radius: 1vw;">
-        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_happy.svg" style="cursor:pointer; float: right;"/>
+        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_happy.svg"
+            style="cursor:pointer; float: right;" />
         <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">가장 행복했던 순간을 이 곳에 적어주세요!</div>
         <b-container ref="form" style="margin-bottom:3.8%">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
@@ -58,6 +62,8 @@
 </template>
 
 <script>
+// import VueAudio from 'vue-audio'
+
 export default {
     data() {
         return {
@@ -66,10 +72,18 @@ export default {
                 require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_2.svg'),
                 require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_3.svg'),
             ],
+            audios: [
+                require('@/assets/audio/flower-dance.mp3'),
+                require('@/assets/audio/motivational-day.mp3'),
+            ],
             currentImage: 0,
-            elementVisible: false
+            elementVisible: false,
+            currentAudio:0,
         }
     },
+    // components: {
+    //     'vue-audio': VueAudio
+    // },
     updated() {
         if (this.currentImage == (this.images.length - 1)) {
             setTimeout(() => this.elementVisible = true, 2000)
@@ -88,7 +102,7 @@ export default {
 
         gotoPage(link) {
             this.$router.push(link)
-        }
+        },
     }
 }
 </script>
@@ -100,11 +114,8 @@ body {
 
 .story {
     position: absolute;
-    /* top: 0;
-    left: 0; */
     right: 40%;
     bottom: 15%;
-    /* height: 50%; */
     margin: auto;
 }
 
