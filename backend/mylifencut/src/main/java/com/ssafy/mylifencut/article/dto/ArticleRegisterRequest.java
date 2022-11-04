@@ -3,8 +3,7 @@ package com.ssafy.mylifencut.article.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.ssafy.mylifencut.answer.domain.Answer;
-import com.ssafy.mylifencut.user.domain.User;
+import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,8 +17,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @Builder
 public class ArticleRegisterRequest {
-	private Integer id;
-	private User user;
-	private List<Answer> answers;
+	private Integer userId;
+	private List<AnswerRegisterRequest> answers;
 	private LocalDateTime createDate;
 }
