@@ -10,15 +10,15 @@ import lombok.Getter;
 @Getter
 @Builder
 @EqualsAndHashCode
-public class AnswerRegisterResponse {
+public class AnswerResponse {
 	private int id;
 	private Integer articleId;
 	private Integer questionId;
 	private String contents;
 	private State state;
 
-	public static AnswerRegisterResponse of(Answer answer) {
-		return AnswerRegisterResponse.builder()
+	public static AnswerResponse of(Answer answer) {
+		return AnswerResponse.builder()
 			.id(answer.getId())
 			.articleId(answer.getArticle().getId())
 			.questionId(answer.getQuestionId())
