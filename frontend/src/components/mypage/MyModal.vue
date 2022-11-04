@@ -8,7 +8,9 @@
       <label class="button" for="lightbox-1">&times;</label>
     </header>
     <main class="main">
-      <p>멀어져만 가는 그대 you're the only one
+      <p>Dear OOO.
+        <br>
+        멀어져만 가는 그대 you're the only one
         내가 사랑했던 것만큼 you're the only one
         아프고 아프지만 바보 같지만 good bye
         다시 널 못 본다 해도 you're the only one, only one <br><br>
@@ -42,7 +44,8 @@
         그리고 언젠가 너의 기억 속에는
         나란 사람은 더 이상 살지 않겠지 지우겠지
         Only one, only one
-        You're the only one, only one
+        You're the only one, only one<br>
+        Sincerely, OOO
       </p>
     </main>
     <footer class="footer">

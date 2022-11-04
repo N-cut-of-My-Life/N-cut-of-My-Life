@@ -1,5 +1,5 @@
 <template>
-  <my-modal></my-modal>
+  <my-modal style="z-index: 5;"></my-modal>
   <div class="jumbotron">
     <div class="title">My Page</div>
     <main class="content">
@@ -31,35 +31,22 @@
           <label class="l-button letter" for="lightbox-1">
             <img src="@/assets/mailbox.png" class="letter-img">
           </label>
-          <!-- <div class="letter" @click="openMailbox">
-            <img src="@/assets/mailbox.png" class="letter-img">
-          </div> -->
+          
         </div>
         <!-- 일지 상세 -->
-        <div class="strip">
-          <div class="film">
-            <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
-          </div>
-          <div class="film">
-            <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
-          </div>
-          <div class="film">
-            <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
-          </div>
+        <div class="below-part">
+          <div class="strip">
+            <div class="film">
+              <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
+            </div>
+            <div class="film">
+              <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
+            </div>
+            <div class="film">
+              <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
+            </div>
+          </div>        
         </div>
-        
-        <div class="strip">
-          <div class="film">
-            <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
-          </div>
-          <div class="film">
-            <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
-          </div>
-          <div class="film">
-            <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
-          </div>
-        </div>
-        
         
       </section>
     </main>
@@ -202,7 +189,7 @@ body {
   position: absolute;
   width: 75%;
   top: 40%;
-  left: 13%;
+  left: 15%;
   word-wrap: break-word;
 
 }
