@@ -25,7 +25,7 @@ public class UserController {
 
 	@PostMapping("/login")
 	public ResponseEntity<BaseResponse> kakaoLogin(@RequestBody String accessToken) {
-		String jwtToken = jwtTokenProvider.createToken(userService.kakaoLogin(accessToken));
+		String jwtToken = jwtTokenProvider.createToken(Integer.toString(userService.kakaoLogin(accessToken)));
 		return new ResponseEntity<>(BaseResponse.from(true, KAKAO_LOGIN_SUCCESS_MESSAGE, jwtToken), HttpStatus.OK);
 	}
 }
