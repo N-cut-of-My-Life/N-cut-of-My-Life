@@ -6,6 +6,7 @@ import static com.ssafy.mylifencut.like.LikeConstant.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,6 +50,14 @@ public class AnswerController {
 		return new ResponseEntity<>(
 			BaseResponse.from(true, DELETE_LIKE_SUCCESS_MESSAGE),
 			HttpStatus.NO_CONTENT);
+	}
+
+	@GetMapping
+	public ResponseEntity<BaseResponse> readGallery() {
+		answerService.getGalleryList();
+		return new ResponseEntity<>(
+			BaseResponse.from(true, READ_GALLERY_SUCCESS_MESSAGE),
+			HttpStatus.OK);
 	}
 
 }
