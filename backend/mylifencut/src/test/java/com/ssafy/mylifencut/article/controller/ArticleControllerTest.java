@@ -5,7 +5,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -66,7 +65,6 @@ class ArticleControllerTest {
 		final BaseResponse response = gson.fromJson(resultActions.andReturn()
 			.getResponse()
 			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
-		Map map = (Map)response.getData();
 		assertNull(response.getData());
 		assertFalse(response.isSuccess());
 		assertEquals(UserConstant.USER_NOT_FOUND_ERROR_MESSAGE, response.getMessage());
