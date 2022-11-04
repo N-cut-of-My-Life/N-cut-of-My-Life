@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +25,7 @@ import com.google.gson.Gson;
 import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
 import com.ssafy.mylifencut.answer.dto.AnswerResponse;
+import com.ssafy.mylifencut.answer.dto.GalleryResponse;
 import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.service.AnswerService;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
@@ -195,5 +197,23 @@ class AnswerControllerTest {
 		);
 		//then
 		resultActions.andExpect(status().isNoContent());
+	}
+
+	@Test
+	@DisplayName("갤러리 조회 성공")
+	public void readGallery() throws Exception {
+		//given
+		final String url = "/answer";
+		doReturn(Arrays.asList(
+			GalleryResponse.builder().id(1).userId(3).contents("답변내용").like(3).build(),
+			GalleryResponse.builder().id(2).userId(5).contents("답변내용이지롱").like(12).build(),
+			GalleryResponse.builder().id(3).userId(6).contents("답변내용입니당").like(13).build()
+		)).when(answerService).getGalleryList();
+		//when
+		final ResultActions resultActions = mockMvc.perform(
+			MockMvcRequestBuilders.get(url)
+		);
+		//then
+		resultActions.andExpect(status().isOk());
 	}
 }
