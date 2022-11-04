@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.google.gson.Gson;
 import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
-import com.ssafy.mylifencut.answer.dto.AnswerRegisterResponse;
+import com.ssafy.mylifencut.answer.dto.AnswerResponse;
 import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.service.AnswerService;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
@@ -80,14 +80,14 @@ class AnswerControllerTest {
 		final String url = "/answer";
 		final AnswerRegisterRequest answerRegisterRequest =
 			new AnswerRegisterRequest(1, 1, "답변 등록", State.CLOSE);
-		final AnswerRegisterResponse answerRegisterResponse = AnswerRegisterResponse.builder()
+		final AnswerResponse answerResponse = AnswerResponse.builder()
 			.id(1)
 			.articleId(1)
 			.questionId(answerRegisterRequest.getQuestionId())
 			.contents(answerRegisterRequest.getContents())
 			.state(answerRegisterRequest.getState())
 			.build();
-		doReturn(answerRegisterResponse)
+		doReturn(answerResponse)
 			.when(answerService)
 			.createAnswer(answerRegisterRequest);
 
@@ -106,11 +106,11 @@ class AnswerControllerTest {
 			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 
 		Map map = (Map)response.getData();
-		assertEquals((double)answerRegisterResponse.getId(), map.get("id"));
-		assertEquals((double)answerRegisterResponse.getArticleId(), map.get("articleId"));
-		assertEquals((double)answerRegisterResponse.getQuestionId(), map.get("questionId"));
-		assertEquals(answerRegisterResponse.getContents(), map.get("contents"));
-		assertEquals(answerRegisterResponse.getState().toString(), map.get("state"));
+		assertEquals((double)answerResponse.getId(), map.get("id"));
+		assertEquals((double)answerResponse.getArticleId(), map.get("articleId"));
+		assertEquals((double)answerResponse.getQuestionId(), map.get("questionId"));
+		assertEquals(answerResponse.getContents(), map.get("contents"));
+		assertEquals(answerResponse.getState().toString(), map.get("state"));
 	}
 
 	@Test
