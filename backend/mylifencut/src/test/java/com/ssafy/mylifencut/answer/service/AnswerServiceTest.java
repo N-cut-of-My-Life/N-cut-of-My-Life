@@ -1,8 +1,12 @@
 package com.ssafy.mylifencut.answer.service;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +20,7 @@ import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
 import com.ssafy.mylifencut.answer.dto.AnswerRegisterResponse;
+import com.ssafy.mylifencut.answer.dto.GalleryResponse;
 import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
 import com.ssafy.mylifencut.article.domain.Article;
@@ -70,6 +75,20 @@ class AnswerServiceTest {
 		assertEquals(answerRegisterResponse.getQuestionId(), result.getQuestionId());
 		assertEquals(answerRegisterResponse.getContents(), result.getContents());
 		assertEquals(answerRegisterResponse.getState(), result.getState());
+	}
+
+	@Test
+	@DisplayName("갤러리 조회 - 성공")
+	public void readGallery() {
+		//given
+		doReturn(Arrays.asList(
+			Answer.builder().questionId(9).contents("답변 내용").state(State.OPEN).build(),
+			Answer.builder().questionId(9).contents("답변 내용").state(State.OPEN).build()
+		)).when(answerRepository).findAllByState(State.OPEN);
+		//when
+		final List<GalleryResponse> result = answerService.getGalleryList();
+		//then
+		assertThat(result.size()).isEqualTo(2);
 	}
 
 	private Answer newAnswer() {
