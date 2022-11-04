@@ -43,12 +43,17 @@ public class Article {
 
 	private LocalDateTime createDate;
 
-	public static Article from(ArticleRegisterRequest articleRegisterRequest) {
+	public static Article from(ArticleRegisterRequest articleRegisterRequest, User user) {
 		return Article.builder()
-			.id(articleRegisterRequest.getId())
-			.answers(articleRegisterRequest.getAnswers())
-			.user(articleRegisterRequest.getUser())
+			.user(user)
 			.createDate(articleRegisterRequest.getCreateDate())
 			.build();
+	}
+
+	public void addAnswer(Answer answer) {
+		answers.add(answer);
+		if (answer.getArticle() != this) {
+			answer.setArticle(this);
+		}
 	}
 }
