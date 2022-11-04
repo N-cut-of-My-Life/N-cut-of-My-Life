@@ -1,4 +1,10 @@
 <template>
+  <div class="other">
+    <b-button @click="router.push({ name: 'introfirstpage' })" class="button_prev" size="sm">
+      <strong>&lt;</strong>&nbsp;&nbsp;홈페이지
+    </b-button>
+  </div>
+
   <div class="jumbotron">
     <div class="title">은 하 갤 러 리</div>
     <!-- masonry 영역 ver2 -->
@@ -28,6 +34,8 @@
 
 <script setup>
 import MasonryWall from '@yeger/vue-masonry-wall'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 // 텍스트 길이, 이미지 크기에 따라
 // 텍스트 박스 잘 바뀌는지 확인하고자 더미데이터 생성
@@ -45,6 +53,19 @@ const items = [
 </script>
 
 <style scoped>
+.other {
+    position: absolute;
+    left: 1%;
+    top: 2.5%;
+    margin: auto;
+}
+
+.button_prev {
+    background-color: #ffffff;
+    color: #141414;
+    border-radius: 0.8vw;
+    border-color: #ffffff;
+}
 .title {
     text-align: center;
     padding-top: 3%;
