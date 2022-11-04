@@ -70,7 +70,7 @@ class AnswerRepositoryTest {
 	public void notExistAnswerStateOpen() {
 		//given
 		//when
-		List<Answer> result = answerRepository.findByState(State.OPEN);
+		List<Answer> result = answerRepository.findAllByState(State.OPEN);
 		//then
 		assertThat(result.size()).isEqualTo(0);
 	}
@@ -98,7 +98,7 @@ class AnswerRepositoryTest {
 		answerRepository.save(answer2);
 		answerRepository.save(answer3);
 		//when
-		List<Answer> result = answerRepository.findByState(State.OPEN);
+		List<Answer> result = answerRepository.findAllByState(State.OPEN);
 		//then
 		assertThat(result.size()).isEqualTo(2);
 	}
