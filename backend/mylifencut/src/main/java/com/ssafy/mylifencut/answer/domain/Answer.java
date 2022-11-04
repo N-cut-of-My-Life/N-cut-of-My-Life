@@ -58,4 +58,8 @@ public class Answer {
 			.state(answerRegisterRequest.getState())
 			.build();
 	}
+
+	public void setArticle(Article article) {
+		this.article = article;
+	}
 }

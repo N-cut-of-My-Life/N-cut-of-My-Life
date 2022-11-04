@@ -31,13 +31,13 @@ public class AnswerService {
 	}
 
 	@Transactional
-	public AnswerRegisterResponse createAnswer(AnswerRegisterRequest answerRegisterRequest) {
+	public AnswerResponse createAnswer(AnswerRegisterRequest answerRegisterRequest) {
 		Answer result = answerRepository.save(Answer.from(answerRegisterRequest, Article.builder().build()));
-		AnswerRegisterResponse answerRegisterResponse = AnswerRegisterResponse.of(result);
+		AnswerResponse answerResponse = AnswerResponse.of(result);
 		if (result.getQuestionId() != 9 && result.getState().equals(State.OPEN)) {
 			throw new InvalidStateException();
 		}
-		return answerRegisterResponse;
+		return answerResponse;
 	}
 
 	public List<GalleryResponse> getGalleryList() {

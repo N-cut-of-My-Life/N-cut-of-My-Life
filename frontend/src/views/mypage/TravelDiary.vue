@@ -1,4 +1,5 @@
 <template>
+  <my-modal style="z-index: 5;"></my-modal>
   <div class="jumbotron">
     <div class="title">My Page</div>
     <main class="content">
@@ -21,19 +22,31 @@
       <section class="diary-part">
         <!-- 상위 2개 아이템들 -->
         <div class="upper-items">
+    
           <div class="last-word">
-            <img src="@/assets/post_paper.png" class="last-word-img">
-            <div class="text-on-img">나에게 하는 마지막 한마디</div>
+            <img src="@/assets/post_paper.png">
+            <h1 class="text-shadow">지금은 고민이 참 많을테지만, 언젠간 난 이겨낼거야</h1>
           </div>
-          <div class="letter">
+
+          <label class="l-button letter" for="lightbox-1">
             <img src="@/assets/mailbox.png" class="letter-img">
-          </div>
+          </label>
+          
         </div>
         <!-- 일지 상세 -->
-        <div class="diary-detail">
-          이곳이 디테일 공간이니라
+        <div class="below-part">
+          <div class="strip">
+            <div class="film">
+              <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
+            </div>
+            <div class="film">
+              <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
+            </div>
+            <div class="film">
+              <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
+            </div>
+          </div>        
         </div>
-        
         
       </section>
     </main>
@@ -41,9 +54,20 @@
 </template>
 
 <script setup>
-
+import MyModal from '@/components/mypage/MyModal.vue'
+// import { ref } from 'vue'
+// let mbClicked = ref(false)
+// const openMailbox = () => {
+//   if (mbClicked.value === false){
+//     mbClicked.value = true
+//     console.log(mbClicked.value)
+//   } else {
+//     mbClicked.value = false
+//     console.log(mbClicked.value)
+//   }
+  
+// }
 </script>
-
 <style scoped>
 @font-face {
   font-family: 'MaplestoryOTFBold';
@@ -149,38 +173,95 @@ body {
 
 .last-word {
   position: relative;
-  text-align: center;
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 
-.last-word-img {
-  width: 90%;
+.last-word img {
+  width: 100%;
 }
 
-.text-on-img {
+.text-shadow {
+  font-family: 'MapleStoryOTFBold';
+  font-size: 1.5rem;
+  color: black;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: 'ONE-Mobile-POP';
+  width: 75%;
+  top: 40%;
+  left: 15%;
+  word-wrap: break-word;
+
 }
 
-.letter {
-  /* display: flex;
-  justify-content: center; */
-  margin-left: auto;
+.l-button {
+  display: inline-block;
+  margin: 0;
+  padding: 10px 15px;
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  -webkit-transition: 0.3s all ease-in-out;
+  transition: 0.3s all ease-in-out;
 }
 
 .letter-img {
-  width: 100%;
+  width: 15vw;
 }
 
 .letter-img:hover {
   scale: 1.1;
 }
 
-.diary-detail {
+.strip {
+  display: flex;
+}
+
+.strip + .strip {
+  margin-top: 1rem;
+}
+
+.film {
+  aspect-ratio: 16 / 9;
+  background: #000;
+  background-image: linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
+    linear-gradient(to right, #fff, #fff);
+
+  background-repeat: no-repeat;
+  background-position: 5% 5%, 15% 5%, 25% 5%, 35% 5%, 45% 5%, 55% 5%, 65% 5%,
+    75% 5%, 85% 5%, 95% 5%, 5% 95%, 15% 95%, 25% 95%, 35% 95%, 45% 95%, 55% 95%,
+    65% 95%, 75% 95%, 85% 95%, 95% 95%;
+
+  background-size: 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%,
+    5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%,
+    5% 8%, 5% 8%;
+}
+
+.film__frame {
+  padding: 13% 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   
 }
+
+.film img {
+  max-width: 100%;
+  border-radius: 2px;
+}
+
+
+
 </style>
