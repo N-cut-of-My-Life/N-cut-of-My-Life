@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.like.exception.AlreadyLikeException;
+import com.ssafy.mylifencut.user.exception.UserNotFoundException;
 
 @RestControllerAdvice
 public class ExceptionAdvice {
@@ -23,5 +24,13 @@ public class ExceptionAdvice {
 		return new ResponseEntity<>(
 			BaseResponse.from(false, exception.getMessage()),
 			HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<BaseResponse> userNotFoundException(UserNotFoundException exception) {
+		return new ResponseEntity<>(
+			BaseResponse.from(false, exception.getMessage()),
+			HttpStatus.BAD_REQUEST
+		);
 	}
 }
