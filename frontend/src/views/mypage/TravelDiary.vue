@@ -1,4 +1,5 @@
 <template>
+  <my-modal v-if="mbClicked === true"></my-modal>
   <div class="jumbotron">
     <div class="title">My Page</div>
     <main class="content">
@@ -27,10 +28,10 @@
               <h1 class="text-shadow">나에게 전하는 한마디</h1>
             </div>
             <div class="back">
-              <p>누구보다 빠르게 난 남들과는 다르게 색다르게</p>
+              <p>지금은 고민이 참 많을테지만, 언젠간 난 이겨낼거야</p>
             </div>
           </div>
-          <div class="letter">
+          <div class="letter" @click="openMailbox">
             <img src="@/assets/mailbox.png" class="letter-img">
           </div>
         </div>
@@ -66,9 +67,20 @@
 </template>
 
 <script setup>
-
+import MyModal from '@/components/mypage/MyModal.vue'
+import { ref } from 'vue'
+let mbClicked = ref(false)
+const openMailbox = () => {
+  if (mbClicked.value === false){
+    mbClicked.value = true
+    console.log(mbClicked.value)
+  } else {
+    mbClicked.value = false
+    console.log(mbClicked.value)
+  }
+  
+}
 </script>
-
 <style scoped>
 @font-face {
   font-family: 'MaplestoryOTFBold';
@@ -347,6 +359,4 @@ h1 {
   max-width: 100%;
   border-radius: 2px;
 }
-
-
 </style>
