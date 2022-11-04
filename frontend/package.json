@@ -16,6 +16,7 @@
     "imagesloaded": "^5.0.0",
     "pinia": "^2.0.23",
     "vue": "^3.2.13",
+    "vue-audio": "^0.0.12",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {
