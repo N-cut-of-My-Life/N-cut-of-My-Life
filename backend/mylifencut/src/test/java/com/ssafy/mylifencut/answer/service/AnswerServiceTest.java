@@ -117,7 +117,6 @@ class AnswerServiceTest {
 			.state(State.CLOSE)
 			.likes(likes)
 			.build();
-
 		doReturn(Arrays.asList(
 			Answer.builder().id(1).article(article).contents("답변 내용").likes(likes).state(State.OPEN).build(),
 			Answer.builder().id(2).article(article2).contents("답변 내용").likes(likes).state(State.OPEN).build()
