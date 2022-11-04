@@ -22,16 +22,13 @@
       <section class="diary-part">
         <!-- 상위 2개 아이템들 -->
         <div class="upper-items">
-          <div class="flip flip-vertical">
-            <div class="front">
-              <img src="@/assets/post_paper.png">
-              <h1 class="text-shadow">나에게 전하는 한마디</h1>
-            </div>
-            <div class="back">
-              <p>지금은 고민이 참 많을테지만, 언젠간 난 이겨낼거야</p>
-            </div>
+    
+          <div class="last-word">
+            <img src="@/assets/post_paper.png">
+            <h1 class="text-shadow">지금은 고민이 참 많을테지만, 언젠간 난 이겨낼거야</h1>
           </div>
-          <label class="hero l-button letter" for="lightbox-1">
+
+          <label class="l-button letter" for="lightbox-1">
             <img src="@/assets/mailbox.png" class="letter-img">
           </label>
           <!-- <div class="letter" @click="openMailbox">
@@ -187,119 +184,41 @@ body {
   display: flex;
 }
 
-h1 {
-  font-size: 2.2em;
+.last-word {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.flip {
-  position: relative;
-}
-.flip > .front,
-.flip > .back {
-  display: block;
-  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transition-duration: 2s;
-  transition-property: transform, opacity;
-}
-.flip > .front {
-  transform: rotateY(0deg);
-}
-.flip > .back {
-  position: absolute;
-  opacity: 0;
-  top: 0px;
-  left: 0px;
+.last-word img {
   width: 100%;
-  height: 100%;
-  transform: rotateY(-180deg);
-}
-.flip:hover > .front {
-  transform: rotateY(180deg);
-}
-
-.flip:hover > .back {
-  opacity: 1;
-  transform: rotateY(0deg);
-}
-.flip.flip-vertical > .back {
-  transform: rotateX(-180deg);
-}
-.flip.flip-vertical:hover > .front {
-  transform: rotateX(180deg);
-}
-
-.flip.flip-vertical:hover > .front .text-shadow{
-  transform: rotateX(180deg);
-  opacity: 0;
-}
-.flip.flip-vertical:hover > .back {
-  transform: rotateX(0deg);
-}
-
-.flip {
-  position: relative;
-  display: inline-block;
-  margin-right: 2px;
-  margin-top: 1em;
-  width: 25vw;
-}
-.flip > .front,
-.flip > .back {
-  display: block;
-  color: white;
-  width: inherit;
-  background-size: cover !important;
-  background-position: center !important;
-  height: 220px;
-  /* padding: 1em 2em; */
-  /* background: #313131;
-  border-radius: 10px; */
-}
-
-.flip > .front img {
-  width: 100%;
-  position: relative;
-}
-
-.flip > .front p,
-.flip > .back p {
-  font-family: 'ONE-Mobile-POP';
-  font-size: 1.5rem;
-  line-height: 160%;
-  color: #999;
-  width: 75%;
-  position: absolute;
-  top: 35%;
-  left: 30%;
-  transform: translateX(-18%);
-  word-wrap: break-word;
 }
 
 .text-shadow {
   font-family: 'MapleStoryOTFBold';
+  font-size: 1.5rem;
   color: black;
   position: absolute;
+  width: 75%;
   top: 40%;
-  left: 10%;
+  left: 13%;
+  word-wrap: break-word;
+
 }
-/* .last-word-front {
-  position: relative;
+
+.l-button {
+  display: inline-block;
+  margin: 0;
+  padding: 10px 15px;
+  border: none;
+  color: #fff;
   text-align: center;
-  display: flex;
-  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  -webkit-transition: 0.3s all ease-in-out;
+  transition: 0.3s all ease-in-out;
 }
-
-.last-word-img {
-  width: 90%;
-}
-
-.text-on-img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: 'ONE-Mobile-POP';
-} */
 
 .letter-img {
   width: 15vw;
@@ -357,16 +276,5 @@ h1 {
 }
 
 
-.l-button {
-  display: inline-block;
-  margin: 0;
-  padding: 10px 15px;
-  border: none;
-  color: #fff;
-  text-align: center;
-  font-size: 14px;
-  font-weight: bold;
-  -webkit-transition: 0.3s all ease-in-out;
-  transition: 0.3s all ease-in-out;
-}
+
 </style>
