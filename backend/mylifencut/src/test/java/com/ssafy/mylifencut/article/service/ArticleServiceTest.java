@@ -18,10 +18,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.ssafy.mylifencut.answer.domain.Answer;
+import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
 import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.article.dto.ArticleRegisterRequest;
-import com.ssafy.mylifencut.article.dto.ArticleRetrieveResponse;
+import com.ssafy.mylifencut.article.dto.ArticleResponse;
 import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnough;
 import com.ssafy.mylifencut.article.repository.ArticleRepository;
 import com.ssafy.mylifencut.user.domain.User;
@@ -72,10 +72,10 @@ class ArticleServiceTest {
 		doReturn(articles).when(articleRepository).findAllByUserId(userId);
 
 		//then
-		final List<ArticleRetrieveResponse> result = articleService.retrieveArticles(userId);
+		final List<ArticleResponse> result = articleService.retrieveArticles(userId);
 		assertNotNull(result);
 		assertEquals(result.size(), 2);
-		for (ArticleRetrieveResponse response : result) {
+		for (ArticleResponse response : result) {
 			assertEquals(response.getUser().getName(), userName);
 		}
 	}
@@ -84,12 +84,13 @@ class ArticleServiceTest {
 	@DisplayName("[여행일지 등록 실패] - 존재하지 않는 userId일 때")
 	public void registerArticle_notFoundUserError() {
 		//given
-		doReturn(Optional.empty()).when(userRepository).findById(5);
+		final Integer userId = 5;
+		doReturn(Optional.empty()).when(userRepository).findById(userId);
 
 		//when
 		final UserNotFoundException result = assertThrows(UserNotFoundException.class
 			, () -> articleService.createArticle(new ArticleRegisterRequest(
-				1, User.builder().id(5).build(), Collections.emptyList(), LocalDateTime.now())
+				userId, Collections.emptyList(), LocalDateTime.now())
 			)
 		);
 
@@ -103,19 +104,49 @@ class ArticleServiceTest {
 		//given
 		doReturn(Optional.of(User.builder().build())).when(userRepository).findById(anyInt());
 
-		final List<Answer> answers = new ArrayList<>();
-		for (int i = 0; i < ANSWERS_MIN_SIZE - 1; i++) {
-			answers.add(Answer.builder().build());
-		}
+		final List<AnswerRegisterRequest> answers = answerRegisterRequests(ANSWERS_MIN_SIZE - 1);
 
 		//when
 		final AnswersSizeIsNotEnough result = assertThrows(AnswersSizeIsNotEnough.class
 			, () -> articleService.createArticle(new ArticleRegisterRequest(
-				1, User.builder().id(1).build(), answers, LocalDateTime.now())
+				1, answers, LocalDateTime.now())
 			)
 		);
 
 		//then
 		assertEquals(result.getMessage(), ARTICLE_ANSWERS_SIZE_IS_NOT_ENOUGH_ERROR_MESSAGE);
+	}
+
+	@Test
+	@DisplayName("[여행일지 등록 성공]")
+	public void registerArticle_success() {
+		//given
+		doReturn(Optional.of(User.builder().build())).when(userRepository).findById(anyInt());
+
+		final Integer userId = 5;
+		final String userName = "유저이름";
+		final ArticleRegisterRequest request = ArticleRegisterRequest.builder()
+			.userId(userId)
+			.answers(answerRegisterRequests(ANSWERS_MIN_SIZE))
+			.createDate(LocalDateTime.now())
+			.build();
+		final Article article = Article.from(request, User.builder().id(userId).name(userName).build());
+		doReturn(article).when(articleRepository).save(any(Article.class));
+
+		//when
+		articleService.createArticle(request);
+
+		//then
+		assertEquals(5, article.getUser().getId());
+		assertEquals(userName, article.getUser().getName());
+		assertEquals(ANSWERS_MIN_SIZE, article.getAnswers().size());
+	}
+
+	private List<AnswerRegisterRequest> answerRegisterRequests(final int answerSize) {
+		final List<AnswerRegisterRequest> answers = new ArrayList<>();
+		for (int i = 0; i < answerSize; i++) {
+			answers.add(AnswerRegisterRequest.builder().build());
+		}
+		return answers;
 	}
 }
