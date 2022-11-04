@@ -102,6 +102,7 @@ class ArticleControllerTest {
 			.getResponse()
 			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 
+		//then
 		assertNotNull(response);
 		assertTrue(response.isSuccess());
 		assertEquals(ArticleConstant.RETRIEVE_SUCCESS_MESSAGE, response.getMessage());
