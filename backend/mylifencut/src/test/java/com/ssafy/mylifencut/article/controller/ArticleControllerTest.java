@@ -12,6 +12,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -52,64 +53,80 @@ class ArticleControllerTest {
 			.build();
 	}
 
-	@Test
-	@DisplayName("[여행일지 조회 실패] - 존재하지 않는 userId일때")
-	public void retrieveArticle_notFoundUserError() throws Exception {
-		final int userId = -1;
-		final String url = "/article/" + userId;
+	@Nested
+	@DisplayName("[여행일지 조회]")
+	class RetrieveTest {
+		@Test
+		@DisplayName("[실패] - 존재하지 않는 userId일때")
+		public void retrieveArticle_notFoundUserError() throws Exception {
+			final int userId = -1;
+			final String url = "/article/" + userId;
 
-		//given
-		doThrow(new UserNotFoundException())
-			.when(articleService)
-			.retrieveArticles(userId);
+			//given
+			doThrow(new UserNotFoundException())
+				.when(articleService)
+				.retrieveArticles(userId);
 
-		//when
-		final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get(url));
+			//when
+			final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get(url));
 
-		//then
-		resultActions.andExpect(status().isBadRequest());
+			//then
+			resultActions.andExpect(status().isBadRequest());
 
-		final BaseResponse response = gson.fromJson(resultActions.andReturn()
-			.getResponse()
-			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
-		assertNull(response.getData());
-		assertFalse(response.isSuccess());
-		assertEquals(UserConstant.USER_NOT_FOUND_ERROR_MESSAGE, response.getMessage());
+			final BaseResponse response = gson.fromJson(resultActions.andReturn()
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+			assertNull(response.getData());
+			assertFalse(response.isSuccess());
+			assertEquals(UserConstant.USER_NOT_FOUND_ERROR_MESSAGE, response.getMessage());
+		}
+
+		@Test
+		@DisplayName("[성공]")
+		public void retrieveArticle_success() throws Exception {
+			//given
+			final int userId = 5;
+			final String url = "/article/" + userId;
+
+			final List<ArticleResponse> articleResponses = new ArrayList<>();
+			for (int i = 0; i < 3; i++) {
+				articleResponses.add(ArticleResponse.builder()
+					.id(i + 1)
+					.user(User.builder().id(userId).build())
+					.createDate(LocalDateTime.now())
+					.build());
+			}
+			doReturn(articleResponses).when(articleService).retrieveArticles(userId);
+
+			//when
+			final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get(url));
+
+			resultActions.andExpect(status().isOk());
+			final BaseResponse response = gson.fromJson(resultActions.andReturn()
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+
+			//then
+			assertNotNull(response);
+			assertTrue(response.isSuccess());
+			assertEquals(ArticleConstant.RETRIEVE_SUCCESS_MESSAGE, response.getMessage());
+			List<ArticleResponse> list = (List<ArticleResponse>)response.getData();
+			for (int i = 0; i < list.size(); i++) {
+				Map articleResponse = (Map)list.get(i);
+				assertEquals((double)(i + 1), articleResponse.get("id"));
+			}
+		}
+
 	}
 
-	@Test
-	@DisplayName("[여행일지 조회 성공]")
-	public void retrieveArticle_success() throws Exception {
-		//given
-		final int userId = 5;
-		final String url = "/article/" + userId;
+	@Nested
+	@DisplayName("[여행일지 등록]")
+	class RegisterTest {
+		@Test
+		@DisplayName("[실패] - 존재하지 않는 userId일때")
+		public void registerArticle_notFoundUserError() {
 
-		final List<ArticleResponse> articleResponses = new ArrayList<>();
-		for (int i = 0; i < 3; i++) {
-			articleResponses.add(ArticleResponse.builder()
-				.id(i + 1)
-				.user(User.builder().id(userId).build())
-				.createDate(LocalDateTime.now())
-				.build());
-		}
-		doReturn(articleResponses).when(articleService).retrieveArticles(userId);
-
-		//when
-		final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get(url));
-
-		resultActions.andExpect(status().isOk());
-		final BaseResponse response = gson.fromJson(resultActions.andReturn()
-			.getResponse()
-			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
-
-		//then
-		assertNotNull(response);
-		assertTrue(response.isSuccess());
-		assertEquals(ArticleConstant.RETRIEVE_SUCCESS_MESSAGE, response.getMessage());
-		List<ArticleResponse> list = (List<ArticleResponse>)response.getData();
-		for (int i = 0; i < list.size(); i++) {
-			Map articleResponse = (Map)list.get(i);
-			assertEquals((double)(i + 1), articleResponse.get("id"));
 		}
 	}
+
 }
