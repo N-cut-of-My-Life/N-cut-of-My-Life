@@ -1,5 +1,5 @@
 <template>
-  <my-modal v-if="mbClicked === true"></my-modal>
+  <my-modal></my-modal>
   <div class="jumbotron">
     <div class="title">My Page</div>
     <main class="content">
@@ -31,9 +31,12 @@
               <p>지금은 고민이 참 많을테지만, 언젠간 난 이겨낼거야</p>
             </div>
           </div>
-          <div class="letter" @click="openMailbox">
+          <label class="hero l-button letter" for="lightbox-1">
             <img src="@/assets/mailbox.png" class="letter-img">
-          </div>
+          </label>
+          <!-- <div class="letter" @click="openMailbox">
+            <img src="@/assets/mailbox.png" class="letter-img">
+          </div> -->
         </div>
         <!-- 일지 상세 -->
         <div class="strip">
@@ -68,18 +71,18 @@
 
 <script setup>
 import MyModal from '@/components/mypage/MyModal.vue'
-import { ref } from 'vue'
-let mbClicked = ref(false)
-const openMailbox = () => {
-  if (mbClicked.value === false){
-    mbClicked.value = true
-    console.log(mbClicked.value)
-  } else {
-    mbClicked.value = false
-    console.log(mbClicked.value)
-  }
+// import { ref } from 'vue'
+// let mbClicked = ref(false)
+// const openMailbox = () => {
+//   if (mbClicked.value === false){
+//     mbClicked.value = true
+//     console.log(mbClicked.value)
+//   } else {
+//     mbClicked.value = false
+//     console.log(mbClicked.value)
+//   }
   
-}
+// }
 </script>
 <style scoped>
 @font-face {
@@ -298,13 +301,6 @@ h1 {
   font-family: 'ONE-Mobile-POP';
 } */
 
-.letter {
-  /* display: flex;
-  justify-content: center; */
-  margin-left: auto;
-  margin-top: -3em
-}
-
 .letter-img {
   width: 15vw;
 }
@@ -358,5 +354,19 @@ h1 {
 .film img {
   max-width: 100%;
   border-radius: 2px;
+}
+
+
+.l-button {
+  display: inline-block;
+  margin: 0;
+  padding: 10px 15px;
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  -webkit-transition: 0.3s all ease-in-out;
+  transition: 0.3s all ease-in-out;
 }
 </style>
