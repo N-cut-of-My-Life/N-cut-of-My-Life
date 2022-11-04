@@ -80,12 +80,12 @@ class AnswerRepositoryTest {
 	public void readGallery() {
 		//given
 		final Answer answer = Answer.builder()
-			.questionId(1)
+			.questionId(9)
 			.contents("답변 내용")
 			.state(State.OPEN)
 			.build();
 		final Answer answer2 = Answer.builder()
-			.questionId(2)
+			.questionId(9)
 			.contents("답변 내용입니다.")
 			.state(State.OPEN)
 			.build();
