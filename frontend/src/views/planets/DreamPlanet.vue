@@ -33,7 +33,7 @@
         </b-button>
     </div>
 
-    <b-modal id="modal-dream" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+    <b-modal data-bs-dismiss="modal" aria-label="Close" id="modal-dream" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
         <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">아쉽게 이루지 못한 꿈을 이 곳에 적어주세요!</div><br />
         <b-container ref="form">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color: #eceffa;">
@@ -163,8 +163,61 @@ img {
     background-color: #81c6e8;
     position: relative;
     margin: 300px auto 0;
+    transition: all 0.3s ease-in-out 0s;
 }
 
+.button_prev {
+    background-color: #ffffff;
+    color: #141414;
+    border-radius: 0.8vw;
+    border-color: #ffffff;
+}
+
+.button_2::before {
+    content: '';
+    border-radius: 1000px;
+    min-width: calc(190px + 12px);
+    min-height: calc(60px + 12px);
+    box-shadow: 0 0 60px #ffffff;;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+    transition: all .3s ease-in-out 0s;
+    animation: ring 1.5s infinite;
+}
+
+.button_2:hover,
+.button_2:focus {
+    color: #313133;
+    transform: translateY(-6px);
+}
+
+.button_2:hover::before,
+.button_2:focus::before {
+    opacity: 1;
+}
+
+.button_2:hover::after,
+.button_2:focus::after {
+    animation: none;
+    display: none;
+}
+
+@keyframes ring {
+    0% {
+        width: fit-content;
+        height: fit-content;
+        opacity: 1;
+    }
+
+    100% {
+        width: fit-content;
+        height: fit-content;
+        opacity: 0;
+    }
+}
 
 .wave {
     position: relative;
@@ -190,7 +243,7 @@ img {
     }
 
     20% {
-        transform: translateY(-10px);
+        transform: translateY(-3px);
     }
 }
 </style>

@@ -31,7 +31,7 @@
         </b-button>
     </div>
 
-    <b-modal id="modal-regret" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+    <b-modal data-bs-dismiss="modal" aria-label="Close" id="modal-regret" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
         <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">가장 후회되는 일을 적어주세요!</div><br />
         <b-container ref="form">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
@@ -82,6 +82,10 @@ export default {
 </script>
 
 <style scoped>
+html, body {
+  height: 100%;
+}
+
 body {
     margin: 0;
 }
@@ -133,7 +137,7 @@ img {
 .last {
     position: absolute;
     bottom: 52%;
-    left: 37.5%;
+    left: 37%;
     margin: auto;
 }
 
@@ -157,8 +161,56 @@ img {
     background-color: #9cb4cc;
     position: relative;
     margin: 300px auto 0;
+    transition: all 0.3s ease-in-out 0s;
+    font-size: 1.3vw;
+    cursor: pointer;
 }
 
+.button_2::before {
+    content: '';
+    border-radius: 1000px;
+    min-width: calc(160px + 12px);
+    min-height: calc(60px + 12px);
+    box-shadow: 0 0 60px #ffffff;;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+    transition: all .3s ease-in-out 0s;
+    animation: ring 1.5s infinite;
+}
+
+.button_2:hover,
+.button_2:focus {
+    color: #313133;
+    transform: translateY(-6px);
+}
+
+.button_2:hover::before,
+.button_2:focus::before {
+    opacity: 1;
+}
+
+.button_2:hover::after,
+.button_2:focus::after {
+    animation: none;
+    display: none;
+}
+
+@keyframes ring {
+    0% {
+        width: fit-content;
+        height: fit-content;
+        opacity: 1;
+    }
+
+    100% {
+        width: fit-content;
+        height: fit-content;
+        opacity: 0;
+    }
+}
 
 .wave {
     position: relative;
@@ -184,7 +236,7 @@ img {
     }
 
     20% {
-        transform: translateY(-10px);
+        transform: translateY(-3px);
     }
 }
 </style>
