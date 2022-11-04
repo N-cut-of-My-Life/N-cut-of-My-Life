@@ -5,6 +5,7 @@ import static com.ssafy.mylifencut.like.LikeConstant.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,4 +41,14 @@ public class AnswerController {
 			BaseResponse.from(true, CREATE_LIKE_SUCCESS_MESSAGE, likeService.createLike(userId, answerId)),
 			HttpStatus.OK);
 	}
+
+	@DeleteMapping("/{answerId}/{userId}")
+	public ResponseEntity<BaseResponse> deleteLike(@PathVariable("answerId") Integer answerId,
+		@PathVariable("userId") Integer userId) {
+		likeService.deleteLike(userId, answerId);
+		return new ResponseEntity<>(
+			BaseResponse.from(true, DELETE_LIKE_SUCCESS_MESSAGE),
+			HttpStatus.NO_CONTENT);
+	}
+
 }
