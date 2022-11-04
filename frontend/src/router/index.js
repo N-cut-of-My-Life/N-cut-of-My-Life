@@ -2,6 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
+    path: '/:pathMatch(.*)*',
+    redirect: "/pagenotfound"
+  },
+  {
     path: '/',
     name: 'intro',
     component: () => import('@/views/intro/IntroView.vue')
@@ -76,6 +80,11 @@ const routes = [
     name: "treasureplanet",
     component: () => import("@/views/planets/TreasurePlanet.vue"),
   },
+  {
+    path: "/pagenotfound",
+    name: "pagenotFound",
+    component: () => import("@/views/404/PageNotFound.vue")
+},
 ]
 
 const router = createRouter({
