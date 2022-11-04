@@ -15,7 +15,7 @@ import com.ssafy.mylifencut.answer.AnswerConstant;
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
-import com.ssafy.mylifencut.answer.dto.AnswerRegisterResponse;
+import com.ssafy.mylifencut.answer.dto.AnswerResponse;
 import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
 import com.ssafy.mylifencut.article.domain.Article;
@@ -54,22 +54,22 @@ class AnswerServiceTest {
 	public void createAnswer() {
 		//given
 		Answer answer = newAnswer();
-		AnswerRegisterResponse answerRegisterResponse = AnswerRegisterResponse.of(answer);
+		AnswerResponse answerResponse = AnswerResponse.of(answer);
 		doReturn(answer).when(answerRepository).save(any(Answer.class));
 
 		//when
 		AnswerRegisterRequest answerRegisterRequest = new AnswerRegisterRequest(0, answer.getQuestionId(),
 			answer.getContents(),
 			answer.getState());
-		final AnswerRegisterResponse result = answerService.createAnswer(answerRegisterRequest);
+		final AnswerResponse result = answerService.createAnswer(answerRegisterRequest);
 
 		//then
 		assertNotNull(result);
-		assertEquals(answerRegisterResponse.getId(), result.getId());
-		assertEquals(answerRegisterResponse.getArticleId(), result.getArticleId());
-		assertEquals(answerRegisterResponse.getQuestionId(), result.getQuestionId());
-		assertEquals(answerRegisterResponse.getContents(), result.getContents());
-		assertEquals(answerRegisterResponse.getState(), result.getState());
+		assertEquals(answerResponse.getId(), result.getId());
+		assertEquals(answerResponse.getArticleId(), result.getArticleId());
+		assertEquals(answerResponse.getQuestionId(), result.getQuestionId());
+		assertEquals(answerResponse.getContents(), result.getContents());
+		assertEquals(answerResponse.getState(), result.getState());
 	}
 
 	private Answer newAnswer() {

@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
-import com.ssafy.mylifencut.answer.dto.AnswerRegisterResponse;
+import com.ssafy.mylifencut.answer.dto.AnswerResponse;
 import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
 import com.ssafy.mylifencut.article.domain.Article;
@@ -27,12 +27,12 @@ public class AnswerService {
 	}
 
 	@Transactional
-	public AnswerRegisterResponse createAnswer(AnswerRegisterRequest answerRegisterRequest) {
+	public AnswerResponse createAnswer(AnswerRegisterRequest answerRegisterRequest) {
 		Answer result = answerRepository.save(Answer.from(answerRegisterRequest, Article.builder().build()));
-		AnswerRegisterResponse answerRegisterResponse = AnswerRegisterResponse.of(result);
+		AnswerResponse answerResponse = AnswerResponse.of(result);
 		if (result.getQuestionId() != 9 && result.getState().equals(State.OPEN)) {
 			throw new InvalidStateException();
 		}
-		return answerRegisterResponse;
+		return answerResponse;
 	}
 }
