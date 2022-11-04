@@ -1,5 +1,8 @@
 package com.ssafy.mylifencut.answer.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -7,6 +10,7 @@ import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
 import com.ssafy.mylifencut.answer.dto.AnswerRegisterResponse;
+import com.ssafy.mylifencut.answer.dto.GalleryResponse;
 import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
 import com.ssafy.mylifencut.article.domain.Article;
@@ -35,4 +39,11 @@ public class AnswerService {
 		}
 		return answerRegisterResponse;
 	}
+
+	public List<GalleryResponse> getGalleryList() {
+		return answerRepository.findAllByState(State.OPEN).stream()
+			.map(GalleryResponse::of)
+			.collect(Collectors.toList());
+	}
+
 }
