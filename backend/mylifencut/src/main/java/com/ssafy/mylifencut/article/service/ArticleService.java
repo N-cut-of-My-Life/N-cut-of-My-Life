@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.article.ArticleConstant;
 import com.ssafy.mylifencut.article.domain.Article;
-import com.ssafy.mylifencut.article.dto.ArticleRegisterRequest;
+import com.ssafy.mylifencut.article.dto.ArticleRequest;
 import com.ssafy.mylifencut.article.dto.ArticleResponse;
 import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnough;
 import com.ssafy.mylifencut.article.repository.ArticleRepository;
@@ -33,14 +33,14 @@ public class ArticleService {
 		return articleRepository.findAllByUserId(userId).stream().map(ArticleResponse::of).collect(Collectors.toList());
 	}
 
-	public void createArticle(ArticleRegisterRequest articleRegisterRequest) {
-		User user = userRepository.findById(articleRegisterRequest.getUserId()).orElseThrow(UserNotFoundException::new);
+	public void createArticle(ArticleRequest articleRequest) {
+		User user = userRepository.findById(articleRequest.getUserId()).orElseThrow(UserNotFoundException::new);
 
-		if (articleRegisterRequest.getAnswers().size() < ArticleConstant.ANSWERS_MIN_SIZE) {
+		if (articleRequest.getAnswers().size() < ArticleConstant.ANSWERS_MIN_SIZE) {
 			throw new AnswersSizeIsNotEnough();
 		}
-		Article article = articleRepository.save(Article.from(articleRegisterRequest, user));
-		articleRegisterRequest.getAnswers().stream()
+		Article article = articleRepository.save(Article.from(articleRequest, user));
+		articleRequest.getAnswers().stream()
 			.map(answerRegisterRequest -> Answer.from(answerRegisterRequest, article))
 			.forEach(article::addAnswer);
 	}

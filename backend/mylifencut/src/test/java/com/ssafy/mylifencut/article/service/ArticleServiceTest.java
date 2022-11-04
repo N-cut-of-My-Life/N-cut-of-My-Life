@@ -20,7 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
 import com.ssafy.mylifencut.article.domain.Article;
-import com.ssafy.mylifencut.article.dto.ArticleRegisterRequest;
+import com.ssafy.mylifencut.article.dto.ArticleRequest;
 import com.ssafy.mylifencut.article.dto.ArticleResponse;
 import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnough;
 import com.ssafy.mylifencut.article.repository.ArticleRepository;
@@ -89,7 +89,7 @@ class ArticleServiceTest {
 
 		//when
 		final UserNotFoundException result = assertThrows(UserNotFoundException.class
-			, () -> articleService.createArticle(new ArticleRegisterRequest(
+			, () -> articleService.createArticle(new ArticleRequest(
 				userId, Collections.emptyList(), LocalDateTime.now())
 			)
 		);
@@ -108,7 +108,7 @@ class ArticleServiceTest {
 
 		//when
 		final AnswersSizeIsNotEnough result = assertThrows(AnswersSizeIsNotEnough.class
-			, () -> articleService.createArticle(new ArticleRegisterRequest(
+			, () -> articleService.createArticle(new ArticleRequest(
 				1, answers, LocalDateTime.now())
 			)
 		);
@@ -125,7 +125,7 @@ class ArticleServiceTest {
 
 		final Integer userId = 5;
 		final String userName = "유저이름";
-		final ArticleRegisterRequest request = ArticleRegisterRequest.builder()
+		final ArticleRequest request = ArticleRequest.builder()
 			.userId(userId)
 			.answers(answerRegisterRequests(ANSWERS_MIN_SIZE))
 			.createDate(LocalDateTime.now())

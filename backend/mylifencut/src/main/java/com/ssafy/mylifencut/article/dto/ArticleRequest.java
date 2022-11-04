@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
-public class ArticleRegisterRequest {
+public class ArticleRequest {
 	private Integer userId;
 	private List<AnswerRegisterRequest> answers;
 	private LocalDateTime createDate;
