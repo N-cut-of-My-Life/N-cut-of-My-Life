@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.mylifencut.answer.domain.Answer;
-import com.ssafy.mylifencut.answer.repository.AnswerRepository;
 import com.ssafy.mylifencut.article.ArticleConstant;
 import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.article.dto.ArticleRegisterRequest;
@@ -26,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 public class ArticleService {
 	private final ArticleRepository articleRepository;
 	private final UserRepository userRepository;
-	private final AnswerRepository answerRepository;
 
 	@Transactional(readOnly = true)
 	public List<ArticleResponse> retrieveArticles(int userId) {
