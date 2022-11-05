@@ -58,9 +58,9 @@ public class AnswerController {
 	@Operation(summary = "갤러리 조회", description = "STATE 상태가 OPEN 인 답변을 조회합니다.")
 	@GetMapping
 	public ResponseEntity<BaseResponse> readGallery() {
-		answerService.getGalleryList();
+
 		return new ResponseEntity<>(
-			BaseResponse.from(true, READ_GALLERY_SUCCESS_MESSAGE),
+			BaseResponse.from(true, READ_GALLERY_SUCCESS_MESSAGE,answerService.getGalleryList()),
 			HttpStatus.OK);
 	}
 
