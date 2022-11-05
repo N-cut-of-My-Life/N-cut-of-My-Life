@@ -173,6 +173,15 @@ class AnswerControllerTest {
 			);
 			//then
 			resultActions.andExpect(status().isOk());
+			final BaseResponse response = gson.fromJson(resultActions.andReturn()
+					.getResponse()
+					.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+			Map map = (Map)response.getData();
+			assertEquals((double)isLikeResponse.getId(), map.get("id"));
+			assertEquals((double)isLikeResponse.getAnswer_id(), map.get("answer_id"));
+			assertEquals((double)isLikeResponse.getUser_id(), map.get("user_id"));
+			assertTrue(response.isSuccess());
+			assertEquals(LikeConstant.CREATE_LIKE_SUCCESS_MESSAGE, response.getMessage());
 
 		}
 	}
