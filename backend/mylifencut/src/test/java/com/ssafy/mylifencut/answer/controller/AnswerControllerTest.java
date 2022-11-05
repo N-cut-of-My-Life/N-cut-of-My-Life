@@ -206,7 +206,13 @@ class AnswerControllerTest {
 			);
 			//then
 			resultActions.andExpect(status().isBadRequest());
-
+			final BaseResponse response = gson.fromJson(resultActions.andReturn()
+					.getResponse()
+					.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+			Map map = (Map)response.getData();
+			assertNull(response.getData());
+			assertFalse(response.isSuccess());
+			assertEquals(LikeConstant.NOT_EXIST_LIKE_ERROR_MESSAGE, response.getMessage());
 
 
 		}
