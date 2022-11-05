@@ -3,6 +3,7 @@ package com.ssafy.mylifencut.answer.controller;
 import static com.ssafy.mylifencut.answer.AnswerConstant.*;
 import static com.ssafy.mylifencut.like.LikeConstant.*;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,6 +36,7 @@ public class AnswerController {
 			HttpStatus.OK);
 	}
 
+	@Operation(summary = "좋아요 추가", description = "답변 번호(answerId)와 유저 아이디(userId)를 이용하여 답변에 좋아요를 추가합니다.")
 	@PostMapping("/{answerId}/{userId}")
 	public ResponseEntity<BaseResponse> registerLike(@PathVariable("answerId") Integer answerId,
 		@PathVariable("userId") Integer userId) {
@@ -43,6 +45,7 @@ public class AnswerController {
 			HttpStatus.OK);
 	}
 
+	@Operation(summary = "좋아요 삭제", description = "답변 번호(answerId)와 유저 아이디(userId)를 이용하여 답변에 좋아요를 삭제합니다.")
 	@DeleteMapping("/{answerId}/{userId}")
 	public ResponseEntity<BaseResponse> deleteLike(@PathVariable("answerId") Integer answerId,
 		@PathVariable("userId") Integer userId) {
@@ -52,6 +55,7 @@ public class AnswerController {
 			HttpStatus.NO_CONTENT);
 	}
 
+	@Operation(summary = "갤러리 조회", description = "STATE 상태가 OPEN 인 답변을 조회합니다.")
 	@GetMapping
 	public ResponseEntity<BaseResponse> readGallery() {
 		answerService.getGalleryList();
