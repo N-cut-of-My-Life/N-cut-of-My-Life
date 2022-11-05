@@ -227,6 +227,13 @@ class AnswerControllerTest {
 			);
 			//then
 			resultActions.andExpect(status().isNoContent());
+			final BaseResponse response = gson.fromJson(resultActions.andReturn()
+					.getResponse()
+					.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+			Map map = (Map)response.getData();
+			assertNull(response.getData());
+			assertTrue(response.isSuccess());
+			assertEquals(LikeConstant.DELETE_LIKE_SUCCESS_MESSAGE, response.getMessage());
 
 
 		}
