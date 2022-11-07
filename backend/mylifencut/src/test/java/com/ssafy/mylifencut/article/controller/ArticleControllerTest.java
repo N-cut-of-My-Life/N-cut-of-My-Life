@@ -163,4 +163,28 @@ class ArticleControllerTest {
 				ArticleConstant.ARTICLE_ANSWERS_SIZE_IS_NOT_ENOUGH_ERROR_MESSAGE)
 		);
 	}
+
+	@Test
+	@DisplayName("[여행일지 등록 성공]")
+	public void registerArticle_success() throws Exception {
+		//given
+		final String url = "/article";
+		final ArticleRequest articleRequest = ArticleRequest.builder()
+			.userId(1)
+			.build();
+		//when
+		final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
+			.post(url)
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(gson.toJson(articleRequest)));
+
+		//then
+		resultActions.andExpect(status().isOk());
+		final BaseResponse response = gson.fromJson(resultActions.andReturn()
+			.getResponse()
+			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+		assertTrue(response.isSuccess());
+		assertEquals(ArticleConstant.REGISTER_SUCCESS_MESSAGE, response.getMessage());
+		assertNull(response.getData());
+	}
 }
