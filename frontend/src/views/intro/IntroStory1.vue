@@ -3,7 +3,7 @@
     <source src="@/assets/intro_video.mp4" type="video/mp4">
   </video>
 
-  <splide id="carousel" :options="options" @splide:arrows:updated="isMounted">
+  <splide id="carousel" :options="options" @splide:arrows:updated="checkLastSlide">
     <splide-slide>
       <h1>
         안녕하세요<br />
@@ -62,15 +62,16 @@
     </b-button>
   </div>
   <div v-else class="jump">
-    <b-button class="button" size="md">
+    <b-button v-show="elementVisible" class="button_2" size="lg">
       <router-link :to="{ name: 'planetlist' }" class="nav-link">
         <div class="wave">
-          <span style="--i: 1">G</span>
-          <span style="--i: 2">o</span>
+          <span style="--i: 1">여</span>
+          <span style="--i: 2">행</span>
           <span style="--i: 3">&nbsp;</span>
-          <span style="--i: 4">G</span>
-          <span style="--i: 5">o</span>
-          <span style="--i: 6">!</span>
+          <span style="--i: 4">떠</span>
+          <span style="--i: 5">나</span>
+          <span style="--i: 6">기</span>
+          <span style="--i: 7">!</span>
         </div>
       </router-link>
     </b-button>
@@ -97,13 +98,19 @@ export default {
         animatedDots: false,
         padding: "2rem",
         type: "fade",
-        autoplay: false,
+        autoplay: true,
       },
-      isLast: false
+      isLast: false,
+      elementVisible: false
+    }
+  },
+  updated() {
+    if (this.isLast === true) {
+      setTimeout(() => this.elementVisible = true, 2000)
     }
   },
   methods: {
-    isMounted(splide, prev, next, prevIndex, nextIndex){
+    checkLastSlide(splide, prev, next, prevIndex, nextIndex) {
       if (nextIndex === -1) {
         this.isLast = true
       } else {
@@ -165,7 +172,7 @@ h1 {
 .wave span {
   position: relative;
   display: inline-block;
-  color: #FFFFFF;
+  color: #ffffff;
   text-transform: uppercase;
   animation: wave 3s infinite;
   animation-delay: calc(0.1s * var(--i));
@@ -180,7 +187,63 @@ h1 {
   }
 
   20% {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
+  }
+}
+
+.button_2 {
+  border-radius: 2vw;
+  border: none;
+  background: linear-gradient(to right, #8bbccc , #4c6793);
+  position: relative;
+  margin: 300px auto 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.button_2::before {
+  content: '';
+  border-radius: 1000px;
+  min-width: calc(160px + 12px);
+  min-height: calc(60px + 12px);
+  box-shadow: 0 0 60px #ffffff;
+  ;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  transition: all .3s ease-in-out 0s;
+  animation: ring 1.5s infinite;
+}
+
+.button_2:hover,
+.button_2:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.button_2:hover::before,
+.button_2:focus::before {
+  opacity: 1;
+}
+
+.button_2:hover::after,
+.button_2:focus::after {
+  animation: none;
+  display: none;
+}
+
+@keyframes ring {
+  0% {
+    width: fit-content;
+    height: fit-content;
+    opacity: 1;
+  }
+
+  100% {
+    width: fit-content;
+    height: fit-content;
+    opacity: 0;
   }
 }
 </style>

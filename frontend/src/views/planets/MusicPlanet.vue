@@ -2,10 +2,15 @@
     <div class="jumbotron">
         <div class="title">둠칫둠칫 행성</div>
     </div>
+    <audio id="myaudios" loop autoplay :src="audios[currentAudio]">
+    </audio>
+    <a href="#noscroll" id="mute">toggle sound</a>
+    <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
     <img :src="images[currentImage]" />
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
-            <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
+            <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
+        </b-button>
     </div>
     <div class="jump">
         <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
@@ -36,6 +41,15 @@
 </template>
 
 <script>
+var audio = document.getElementById('background_audio');
+
+document.getElementById('mute').addEventListener('click', function (e)
+{
+    e = e || window.event;
+    audio.muted = !audio.muted;
+    e.preventDefault();
+}, false);
+
 export default {
     data() {
         return {
@@ -46,8 +60,12 @@ export default {
                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_4.svg'),
                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_5.svg'),
             ],
+            audios: [
+                require('@/assets/audio/booty-in-the-nest.mp3')
+            ],
             currentImage: 0,
-            elementVisible: false
+            elementVisible: false,
+            currentAudio: 0,
         }
     },
     methods: {
@@ -64,9 +82,14 @@ export default {
         gotoPage(link) {
             this.$router.push(link)
         },
+
+        // toggleMute() {
+        //     var myAudio = document.getElementById('myaudios');
+        //     myAudio.muted = !myAudio.muted;
+        // }        
     },
     updated() {
-        if(this.currentImage==(this.images.length-1)){
+        if (this.currentImage == (this.images.length - 1)) {
             setTimeout(() => this.elementVisible = true, 2000)
         }
     },
@@ -74,8 +97,9 @@ export default {
 </script>
 
 <style scoped>
-html, body {
-  height: 100%;
+html,
+body {
+    height: 100%;
 }
 
 .button_prev {
@@ -149,6 +173,7 @@ img {
     border-radius: 0.8vw;
     border-color: #f0b7a7;
 }
+
 .button_prev {
     background-color: #ffffff;
     color: #141414;
@@ -170,7 +195,8 @@ img {
     border-radius: 1000px;
     min-width: calc(220px + 12px);
     min-height: calc(60px + 12px);
-    box-shadow: 0 0 60px #ffffff;;
+    box-shadow: 0 0 60px #ffffff;
+    ;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -210,6 +236,7 @@ img {
         opacity: 0;
     }
 }
+
 .wave {
     position: relative;
     /* -webkit-box-reflect: below -1px linear-gradient(transparent, #FFFFFF); */

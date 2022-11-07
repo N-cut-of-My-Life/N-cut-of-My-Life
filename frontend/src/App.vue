@@ -1,16 +1,22 @@
 <template>
   <PageLoader />
-  <router-view/>
+  <!-- <a class="mute" href="" @click="store.toggleMute">Mute/Unmute</a> -->
+  <router-view />
 </template>
 
-<script>
+<script setup>
 import PageLoader from "@/load/PageLoader.vue";
+// import { useMusicStore } from '@/store/index.js'
+// const store = useMusicStore()
 
-export default {
-  components: {
-    PageLoader,
-  },
-};
+
+  // methods: {
+  //   toggleMute() {
+  //     var myAudio = document.getElementById('myaudios');
+  //     myAudio.muted = !myAudio.muted;
+  //   }
+  // }
+
 </script>
 
 <style>
@@ -29,5 +35,12 @@ export default {
 
 body {
   margin: 0;
+}
+
+.mute{
+    position: absolute;
+    left: 2%;
+    bottom: 2%;
+    margin: auto;
 }
 </style>
