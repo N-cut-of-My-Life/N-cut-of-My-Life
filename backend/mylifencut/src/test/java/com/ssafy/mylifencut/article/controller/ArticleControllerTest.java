@@ -18,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -25,6 +26,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.google.gson.Gson;
 import com.ssafy.mylifencut.article.ArticleConstant;
+import com.ssafy.mylifencut.article.dto.ArticleRequest;
 import com.ssafy.mylifencut.article.dto.ArticleResponse;
 import com.ssafy.mylifencut.article.service.ArticleService;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
@@ -124,8 +126,28 @@ class ArticleControllerTest {
 	class RegisterTest {
 		@Test
 		@DisplayName("[실패] - 존재하지 않는 userId일때")
-		public void registerArticle_notFoundUserError() {
+		public void registerArticle_notFoundUserError() throws Exception {
+			//given
+			final String url = "/article";
+			final ArticleRequest articleRequest = ArticleRequest.builder().userId(1).build();
+			doThrow(new UserNotFoundException())
+				.when(articleService)
+				.createArticle(articleRequest);
 
+			//when
+			final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
+				.post(url)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(gson.toJson(articleRequest)));
+
+			//then
+			resultActions.andExpect(status().isBadRequest());
+			final BaseResponse response = gson.fromJson(resultActions.andReturn()
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+			assertNull(response.getData());
+			assertFalse(response.isSuccess());
+			assertEquals(UserConstant.USER_NOT_FOUND_ERROR_MESSAGE, response.getMessage());
 		}
 	}
 
