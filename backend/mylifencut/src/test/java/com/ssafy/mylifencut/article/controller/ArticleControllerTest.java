@@ -9,12 +9,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -122,66 +126,41 @@ class ArticleControllerTest {
 
 	}
 
-	@Nested
-	@DisplayName("[여행일지 등록]")
-	class RegisterTest {
-		@Test
-		@DisplayName("[실패] - 존재하지 않는 userId일때")
-		public void registerArticle_notFoundUserError() throws Exception {
-			//given
-			final String url = "/article";
-			final ArticleRequest articleRequest = ArticleRequest.builder()
-				.userId(1)
-				.build();
-			doThrow(new UserNotFoundException())
-				.when(articleService)
-				.createArticle(any(ArticleRequest.class));
+	@ParameterizedTest
+	@MethodSource("registerArticleErrorParameter")
+	@DisplayName("[여행일지 등록 실패] - service에서 예외가 발생했을 때")
+	public void registerArticle_error(RuntimeException exception, String errorMessage) throws
+		Exception {
+		//given
+		final String url = "/article";
+		final ArticleRequest articleRequest = ArticleRequest.builder()
+			.userId(1)
+			.build();
+		doThrow(exception)
+			.when(articleService)
+			.createArticle(any(ArticleRequest.class));
 
-			//when
-			final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
-				.post(url)
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(gson.toJson(articleRequest)));
+		//when
+		final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
+			.post(url)
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(gson.toJson(articleRequest)));
 
-			//then
-			resultActions.andExpect(status().isBadRequest());
-			final BaseResponse response = gson.fromJson(resultActions.andReturn()
-				.getResponse()
-				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
-			assertFalse(response.isSuccess());
-			assertEquals(UserConstant.USER_NOT_FOUND_ERROR_MESSAGE, response.getMessage());
-			assertNull(response.getData());
-		}
-
-		@Test
-		@DisplayName("[실패] - 답변 리스트 개수가 3개 미만일때")
-		public void registerArticle_registerArticle_answersSizeIsNotEnoughError() throws Exception {
-			//given
-			final String url = "/article";
-			final ArticleRequest articleRequest = ArticleRequest.builder()
-				.userId(1)
-				.build();
-			doThrow(new AnswersSizeIsNotEnough())
-				.when(articleService)
-				.createArticle(any(ArticleRequest.class));
-
-			//when
-			final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
-				.post(url)
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(gson.toJson(articleRequest)));
-
-			//then
-			resultActions.andExpect(status().isBadRequest());
-			final BaseResponse response = gson.fromJson(resultActions.andReturn()
-				.getResponse()
-				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
-			assertFalse(response.isSuccess());
-			assertEquals(ArticleConstant.ARTICLE_ANSWERS_SIZE_IS_NOT_ENOUGH_ERROR_MESSAGE, response.getMessage());
-			assertNull(response.getData());
-		}
+		//then
+		resultActions.andExpect(status().isBadRequest());
+		final BaseResponse response = gson.fromJson(resultActions.andReturn()
+			.getResponse()
+			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+		assertFalse(response.isSuccess());
+		assertEquals(errorMessage, response.getMessage());
+		assertNull(response.getData());
 	}
 
-
-
+	private static Stream<Arguments> registerArticleErrorParameter() {
+		return Stream.of(
+			Arguments.of(new UserNotFoundException(), UserConstant.USER_NOT_FOUND_ERROR_MESSAGE),
+			Arguments.of(new AnswersSizeIsNotEnough(),
+				ArticleConstant.ARTICLE_ANSWERS_SIZE_IS_NOT_ENOUGH_ERROR_MESSAGE)
+		);
+	}
 }
