@@ -3,7 +3,7 @@
     <source src="@/assets/intro_video.mp4" type="video/mp4">
   </video>
 
-  <splide id="carousel" :options="options">
+  <splide id="carousel" :options="options" @splide:arrows:updated="isMounted">
     <splide-slide>
       <h1>
         안녕하세요<br />
@@ -55,7 +55,7 @@
   </splide>
 
   <!-- page index 적용 방법 탐색 중 -->
-  <div v-if="index != 7" class="jump">
+  <div v-if="isLast === false" class="jump">
     <b-button class="button" size="sm">
       <router-link :to="{ name: 'planetlist' }" class="nav-link">
         SKIP
@@ -98,11 +98,21 @@ export default {
         animatedDots: false,
         padding: "2rem",
         type: "fade",
-        autoplay: true,
+        autoplay: false,
       },
-      index:0
+      isLast: false
     }
   },
+  methods: {
+    isMounted(splide, prev, next, prevIndex, nextIndex){
+      if (nextIndex === -1) {
+        this.isLast = true
+      } else {
+        this.isLast = false
+      }
+
+    }
+  }
 };
 </script>
 
