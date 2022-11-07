@@ -19,5 +19,5 @@ import lombok.NoArgsConstructor;
 public class ArticleRequest {
 	private Integer userId;
 	private List<AnswerRegisterRequest> answers;
-	private LocalDateTime createDate;
+	private LocalDateTime createDate = LocalDateTime.now();
 }
