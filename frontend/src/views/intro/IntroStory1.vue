@@ -55,7 +55,7 @@
   </splide>
 
   <!-- page index 적용 방법 탐색 중 -->
-  <div v-if="index != 7" class="jump">
+  <div v-if="index != 6" class="jump">
     <b-button class="button" size="sm">
       <router-link :to="{ name: 'planetlist' }" class="nav-link">
         SKIP
@@ -63,7 +63,7 @@
     </b-button>
   </div>
   <div v-else class="jump">
-    <b-button class="button" size="sm">
+    <b-button class="button" size="md">
       <router-link :to="{ name: 'planetlist' }" class="nav-link">
         <div class="wave">
           <span style="--i: 1">G</span>
@@ -100,7 +100,6 @@ export default {
         type: "fade",
         autoplay: true,
       },
-      index:0
     }
   },
 };

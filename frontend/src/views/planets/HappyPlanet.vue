@@ -44,8 +44,8 @@
             </div>
         </b-button>
     </div>
-
-    <b-modal centered no-stacking id="modal-happy" hide-header hide-footer
+ 
+    <b-modal centered no-stacking id="modal-happy" hide-header hide-footer :no-close-on-backdrop="true" :close-on-esc="true"
         style="text-align: center; border-radius: 1vw;">
         <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_happy.svg"
             style="cursor:pointer; float: right;" />
@@ -56,7 +56,7 @@
             </b-form-textarea>
         </b-container>
         <b-button text @click="submit"
-            style="color: #ffffff; background-color: #bb9f7f; border: none; border-radius: 1vw;">저장
+            style="color: #ffffff; background-color: #d2aa62; border: none; border-radius: 1vw;">저장
         </b-button>
     </b-modal>
 </template>
@@ -78,7 +78,7 @@ export default {
             ],
             currentImage: 0,
             elementVisible: false,
-            currentAudio:0,
+            currentAudio: 0,
         }
     },
     // components: {
