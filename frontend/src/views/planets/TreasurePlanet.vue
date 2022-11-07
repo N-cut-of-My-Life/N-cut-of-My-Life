@@ -44,7 +44,7 @@
         </b-button>
     </div>
 
-    <b-modal id="modal-treasure" hide-header hide-footer centered no-stacking
+    <b-modal id="modal-treasure" hide-header hide-footer centered no-stacking :no-close-on-backdrop="true"
         style="text-align: center; border-radius: 1vw;">
         <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg" style="cursor:pointer; float: right;"/>
         <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">당신의 가장 소중한 물건을 적어주세요!</div>

@@ -33,7 +33,7 @@
             </div>
         </b-button>
     </div>
-    <b-modal id="modal-precious" centered no-stacking hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+    <b-modal :no-close-on-backdrop="true" id="modal-precious" centered no-stacking hide-header hide-footer style="text-align: center; border-radius: 1vw;">
       <b-popover target="addon" placement="left">
         <input type="file" accept="image/*" @change="onUpload" />
         <div>
