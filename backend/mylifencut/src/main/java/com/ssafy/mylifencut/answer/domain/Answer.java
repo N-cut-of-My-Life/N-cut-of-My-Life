@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.springframework.lang.Nullable;
+
 import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
 import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.like.domain.IsLike;
@@ -41,6 +43,7 @@ public class Answer {
 
 	private String contents;
 
+	@Nullable
 	private String imgUrl;
 
 	@Enumerated(EnumType.STRING)
