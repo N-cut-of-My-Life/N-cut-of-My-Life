@@ -129,7 +129,10 @@ class ArticleControllerTest {
 		public void registerArticle_notFoundUserError() throws Exception {
 			//given
 			final String url = "/article";
-			final ArticleRequest articleRequest = ArticleRequest.builder().userId(1).build();
+			final ArticleRequest articleRequest = ArticleRequest.builder()
+				.userId(1)
+				.createDate(LocalDateTime.now())
+				.build();
 			doThrow(new UserNotFoundException())
 				.when(articleService)
 				.createArticle(articleRequest);
@@ -145,7 +148,6 @@ class ArticleControllerTest {
 			final BaseResponse response = gson.fromJson(resultActions.andReturn()
 				.getResponse()
 				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
-			assertNull(response.getData());
 			assertFalse(response.isSuccess());
 			assertEquals(UserConstant.USER_NOT_FOUND_ERROR_MESSAGE, response.getMessage());
 		}
