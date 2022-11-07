@@ -131,11 +131,10 @@ class ArticleControllerTest {
 			final String url = "/article";
 			final ArticleRequest articleRequest = ArticleRequest.builder()
 				.userId(1)
-				.createDate(LocalDateTime.now())
 				.build();
 			doThrow(new UserNotFoundException())
 				.when(articleService)
-				.createArticle(articleRequest);
+				.createArticle(any(ArticleRequest.class));
 
 			//when
 			final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
