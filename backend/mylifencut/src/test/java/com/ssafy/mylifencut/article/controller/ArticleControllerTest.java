@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.ssafy.mylifencut.article.ArticleConstant;
 import com.ssafy.mylifencut.article.dto.ArticleRequest;
 import com.ssafy.mylifencut.article.dto.ArticleResponse;
+import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnough;
 import com.ssafy.mylifencut.article.service.ArticleService;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
@@ -151,6 +152,36 @@ class ArticleControllerTest {
 			assertEquals(UserConstant.USER_NOT_FOUND_ERROR_MESSAGE, response.getMessage());
 			assertNull(response.getData());
 		}
+
+		@Test
+		@DisplayName("[실패] - 답변 리스트 개수가 3개 미만일때")
+		public void registerArticle_registerArticle_answersSizeIsNotEnoughError() throws Exception {
+			//given
+			final String url = "/article";
+			final ArticleRequest articleRequest = ArticleRequest.builder()
+				.userId(1)
+				.build();
+			doThrow(new AnswersSizeIsNotEnough())
+				.when(articleService)
+				.createArticle(any(ArticleRequest.class));
+
+			//when
+			final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
+				.post(url)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(gson.toJson(articleRequest)));
+
+			//then
+			resultActions.andExpect(status().isBadRequest());
+			final BaseResponse response = gson.fromJson(resultActions.andReturn()
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+			assertFalse(response.isSuccess());
+			assertEquals(ArticleConstant.ARTICLE_ANSWERS_SIZE_IS_NOT_ENOUGH_ERROR_MESSAGE, response.getMessage());
+			assertNull(response.getData());
+		}
 	}
+
+
 
 }
