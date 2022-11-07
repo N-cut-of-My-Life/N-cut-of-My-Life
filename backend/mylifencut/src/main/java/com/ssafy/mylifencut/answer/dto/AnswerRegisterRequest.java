@@ -17,5 +17,7 @@ public class AnswerRegisterRequest {
 	private Integer userId;
 	private Integer questionId;
 	private String contents;
+	private String imgUrl;
 	private State state;
+
 }
