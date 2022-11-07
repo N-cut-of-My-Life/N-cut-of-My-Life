@@ -149,6 +149,7 @@ class ArticleControllerTest {
 				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 			assertFalse(response.isSuccess());
 			assertEquals(UserConstant.USER_NOT_FOUND_ERROR_MESSAGE, response.getMessage());
+			assertNull(response.getData());
 		}
 	}
 
