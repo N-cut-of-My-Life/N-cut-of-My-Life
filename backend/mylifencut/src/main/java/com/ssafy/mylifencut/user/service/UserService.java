@@ -10,6 +10,7 @@ import java.net.URL;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 public class UserService {
 
 	private final UserRepository userRepository;
@@ -132,12 +134,18 @@ public class UserService {
 		return userRepository.findByEmail(userInfo.getEmail()).isPresent();
 	}
 
+	@Transactional
 	public User join(UserInfo userInfo) {
 		return userRepository.save(User.from(userInfo));
 	}
 
 	public User login(UserInfo userInfo) {
 		return userRepository.findByEmail(userInfo.getEmail())
+			.orElseThrow(UserNotFoundException::new);
+	}
+
+	public User loadUserByUserId(String memberId) {
+		return userRepository.findById(Integer.parseInt(memberId))
 			.orElseThrow(UserNotFoundException::new);
 	}
 }
