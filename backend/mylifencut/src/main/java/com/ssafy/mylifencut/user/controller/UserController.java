@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.user.JwtTokenProvider;
 import com.ssafy.mylifencut.user.service.UserService;
@@ -25,6 +27,8 @@ public class UserController {
 
 	@PostMapping("/login")
 	public ResponseEntity<BaseResponse> kakaoLogin(@RequestBody String accessToken) {
+		JsonElement element = JsonParser.parseString(accessToken);
+		accessToken = element.getAsJsonObject().get("accessToken").getAsString();
 		String jwtToken = jwtTokenProvider.createToken(Integer.toString(userService.kakaoLogin(accessToken)));
 		return new ResponseEntity<>(BaseResponse.from(true, KAKAO_LOGIN_SUCCESS_MESSAGE, jwtToken), HttpStatus.OK);
 	}

@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Transactional(readOnly = true)
+@Transactional
 public class UserService implements UserDetailsService {
 
 	private final UserRepository userRepository;
@@ -50,6 +50,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	public String getAccessToken(String code) {
+		System.out.println(code);
 		String access_Token;
 		String refresh_Token;
 		String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -89,6 +90,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	public UserInfo getUserInfo(String token) {
+		System.out.println(token);
 		String reqURL = "https://kapi.kakao.com/v2/user/me";
 
 		//access_token을 이용하여 사용자 정보 조회
@@ -107,7 +109,13 @@ public class UserService implements UserDetailsService {
 
 			return UserInfo.builder()
 				.email(element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString())
-				.name(element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("nickname").getAsString())
+				.name(element.getAsJsonObject()
+					.get("kakao_account")
+					.getAsJsonObject()
+					.get("profile")
+					.getAsJsonObject()
+					.get("nickname")
+					.getAsString())
 				.build();
 		} catch (IOException e) {
 			throw new InvalidKakaoAccessTokenException();
@@ -133,21 +141,23 @@ public class UserService implements UserDetailsService {
 		return result.toString();
 	}
 
+	@Transactional(readOnly = true)
 	public boolean isExistingUser(UserInfo userInfo) {
 		return userRepository.findByEmail(userInfo.getEmail()).isPresent();
 	}
 
-	@Transactional
 	public User join(UserInfo userInfo) {
 		return userRepository.save(User.from(userInfo));
 	}
 
+	@Transactional(readOnly = true)
 	public User login(UserInfo userInfo) {
 		return userRepository.findByEmail(userInfo.getEmail())
 			.orElseThrow(UserNotFoundException::new);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return userRepository.findById(Integer.parseInt(username))
 			.orElseThrow(UserNotFoundException::new);
