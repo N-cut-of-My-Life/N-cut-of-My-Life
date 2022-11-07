@@ -9,6 +9,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional(readOnly = true)
-public class UserService {
+public class UserService implements UserDetailsService {
 
 	private final UserRepository userRepository;
 
@@ -144,8 +147,9 @@ public class UserService {
 			.orElseThrow(UserNotFoundException::new);
 	}
 
-	public User loadUserByUserId(String memberId) {
-		return userRepository.findById(Integer.parseInt(memberId))
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return userRepository.findById(Integer.parseInt(username))
 			.orElseThrow(UserNotFoundException::new);
 	}
 }
