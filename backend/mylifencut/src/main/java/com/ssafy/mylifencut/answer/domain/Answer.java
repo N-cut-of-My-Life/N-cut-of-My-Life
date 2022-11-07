@@ -41,6 +41,8 @@ public class Answer {
 
 	private String contents;
 
+	private String imgUrl;
+
 	@Enumerated(EnumType.STRING)
 	private State state;
 
@@ -55,6 +57,7 @@ public class Answer {
 			.contents(answerRegisterRequest.getContents())
 			.questionId(answerRegisterRequest.getQuestionId())
 			.contents(answerRegisterRequest.getContents())
+			.imgUrl(answerRegisterRequest.getImgUrl())
 			.state(answerRegisterRequest.getState())
 			.build();
 	}
