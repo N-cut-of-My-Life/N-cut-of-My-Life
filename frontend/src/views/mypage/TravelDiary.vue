@@ -1,5 +1,11 @@
 <template>
   <my-modal style="z-index: 5;"></my-modal>
+  <div class="other">
+    <b-button @click="router.push({ name: 'introfirstpage' })" class="button_prev" size="sm">
+      <strong>&lt;</strong>&nbsp;&nbsp;홈페이지
+    </b-button>
+  </div>
+
   <div class="jumbotron">
     <div class="title">My Page</div>
     <main class="content">
@@ -45,7 +51,7 @@
             <div class="film">
               <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
             </div>
-          </div>        
+          </div>       
         </div>
         
       </section>
@@ -55,18 +61,9 @@
 
 <script setup>
 import MyModal from '@/components/mypage/MyModal.vue'
-// import { ref } from 'vue'
-// let mbClicked = ref(false)
-// const openMailbox = () => {
-//   if (mbClicked.value === false){
-//     mbClicked.value = true
-//     console.log(mbClicked.value)
-//   } else {
-//     mbClicked.value = false
-//     console.log(mbClicked.value)
-//   }
-  
-// }
+import { useRouter } from 'vue-router'
+const router =  useRouter();
+
 </script>
 <style scoped>
 @font-face {
@@ -84,6 +81,20 @@ import MyModal from '@/components/mypage/MyModal.vue'
 body {
   margin: 0;
 }
+.other {
+    position: absolute;
+    left: 1%;
+    top: 2.5%;
+    margin: auto;
+}
+
+.button_prev {
+    background-color: #ffffff;
+    color: #141414;
+    border-radius: 0.8vw;
+    border-color: #ffffff;
+}
+
 .jumbotron {
   background: url("@/assets/travel_diary.svg") no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -209,6 +220,8 @@ body {
 
 .letter-img {
   width: 15vw;
+  transform: rotate(180deg) scaleY(-1);
+  
 }
 
 .letter-img:hover {
