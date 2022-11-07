@@ -3,6 +3,9 @@
   <video muted autoplay loop playbackRate="1.0">
     <source src="@/assets/intro_video.mp4" type="video/mp4">
   </video>
+  <audio loop autoplay>
+    <source src="@/assets/audio/daylight.mp3" type="audio/mp3">
+  </audio>
   <div class="other">
         <b-button @click="gotoPage({ name: 'introfirstpage' })" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;돌아가기
