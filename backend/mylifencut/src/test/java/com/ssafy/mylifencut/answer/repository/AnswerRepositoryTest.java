@@ -43,6 +43,7 @@ class AnswerRepositoryTest {
 
 		final Answer answer = Answer.builder()
 			.article(article)
+			.imgUrl("/dir/img")
 			.questionId(1)
 			.contents("답변 내용")
 			.state(State.CLOSE)
@@ -54,6 +55,7 @@ class AnswerRepositoryTest {
 		assertEquals(savedAnswer.getQuestionId(), 1);
 		assertEquals(savedAnswer.getContents(), "답변 내용");
 		assertEquals(savedAnswer.getState(), State.CLOSE);
+		assertEquals(savedAnswer.getImgUrl(),"/dir/img");
 	}
 
 	@Nested
