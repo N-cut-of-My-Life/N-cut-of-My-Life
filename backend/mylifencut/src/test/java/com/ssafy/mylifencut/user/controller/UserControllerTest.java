@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -48,54 +49,58 @@ public class UserControllerTest {
 			.build();
 	}
 
-	@Test
-	@DisplayName("카카오 로그인 - AccessToken 오류")
-	public void invalidToken() throws Exception {
-		// given
-		final String url = "/user/login";
-		final String token = "INVALID_TOKEN";
-		doThrow(new InvalidKakaoAccessTokenException())
-			.when(userService)
-			.kakaoLogin(any());
+	@Nested
+	@DisplayName("카카오 로그인")
+	class loginTest {
+		@Test
+		@DisplayName("카카오 로그인 AccessToken 오류")
+		public void invalidToken() throws Exception {
+			// given
+			final String url = "/user/login";
+			final String token = "INVALID_TOKEN";
+			doThrow(new InvalidKakaoAccessTokenException())
+				.when(userService)
+				.kakaoLogin(any());
 
-		// when
-		final ResultActions resultActions = mockMvc.perform(
-			MockMvcRequestBuilders.post(url)
-				.content(gson.toJson(token))
-				.contentType(MediaType.APPLICATION_JSON)
-		);
+			// when
+			final ResultActions resultActions = mockMvc.perform(
+				MockMvcRequestBuilders.post(url)
+					.content(gson.toJson(token))
+					.contentType(MediaType.APPLICATION_JSON)
+			);
 
-		//then
-		resultActions.andExpect(status().isBadRequest());
-	}
+			//then
+			resultActions.andExpect(status().isBadRequest());
+		}
 
-	@Test
-	@DisplayName("카카오 로그인 - 성공")
-	public void loginSuccess() throws Exception {
-		// given
-		final String url = "/user/login";
-		final String accessToken = "DUMMY_TOKEN";
-		final String jwtToken = "JWT_TOKEN";
+		@Test
+		@DisplayName("카카오 로그인 성공")
+		public void loginSuccess() throws Exception {
+			// given
+			final String url = "/user/login";
+			final String accessToken = "DUMMY_TOKEN";
+			final String jwtToken = "JWT_TOKEN";
 
-		doReturn(1)
-			.when(userService)
-			.kakaoLogin(any());
-		doReturn(jwtToken)
-			.when(jwtTokenProvider)
-			.createToken(any());
+			doReturn(1)
+				.when(userService)
+				.kakaoLogin(any());
+			doReturn(jwtToken)
+				.when(jwtTokenProvider)
+				.createToken(any());
 
-		// when
-		final ResultActions resultActions = mockMvc.perform(
-			MockMvcRequestBuilders.post(url)
-				.content(gson.toJson(accessToken))
-				.contentType(MediaType.APPLICATION_JSON)
-		);
+			// when
+			final ResultActions resultActions = mockMvc.perform(
+				MockMvcRequestBuilders.post(url)
+					.content(gson.toJson(accessToken))
+					.contentType(MediaType.APPLICATION_JSON)
+			);
 
-		// then
-		resultActions.andExpect(status().isOk());
-		final BaseResponse response = gson.fromJson(resultActions.andReturn()
-			.getResponse()
-			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
-		assertEquals(response.getData(), jwtToken);
+			// then
+			resultActions.andExpect(status().isOk());
+			final BaseResponse response = gson.fromJson(resultActions.andReturn()
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+			assertEquals(response.getData(), jwtToken);
+		}
 	}
 }
