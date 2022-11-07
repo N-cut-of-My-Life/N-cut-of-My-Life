@@ -10,6 +10,7 @@ import java.util.Map;
 
 import com.ssafy.mylifencut.like.LikeConstant;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,7 @@ import com.ssafy.mylifencut.like.dto.IsLikeResponse;
 import com.ssafy.mylifencut.like.exception.AlreadyLikeException;
 import com.ssafy.mylifencut.like.exception.NotExistLikeException;
 import com.ssafy.mylifencut.like.service.LikeService;
+
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("답변 컨트롤러 테스트")
@@ -67,7 +69,7 @@ class AnswerControllerTest {
 		// given
 		final String url = "/answer";
 		final AnswerRegisterRequest answerRegisterRequest =
-			new AnswerRegisterRequest(1, 1, "답변 등록", State.OPEN);
+			new AnswerRegisterRequest(1, 1, "답변 등록", "/dir/img",State.OPEN);
 		doThrow(new InvalidStateException())
 			.when(answerService)
 			.createAnswer(answerRegisterRequest);
@@ -80,18 +82,20 @@ class AnswerControllerTest {
 		// then
 		resultActions.andExpect(status().isBadRequest());
 	}
+
 	@Test
 	@DisplayName("답변 등록 성공")
 	public void createAnswer() throws Exception {
 		// given
 		final String url = "/answer";
 		final AnswerRegisterRequest answerRegisterRequest =
-			new AnswerRegisterRequest(1, 1, "답변 등록", State.CLOSE);
+			new AnswerRegisterRequest(1, 1, "답변 등록", "/dir/img",State.CLOSE);
 		final AnswerResponse answerResponse = AnswerResponse.builder()
 			.id(1)
 			.articleId(1)
 			.questionId(answerRegisterRequest.getQuestionId())
 			.contents(answerRegisterRequest.getContents())
+			.imgUrl(answerRegisterRequest.getImgUrl())
 			.state(answerRegisterRequest.getState())
 			.build();
 		doReturn(answerResponse)
@@ -116,6 +120,7 @@ class AnswerControllerTest {
 		assertEquals((double)answerResponse.getId(), map.get("id"));
 		assertEquals((double)answerResponse.getArticleId(), map.get("articleId"));
 		assertEquals((double)answerResponse.getQuestionId(), map.get("questionId"));
+		assertEquals(answerResponse.getImgUrl(),map.get("imgUrl"));
 		assertEquals(answerResponse.getContents(), map.get("contents"));
 		assertEquals(answerResponse.getState().toString(), map.get("state"));
 	}
