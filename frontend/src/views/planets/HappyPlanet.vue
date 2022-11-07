@@ -3,8 +3,9 @@
         <div class="title">하하호호 행성</div>
     </div>
     <!-- <vue-audio :file="audios[currentAudio]" autoplay/> -->
-    <audio loop autoplay controls :src="audios[currentAudio]">
+    <audio id="myaudios" loop autoplay :src="audios[currentAudio]" :muted="mute">
     </audio>
+    <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
     <img class="story" :src="images[currentImage]" />
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
@@ -44,8 +45,8 @@
             </div>
         </b-button>
     </div>
- 
-    <b-modal centered no-stacking id="modal-happy" hide-header hide-footer :no-close-on-backdrop="true" :close-on-esc="true"
+
+    <b-modal centered no-stacking id="modal-happy" hide-header hide-footer :no-close-on-backdrop="true"
         style="text-align: center; border-radius: 1vw;">
         <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_happy.svg"
             style="cursor:pointer; float: right;" />
@@ -73,12 +74,14 @@ export default {
                 require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_3.svg'),
             ],
             audios: [
-                require('@/assets/audio/flower-dance.mp3'),
-                require('@/assets/audio/motivational-day.mp3'),
+                // require('@/assets/audio/flower-dance.mp3'),
+                // require('@/assets/audio/motivational-day.mp3'),
+                require('@/assets/audio/mix_flower_moti.mp3')
             ],
             currentImage: 0,
             elementVisible: false,
             currentAudio: 0,
+            mute: false
         }
     },
     // components: {
@@ -103,6 +106,14 @@ export default {
         gotoPage(link) {
             this.$router.push(link)
         },
+
+        // toggleMute() {
+        //     var myAudio = document.getElementById('myaudios');
+        //     myAudio.muted = !myAudio.muted;
+        // }
+        toggleMute() {
+            this.mute = !this.mute
+        }
     }
 }
 </script>
