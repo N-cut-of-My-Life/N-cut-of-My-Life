@@ -33,19 +33,19 @@
         </b-button>
     </div>
 
-    <b-modal centered no-stacking id="modal-dream" hide-header hide-footer
+    <b-modal centered no-stacking id="modal-dream" hide-header hide-footer :no-close-on-backdrop="true"
         style="text-align: center; border-radius: 1vw;">
-        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg"
+        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_dream.svg"
             style="cursor:pointer; float: right;" />
         <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">아쉽게 이루지 못한 꿈을 이 곳에 적어주세요!
         </div>
-        <b-container ref="form">
+        <b-container ref="form" style="margin-bottom:3.8%">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
                 style="border-radius: 1vw; background-color: #eceffa;">
             </b-form-textarea>
         </b-container>
         <b-button text @click="submit"
-            style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
+            style="color: #ffffff; background-color: #b1afff; border: none; border-radius: 1vw;">저장
         </b-button>
     </b-modal>
 </template>

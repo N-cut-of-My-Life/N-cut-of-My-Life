@@ -33,9 +33,16 @@
             </div>
         </b-button>
     </div>
-    <b-modal id="modal-precious" centered no-stacking hide-header hide-footer style="text-align: center; border-radius: 1vw;">
-      <b-popover target="addon">
-        사진을 올려주세요!
+    <b-modal :no-close-on-backdrop="true" id="modal-precious" centered no-stacking hide-header hide-footer style="text-align: center; border-radius: 1vw;">
+      <b-popover target="addon" placement="left">
+        <input type="file" accept="image/*" @change="onUpload" />
+        <div>
+            <img v-if="item.imageUrl" :src="item.imageUrl" style="max-width: 16vw; height: auto;"> 
+            <div v-else>
+                <div><strong>소중한 순간을 담아주세요!</strong></div>
+                <img src="@/assets/v-pose.svg">
+            </div>
+        </div>
       </b-popover>
       <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_happy.svg" style="cursor:pointer; float: right;"/>
       <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">소중한 사람과의 추억을 기록해보세요!</div>
@@ -53,6 +60,10 @@
 export default {
     data() {
         return {
+            item:{
+                image : null,
+                imageUrl : null,
+            },
             images: [
                 require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_1.svg'),
                 require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_2.svg'),
@@ -63,6 +74,11 @@ export default {
         }
     },
     methods: {
+        onUpload(e) {
+            const file = e.target.files[0]
+            this.image = file
+            this.item.imageUrl = URL.createObjectURL(file)
+        },
         nextImage() {
             if (this.currentImage !== (this.images.length - 1))
                 this.currentImage++;

@@ -54,7 +54,6 @@
     </splide-slide>
   </splide>
 
-  <!-- page index 적용 방법 탐색 중 -->
   <div v-if="isLast === false" class="jump">
     <b-button class="button" size="sm">
       <router-link :to="{ name: 'planetlist' }" class="nav-link">
@@ -63,7 +62,7 @@
     </b-button>
   </div>
   <div v-else class="jump">
-    <b-button class="button" size="sm">
+    <b-button class="button" size="md">
       <router-link :to="{ name: 'planetlist' }" class="nav-link">
         <div class="wave">
           <span style="--i: 1">G</span>

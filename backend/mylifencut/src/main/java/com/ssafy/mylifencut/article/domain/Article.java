@@ -41,7 +41,8 @@ public class Article {
 	@OneToMany(mappedBy = "article")
 	private List<Answer> answers = new ArrayList<>();
 
-	private LocalDateTime createDate;
+	@Builder.Default
+	private LocalDateTime createDate = LocalDateTime.now();
 
 	public static Article from(ArticleRequest articleRequest, User user) {
 		return Article.builder()
