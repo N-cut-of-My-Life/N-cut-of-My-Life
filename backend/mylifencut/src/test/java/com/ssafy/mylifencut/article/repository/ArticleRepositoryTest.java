@@ -25,8 +25,8 @@ public class ArticleRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("마이페이지에서 과거 기록 리스트가 없을 때(사이즈가 0이어야함) - 성공")
-	public void RetrieveMyPageEmpty() {
+	@DisplayName("[성공] 여행일지가 없을 때(사이즈가 0이어야함) 조회")
+	public void retrieveArticle_empty() {
 		//given
 		final List<Article> articles;
 
@@ -39,7 +39,7 @@ public class ArticleRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("마이페이지에서 article을 저장 후 조회 - 성공")
+	@DisplayName("[성공] 여행일지 저장 후 조회")
 	public void SaveArticleAndRetrieve() {
 		//given
 		final User user = user();
