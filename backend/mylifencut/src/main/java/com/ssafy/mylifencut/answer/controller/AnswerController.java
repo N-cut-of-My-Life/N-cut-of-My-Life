@@ -3,7 +3,6 @@ package com.ssafy.mylifencut.answer.controller;
 import static com.ssafy.mylifencut.answer.AnswerConstant.*;
 import static com.ssafy.mylifencut.like.LikeConstant.*;
 
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
+import com.ssafy.mylifencut.answer.dto.GalleryResponse;
 import com.ssafy.mylifencut.answer.service.AnswerService;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.like.service.LikeService;
 
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -56,6 +59,10 @@ public class AnswerController {
 	}
 
 	@Operation(summary = "갤러리 조회", description = "STATE 상태가 OPEN 인 답변을 조회합니다.")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "갤러리 조회 성공", response = GalleryResponse.class),
+		@ApiResponse(code = 404, message = "갤러리 조회 실패")
+	})
 	@GetMapping
 	public ResponseEntity<BaseResponse> readGallery() {
 
