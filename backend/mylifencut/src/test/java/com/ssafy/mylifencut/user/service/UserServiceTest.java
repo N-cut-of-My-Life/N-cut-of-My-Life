@@ -274,8 +274,8 @@ public class UserServiceTest {
 				.refreshToken("TOKEN_BEFORE")
 				.build();
 			TokenResponse tokenResponse = TokenResponse.builder()
-				.AccessToken("TOKEN_AFTER")
-				.RefreshToken("TOKEN_AFTER")
+				.accessToken("TOKEN_AFTER")
+				.refreshToken("TOKEN_AFTER")
 				.build();
 			RefreshToken refreshToken = RefreshToken.builder()
 				.token("TOKEN_BEFORE")
