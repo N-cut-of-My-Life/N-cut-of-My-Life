@@ -34,13 +34,13 @@ class JwtTokenProviderTest {
 		final String userId = "1";
 
 		//when
-		final String accessToken = jwtTokenProvider.createToken(userId);
+		final TokenResponse accessToken = jwtTokenProvider.validateAccessToken(userId);
 
 		// then
 		assertEquals(userId, jwtTokenProvider.getUserId(accessToken));
 	}
 
-	@DisplayName("토큰 검증")
+	@DisplayName("엑세스 토큰 검증")
 	@Nested
 	class TokenValidationTest {
 
@@ -51,10 +51,10 @@ class JwtTokenProviderTest {
 			final String userId = "1";
 
 			// when
-			final String accessToken = jwtTokenProvider.createToken(userId);
+			final TokenResponse accessToken = jwtTokenProvider.createToken(userId);
 
 			// then
-			assertTrue(jwtTokenProvider.validateToken(accessToken));
+			assertTrue(jwtTokenProvider.validateAccessToken(accessToken));
 		}
 
 		@DisplayName("토큰 검증 만료된 토큰이면 false")
@@ -64,7 +64,7 @@ class JwtTokenProviderTest {
 			final String invalidToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjY3Nzc5NTYyLCJleHAiOjE2Njc3Nzk1NjN9.YafKFAra_MdrtlSwimpYIjwaL9TKVTkNuLe5fgQOY2w";
 
 			// when
-			final boolean result = jwtTokenProvider.validateToken(invalidToken);
+			final boolean result = jwtTokenProvider.validateAccessToken(invalidToken);
 
 			// then
 			assertFalse(result);
@@ -77,7 +77,37 @@ class JwtTokenProviderTest {
 			final String unissuedAccessToken = "유효하지 않은 토큰";
 
 			// when
-			boolean result = jwtTokenProvider.validateToken(unissuedAccessToken);
+			boolean result = jwtTokenProvider.validateAccessToken(unissuedAccessToken);
+
+			//then
+			assertFalse(result);
+		}
+	}
+
+	@Nested
+	@DisplayName("리프레쉬 토큰 검증")
+	class refreshTokenValidation {
+		@DisplayName("만료된 리프레쉬 토큰인 경우")
+		@Test
+		void invalidToken() {
+			// given
+			final String unissuedAccessToken = "유효하지 않은 토큰";
+
+			// when
+			boolean result = jwtTokenProvider.validateRefreshToken(unissuedAccessToken);
+
+			//then
+			assertFalse(result);
+		}
+
+		@DisplayName("기간이 남아있는 리프레쉬 토큰인 경우")
+		@Test
+		void validToken() {
+			// given
+			final String unissuedAccessToken = "유효하지 않은 토큰";
+
+			// when
+			boolean result = jwtTokenProvider.validateRefreshToken(unissuedAccessToken);
 
 			//then
 			assertFalse(result);
