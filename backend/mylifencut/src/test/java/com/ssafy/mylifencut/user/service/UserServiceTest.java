@@ -215,6 +215,30 @@ public class UserServiceTest {
 		}
 
 		@Test
+		@DisplayName("리프레쉬 토큰에 ID가 올바르지 않은 경우")
+		void notValidUserId() {
+			// given
+			TokenRequest tokenRequest = TokenRequest.builder()
+				.accessToken("TOKEN_BEFORE")
+				.refreshToken("TOKEN_BEFORE")
+				.build();
+			doReturn(true)
+				.when(jwtTokenProvider)
+				.validateToken(any());
+			doReturn("1")
+				.when(jwtTokenProvider)
+				.getUserId(any());
+			doReturn(Optional.empty())
+				.when(userRepository)
+				.findById(1);
+
+			// when
+
+			// then
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(tokenRequest));
+		}
+
+		@Test
 		@DisplayName("올바른 리프레쉬 토큰")
 		void validRefreshToken() {
 			// given
