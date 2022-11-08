@@ -1,19 +1,35 @@
 import { defineStore } from 'pinia'
+import index from '@/api/index'
+import axios from 'axios'
 
-export const useCounterStore = defineStore('counter', {
-  state: () => ({ count: 0 }),
-  getters: {
-    double: state => state.count * 2,
-  },
+// for 은하 갤러리
+export const useGalleryStore = defineStore('gallery', {
+  state: () => ({
+    lastWords: []
+  }),
+  getters: {},
   actions: {
-    increment() {
-      this.count++
-    },
-  },
+    getLastWord() {
+      axios({
+        url: index.answer.getLastWord(),
+        method: 'GET'
+      })
+        .then((res) => {
+          console.log(res)
+          this.lastWords = res.data
+      })
+        .catch((err) => {
+          console.log(err)
+      })
+    }
+  }
 })
 
+// for 둠칫둠칫 행성
 export const useMusicStore = defineStore('music', {
-  state: () => ({ count: 0 }),
+  state: () => ({
+      isMute: false, 
+    }),
   getters: {
   },
   actions: {

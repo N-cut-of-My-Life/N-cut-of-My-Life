@@ -5,7 +5,7 @@ const ARTICLE = 'article/'
 
 export default {
   answer: {
-    getGallery: () => HOST + ANSWER,
+    getLastWord: () => HOST + ANSWER,
   },
 
   article: {
