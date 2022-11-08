@@ -5,6 +5,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -57,7 +59,10 @@ public class UserControllerTest {
 		public void invalidToken() throws Exception {
 			// given
 			final String url = "/user/login";
-			final String token = "INVALID_TOKEN";
+			final Map<String, String> token = new HashMap<>();
+			token.put("accessToken", "INVALID_TOKEN");
+			// final String token = "{accessToken: y2JO3apqZqQMsjJxQEduSb-qhHXu4r7JmcLmb20y9aOwdJflWz0JciYYd7cf5n_45nw_7wo9dRkAAAGEUT3SuA}";
+			// System.out.println("TEST"+token);
 			doThrow(new InvalidKakaoAccessTokenException())
 				.when(userService)
 				.kakaoLogin(any());
@@ -74,11 +79,12 @@ public class UserControllerTest {
 		}
 
 		@Test
-		@DisplayName("카카오 로그인 성공")
+		@DisplayName("로그인 성공")
 		public void loginSuccess() throws Exception {
 			// given
 			final String url = "/user/login";
-			final String accessToken = "DUMMY_TOKEN";
+			final Map<String, String> token = new HashMap<>();
+			token.put("accessToken", "INVALID_TOKEN");
 			final String jwtToken = "JWT_TOKEN";
 
 			doReturn(1)
@@ -91,7 +97,7 @@ public class UserControllerTest {
 			// when
 			final ResultActions resultActions = mockMvc.perform(
 				MockMvcRequestBuilders.post(url)
-					.content(gson.toJson(accessToken))
+					.content(gson.toJson(token))
 					.contentType(MediaType.APPLICATION_JSON)
 			);
 
