@@ -1,8 +1,8 @@
 <template>
-    <audio loop autoplay>
+  <audio loop autoplay volume="0.5">
     <source src="@/assets/audio/daylight.mp3" type="audio/mp3">
   </audio>
-  <video muted autoplay loop playbackRate="0.7">
+  <video muted autoplay loop playbackRate="0.5">
     <source src="@/assets/space.mp4" type="video/mp4">
   </video>
   <div class="menu-box">

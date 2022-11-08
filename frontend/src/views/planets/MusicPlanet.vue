@@ -2,7 +2,7 @@
     <div class="jumbotron">
         <div class="title">둠칫둠칫 행성</div>
     </div>
-    <audio id="myaudios" loop autoplay :src="audios[currentAudio]">
+    <audio id="myaudios" loop autoplay :src="audios[currentAudio]" volume="0.3">
     </audio>
     <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
     <img :src="images[currentImage]" />
