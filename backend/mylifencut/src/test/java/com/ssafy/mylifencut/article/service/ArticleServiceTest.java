@@ -110,14 +110,15 @@ class ArticleServiceTest {
 		@DisplayName("[실패] - 답변 리스트 개수가 3개 미만일때")
 		public void registerArticle_answersSizeIsNotEnoughError() {
 			//given
-			doReturn(Optional.of(User.builder().build())).when(userRepository).findById(anyInt());
+			final Integer userId = 3;
+			doReturn(Optional.of(User.builder().build())).when(userRepository).findById(userId);
 
 			final List<AnswerRegisterRequest> answers = answerRegisterRequests(ANSWERS_MIN_SIZE - 1);
 
 			//when
 			final AnswersSizeIsNotEnough result = assertThrows(AnswersSizeIsNotEnough.class
 				, () -> articleService.createArticle(new ArticleRequest(
-					1, answers, LocalDateTime.now())
+					userId, answers, LocalDateTime.now())
 				)
 			);
 
@@ -129,10 +130,10 @@ class ArticleServiceTest {
 		@DisplayName("[성공]")
 		public void registerArticle_success() {
 			//given
-			doReturn(Optional.of(User.builder().build())).when(userRepository).findById(anyInt());
-
 			final Integer userId = 5;
 			final String userName = "유저이름";
+			doReturn(Optional.of(User.builder().build())).when(userRepository).findById(userId);
+
 			final ArticleRequest request = ArticleRequest.builder()
 				.userId(userId)
 				.answers(answerRegisterRequests(ANSWERS_MIN_SIZE))
