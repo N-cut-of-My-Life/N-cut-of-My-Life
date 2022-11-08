@@ -21,7 +21,7 @@ class RefreshTokenRepositoryTest {
 		String refreshToken = "REFRESH_TOKEN";
 
 		// when
-		final Optional<Integer> userId = refreshTokenRepository.findByRefreshToken();
+		final Optional<Integer> userId = refreshTokenRepository.findByToken(refreshToken);
 
 		// then
 		assertFalse(userId.isPresent());
