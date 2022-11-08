@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.ssafy.mylifencut.user.JwtTokenProvider;
 import com.ssafy.mylifencut.user.UserConstant;
 import com.ssafy.mylifencut.user.domain.User;
+import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
