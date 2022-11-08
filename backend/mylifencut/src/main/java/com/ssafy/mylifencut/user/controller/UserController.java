@@ -17,6 +17,7 @@ import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.service.UserService;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -28,6 +29,7 @@ public class UserController {
 	private final JwtTokenProvider jwtTokenProvider;
 
 	@PostMapping("/login")
+	@ApiOperation(value = "카카오 로그인", notes = "카카오 AccessToken으로 로그인")
 	public ResponseEntity<BaseResponse> kakaoLogin(@RequestBody Map<String, String> json) {
 		String accessToken = json.get("accessToken");
 		TokenResponse jwtToken = jwtTokenProvider.createToken(Integer.toString(userService.kakaoLogin(accessToken)));
@@ -35,6 +37,7 @@ public class UserController {
 	}
 
 	@PostMapping("/token")
+	@ApiOperation(value = "Refresh Token 갱신", notes = "Refresh, Access Token을 보내서 새로 갱신된 토큰 발급")
 	public ResponseEntity<BaseResponse> reissueToken(@RequestBody TokenRequest tokenRequest) {
 		return new ResponseEntity<>(
 			BaseResponse.from(true, TOKEN_REISSUE_SUCCESS_MESSAGE, userService.reissueToken(tokenRequest)),
