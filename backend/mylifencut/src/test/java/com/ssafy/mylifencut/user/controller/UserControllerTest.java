@@ -26,8 +26,10 @@ import com.google.gson.Gson;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.user.JwtTokenProvider;
+import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
+import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.service.UserService;
 
 @ExtendWith(MockitoExtension.class)
@@ -111,6 +113,96 @@ public class UserControllerTest {
 			Map map = (Map)response.getData();
 			assertEquals(map.get("accessToken"), jwtToken.getAccessToken());
 			assertEquals(map.get("refreshToken"), jwtToken.getRefreshToken());
+		}
+	}
+
+	@Nested
+	@DisplayName("리프레쉬 토큰 테스트")
+	class refreshTokenTest {
+
+		@Test
+		@DisplayName("잘못된 리프레쉬 토큰")
+		public void expiredRefreshToken() throws Exception {
+			// given
+			final String url = "/user/token";
+			final TokenRequest tokenRequest = TokenRequest.builder()
+				.accessToken("INVALID_TOKEN")
+				.refreshToken("INVALID_TOKEN")
+				.build();
+			doThrow(new InvalidRefreshTokenException())
+				.when(userService)
+				.reissueToken(any());
+
+			// when
+			final ResultActions resultActions = mockMvc.perform(
+				MockMvcRequestBuilders.post(url)
+					.content(gson.toJson(tokenRequest))
+					.contentType(MediaType.APPLICATION_JSON)
+			);
+
+			// then
+			resultActions.andExpect(status().isBadRequest());
+		}
+
+		@Test
+		@DisplayName("만료된 리프레쉬 토큰")
+		public void invalidRefreshToken() throws Exception {
+			// given
+			final String url = "/user/token";
+			final TokenRequest tokenRequest = TokenRequest.builder()
+				.accessToken("EXPIRED_TOKEN")
+				.refreshToken("EXPIRED_TOKEN")
+				.build();
+			doThrow(new InvalidRefreshTokenException())
+				.when(userService)
+				.reissueToken(any());
+
+			// when
+			final ResultActions resultActions = mockMvc.perform(
+				MockMvcRequestBuilders.post(url)
+					.content(gson.toJson(tokenRequest))
+					.contentType(MediaType.APPLICATION_JSON)
+			);
+
+			// then
+			resultActions.andExpect(status().isBadRequest());
+		}
+
+		@Test
+		@DisplayName("유효한 리프레쉬 토큰")
+		public void validRefreshToken() throws Exception {
+			// given
+			final String url = "/user/token";
+			final TokenRequest tokenRequest = TokenRequest.builder()
+				.accessToken("VALID_TOKEN")
+				.refreshToken("VALID_TOKEN")
+				.build();
+			final TokenResponse tokenResponse = TokenResponse.builder()
+				.accessToken("NEW_TOKEN")
+				.refreshToken("NEW_TOKEN")
+				.build();
+			doReturn(tokenResponse)
+				.when(userService)
+				.reissueToken(any());
+
+			// when
+			final ResultActions resultActions = mockMvc.perform(
+				MockMvcRequestBuilders.post(url)
+					.content(gson.toJson(tokenRequest))
+					.contentType(MediaType.APPLICATION_JSON)
+			);
+
+			// then
+			resultActions.andExpect(status().isOk());
+
+			final BaseResponse response = gson.fromJson(resultActions.andReturn()
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+
+			Map map = (Map)response.getData();
+			assertEquals(map.get("accessToken"), tokenResponse.getAccessToken());
+			assertEquals(map.get("refreshToken"), tokenResponse.getRefreshToken());
+
 		}
 	}
 }
