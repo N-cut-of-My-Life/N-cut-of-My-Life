@@ -37,6 +37,7 @@
         <div class="upper-items">
     
           <div class="last-word">
+            <img src="@/assets/post_paper.png">
             <h1 class="text-shadow">지금은 고민이 참 많을테지만, 언젠간 난 이겨낼거야</h1>
           </div>
 
