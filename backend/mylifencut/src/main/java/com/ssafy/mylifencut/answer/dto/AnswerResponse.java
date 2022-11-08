@@ -6,13 +6,10 @@ import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
 @Builder
-@EqualsAndHashCode
-
 public class AnswerResponse {
 	private int id;
 	private Integer articleId;

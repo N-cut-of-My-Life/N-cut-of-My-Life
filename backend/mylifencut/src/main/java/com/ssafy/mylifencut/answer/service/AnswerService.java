@@ -14,7 +14,6 @@ import com.ssafy.mylifencut.answer.dto.GalleryResponse;
 import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
 import com.ssafy.mylifencut.article.domain.Article;
-import com.ssafy.mylifencut.common.dto.BaseResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,13 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class AnswerService {
-
 	private final AnswerRepository answerRepository;
-
-	public BaseResponse register(AnswerRegisterRequest answerRegisterRequest) {
-
-		return BaseResponse.from(true, "답변이 등록되었습니다.");
-	}
 
 	@Transactional
 	public AnswerResponse createAnswer(AnswerRegisterRequest answerRegisterRequest) {
