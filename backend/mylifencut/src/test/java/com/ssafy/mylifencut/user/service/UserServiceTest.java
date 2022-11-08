@@ -239,6 +239,33 @@ public class UserServiceTest {
 		}
 
 		@Test
+		@DisplayName("저장된 리프레쉬 토큰이 없는 경우")
+		void isNotInRefreshToken() {
+			// given
+			TokenRequest tokenRequest = TokenRequest.builder()
+				.accessToken("TOKEN_BEFORE")
+				.refreshToken("TOKEN_BEFORE")
+				.build();
+			User user = User.builder()
+				.id(1)
+				.build();
+			doReturn(true)
+				.when(jwtTokenProvider)
+				.validateToken(any());
+			doReturn("1")
+				.when(jwtTokenProvider)
+				.getUserId(any());
+			doReturn(Optional.of(user))
+				.when(userRepository)
+				.findById(1);
+
+			// when
+
+			// then
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(tokenRequest));
+		}
+
+		@Test
 		@DisplayName("올바른 리프레쉬 토큰")
 		void validRefreshToken() {
 			// given
