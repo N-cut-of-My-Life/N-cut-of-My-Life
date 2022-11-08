@@ -21,7 +21,7 @@ import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
-import com.ssafy.mylifencut.user.exception.NotValidTokenException;
+import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
 import com.ssafy.mylifencut.user.repository.UserRepository;
 
@@ -182,14 +182,14 @@ public class UserServiceTest {
 				.accessToken("TOKEN")
 				.refreshToken("TOKEN")
 				.build();
-			doThrow(new NotValidTokenException())
+			doThrow(new InvalidRefreshTokenException())
 				.when(jwtTokenProvider)
 				.validateToken(any());
 
 			// when
 
 			// then
-			assertThrows(NotValidTokenException.class, () -> userService.reissueToken(tokenRequest));
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(tokenRequest));
 		}
 
 		@Test
@@ -200,14 +200,14 @@ public class UserServiceTest {
 				.accessToken("TOKEN")
 				.refreshToken("TOKEN")
 				.build();
-			doThrow(new NotValidTokenException())
+			doThrow(new InvalidRefreshTokenException())
 				.when(jwtTokenProvider)
 				.validateToken(any());
 
 			// when
 
 			// then
-			assertThrows(NotValidTokenException.class, () -> userService.reissueToken(tokenRequest));
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(tokenRequest));
 		}
 
 		@Test

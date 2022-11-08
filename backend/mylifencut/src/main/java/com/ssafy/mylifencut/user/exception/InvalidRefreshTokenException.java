@@ -2,8 +2,8 @@ package com.ssafy.mylifencut.user.exception;
 
 import static com.ssafy.mylifencut.user.UserConstant.*;
 
-public class NotValidTokenException extends RuntimeException {
-	public NotValidTokenException() {
+public class InvalidRefreshTokenException extends RuntimeException {
+	public InvalidRefreshTokenException() {
 		super(INVALID_REFRESH_TOKEN_ERROR_MESSAGE);
 	}
 }
