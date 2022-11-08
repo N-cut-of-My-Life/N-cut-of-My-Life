@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.ssafy.mylifencut.user.domain.RefreshToken;
 
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Integer> {
-	Optional<Integer> findByRefreshToken();
+	Optional<Integer> findByToken(String token);
 }
