@@ -7,6 +7,7 @@ import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class RefreshToken {
 	@Id
 	@GeneratedValue
@@ -23,7 +25,7 @@ public class RefreshToken {
 	@Column(nullable = false)
 	private String token;
 	@Column(nullable = false)
-	private Integer user_id;
+	private Integer userId;
 
 	public RefreshToken updateToken(String token) {
 		this.token = token;
