@@ -20,6 +20,7 @@ import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.dto.UserInfo;
+import com.ssafy.mylifencut.user.exception.ExpiredTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.NotValidTokenException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
