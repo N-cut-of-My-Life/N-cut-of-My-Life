@@ -17,10 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.ssafy.mylifencut.user.JwtTokenProvider;
+import com.ssafy.mylifencut.user.domain.RefreshToken;
 import com.ssafy.mylifencut.user.domain.User;
+import com.ssafy.mylifencut.user.dto.TokenRequest;
+import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
+import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
+import com.ssafy.mylifencut.user.repository.RefreshTokenRepository;
 import com.ssafy.mylifencut.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -33,6 +39,8 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService implements UserDetailsService {
 
 	private final UserRepository userRepository;
+	private final JwtTokenProvider jwtTokenProvider;
+	private final RefreshTokenRepository refreshTokenRepository;
 
 	@Value("${oauth2.kakao.restApiKey}")
 	private String kakao_restApiKey;
@@ -161,5 +169,29 @@ public class UserService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return userRepository.findById(Integer.parseInt(username))
 			.orElseThrow(UserNotFoundException::new);
+	}
+
+	public TokenResponse reissueToken(TokenRequest tokenRequest) {
+
+		if (!jwtTokenProvider.validateToken(tokenRequest.getRefreshToken())) {
+			throw new InvalidRefreshTokenException();
+		}
+
+		String accessToken = tokenRequest.getAccessToken();
+
+		User user = userRepository.findById(Integer.parseInt(jwtTokenProvider.getUserId(accessToken)))
+			.orElseThrow(InvalidRefreshTokenException::new);
+		RefreshToken refreshToken = refreshTokenRepository.findByUserId(user.getId())
+			.orElseThrow(InvalidRefreshTokenException::new);
+
+		if (!refreshToken.getToken().equals(tokenRequest.getRefreshToken())) {
+			throw new InvalidRefreshTokenException();
+		}
+
+		TokenResponse tokenResponse = jwtTokenProvider.createToken(Integer.toString(user.getId()));
+		refreshToken.updateToken(tokenResponse.getRefreshToken());
+		refreshTokenRepository.save(refreshToken);
+
+		return tokenResponse;
 	}
 }
