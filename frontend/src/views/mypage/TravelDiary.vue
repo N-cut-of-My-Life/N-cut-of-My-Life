@@ -16,33 +16,18 @@
         <div class="prof-id">test123@naver.com</div>
         <div class="prof-journal-title">OO님의 여행일지</div>
         <div>
-          <!-- <div class="journal">
-            <img src="@/assets/space_diary.png" class="journal-img">
-          </div>
-          <div class="journal">
-            <img src="@/assets/space_diary.png" class="journal-img">
-          </div> -->
-          <splide id="carousel" :options="options">
-            <splide-slide>
-              <div class="prof-journals">
-                <div class="journal">
-                  <img src="@/assets/space_diary.png" class="journal-img">
+          <splide id="diary-carousel" :options="options">
+            <template v-for="(n, index) in 4" :key="index">
+              <splide-slide>
+                <div class="prof-journals">
+                  <div class="journal">
+                    <img src="@/assets/space_diary.png" class="journal-img">
+                    <div class="diary-title">2022년 11월 8일의 기록</div>
+                  </div>
                 </div>
-                <div class="journal">
-                  <img src="@/assets/space_diary.png" class="journal-img">
-                </div>
-              </div>
-            </splide-slide>
-            <splide-slide>
-              <div class="prof-journals">
-                <div class="journal">
-                  <img src="@/assets/space_diary.png" class="journal-img">
-                </div>
-                <div class="journal">
-                  <img src="@/assets/space_diary.png" class="journal-img">
-                </div>
-              </div>
-            </splide-slide>
+              </splide-slide>
+            </template>
+            
           </splide>
         </div>
       </section>
@@ -88,14 +73,13 @@ import MyModal from '@/components/mypage/MyModal.vue'
 import { useRouter } from 'vue-router'
 const router =  useRouter();
 const options = {
-  perPage: 1,
+  perPage: 2,
   pauseOnHover: false,
+  padding: "0.3rem",
   arrows: true,
-  dots: false,
-  animatedDots: false,
-  padding: "2rem",
-  type: "fade",
-  autoplay: true,
+  pagination: false,
+  focus: 0,
+  wheel: true,
 }
 
 </script>
@@ -198,8 +182,19 @@ body {
 
 .journal-img {
   width: 100%;
+  position: relative;
 }
 
+.diary-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  font-family: 'MapleStoryOTFBold';
+  color: aliceblue;
+  transform: translate(-33%, -350%);
+  
+}
 .journal-img:hover {
   scale: 1.05;
 }
@@ -308,7 +303,15 @@ body {
   max-width: 100%;
   border-radius: 2px;
 }
+</style>
 
 
-
+<style>
+/* 캐러셀용 스타일 태그입니다. */
+.splide__arrow--prev {
+  left: -2em;
+}
+.splide__arrow--next {
+  right: -2em;
+}
 </style>
