@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,7 @@ class AnswerRepositoryTest {
 
 	@Test
 	@DisplayName("답변 등록 성공")
+	@Disabled
 	public void createAnswer() {
 		//given
 		final User user = User.builder()
@@ -114,7 +116,4 @@ class AnswerRepositoryTest {
 			assertThat(result.size()).isEqualTo(2);
 		}
 	}
-
-
-
 }

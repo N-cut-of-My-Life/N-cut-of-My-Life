@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -41,6 +42,7 @@ class AnswerServiceTest {
 
 	@Nested
 	@DisplayName("답변 등록 테스트")
+	@Disabled
 	class AnswerRegisterTest{
 		@Test
 		@DisplayName("답변등록 - 공개여부를 선택할 수 없는 답변의 상태가 OPEN일 때")
@@ -66,6 +68,7 @@ class AnswerServiceTest {
 
 		@Test
 		@DisplayName("답변등록 - 성공")
+		@Disabled
 		public void createAnswer() {
 			//given
 			Answer answer = newAnswer();
@@ -143,12 +146,7 @@ class AnswerServiceTest {
 		}
 	}
 
-
-
-
-
 	private Answer newAnswer() {
-
 		return Answer.builder()
 			.id(1)
 			.article(Article.builder().build())

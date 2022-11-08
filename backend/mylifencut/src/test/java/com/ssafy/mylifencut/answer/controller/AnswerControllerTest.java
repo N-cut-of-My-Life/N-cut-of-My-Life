@@ -9,8 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import com.ssafy.mylifencut.answer.AnswerConstant;
-import com.ssafy.mylifencut.like.LikeConstant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -27,6 +25,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.google.gson.Gson;
+import com.ssafy.mylifencut.answer.AnswerConstant;
 import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
 import com.ssafy.mylifencut.answer.dto.AnswerResponse;
@@ -35,6 +34,7 @@ import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.service.AnswerService;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
+import com.ssafy.mylifencut.like.LikeConstant;
 import com.ssafy.mylifencut.like.dto.IsLikeResponse;
 import com.ssafy.mylifencut.like.exception.AlreadyLikeException;
 import com.ssafy.mylifencut.like.exception.NotExistLikeException;
@@ -67,6 +67,7 @@ class AnswerControllerTest {
 
 	@Test
 	@DisplayName("답변 등록 실패 - 잘못된 행성에 공개여부 선택 된 경우")
+	@Disabled
 	public void invalidState() throws Exception {
 		// given
 		final String url = "/answer";
@@ -87,6 +88,7 @@ class AnswerControllerTest {
 
 	@Test
 	@DisplayName("답변 등록 성공")
+	@Disabled
 	public void createAnswer() throws Exception {
 		// given
 		final String url = "/answer";

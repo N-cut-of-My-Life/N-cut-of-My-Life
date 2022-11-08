@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,13 +30,6 @@ public class AnswerController {
 
 	private final AnswerService answerService;
 	private final LikeService likeService;
-
-	@PostMapping
-	public ResponseEntity<BaseResponse> registerAnswer(@RequestBody final AnswerRegisterRequest answerRegisterRequest) {
-		return new ResponseEntity<>(
-			BaseResponse.from(true, CREATE_ANSWER_SUCCESS_MESSAGE, answerService.createAnswer(answerRegisterRequest)),
-			HttpStatus.OK);
-	}
 
 	@Operation(summary = "좋아요 추가", description = "답변 번호(answerId)와 유저 아이디(userId)를 이용하여 답변에 좋아요를 추가합니다.")
 	@PostMapping("/{answerId}/{userId}")

@@ -19,16 +19,6 @@ public class BaseResponse {
 	}
 
 	public static BaseResponse from(boolean success, String message, Object data) {
-		System.out.println("isSuccess" + success);
 		return builder().success(success).message(message).data(data).build();
-	}
-
-	@Override
-	public String toString() {
-		return "BaseResponse{" +
-			"isSuccess=" + success +
-			", message='" + message + '\'' +
-			", data=" + data +
-			'}';
 	}
 }

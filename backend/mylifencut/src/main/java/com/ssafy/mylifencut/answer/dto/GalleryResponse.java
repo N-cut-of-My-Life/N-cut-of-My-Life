@@ -3,12 +3,10 @@ package com.ssafy.mylifencut.answer.dto;
 import com.ssafy.mylifencut.answer.domain.Answer;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
 @Builder
-@EqualsAndHashCode
 public class GalleryResponse {
 	private int id;
 	private int userId;
