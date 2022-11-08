@@ -48,13 +48,19 @@ public class UserService {
 	@Value("${oauth2.kakao.redirectUri}")
 	private String kakao_redirectUri;
 
-	public Integer kakaoLogin(String token) {
+	public TokenResponse kakaoLogin(String token) {
 		UserInfo userInfo = getUserInfo(getAccessToken(token));
 
 		User user = userRepository.findByEmail(userInfo.getEmail())
 			.orElse(join(userInfo));
 
-		return user.getId();
+		TokenResponse tokenResponse = jwtTokenProvider.createToken(Integer.toString(user.getId()));
+		RefreshToken refreshToken = RefreshToken.builder()
+			.userId(user.getId())
+			.token(tokenResponse.getRefreshToken())
+			.build();
+		refreshTokenRepository.save(refreshToken);
+		return tokenResponse;
 	}
 
 	public String getAccessToken(String code) {
