@@ -3,6 +3,7 @@ package com.ssafy.mylifencut.user.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.ssafy.mylifencut.article.domain.Article;
@@ -48,6 +50,10 @@ public class User implements UserDetails {
 	@OneToMany(mappedBy = "user")
 	private List<IsLike> likes = new ArrayList<>();
 
+	@Builder.Default
+	@OneToMany(mappedBy = "user")
+	private List<Authority> authorities = new ArrayList<>();
+
 	public void addArticle(Article article) {
 		this.articles.add(article);
 	}
@@ -61,7 +67,9 @@ public class User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return authorities.stream()
+			.map(authority -> new SimpleGrantedAuthority(authority.getRole().toString()))
+			.collect(Collectors.toList());
 	}
 
 	@Override
