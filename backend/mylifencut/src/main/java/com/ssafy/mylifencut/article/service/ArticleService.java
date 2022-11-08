@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.mylifencut.answer.domain.Answer;
+import com.ssafy.mylifencut.answer.exception.CanNotBeOpenedAnswerException;
 import com.ssafy.mylifencut.article.ArticleConstant;
 import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.article.dto.ArticleRequest;
@@ -43,6 +44,11 @@ public class ArticleService {
 		Article article = articleRepository.save(Article.from(articleRequest, user));
 		articleRequest.getAnswers().stream()
 			.map(answerRegisterRequest -> Answer.from(answerRegisterRequest, article))
-			.forEach(article::addAnswer);
+			.forEach(answer -> {
+				if (answer.isCanNotBeOpenedAnswer()) {
+					throw new CanNotBeOpenedAnswerException();
+				}
+				article.addAnswer(answer);
+			});
 	}
 }
