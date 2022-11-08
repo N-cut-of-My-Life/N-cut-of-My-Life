@@ -213,7 +213,7 @@ public class UserServiceTest {
 
 		@Test
 		@DisplayName("올바른 리프레쉬 토큰")
-		void expiredRefreshToken() {
+		void validRefreshToken() {
 			// given
 			TokenRequest tokenRequest = TokenRequest.builder()
 				.accessToken("TOKEN")
