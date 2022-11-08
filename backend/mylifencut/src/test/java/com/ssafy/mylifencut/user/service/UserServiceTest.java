@@ -20,7 +20,6 @@ import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.dto.UserInfo;
-import com.ssafy.mylifencut.user.exception.ExpiredTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.NotValidTokenException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
@@ -201,14 +200,14 @@ public class UserServiceTest {
 				.accessToken("TOKEN")
 				.refreshToken("TOKEN")
 				.build();
-			doThrow(new ExpiredTokenException())
+			doThrow(new NotValidTokenException())
 				.when(jwtTokenProvider)
 				.validateToken(any());
 
 			// when
 
 			// then
-			assertThrows(ExpiredTokenException.class, () -> userService.reissueToken(tokenRequest));
+			assertThrows(NotValidTokenException.class, () -> userService.reissueToken(tokenRequest));
 		}
 
 		@Test
