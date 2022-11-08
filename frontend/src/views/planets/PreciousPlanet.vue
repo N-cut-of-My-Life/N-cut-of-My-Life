@@ -3,6 +3,9 @@
         <div class="title">넌너무소중 행성</div>
     </div>
     <img class="bubble" :src="images[currentImage]" />
+    <audio loop autoplay volume="0.3">
+        <source src="@/assets/audio/mix_precious.mp3" type="audio/mp3">
+    </audio>
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" variant="warning" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
@@ -36,8 +39,8 @@
             </div>
         </b-button>
     </div>
-    <b-modal :no-close-on-backdrop="true" id="modal-precious" centered no-stacking hide-header
-        hide-footer style="text-align: center; border-radius: 1vw;">
+    <b-modal :no-close-on-backdrop="true" id="modal-precious" centered no-stacking hide-header hide-footer
+        style="text-align: center; border-radius: 1vw;">
         <b-popover target="addon" placement="left">
             <input type="file" accept="image/*" @change="onUpload" />
             <div>
