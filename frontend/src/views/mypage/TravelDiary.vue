@@ -15,13 +15,35 @@
         </div>
         <div class="prof-id">test123@naver.com</div>
         <div class="prof-journal-title">OO님의 여행일지</div>
-        <div class="prof-journals">
-          <div class="journal">
+        <div>
+          <!-- <div class="journal">
             <img src="@/assets/space_diary.png" class="journal-img">
           </div>
           <div class="journal">
             <img src="@/assets/space_diary.png" class="journal-img">
-          </div>
+          </div> -->
+          <splide id="carousel" :options="options">
+            <splide-slide>
+              <div class="prof-journals">
+                <div class="journal">
+                  <img src="@/assets/space_diary.png" class="journal-img">
+                </div>
+                <div class="journal">
+                  <img src="@/assets/space_diary.png" class="journal-img">
+                </div>
+              </div>
+            </splide-slide>
+            <splide-slide>
+              <div class="prof-journals">
+                <div class="journal">
+                  <img src="@/assets/space_diary.png" class="journal-img">
+                </div>
+                <div class="journal">
+                  <img src="@/assets/space_diary.png" class="journal-img">
+                </div>
+              </div>
+            </splide-slide>
+          </splide>
         </div>
       </section>
 
@@ -60,9 +82,21 @@
 </template>
 
 <script setup>
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import '@splidejs/splide/dist/css/themes/splide-default.min.css'
 import MyModal from '@/components/mypage/MyModal.vue'
 import { useRouter } from 'vue-router'
 const router =  useRouter();
+const options = {
+  perPage: 1,
+  pauseOnHover: false,
+  arrows: true,
+  dots: false,
+  animatedDots: false,
+  padding: "2rem",
+  type: "fade",
+  autoplay: true,
+}
 
 </script>
 <style scoped>
