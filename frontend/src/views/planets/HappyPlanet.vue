@@ -3,7 +3,7 @@
         <div class="title">하하호호 행성</div>
     </div>
     <!-- <vue-audio :file="audios[currentAudio]" autoplay/> -->
-    <audio id="myaudios" loop autoplay :src="audios[currentAudio]" :muted="mute">
+    <audio id="myaudios" loop autoplay :src="audios[currentAudio]" :muted="mute" volume="0.3">
     </audio>
     <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
     <img class="story" :src="images[currentImage]" />
