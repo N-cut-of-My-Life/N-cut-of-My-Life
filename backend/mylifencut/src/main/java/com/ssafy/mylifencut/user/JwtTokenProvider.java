@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.ssafy.mylifencut.user.dto.TokenResponse;
-import com.ssafy.mylifencut.user.service.UserService;
+import com.ssafy.mylifencut.user.service.SecurityService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -29,7 +29,7 @@ public class JwtTokenProvider {
 	private String secretKey;
 	private final long accessTokenValidTime = 30 * 60 * 1000L;    // access 토큰 유효시간 30분
 	private final long refreshTokenValidTime = 14 * 24 * 60 * 60 * 1000L;    // refresh 토큰 유효시간 14일
-	private final UserService userService;
+	private final SecurityService securityService;
 
 	@PostConstruct
 	protected void init() {
@@ -61,7 +61,7 @@ public class JwtTokenProvider {
 	}
 
 	public Authentication getAuthentication(String token) {
-		UserDetails userDetails = userService.loadUserByUsername(getUserId(token));
+		UserDetails userDetails = securityService.loadUserByUsername(getUserId(token));
 		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 	}
 

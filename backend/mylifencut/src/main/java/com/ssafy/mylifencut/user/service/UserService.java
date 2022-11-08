@@ -9,9 +9,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
-public class UserService implements UserDetailsService {
+public class UserService {
 
 	private final UserRepository userRepository;
 	private final JwtTokenProvider jwtTokenProvider;
@@ -161,13 +158,6 @@ public class UserService implements UserDetailsService {
 	@Transactional(readOnly = true)
 	public User login(UserInfo userInfo) {
 		return userRepository.findByEmail(userInfo.getEmail())
-			.orElseThrow(UserNotFoundException::new);
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return userRepository.findById(Integer.parseInt(username))
 			.orElseThrow(UserNotFoundException::new);
 	}
 
