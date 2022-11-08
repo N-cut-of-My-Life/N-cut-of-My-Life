@@ -28,7 +28,7 @@ class JwtTokenProviderTest {
 		jwtTokenProvider.init();
 	}
 
-	@DisplayName("유효한 토큰이 생성된 후 원하는 playload로 변환되는지 검증한다.")
+	@DisplayName("유효한 토큰이 생성된 후 원하는 payload로 변환되는지 검증한다.")
 	@Test
 	void checkPayloadAfterIssuingToken() {
 		// given
