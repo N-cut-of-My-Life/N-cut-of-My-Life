@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.service.UserService;
 
 import io.jsonwebtoken.Claims;
@@ -26,7 +27,8 @@ public class JwtTokenProvider {
 
 	@Value("${spring.jwt.secretKey}")
 	private String secretKey;
-	private final long tokenValidTime = 30 * 60 * 1000L;    // 토큰 유효시간 30분
+	private final long accessTokenValidTime = 30 * 60 * 1000L;    // access 토큰 유효시간 30분
+	private final long refreshTokenValidTime = 14 * 24 * 60 * 60 * 1000L;    // refresh 토큰 유효시간 14일
 	private final UserService userService;
 
 	@PostConstruct
@@ -36,16 +38,26 @@ public class JwtTokenProvider {
 		secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
 	}
 
-	public String createToken(String userId) {
+	public TokenResponse createToken(String userId) {
 		Claims claims = Jwts.claims().setSubject(userId);
 		Date now = new Date();
 
-		return Jwts.builder()
+		String accessToken = Jwts.builder()
 			.setClaims(claims)
 			.setIssuedAt(now)
-			.setExpiration(new Date(now.getTime() + tokenValidTime))
+			.setExpiration(new Date(now.getTime() + accessTokenValidTime))
 			.signWith(SignatureAlgorithm.HS256, secretKey)
 			.compact();
+
+		String refreshToken = Jwts.builder()
+			.setExpiration(new Date(now.getTime() + refreshTokenValidTime))
+			.signWith(SignatureAlgorithm.HS256, secretKey)
+			.compact();
+
+		return TokenResponse.builder()
+			.AccessToken(accessToken)
+			.RefreshToken(refreshToken)
+			.build();
 	}
 
 	public Authentication getAuthentication(String token) {
