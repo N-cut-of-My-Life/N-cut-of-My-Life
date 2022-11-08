@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.user.JwtTokenProvider;
+import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.service.UserService;
 
@@ -61,8 +62,6 @@ public class UserControllerTest {
 			final String url = "/user/login";
 			final Map<String, String> token = new HashMap<>();
 			token.put("accessToken", "INVALID_TOKEN");
-			// final String token = "{accessToken: y2JO3apqZqQMsjJxQEduSb-qhHXu4r7JmcLmb20y9aOwdJflWz0JciYYd7cf5n_45nw_7wo9dRkAAAGEUT3SuA}";
-			// System.out.println("TEST"+token);
 			doThrow(new InvalidKakaoAccessTokenException())
 				.when(userService)
 				.kakaoLogin(any());
@@ -85,7 +84,10 @@ public class UserControllerTest {
 			final String url = "/user/login";
 			final Map<String, String> token = new HashMap<>();
 			token.put("accessToken", "INVALID_TOKEN");
-			final String jwtToken = "JWT_TOKEN";
+			final TokenResponse jwtToken = TokenResponse.builder()
+				.accessToken("NEW_TOKEN")
+				.refreshToken("NEW_TOKEN")
+				.build();
 
 			doReturn(1)
 				.when(userService)
@@ -106,7 +108,9 @@ public class UserControllerTest {
 			final BaseResponse response = gson.fromJson(resultActions.andReturn()
 				.getResponse()
 				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
-			assertEquals(response.getData(), jwtToken);
+			Map map = (Map)response.getData();
+			assertEquals(map.get("accessToken"), jwtToken.getAccessToken());
+			assertEquals(map.get("refreshToken"), jwtToken.getRefreshToken());
 		}
 	}
 }
