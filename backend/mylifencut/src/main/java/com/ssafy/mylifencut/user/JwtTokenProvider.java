@@ -55,8 +55,8 @@ public class JwtTokenProvider {
 			.compact();
 
 		return TokenResponse.builder()
-			.AccessToken(accessToken)
-			.RefreshToken(refreshToken)
+			.accessToken(accessToken)
+			.refreshToken(refreshToken)
 			.build();
 	}
 

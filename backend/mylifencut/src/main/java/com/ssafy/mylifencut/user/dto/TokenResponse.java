@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class TokenResponse {
-	private String RefreshToken;
-	private String AccessToken;
+	private String refreshToken;
+	private String accessToken;
 }
