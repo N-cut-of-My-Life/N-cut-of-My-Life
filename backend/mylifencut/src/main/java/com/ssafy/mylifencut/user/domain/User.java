@@ -5,7 +5,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -51,7 +53,7 @@ public class User implements UserDetails {
 	private List<IsLike> likes = new ArrayList<>();
 
 	@Builder.Default
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Authority> authorities = new ArrayList<>();
 
 	public void addArticle(Article article) {
@@ -63,6 +65,10 @@ public class User implements UserDetails {
 			.name(userInfo.getName())
 			.email(userInfo.getEmail())
 			.build();
+	}
+
+	public void setAuthorities(List<Authority> authorities) {
+		this.authorities = authorities;
 	}
 
 	@Override
