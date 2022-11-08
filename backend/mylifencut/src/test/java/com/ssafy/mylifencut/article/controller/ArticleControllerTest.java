@@ -32,7 +32,7 @@ import com.google.gson.Gson;
 import com.ssafy.mylifencut.article.ArticleConstant;
 import com.ssafy.mylifencut.article.dto.ArticleRequest;
 import com.ssafy.mylifencut.article.dto.ArticleResponse;
-import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnough;
+import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnoughException;
 import com.ssafy.mylifencut.article.service.ArticleService;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
@@ -159,7 +159,7 @@ class ArticleControllerTest {
 	private static Stream<Arguments> registerArticleErrorParameter() {
 		return Stream.of(
 			Arguments.of(new UserNotFoundException(), UserConstant.USER_NOT_FOUND_ERROR_MESSAGE),
-			Arguments.of(new AnswersSizeIsNotEnough(),
+			Arguments.of(new AnswersSizeIsNotEnoughException(),
 				ArticleConstant.ARTICLE_ANSWERS_SIZE_IS_NOT_ENOUGH_ERROR_MESSAGE)
 		);
 	}

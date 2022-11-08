@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 
 import org.springframework.lang.Nullable;
 
+import com.ssafy.mylifencut.answer.AnswerConstant;
 import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
 import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.like.domain.IsLike;
@@ -67,5 +68,9 @@ public class Answer {
 
 	public void setArticle(Article article) {
 		this.article = article;
+	}
+
+	public boolean isCanNotBeOpenedAnswer() {
+		return this.questionId != AnswerConstant.OPENABLE_QUESTION_ID && this.state.equals(State.OPEN);
 	}
 }
