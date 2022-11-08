@@ -3,6 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'jacoco'
     id 'java'
+    id 'org.sonarqube' version '3.4.0.2513'
 }
 
 group = 'com.ssafy'
@@ -53,6 +54,9 @@ jacocoTestReport {
         csv {
             enabled true
         }
+        xml {
+            enabled true
+        }
     }
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
@@ -100,5 +104,20 @@ jacocoTestCoverageVerification {
                         '**.*Constant*',
                         '**.*Filter']
         }
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.host.url", "http://k7b105.p.ssafy.io:8000/"
+        property "sonar.sources", "src"
+        property "sonar.language", "java"
+        property 'sonar.projectVersion', '1.1.0-SNAPSHOT'
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.profile", "Sonar way"
+        property "sonar.java.binaries", "${buildDir}/classes"
+        property "sonar.test.inclusions", "**/*Test.java"
+        property "sonar.exclusions", "**/resources/static/**, **/Q*.class, **/test/**"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
     }
 }
