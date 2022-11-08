@@ -29,8 +29,9 @@ public class ArticleService {
 	@Transactional(readOnly = true)
 	public List<ArticleResponse> retrieveArticles(int userId) {
 		userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-
-		return articleRepository.findAllByUserId(userId).stream().map(ArticleResponse::of).collect(Collectors.toList());
+		return articleRepository.findAllByUserId(userId).stream()
+			.map(ArticleResponse::of)
+			.collect(Collectors.toList());
 	}
 
 	public void createArticle(ArticleRequest articleRequest) {

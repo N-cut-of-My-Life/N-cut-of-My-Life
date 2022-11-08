@@ -37,7 +37,6 @@
         <div class="upper-items">
     
           <div class="last-word">
-            <img src="@/assets/post_paper.png">
             <h1 class="text-shadow">지금은 고민이 참 많을테지만, 언젠간 난 이겨낼거야</h1>
           </div>
 
@@ -304,7 +303,6 @@ body {
   border-radius: 2px;
 }
 </style>
-
 
 <style>
 /* 캐러셀용 스타일 태그입니다. */

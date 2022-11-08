@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,7 @@ class AnswerRepositoryTest {
 
 	@Test
 	@DisplayName("답변 등록 성공")
+	@Disabled
 	public void createAnswer() {
 		//given
 		final User user = User.builder()
@@ -43,6 +45,7 @@ class AnswerRepositoryTest {
 
 		final Answer answer = Answer.builder()
 			.article(article)
+			.imgUrl("/dir/img")
 			.questionId(1)
 			.contents("답변 내용")
 			.state(State.CLOSE)
@@ -54,6 +57,7 @@ class AnswerRepositoryTest {
 		assertEquals(savedAnswer.getQuestionId(), 1);
 		assertEquals(savedAnswer.getContents(), "답변 내용");
 		assertEquals(savedAnswer.getState(), State.CLOSE);
+		assertEquals(savedAnswer.getImgUrl(),"/dir/img");
 	}
 
 	@Nested
@@ -112,7 +116,4 @@ class AnswerRepositoryTest {
 			assertThat(result.size()).isEqualTo(2);
 		}
 	}
-
-
-
 }

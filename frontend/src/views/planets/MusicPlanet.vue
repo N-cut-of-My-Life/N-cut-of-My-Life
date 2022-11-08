@@ -2,9 +2,8 @@
     <div class="jumbotron">
         <div class="title">둠칫둠칫 행성</div>
     </div>
-    <audio id="myaudios" loop autoplay :src="audios[currentAudio]">
+    <audio id="myaudios" loop autoplay :src="audios[currentAudio]" volume="0.2">
     </audio>
-    <a href="#noscroll" id="mute">toggle sound</a>
     <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
     <img :src="images[currentImage]" />
     <div class="other">
@@ -41,15 +40,6 @@
 </template>
 
 <script>
-var audio = document.getElementById('background_audio');
-
-document.getElementById('mute').addEventListener('click', function (e)
-{
-    e = e || window.event;
-    audio.muted = !audio.muted;
-    e.preventDefault();
-}, false);
-
 export default {
     data() {
         return {
@@ -61,7 +51,9 @@ export default {
                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_5.svg'),
             ],
             audios: [
-                require('@/assets/audio/booty-in-the-nest.mp3')
+            // 병합 예정    
+            // require('@/assets/audio/booty-in-the-nest.mp3'),
+                require('@/assets/audio/come-on-boy.mp3')
             ],
             currentImage: 0,
             elementVisible: false,

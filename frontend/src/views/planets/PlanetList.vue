@@ -3,6 +3,9 @@
   <video muted autoplay loop playbackRate="1.0">
     <source src="@/assets/intro_video.mp4" type="video/mp4">
   </video>
+  <audio loop autoplay volume="0.5">
+    <source src="@/assets/audio/daylight.mp3" type="audio/mp3">
+  </audio>
   <div class="other">
         <b-button @click="gotoPage({ name: 'introfirstpage' })" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;돌아가기
@@ -90,7 +93,6 @@ video {
   top: 50%;
 }
 
-
 .stars {
   display: block;
   max-width: 20%;
@@ -100,8 +102,8 @@ video {
   top: 50%;
   margin-top: -144.72px;
   margin-left: -86.14px;
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+  filter: grayscale(75%);
+  -webkit-filter: grayscale(75%);
 }
 
 .stars_line {
@@ -152,8 +154,8 @@ video {
   background-size: 512px 256px;
   margin-left: -128px;
   margin-top: -128px;
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+  filter: grayscale(75%);
+  -webkit-filter: grayscale(75%);
   animation: rotation_1 20s infinite linear;
   cursor: pointer;
 }
@@ -167,8 +169,8 @@ video {
   background-size: 512px 256px;
   margin-left: 0px;
   margin-top: -250px;
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+  filter: grayscale(75%);
+  -webkit-filter: grayscale(75%);
   animation: rotation_2 20s infinite linear;
   cursor: pointer;
 }
@@ -182,8 +184,8 @@ video {
   background-size: 512px 256px;
   margin-left: -50px;
   margin-top: -128px;
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+  filter: grayscale(75%);
+  -webkit-filter: grayscale(75%);
   animation: rotation_3 20s infinite linear;
   cursor: pointer;
 }
@@ -193,8 +195,8 @@ video {
   height: auto;
   margin-left: 10px;
   margin-top: -150px;
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+  filter: grayscale(75%);
+  -webkit-filter: grayscale(75%);
   animation: rotation_4 20s infinite linear;
   cursor: pointer;
 }
@@ -208,8 +210,8 @@ video {
   background-size: 512px 256px;
   margin-left: -100px;
   margin-top: 100px;
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+  filter: grayscale(75%);
+  -webkit-filter: grayscale(75%);
   animation: rotation_5 20s infinite linear;
   cursor: pointer;
 }
@@ -223,8 +225,8 @@ video {
   background-size: 512px 256px;
   margin-left: -188px;
   margin-top: -128px;
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+  filter: grayscale(75%);
+  -webkit-filter: grayscale(75%);
   animation: rotation_6 20s infinite linear;
   cursor: pointer;
 }
@@ -238,8 +240,8 @@ video {
   background-size: 512px 256px;
   margin-left: -128px;
   margin-top: -128px;
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+  filter: grayscale(75%);
+  -webkit-filter: grayscale(75%);
   animation: rotation_7 20s infinite linear;
   cursor: pointer;
 }
@@ -249,8 +251,8 @@ video {
   height: auto;
   margin-left: 50px;
   margin-top: -46.3px;
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+  filter: grayscale(75%);
+  -webkit-filter: grayscale(75%);
   animation: rotation_8 20s infinite linear;
   cursor: pointer;
 }

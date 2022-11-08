@@ -3,6 +3,9 @@
         <div class="title">반짝반짝 행성</div>
     </div>
     <img class="bubble" :src="images[currentImage]" />
+    <audio loop autoplay volume="0.3">
+        <source src="@/assets/audio/shining-diamond.mp3" type="audio/mp3">
+    </audio>
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
@@ -46,7 +49,8 @@
 
     <b-modal id="modal-treasure" hide-header hide-footer centered no-stacking :no-close-on-backdrop="true"
         style="text-align: center; border-radius: 1vw;">
-        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg" style="cursor:pointer; float: right;"/>
+        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg"
+            style="cursor:pointer; float: right;" />
         <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">당신의 가장 소중한 물건을 적어주세요!</div>
         <b-container ref="form" style="margin-bottom:3.8%">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required

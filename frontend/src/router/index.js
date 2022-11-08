@@ -16,14 +16,9 @@ const routes = [
     component: () => import("@/views/intro/IntroFirstPage.vue"),
   },
   {
-    path: "/introstory1",
-    name: "introstory1",
-    component: () => import("@/views/intro/IntroStory1.vue"),
-  },
-  {
-    path: "/introstory2",
-    name: "introstory2",
-    component: () => import("@/views/intro/IntroStory2.vue"),
+    path: "/introstory",
+    name: "introstory",
+    component: () => import("@/views/intro/IntroStory.vue"),
   },
   {
     path: "/galaxygallery",
@@ -79,6 +74,11 @@ const routes = [
     path: "/treasureplanet",
     name: "treasureplanet",
     component: () => import("@/views/planets/TreasurePlanet.vue"),
+  },
+  {
+    path: "/resultprint",
+    name: "resultprint",
+    component: () => import("@/views/result/ResultPrint.vue"),
   },
   {
     path: "/pagenotfound",

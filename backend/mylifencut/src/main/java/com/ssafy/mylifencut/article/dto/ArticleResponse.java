@@ -9,12 +9,10 @@ import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.user.domain.User;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
 @Builder
-@EqualsAndHashCode
 public class ArticleResponse {
 	private Integer id;
 	private User user;
