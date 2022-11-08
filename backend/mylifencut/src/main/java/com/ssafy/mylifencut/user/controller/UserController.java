@@ -18,6 +18,8 @@ import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -38,6 +40,10 @@ public class UserController {
 
 	@PostMapping("/token")
 	@ApiOperation(value = "Refresh Token 갱신", notes = "Refresh, Access Token을 보내서 새로 갱신된 토큰 발급")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "토큰 재발급 성공", response = TokenResponse.class),
+		@ApiResponse(code = 400, message = "토큰 오류로 재발급 실패")
+	})
 	public ResponseEntity<BaseResponse> reissueToken(@RequestBody TokenRequest tokenRequest) {
 		return new ResponseEntity<>(
 			BaseResponse.from(true, TOKEN_REISSUE_SUCCESS_MESSAGE, userService.reissueToken(tokenRequest)),
