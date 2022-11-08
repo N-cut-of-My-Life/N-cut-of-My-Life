@@ -6,8 +6,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.ssafy.mylifencut.answer.AnswerConstant;
 import com.ssafy.mylifencut.like.LikeConstant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -253,16 +255,32 @@ class AnswerControllerTest {
 			//given
 			final String url = "/answer";
 			doReturn(Arrays.asList(
-					GalleryResponse.builder().id(1).userId(3).contents("답변내용").like(3).build(),
-					GalleryResponse.builder().id(2).userId(5).contents("답변내용이지롱").like(12).build(),
-					GalleryResponse.builder().id(3).userId(6).contents("답변내용입니당").like(13).build()
+					GalleryResponse.builder().id(1).userId(3).contents("답변내용").like(10).build(),
+					GalleryResponse.builder().id(2).userId(4).contents("답변내용이지롱").like(11).build(),
+					GalleryResponse.builder().id(3).userId(5).contents("답변내용입니당").like(12).build()
 			)).when(answerService).getGalleryList();
 			//when
 			final ResultActions resultActions = mockMvc.perform(
 					MockMvcRequestBuilders.get(url)
 			);
+			final BaseResponse response =  gson.fromJson(resultActions.andReturn()
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+
 			//then
 			resultActions.andExpect(status().isOk());
+			assertNotNull(response);
+			assertTrue(response.isSuccess());
+			assertEquals(AnswerConstant.READ_GALLERY_SUCCESS_MESSAGE, response.getMessage());
+			List<GalleryResponse> list = (List<GalleryResponse>)response.getData();
+			String[] contentsList = {"답변내용", "답변내용이지롱", "답변내용입니당"};
+			for (int i = 0; i < list.size(); i++) {
+				Map galleryResponse = (Map)list.get(i);
+				assertEquals((double)(i+1), galleryResponse.get("id"));
+				assertEquals((double)(i+3), galleryResponse.get("userId"));
+				assertEquals((double)(i+10), galleryResponse.get("like"));
+				assertEquals(contentsList[i], galleryResponse.get("contents"));
+			}
 		}
 	}
 
