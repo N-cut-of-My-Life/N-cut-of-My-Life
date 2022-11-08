@@ -14,8 +14,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.ssafy.mylifencut.user.JwtTokenProvider;
 import com.ssafy.mylifencut.user.UserConstant;
 import com.ssafy.mylifencut.user.domain.User;
+import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
@@ -28,6 +30,8 @@ public class UserServiceTest {
 	private UserService userService;
 	@Mock
 	private UserRepository userRepository;
+	@Mock
+	private JwtTokenProvider jwtTokenProvider;
 
 	private final String email = "ssafy@email.com";
 	private final String name = "홍길동";
@@ -161,6 +165,71 @@ public class UserServiceTest {
 
 			// then
 			assertEquals(result.getMessage(), INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE);
+		}
+	}
+
+	@Nested
+	@DisplayName("리프레쉬 토큰 테스트")
+	class refreshTokenTest {
+
+		@Test
+		@DisplayName("발급되지 않았던 리프레쉬 토큰")
+		void notValidRefreshToken() {
+			// given
+			TokenRequest tokenRequest = TokenRequest.builder()
+				.accessToken("TOKEN")
+				.refreshToken("TOKEN")
+				.build();
+			doThrow(new NotValidTokenException())
+				.when(jwtTokenProvider)
+				.validateToken(any());
+
+			// when
+
+			// then
+			assertThrows(NotValidTokenException.class, () -> userService.reissueToken(tokenRequest));
+		}
+
+		@Test
+		@DisplayName("만료된 리프레쉬 토큰")
+		void expiredRefreshToken() {
+			// given
+			TokenRequest tokenRequest = TokenRequest.builder()
+				.accessToken("TOKEN")
+				.refreshToken("TOKEN")
+				.build();
+			doThrow(new NotValidTokenException())
+				.when(jwtTokenProvider)
+				.validateToken(any());
+
+			// when
+
+			// then
+			assertThrows(NotValidTokenException.class, () -> userService.reissueToken(tokenRequest));
+		}
+
+		@Test
+		@DisplayName("올바른 리프레쉬 토큰")
+		void expiredRefreshToken() {
+			// given
+			TokenRequest tokenRequest = TokenRequest.builder()
+				.accessToken("TOKEN")
+				.refreshToken("TOKEN")
+				.build();
+			TokenResponse tokenResponse = TokenResponse.builder()
+				.AccessToken("TOKEN")
+				.RefreshToken("TOKEN")
+				.build();
+			doReturn(tokenResponse)
+				.when(jwtTokenProvider)
+				.validateToken(any());
+
+			// when
+			TokenResponse result = userService.reissueToken(tokenRequest);
+
+			// then
+			assertEquals(tokenResponse.getRefreshToken(), result.getRefreshToken());
+			assertEquals(tokenResponse.getAccessToken(), result.getAccessToken());
 		}
 	}
 
