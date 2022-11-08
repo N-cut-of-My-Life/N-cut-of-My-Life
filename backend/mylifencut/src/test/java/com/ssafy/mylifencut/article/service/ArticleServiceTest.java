@@ -26,7 +26,7 @@ import com.ssafy.mylifencut.answer.exception.CanNotBeOpenedAnswerException;
 import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.article.dto.ArticleRequest;
 import com.ssafy.mylifencut.article.dto.ArticleResponse;
-import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnough;
+import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnoughException;
 import com.ssafy.mylifencut.article.repository.ArticleRepository;
 import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
@@ -119,7 +119,7 @@ class ArticleServiceTest {
 			final List<AnswerRegisterRequest> answers = answerRegisterRequests(ANSWERS_MIN_SIZE - 1);
 
 			//when
-			final AnswersSizeIsNotEnough result = assertThrows(AnswersSizeIsNotEnough.class
+			final AnswersSizeIsNotEnoughException result = assertThrows(AnswersSizeIsNotEnoughException.class
 				, () -> articleService.createArticle(new ArticleRequest(
 					userId, answers, LocalDateTime.now())
 				)
