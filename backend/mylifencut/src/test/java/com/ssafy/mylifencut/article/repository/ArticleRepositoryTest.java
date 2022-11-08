@@ -15,6 +15,7 @@ import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.user.domain.User;
 
 @DataJpaTest
+@DisplayName("여행일지 repository 테스트")
 public class ArticleRepositoryTest {
 	@Autowired
 	private ArticleRepository articleRepository;
