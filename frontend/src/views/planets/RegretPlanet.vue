@@ -3,6 +3,9 @@
         <div class="title">괜히글 행성</div>
     </div>
     <img class="bubble" :src="images[currentImage]" />
+    <audio loop autoplay volume="0.3">
+        <source src="@/assets/audio/mix_regret.mp3" type="audio/mp3">
+    </audio>
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
@@ -31,8 +34,10 @@
         </b-button>
     </div>
 
-    <b-modal id="modal-regret" hide-header hide-footer centered no-stacking style="text-align: center; border-radius: 1vw;" :no-close-on-backdrop="true">
-        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg" style="cursor:pointer; float: right;"/>
+    <b-modal id="modal-regret" hide-header hide-footer centered no-stacking
+        style="text-align: center; border-radius: 1vw;" :no-close-on-backdrop="true">
+        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg"
+            style="cursor:pointer; float: right;" />
         <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">가장 후회되는 일을 적어주세요!</div>
         <b-container ref="form" style="margin-bottom:3.8%">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
@@ -58,7 +63,7 @@ export default {
         }
     },
     updated() {
-        if(this.currentImage==(this.images.length-1)){
+        if (this.currentImage == (this.images.length - 1)) {
             setTimeout(() => this.elementVisible = true, 2000)
         }
     },
@@ -81,8 +86,9 @@ export default {
 </script>
 
 <style scoped>
-html, body {
-  height: 100%;
+html,
+body {
+    height: 100%;
 }
 
 body {
@@ -174,7 +180,8 @@ body {
     border-radius: 1000px;
     min-width: calc(160px + 12px);
     min-height: calc(60px + 12px);
-    box-shadow: 0 0 60px #ffffff;;
+    box-shadow: 0 0 60px #ffffff;
+    ;
     position: absolute;
     top: 50%;
     left: 50%;

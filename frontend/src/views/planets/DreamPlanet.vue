@@ -3,6 +3,9 @@
         <div class="title">이루지못 행성</div>
     </div>
     <img class="bubble" :src="images[currentImage]" />
+    <audio loop autoplay volume="0.3">
+        <source src="@/assets/audio/mix_dream.mp3" type="audio/mp3">
+    </audio>
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기

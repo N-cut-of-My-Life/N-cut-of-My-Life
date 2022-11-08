@@ -93,7 +93,6 @@ video {
   top: 50%;
 }
 
-
 .stars {
   display: block;
   max-width: 20%;
