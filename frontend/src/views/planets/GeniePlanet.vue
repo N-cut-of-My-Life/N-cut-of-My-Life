@@ -5,10 +5,14 @@
     <div class="img-box">
         <img src="@/assets/genie_charac.png" class="img-genie genie-bounce" />
     </div>
+    <audio loop autoplay volume="0.3">
+        <source src="@/assets/audio/disco-funk-paradise.mp3" type="audio/mp3">
+    </audio>
     <img class="bubble" :src="images[currentImage]" />
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
-            <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
+            <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
+        </b-button>
     </div>
     <div class="jump">
         <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
@@ -36,14 +40,18 @@
         </b-button>
     </div>
 
-    <b-modal centered no-stacking id="modal-genie" hide-header hide-footer style="text-align: center; border-radius: 1vw;" :no-close-on-backdrop="true">
-        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg" style="cursor:pointer; float: right;"/>
+    <b-modal centered no-stacking id="modal-genie" hide-header hide-footer
+        style="text-align: center; border-radius: 1vw;" :no-close-on-backdrop="true">
+        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg"
+            style="cursor:pointer; float: right;" />
         <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">당신의 소원을 적어주세요!</div>
         <b-container ref="form" style="margin-bottom:3.8%">
-            <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color:#e3ecfc">
+            <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
+                style="border-radius: 1vw; background-color:#e3ecfc">
             </b-form-textarea>
         </b-container>
-        <b-button text @click="submit" style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
+        <b-button text @click="submit"
+            style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
         </b-button>
     </b-modal>
 </template>
@@ -64,7 +72,7 @@ export default {
         }
     },
     updated() {
-        if(this.currentImage==(this.images.length-1)){
+        if (this.currentImage == (this.images.length - 1)) {
             setTimeout(() => this.elementVisible = true, 2000)
         }
     },
@@ -206,7 +214,7 @@ body {
 .button_2 {
     border-radius: 0.8vw;
     /* border-color: #81c6e8; */
-    border:none;
+    border: none;
     background-color: #9cb4cc;
     position: relative;
     margin: 300px auto 0;
@@ -225,7 +233,8 @@ body {
     border-radius: 1000px;
     min-width: calc(200px + 12px);
     min-height: calc(60px + 12px);
-    box-shadow: 0 0 60px #ffffff;;
+    box-shadow: 0 0 60px #ffffff;
+    ;
     position: absolute;
     top: 50%;
     left: 50%;

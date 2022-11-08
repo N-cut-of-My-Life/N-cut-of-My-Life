@@ -7,16 +7,26 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.ssafy.mylifencut.user.JwtTokenProvider;
+import com.ssafy.mylifencut.user.domain.Authority;
+import com.ssafy.mylifencut.user.domain.RefreshToken;
+import com.ssafy.mylifencut.user.domain.Role;
 import com.ssafy.mylifencut.user.domain.User;
+import com.ssafy.mylifencut.user.dto.TokenRequest;
+import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
+import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
+import com.ssafy.mylifencut.user.repository.RefreshTokenRepository;
 import com.ssafy.mylifencut.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -25,9 +35,12 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final JwtTokenProvider jwtTokenProvider;
+	private final RefreshTokenRepository refreshTokenRepository;
 
 	@Value("${oauth2.kakao.restApiKey}")
 	private String kakao_restApiKey;
@@ -35,16 +48,23 @@ public class UserService {
 	@Value("${oauth2.kakao.redirectUri}")
 	private String kakao_redirectUri;
 
-	public Integer kakaoLogin(String token) {
+	public TokenResponse kakaoLogin(String token) {
 		UserInfo userInfo = getUserInfo(getAccessToken(token));
 
 		User user = userRepository.findByEmail(userInfo.getEmail())
-			.orElse(join(userInfo));
+			.orElseGet(() -> join(userInfo));
 
-		return user.getId();
+		TokenResponse tokenResponse = jwtTokenProvider.createToken(Integer.toString(user.getId()));
+		RefreshToken refreshToken = RefreshToken.builder()
+			.userId(user.getId())
+			.token(tokenResponse.getRefreshToken())
+			.build();
+		refreshTokenRepository.save(refreshToken);
+		return tokenResponse;
 	}
 
 	public String getAccessToken(String code) {
+		System.out.println(code);
 		String access_Token;
 		String refresh_Token;
 		String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -84,6 +104,7 @@ public class UserService {
 	}
 
 	public UserInfo getUserInfo(String token) {
+		System.out.println(token);
 		String reqURL = "https://kapi.kakao.com/v2/user/me";
 
 		//access_token을 이용하여 사용자 정보 조회
@@ -102,7 +123,13 @@ public class UserService {
 
 			return UserInfo.builder()
 				.email(element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString())
-				.name(element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("nickname").getAsString())
+				.name(element.getAsJsonObject()
+					.get("kakao_account")
+					.getAsJsonObject()
+					.get("profile")
+					.getAsJsonObject()
+					.get("nickname")
+					.getAsString())
 				.build();
 		} catch (IOException e) {
 			throw new InvalidKakaoAccessTokenException();
@@ -128,16 +155,49 @@ public class UserService {
 		return result.toString();
 	}
 
+	@Transactional(readOnly = true)
 	public boolean isExistingUser(UserInfo userInfo) {
 		return userRepository.findByEmail(userInfo.getEmail()).isPresent();
 	}
 
 	public User join(UserInfo userInfo) {
-		return userRepository.save(User.from(userInfo));
+		User newUser = User.from(userInfo);
+		Authority authority = Authority.builder()
+			.user(newUser)
+			.role(Role.USER)
+			.build();
+		newUser.setAuthorities(Collections.singletonList(authority));
+		return userRepository.save(newUser);
 	}
 
+	@Transactional(readOnly = true)
 	public User login(UserInfo userInfo) {
 		return userRepository.findByEmail(userInfo.getEmail())
 			.orElseThrow(UserNotFoundException::new);
+	}
+
+	@Transactional
+	public TokenResponse reissueToken(TokenRequest tokenRequest) {
+
+		if (!jwtTokenProvider.validateToken(tokenRequest.getRefreshToken())) {
+			throw new InvalidRefreshTokenException();
+		}
+
+		String accessToken = tokenRequest.getAccessToken();
+
+		User user = userRepository.findById(Integer.parseInt(jwtTokenProvider.getUserId(accessToken)))
+			.orElseThrow(InvalidRefreshTokenException::new);
+		RefreshToken refreshToken = refreshTokenRepository.findByUserId(user.getId())
+			.orElseThrow(InvalidRefreshTokenException::new);
+
+		if (!refreshToken.getToken().equals(tokenRequest.getRefreshToken())) {
+			throw new InvalidRefreshTokenException();
+		}
+
+		TokenResponse tokenResponse = jwtTokenProvider.createToken(Integer.toString(user.getId()));
+		refreshToken.updateToken(tokenResponse.getRefreshToken());
+		refreshTokenRepository.save(refreshToken);
+
+		return tokenResponse;
 	}
 }

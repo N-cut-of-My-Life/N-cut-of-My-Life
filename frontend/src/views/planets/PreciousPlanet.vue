@@ -3,15 +3,21 @@
         <div class="title">넌너무소중 행성</div>
     </div>
     <img class="bubble" :src="images[currentImage]" />
+    <audio loop autoplay volume="0.3">
+        <source src="@/assets/audio/mix_precious.mp3" type="audio/mp3">
+    </audio>
     <div class="other">
-        <b-button @click="gotoPage({ name: 'planetlist' })" variant="warning" class="button_prev" size="sm"><strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
+        <b-button @click="gotoPage({ name: 'planetlist' })" variant="warning" class="button_prev" size="sm">
+            <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
+        </b-button>
     </div>
     <div class="jump">
         <b-button @click="previousImage()" variant="warning" class="button" size="sm" :disabled="currentImage === 0">
             뒤로
         </b-button>
         &nbsp;
-        <b-button @click="nextImage()" variant="warning" class="button" size="sm" :disabled="currentImage === (images.length - 1)">
+        <b-button @click="nextImage()" variant="warning" class="button" size="sm"
+            :disabled="currentImage === (images.length - 1)">
             다음
         </b-button>
     </div>
@@ -33,26 +39,30 @@
             </div>
         </b-button>
     </div>
-    <b-modal :no-close-on-backdrop="true" id="modal-precious" centered no-stacking hide-header hide-footer style="text-align: center; border-radius: 1vw;">
-      <b-popover target="addon" placement="left">
-        <input type="file" accept="image/*" @change="onUpload" />
-        <div>
-            <img v-if="item.imageUrl" :src="item.imageUrl" style="max-width: 16vw; height: auto;"> 
-            <div v-else>
-                <div><strong>소중한 순간을 담아주세요!</strong></div>
-                <img src="@/assets/v-pose.svg">
+    <b-modal :no-close-on-backdrop="true" id="modal-precious" centered no-stacking hide-header hide-footer
+        style="text-align: center; border-radius: 1vw;">
+        <b-popover target="addon" placement="left">
+            <input type="file" accept="image/*" @change="onUpload" />
+            <div>
+                <img v-if="item.imageUrl" :src="item.imageUrl" style="max-width: 16vw; height: auto;">
+                <div v-else>
+                    <div><strong>소중한 순간을 담아주세요!</strong></div>
+                    <img src="@/assets/v-pose.svg">
+                </div>
             </div>
-        </div>
-      </b-popover>
-      <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_happy.svg" style="cursor:pointer; float: right;"/>
-      <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">소중한 사람과의 추억을 기록해보세요!</div>
-      <b-container ref="form" style="margin-bottom:3.8%">
-          <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required style="border-radius: 1vw; background-color: #FDFCFA;">
-          </b-form-textarea>
-      </b-container>
-      <b-button text @click="submit" style="color: #ffffff; background-color: #C6753E; border: none; border-radius: 1vw;">저장
-      </b-button>
-      <b-button class='img-btn' id="addon"><img class="upload" src="@\assets\enter-image-upload.svg"></b-button>
+        </b-popover>
+        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_happy.svg"
+            style="cursor:pointer; float: right;" />
+        <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">소중한 사람과의 추억을 기록해보세요!</div>
+        <b-container ref="form" style="margin-bottom:3.8%">
+            <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
+                style="border-radius: 1vw; background-color: #FDFCFA;">
+            </b-form-textarea>
+        </b-container>
+        <b-button text @click="submit"
+            style="color: #ffffff; background-color: #C6753E; border: none; border-radius: 1vw;">저장
+        </b-button>
+        <b-button class='img-btn' id="addon"><img class="upload" src="@\assets\enter-image-upload.svg"></b-button>
     </b-modal>
 </template>
 
@@ -60,9 +70,9 @@
 export default {
     data() {
         return {
-            item:{
-                image : null,
-                imageUrl : null,
+            item: {
+                image: null,
+                imageUrl: null,
             },
             images: [
                 require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_1.svg'),
@@ -70,7 +80,8 @@ export default {
                 require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_3.svg'),
             ],
             currentImage: 0,
-            elementVisible: false
+            elementVisible: false,
+            // modalShow: false
         }
     },
     methods: {
@@ -94,7 +105,7 @@ export default {
         }
     },
     updated() {
-        if(this.currentImage==(this.images.length-1)){
+        if (this.currentImage == (this.images.length - 1)) {
             setTimeout(() => this.elementVisible = true, 2000)
         }
     },
@@ -173,7 +184,7 @@ body {
 
 
 .button_prev {
-    background-color:#ffffff;
+    background-color: #ffffff;
     color: #141414;
     border-radius: 0.8vw;
     border-color: #ffffff;
@@ -193,7 +204,8 @@ body {
     border-radius: 1000px;
     min-width: calc(220px + 12px);
     min-height: calc(60px + 12px);
-    box-shadow: 0 0 60px #ffffff;;
+    box-shadow: 0 0 60px #ffffff;
+    ;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -233,6 +245,7 @@ body {
         opacity: 0;
     }
 }
+
 .wave {
     position: relative;
     /* -webkit-box-reflect: below -1px linear-gradient(transparent, #FFFFFF); */
@@ -249,15 +262,17 @@ body {
 }
 
 .img-btn {
-  left: 0%;
-  bottom:0%;
-  background-color: transparent;
-  border: none;
-  position:absolute;
+    left: 0%;
+    bottom: 0%;
+    background-color: transparent;
+    border: none;
+    position: absolute;
 }
+
 .img-btn:active {
-  background-color: transparent;
+    background-color: transparent;
 }
+
 @keyframes wave {
 
     0%,
@@ -275,4 +290,10 @@ body {
 #modal-precious .modal-content {
     background-color: #F5E2CE;
 }
+
+/* 아래 주석 해제 시, 백그라운드 클릭 시 모달 닫힘 */
+/* #modal-precious .modal-backdrop {
+    display: none;
+    z-index: -1;
+} */
 </style>

@@ -1,5 +1,8 @@
 <template>
-  <video muted autoplay loop playbackRate="0.7">
+  <audio loop autoplay volume="0.5">
+    <source src="@/assets/audio/daylight.mp3" type="audio/mp3">
+  </audio>
+  <video muted autoplay loop playbackRate="0.5">
     <source src="@/assets/space.mp4" type="video/mp4">
   </video>
   <div class="menu-box">
@@ -56,17 +59,17 @@
 }
 
 @font-face {
-    font-family: 'ONE-Mobile-POP';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'ONE-Mobile-POP';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'MaplestoryOTFBold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'MaplestoryOTFBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 .wave {

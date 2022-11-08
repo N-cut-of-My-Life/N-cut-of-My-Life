@@ -1,5 +1,11 @@
 <template>
   <my-modal style="z-index: 5;"></my-modal>
+  <div class="other">
+    <b-button @click="router.push({ name: 'introfirstpage' })" class="button_prev" size="sm">
+      <strong>&lt;</strong>&nbsp;&nbsp;홈페이지
+    </b-button>
+  </div>
+
   <div class="jumbotron">
     <div class="title">My Page</div>
     <main class="content">
@@ -9,13 +15,20 @@
         </div>
         <div class="prof-id">test123@naver.com</div>
         <div class="prof-journal-title">OO님의 여행일지</div>
-        <div class="prof-journals">
-          <div class="journal">
-            <img src="@/assets/space_diary.png" class="journal-img">
-          </div>
-          <div class="journal">
-            <img src="@/assets/space_diary.png" class="journal-img">
-          </div>
+        <div>
+          <splide id="diary-carousel" :options="options">
+            <template v-for="(n, index) in 4" :key="index">
+              <splide-slide>
+                <div class="prof-journals">
+                  <div class="journal">
+                    <img src="@/assets/space_diary.png" class="journal-img">
+                    <div class="diary-title">2022년 11월 8일의 기록</div>
+                  </div>
+                </div>
+              </splide-slide>
+            </template>
+            
+          </splide>
         </div>
       </section>
 
@@ -45,7 +58,7 @@
             <div class="film">
               <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
             </div>
-          </div>        
+          </div>       
         </div>
         
       </section>
@@ -54,19 +67,21 @@
 </template>
 
 <script setup>
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import '@splidejs/splide/dist/css/themes/splide-default.min.css'
 import MyModal from '@/components/mypage/MyModal.vue'
-// import { ref } from 'vue'
-// let mbClicked = ref(false)
-// const openMailbox = () => {
-//   if (mbClicked.value === false){
-//     mbClicked.value = true
-//     console.log(mbClicked.value)
-//   } else {
-//     mbClicked.value = false
-//     console.log(mbClicked.value)
-//   }
-  
-// }
+import { useRouter } from 'vue-router'
+const router =  useRouter();
+const options = {
+  perPage: 2,
+  pauseOnHover: false,
+  padding: "0.3rem",
+  arrows: true,
+  pagination: false,
+  focus: 0,
+  wheel: true,
+}
+
 </script>
 <style scoped>
 @font-face {
@@ -84,6 +99,20 @@ import MyModal from '@/components/mypage/MyModal.vue'
 body {
   margin: 0;
 }
+.other {
+    position: absolute;
+    left: 1%;
+    top: 2.5%;
+    margin: auto;
+}
+
+.button_prev {
+    background-color: #ffffff;
+    color: #141414;
+    border-radius: 0.8vw;
+    border-color: #ffffff;
+}
+
 .jumbotron {
   background: url("@/assets/travel_diary.svg") no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -153,8 +182,19 @@ body {
 
 .journal-img {
   width: 100%;
+  position: relative;
 }
 
+.diary-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  font-family: 'MapleStoryOTFBold';
+  color: aliceblue;
+  transform: translate(-33%, -350%);
+  
+}
 .journal-img:hover {
   scale: 1.05;
 }
@@ -209,6 +249,8 @@ body {
 
 .letter-img {
   width: 15vw;
+  transform: rotate(180deg) scaleY(-1);
+  
 }
 
 .letter-img:hover {
@@ -261,7 +303,14 @@ body {
   max-width: 100%;
   border-radius: 2px;
 }
+</style>
 
-
-
+<style>
+/* 캐러셀용 스타일 태그입니다. */
+.splide__arrow--prev {
+  left: -2em;
+}
+.splide__arrow--next {
+  right: -2em;
+}
 </style>
