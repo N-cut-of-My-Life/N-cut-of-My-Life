@@ -26,7 +26,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.google.gson.Gson;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
-import com.ssafy.mylifencut.user.JwtTokenProvider;
 import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
@@ -41,8 +40,6 @@ public class UserControllerTest {
 	private UserController userController;
 	@Mock
 	private UserService userService;
-	@Mock
-	private JwtTokenProvider jwtTokenProvider;
 
 	private MockMvc mockMvc;
 	private Gson gson;
@@ -97,12 +94,9 @@ public class UserControllerTest {
 				.refreshToken("NEW_TOKEN")
 				.build();
 
-			doReturn(1)
+			doReturn(jwtToken)
 				.when(userService)
 				.kakaoLogin(any());
-			doReturn(jwtToken)
-				.when(jwtTokenProvider)
-				.createToken(any());
 
 			// when
 			final ResultActions resultActions = mockMvc.perform(
