@@ -10,15 +10,25 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class BaseResponse {
-	private boolean isSuccess;
+	private boolean success;
 	private String message;
 	private Object data;
 
-	public static BaseResponse from(boolean isSuccess, String message) {
-		return builder().isSuccess(isSuccess).message(message).build();
+	public static BaseResponse from(boolean success, String message) {
+		return builder().success(success).message(message).build();
 	}
 
-	public static BaseResponse from(boolean isSuccess, String message, Object data) {
-		return builder().isSuccess(isSuccess).message(message).data(data).build();
+	public static BaseResponse from(boolean success, String message, Object data) {
+		System.out.println("isSuccess" + success);
+		return builder().success(success).message(message).data(data).build();
+	}
+
+	@Override
+	public String toString() {
+		return "BaseResponse{" +
+			"isSuccess=" + success +
+			", message='" + message + '\'' +
+			", data=" + data +
+			'}';
 	}
 }

@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.7.5'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'jacoco'
     id 'java'
 }
 
@@ -36,4 +37,48 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    finalizedBy('jacocoTestReport')
+}
+
+jacoco {
+    toolVersion = '0.8.5'
+}
+
+jacocoTestReport {
+    reports {
+        html {
+            enabled true
+            destination file('build/reports/jacocoReport.html')
+        }
+        csv {
+            enabled true
+        }
+    }
+    finalizedBy('jacocoTestCoverageVerification')
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'CLASS'
+            includes = ['org.gradle.*']
+
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.80
+            }
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.80
+            }
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                maximum = 250
+            }
+            excludes = []
+        }
+    }
 }

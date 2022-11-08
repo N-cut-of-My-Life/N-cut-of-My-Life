@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.ssafy.mylifencut.answer.domain.Answer;
+import com.ssafy.mylifencut.article.dto.ArticleRequest;
 import com.ssafy.mylifencut.user.domain.User;
 
 import lombok.AllArgsConstructor;
@@ -40,5 +41,20 @@ public class Article {
 	@OneToMany(mappedBy = "article")
 	private List<Answer> answers = new ArrayList<>();
 
-	private LocalDateTime createDate;
+	@Builder.Default
+	private LocalDateTime createDate = LocalDateTime.now();
+
+	public static Article from(ArticleRequest articleRequest, User user) {
+		return Article.builder()
+			.user(user)
+			.createDate(articleRequest.getCreateDate())
+			.build();
+	}
+
+	public void addAnswer(Answer answer) {
+		answers.add(answer);
+		if (answer.getArticle() != this) {
+			answer.setArticle(this);
+		}
+	}
 }

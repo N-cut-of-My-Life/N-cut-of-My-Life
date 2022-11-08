@@ -3,6 +3,9 @@
   <video muted autoplay loop playbackRate="1.0">
     <source src="@/assets/intro_video.mp4" type="video/mp4">
   </video>
+  <audio loop autoplay volume="0.5">
+    <source src="@/assets/audio/daylight.mp3" type="audio/mp3">
+  </audio>
   <div class="other">
         <b-button @click="gotoPage({ name: 'introfirstpage' })" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;돌아가기
@@ -98,7 +101,7 @@ video {
   position: absolute;
   left: 50%;
   top: 50%;
-  margin-top: -104.72px;
+  margin-top: -144.72px;
   margin-left: -86.14px;
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
@@ -111,18 +114,18 @@ video {
   position: absolute;
   left: 50%;
   top: 50%;
-  margin-top: -94.72px;
+  margin-top: -134.72px;
   margin-left: -90.34px;
 }
 
 .teapot {
-  /* display:none; */
+  display:block;
   max-width: 16%;
   height: auto;
   position: absolute;
   left: 50%;
   top: 50%;
-  margin-top: -41px;
+  margin-top: -81px;
   margin-left: -20.34px;
   cursor: pointer;
 }
@@ -165,8 +168,8 @@ video {
   max-height: auto;
   background: #666 url("../../assets/planet/weep.png") repeat-x 0% 0%;
   background-size: 512px 256px;
-  margin-left: -128px;
-  margin-top: -128px;
+  margin-left: 0px;
+  margin-top: -250px;
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
   animation: rotation_2 20s infinite linear;
@@ -180,7 +183,7 @@ video {
   max-height: auto;
   background: #666 url("../../assets/planet/haho.png") repeat-x 0% 0%;
   background-size: 512px 256px;
-  margin-left: -128px;
+  margin-left: -50px;
   margin-top: -128px;
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
@@ -191,8 +194,8 @@ video {
 .planet:nth-child(4) {
   max-width: 15%;
   height: auto;
-  margin-left: -78.5px;
-  margin-top: -78.5px;
+  margin-left: 10px;
+  margin-top: -150px;
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
   animation: rotation_4 20s infinite linear;
@@ -206,8 +209,8 @@ video {
   max-height: auto;
   background: #666 url("../../assets/planet/didnt.png") repeat-x 0% 0%;
   background-size: 512px 256px;
-  margin-left: -128px;
-  margin-top: -128px;
+  margin-left: -100px;
+  margin-top: 100px;
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
   animation: rotation_5 20s infinite linear;
@@ -221,7 +224,7 @@ video {
   max-height: auto;
   background: #666 url("../../assets/planet/dearyou.png") repeat-x 0% 0%;
   background-size: 512px 256px;
-  margin-left: -128px;
+  margin-left: -188px;
   margin-top: -128px;
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
@@ -247,7 +250,7 @@ video {
 .planet:nth-child(8) {
   max-width: 15%;
   height: auto;
-  margin-left: -52.35px;
+  margin-left: 50px;
   margin-top: -46.3px;
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);

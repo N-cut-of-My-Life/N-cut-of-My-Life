@@ -2,6 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
+    path: '/:pathMatch(.*)*',
+    redirect: "/pagenotfound"
+  },
+  {
     path: '/',
     name: 'intro',
     component: () => import('@/views/intro/IntroView.vue')
@@ -12,14 +16,9 @@ const routes = [
     component: () => import("@/views/intro/IntroFirstPage.vue"),
   },
   {
-    path: "/introstory1",
-    name: "introstory1",
-    component: () => import("@/views/intro/IntroStory1.vue"),
-  },
-  {
-    path: "/introstory2",
-    name: "introstory2",
-    component: () => import("@/views/intro/IntroStory2.vue"),
+    path: "/introstory",
+    name: "introstory",
+    component: () => import("@/views/intro/IntroStory.vue"),
   },
   {
     path: "/galaxygallery",
@@ -76,6 +75,11 @@ const routes = [
     name: "treasureplanet",
     component: () => import("@/views/planets/TreasurePlanet.vue"),
   },
+  {
+    path: "/pagenotfound",
+    name: "pagenotFound",
+    component: () => import("@/views/404/PageNotFound.vue")
+},
 ]
 
 const router = createRouter({

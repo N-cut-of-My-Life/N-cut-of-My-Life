@@ -2,10 +2,11 @@
     <div class="jumbotron">
         <div class="title">반짝반짝 행성</div>
     </div>
-    <img :src="images[currentImage]" />
+    <img class="bubble" :src="images[currentImage]" />
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
-            <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
+            <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
+        </b-button>
     </div>
     <div class="jump">
         <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
@@ -16,7 +17,7 @@
             다음
         </b-button>
     </div>
-    <div v-if="currentImage === (images.length - 1)" class="last" data-bs-dismiss="modal" aria-label="Close">
+    <div v-if="currentImage === (images.length - 1)" class="last">
         <b-button v-show="elementVisible" class="button_2" size="md">
             <div class="wave" v-b-modal.modal-treasure>
                 <span style="--i: 1">가</span>
@@ -43,18 +44,20 @@
         </b-button>
     </div>
 
-    <b-modal data-bs-dismiss="modal" aria-label="Close" id="modal-treasure" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
-        <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">당신의 가장 소중한 물건을 적어주세요!</div><br />
-        <b-container ref="form">
+    <b-modal id="modal-treasure" hide-header hide-footer centered no-stacking :no-close-on-backdrop="true"
+        style="text-align: center; border-radius: 1vw;">
+        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg" style="cursor:pointer; float: right;"/>
+        <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">당신의 가장 소중한 물건을 적어주세요!</div>
+        <b-container ref="form" style="margin-bottom:3.8%">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
                 style="border-radius: 1vw; background-color:#e3ecfc">
             </b-form-textarea>
-        </b-container><br />
-        <b-button data-bs-dismiss="modal" aria-label="Close"
-            style="color: #ffffff; background-color: #a1a1a1; border: none; border-radius: 1vw;">취소</b-button>&nbsp;
-        <b-button text @click="submit"
-            style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
-        </b-button>
+        </b-container>
+        <span>
+            <b-button text @click="submit" data-bs-dismiss="modal" aria-label="Close"
+                style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw;">저장
+            </b-button>
+        </span>
     </b-modal>
 </template>
 
@@ -70,7 +73,7 @@ export default {
                 require('@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_5.svg'),
             ],
             currentImage: 0,
-            elementVisible: false
+            elementVisible: false,
         }
     },
     updated() {
@@ -91,21 +94,26 @@ export default {
 
         gotoPage(link) {
             this.$router.push(link)
-        }
+        },
     }
 }
 </script>
 
 <style scoped>
-html, body {
-  height: 100%;
+html,
+body {
+    height: 100%;
+}
+
+.x_button {
+    width: 4%;
 }
 
 body {
     margin: 0;
 }
 
-img {
+.bubble {
     position: absolute;
     left: 9%;
     bottom: 10%;
@@ -186,9 +194,10 @@ img {
 .button_2::before {
     content: '';
     border-radius: 1000px;
-    min-width: calc(320px + 12px);
+    min-width: calc(280px + 12px);
     min-height: calc(60px + 12px);
-    box-shadow: 0 0 60px #ffffff;;
+    box-shadow: 0 0 60px #ffffff;
+    ;
     position: absolute;
     top: 50%;
     left: 50%;

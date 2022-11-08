@@ -11,3 +11,15 @@ export const useCounterStore = defineStore('counter', {
     },
   },
 })
+
+export const useMusicStore = defineStore('music', {
+  state: () => ({ count: 0 }),
+  getters: {
+  },
+  actions: {
+    toggleMute() {
+      var myAudio = document.getElementById('myaudios');
+      myAudio.muted = !myAudio.muted;
+    }
+  },
+})

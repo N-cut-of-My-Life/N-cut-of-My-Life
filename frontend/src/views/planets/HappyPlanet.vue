@@ -2,10 +2,15 @@
     <div class="jumbotron">
         <div class="title">하하호호 행성</div>
     </div>
-    <img :src="images[currentImage]" />
+    <!-- <vue-audio :file="audios[currentAudio]" autoplay/> -->
+    <audio id="myaudios" loop autoplay :src="audios[currentAudio]" :muted="mute" volume="0.3">
+    </audio>
+    <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
+    <img class="story" :src="images[currentImage]" />
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
-            <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
+            <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
+        </b-button>
     </div>
     <div class="jump">
         <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
@@ -16,7 +21,7 @@
             다음
         </b-button>
     </div>
-    <div v-if="currentImage === (images.length - 1)" class="last" data-bs-dismiss="modal" aria-label="Close">
+    <div v-if="currentImage === (images.length - 1)" class="last">
         <b-button v-show="elementVisible" class="button_2" size="md">
             <div class="wave" v-b-modal.modal-happy>
                 <span style="--i: 1">가</span>
@@ -41,22 +46,25 @@
         </b-button>
     </div>
 
-    <b-modal data-bs-dismiss="modal" aria-label="Close" id="modal-happy" hide-header hide-footer style="text-align: center; border-radius: 1vw;">
-        <div style="font-size:1.3vw; margin-top: 2%; font-weight: 400;">가장 행복했던 순간을 이 곳에 적어주세요!</div><br />
-        <b-container ref="form">
+    <b-modal centered no-stacking id="modal-happy" hide-header hide-footer :no-close-on-backdrop="true"
+        style="text-align: center; border-radius: 1vw;">
+        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_happy.svg"
+            style="cursor:pointer; float: right;" />
+        <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">가장 행복했던 순간을 이 곳에 적어주세요!</div>
+        <b-container ref="form" style="margin-bottom:3.8%">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
                 style="border-radius: 1vw; background-color: #f7eadb;">
             </b-form-textarea>
-        </b-container><br />
-        <b-button data-bs-dismiss="modal" aria-label="Close"
-            style="color: #ffffff; background-color: #a1a1a1; border: none; border-radius: 1vw;">취소</b-button>&nbsp;
+        </b-container>
         <b-button text @click="submit"
-            style="color: #ffffff; background-color: #bb9f7f; border: none; border-radius: 1vw;">저장
+            style="color: #ffffff; background-color: #d2aa62; border: none; border-radius: 1vw;">저장
         </b-button>
     </b-modal>
 </template>
 
 <script>
+// import VueAudio from 'vue-audio'
+
 export default {
     data() {
         return {
@@ -65,12 +73,22 @@ export default {
                 require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_2.svg'),
                 require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_3.svg'),
             ],
+            audios: [
+                // require('@/assets/audio/flower-dance.mp3'),
+                // require('@/assets/audio/motivational-day.mp3'),
+                require('@/assets/audio/mix_flower_moti.mp3')
+            ],
             currentImage: 0,
-            elementVisible: false
+            elementVisible: false,
+            currentAudio: 0,
+            mute: false
         }
     },
+    // components: {
+    //     'vue-audio': VueAudio
+    // },
     updated() {
-        if(this.currentImage==(this.images.length-1)){
+        if (this.currentImage == (this.images.length - 1)) {
             setTimeout(() => this.elementVisible = true, 2000)
         }
     },
@@ -87,6 +105,14 @@ export default {
 
         gotoPage(link) {
             this.$router.push(link)
+        },
+
+        // toggleMute() {
+        //     var myAudio = document.getElementById('myaudios');
+        //     myAudio.muted = !myAudio.muted;
+        // }
+        toggleMute() {
+            this.mute = !this.mute
         }
     }
 }
@@ -97,13 +123,10 @@ body {
     margin: 0;
 }
 
-img {
+.story {
     position: absolute;
-    /* top: 0;
-    left: 0; */
     right: 40%;
     bottom: 15%;
-    /* height: 50%; */
     margin: auto;
 }
 
@@ -142,6 +165,10 @@ img {
     left: 1%;
     top: 2.5%;
     margin: auto;
+}
+
+.x_button {
+    width: 4%;
 }
 
 .last {
@@ -187,7 +214,8 @@ img {
     border-radius: 1000px;
     min-width: calc(300px + 12px);
     min-height: calc(60px + 12px);
-    box-shadow: 0 0 60px #ffffff;;
+    box-shadow: 0 0 60px #ffffff;
+    ;
     position: absolute;
     top: 50%;
     left: 50%;

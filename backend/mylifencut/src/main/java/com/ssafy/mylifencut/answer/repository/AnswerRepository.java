@@ -8,5 +8,5 @@ import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
 
 public interface AnswerRepository extends JpaRepository<Answer, Integer> {
-	List<Answer> findByState(State state);
+	List<Answer> findAllByState(State state);
 }
