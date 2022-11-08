@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.ssafy.mylifencut.user.JwtTokenProvider;
 import com.ssafy.mylifencut.user.UserConstant;
+import com.ssafy.mylifencut.user.domain.RefreshToken;
 import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.TokenResponse;
@@ -23,6 +24,7 @@ import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
+import com.ssafy.mylifencut.user.repository.RefreshTokenRepository;
 import com.ssafy.mylifencut.user.repository.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,6 +36,8 @@ public class UserServiceTest {
 	private UserRepository userRepository;
 	@Mock
 	private JwtTokenProvider jwtTokenProvider;
+	@Mock
+	private RefreshTokenRepository refreshTokenRepository;
 
 	private final String email = "ssafy@email.com";
 	private final String name = "홍길동";
@@ -182,7 +186,7 @@ public class UserServiceTest {
 				.accessToken("TOKEN")
 				.refreshToken("TOKEN")
 				.build();
-			doThrow(new InvalidRefreshTokenException())
+			doReturn(false)
 				.when(jwtTokenProvider)
 				.validateToken(any());
 
@@ -200,7 +204,7 @@ public class UserServiceTest {
 				.accessToken("TOKEN")
 				.refreshToken("TOKEN")
 				.build();
-			doThrow(new InvalidRefreshTokenException())
+			doReturn(false)
 				.when(jwtTokenProvider)
 				.validateToken(any());
 
@@ -215,16 +219,36 @@ public class UserServiceTest {
 		void validRefreshToken() {
 			// given
 			TokenRequest tokenRequest = TokenRequest.builder()
-				.accessToken("TOKEN")
-				.refreshToken("TOKEN")
+				.accessToken("TOKEN_BEFORE")
+				.refreshToken("TOKEN_BEFORE")
 				.build();
 			TokenResponse tokenResponse = TokenResponse.builder()
-				.AccessToken("TOKEN")
-				.RefreshToken("TOKEN")
+				.AccessToken("TOKEN_AFTER")
+				.RefreshToken("TOKEN_AFTER")
 				.build();
-			doReturn(tokenResponse)
+			RefreshToken refreshToken = RefreshToken.builder()
+				.token("TOKEN_BEFORE")
+				.userId(1)
+				.build();
+			User user = User.builder()
+				.id(1)
+				.build();
+
+			doReturn(true)
 				.when(jwtTokenProvider)
 				.validateToken(any());
+			doReturn("1")
+				.when(jwtTokenProvider)
+				.getUserId(any());
+			doReturn(Optional.of(user))
+				.when(userRepository)
+				.findById(1);
+			doReturn(Optional.of(refreshToken))
+				.when(refreshTokenRepository)
+				.findByUserId(1);
+			doReturn(tokenResponse)
+				.when(jwtTokenProvider)
+				.createToken(any());
 
 			// when
 			TokenResponse result = userService.reissueToken(tokenRequest);
