@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.ssafy.mylifencut.user.JwtTokenProvider;
+import com.ssafy.mylifencut.user.domain.Authority;
 import com.ssafy.mylifencut.user.domain.RefreshToken;
+import com.ssafy.mylifencut.user.domain.Role;
 import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.TokenResponse;
@@ -152,7 +155,13 @@ public class UserService {
 	}
 
 	public User join(UserInfo userInfo) {
-		return userRepository.save(User.from(userInfo));
+		User newUser = User.from(userInfo);
+		Authority authority = Authority.builder()
+			.user(newUser)
+			.role(Role.USER)
+			.build();
+		newUser.setAuthorities(Collections.singletonList(authority));
+		return userRepository.save(newUser);
 	}
 
 	@Transactional(readOnly = true)

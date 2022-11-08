@@ -17,6 +17,8 @@ import com.ssafy.mylifencut.answer.service.AnswerService;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.like.service.LikeService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,6 +32,12 @@ public class AnswerController {
 	private final AnswerService answerService;
 	private final LikeService likeService;
 
+	@ApiImplicitParams({
+		@ApiImplicitParam(
+			name = "X-AUTH-TOKEN",
+			value = "AccessToken",
+			required = true, dataType = "String", paramType = "header")
+	})
 	@Operation(summary = "좋아요 추가", description = "답변 번호(answerId)와 유저 아이디(userId)를 이용하여 답변에 좋아요를 추가합니다.")
 	@PostMapping("/{answerId}/{userId}")
 	public ResponseEntity<BaseResponse> registerLike(@PathVariable("answerId") Integer answerId,
@@ -39,6 +47,12 @@ public class AnswerController {
 			HttpStatus.OK);
 	}
 
+	@ApiImplicitParams({
+		@ApiImplicitParam(
+			name = "X-AUTH-TOKEN",
+			value = "AccessToken",
+			required = true, dataType = "String", paramType = "header")
+	})
 	@Operation(summary = "좋아요 삭제", description = "답변 번호(answerId)와 유저 아이디(userId)를 이용하여 답변에 좋아요를 삭제합니다.")
 	@DeleteMapping("/{answerId}/{userId}")
 	public ResponseEntity<BaseResponse> deleteLike(@PathVariable("answerId") Integer answerId,
@@ -49,6 +63,12 @@ public class AnswerController {
 			HttpStatus.NO_CONTENT);
 	}
 
+	@ApiImplicitParams({
+		@ApiImplicitParam(
+			name = "X-AUTH-TOKEN",
+			value = "AccessToken",
+			required = true, dataType = "String", paramType = "header")
+	})
 	@Operation(summary = "갤러리 조회", description = "STATE 상태가 OPEN 인 답변을 조회합니다.")
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "갤러리 조회 성공", response = GalleryResponse.class),
@@ -58,7 +78,7 @@ public class AnswerController {
 	public ResponseEntity<BaseResponse> readGallery() {
 
 		return new ResponseEntity<>(
-			BaseResponse.from(true, READ_GALLERY_SUCCESS_MESSAGE,answerService.getGalleryList()),
+			BaseResponse.from(true, READ_GALLERY_SUCCESS_MESSAGE, answerService.getGalleryList()),
 			HttpStatus.OK);
 	}
 
