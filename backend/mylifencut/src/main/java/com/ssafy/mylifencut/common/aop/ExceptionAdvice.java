@@ -10,6 +10,7 @@ import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.like.exception.AlreadyLikeException;
 import com.ssafy.mylifencut.like.exception.NotExistLikeException;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
+import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 
 @RestControllerAdvice
 public class ExceptionAdvice {
@@ -40,5 +41,13 @@ public class ExceptionAdvice {
 		return new ResponseEntity<>(
 			BaseResponse.from(false, exception.getMessage()),
 			HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(InvalidRefreshTokenException.class)
+	public ResponseEntity<BaseResponse> invalidRefreshTokenException(InvalidRefreshTokenException exception) {
+		return new ResponseEntity<>(
+			BaseResponse.from(false, exception.getMessage()),
+			HttpStatus.BAD_REQUEST
+		);
 	}
 }
