@@ -7,14 +7,12 @@ import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @Builder
 public class ArticleRequest {
 	private Integer userId;
