@@ -76,6 +76,11 @@ const routes = [
     component: () => import("@/views/planets/TreasurePlanet.vue"),
   },
   {
+    path: "/resultprint",
+    name: "resultprint",
+    component: () => import("@/views/result/ResultPrint.vue"),
+  },
+  {
     path: "/pagenotfound",
     name: "pagenotFound",
     component: () => import("@/views/404/PageNotFound.vue")
