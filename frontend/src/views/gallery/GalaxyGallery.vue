@@ -11,7 +11,6 @@
     <MasonryWall :items="items" :ssr-columns="1" :column-width="200" :gap="16">
     <template #default="{ item }">
       <div
-        :style="{ height: auto }"
         class="common"
       >
         <!-- api호출이 아닌 상태이기 떄문에 추후 변경:require 이후 코드 -->
@@ -35,7 +34,11 @@
 <script setup>
 import MasonryWall from '@yeger/vue-masonry-wall'
 import { useRouter } from 'vue-router'
+import { useGalleryStore } from '@/store/index'
 const router = useRouter()
+const galleryStore = useGalleryStore()
+
+galleryStore.getLastWord()
 
 // 텍스트 길이, 이미지 크기에 따라
 // 텍스트 박스 잘 바뀌는지 확인하고자 더미데이터 생성

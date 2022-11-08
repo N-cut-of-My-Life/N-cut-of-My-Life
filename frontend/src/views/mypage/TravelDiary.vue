@@ -15,13 +15,20 @@
         </div>
         <div class="prof-id">test123@naver.com</div>
         <div class="prof-journal-title">OO님의 여행일지</div>
-        <div class="prof-journals">
-          <div class="journal">
-            <img src="@/assets/space_diary.png" class="journal-img" @click="router.push({ name: 'resultprint' })">
-          </div>
-          <div class="journal">
-            <img src="@/assets/space_diary.png" class="journal-img">
-          </div>
+        <div>
+          <splide id="diary-carousel" :options="options">
+            <template v-for="(n, index) in 4" :key="index">
+              <splide-slide>
+                <div class="prof-journals">
+                  <div class="journal">
+                    <img src="@/assets/space_diary.png" class="journal-img">
+                    <div class="diary-title">2022년 11월 8일의 기록</div>
+                  </div>
+                </div>
+              </splide-slide>
+            </template>
+            
+          </splide>
         </div>
       </section>
 
@@ -30,6 +37,7 @@
         <div class="upper-items">
     
           <div class="last-word">
+            <img src="@/assets/post_paper.png">
             <h1 class="text-shadow">지금은 고민이 참 많을테지만, 언젠간 난 이겨낼거야</h1>
           </div>
 
@@ -59,9 +67,20 @@
 </template>
 
 <script setup>
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import '@splidejs/splide/dist/css/themes/splide-default.min.css'
 import MyModal from '@/components/mypage/MyModal.vue'
 import { useRouter } from 'vue-router'
 const router =  useRouter();
+const options = {
+  perPage: 2,
+  pauseOnHover: false,
+  padding: "0.3rem",
+  arrows: true,
+  pagination: false,
+  focus: 0,
+  wheel: true,
+}
 
 </script>
 <style scoped>
@@ -163,8 +182,19 @@ body {
 
 .journal-img {
   width: 100%;
+  position: relative;
 }
 
+.diary-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  font-family: 'MapleStoryOTFBold';
+  color: aliceblue;
+  transform: translate(-33%, -350%);
+  
+}
 .journal-img:hover {
   scale: 1.05;
 }
@@ -273,7 +303,14 @@ body {
   max-width: 100%;
   border-radius: 2px;
 }
+</style>
 
-
-
+<style>
+/* 캐러셀용 스타일 태그입니다. */
+.splide__arrow--prev {
+  left: -2em;
+}
+.splide__arrow--next {
+  right: -2em;
+}
 </style>
