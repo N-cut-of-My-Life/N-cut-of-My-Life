@@ -39,6 +39,7 @@ class JwtTokenProviderTest {
 
 		// then
 		assertEquals(userId, jwtTokenProvider.getUserId(accessToken.getAccessToken()));
+		System.out.println(accessToken.getRefreshToken());
 	}
 
 	@DisplayName("엑세스 토큰 검증")
@@ -90,12 +91,12 @@ class JwtTokenProviderTest {
 	class refreshTokenValidation {
 		@DisplayName("만료된 리프레쉬 토큰인 경우")
 		@Test
-		void invalidToken() {
+		void expiredToken() {
 			// given
-			final String unissuedAccessToken = "유효하지 않은 토큰";
+			final String expiredToken = "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Njc4Njg1NTh9.SMOp2mmYJ5GFhsxQb2_22hG0xDc5uEfX5deiAwxJ0oU";
 
 			// when
-			boolean result = jwtTokenProvider.validateToken(unissuedAccessToken);
+			boolean result = jwtTokenProvider.validateToken(expiredToken);
 
 			//then
 			assertFalse(result);
@@ -104,6 +105,19 @@ class JwtTokenProviderTest {
 		@DisplayName("기간이 남아있는 리프레쉬 토큰인 경우")
 		@Test
 		void validToken() {
+			// given
+			final TokenResponse tokenResponse = jwtTokenProvider.createToken("1");
+
+			// when
+			boolean result = jwtTokenProvider.validateToken(tokenResponse.getRefreshToken());
+
+			//then
+			assertFalse(result);
+		}
+
+		@DisplayName("토큰 검증 발급되지 않은 토큰이면 false")
+		@Test
+		void invalidToken() {
 			// given
 			final String unissuedAccessToken = "유효하지 않은 토큰";
 
