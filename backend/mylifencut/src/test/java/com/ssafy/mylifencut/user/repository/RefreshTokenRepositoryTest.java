@@ -24,10 +24,23 @@ class RefreshTokenRepositoryTest {
 		String refreshToken = "REFRESH_TOKEN";
 
 		// when
-		final Optional<Integer> userId = refreshTokenRepository.findByToken(refreshToken);
+		final Optional<RefreshToken> userId = refreshTokenRepository.findByToken(refreshToken);
 
 		// then
 		assertFalse(userId.isPresent());
+	}
+
+	@DisplayName("userId으로 리프레쉬 토큰 검색")
+	@Test
+	public void findRefreshTokenByUserIdFail() {
+		// given
+		Integer userId = 1;
+
+		// when
+		final Optional<RefreshToken> result = refreshTokenRepository.findByUserId(userId);
+
+		// then
+		assertFalse(result.isPresent());
 	}
 
 	@DisplayName("리프레쉬 토큰 저장")
