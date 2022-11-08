@@ -112,7 +112,7 @@ class JwtTokenProviderTest {
 			boolean result = jwtTokenProvider.validateToken(tokenResponse.getRefreshToken());
 
 			//then
-			assertFalse(result);
+			assertTrue(result);
 		}
 
 		@DisplayName("토큰 검증 발급되지 않은 토큰이면 false")
