@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.user.JwtTokenProvider;
+import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.service.UserService;
 
@@ -31,5 +32,12 @@ public class UserController {
 		String accessToken = json.get("accessToken");
 		TokenResponse jwtToken = jwtTokenProvider.createToken(Integer.toString(userService.kakaoLogin(accessToken)));
 		return new ResponseEntity<>(BaseResponse.from(true, KAKAO_LOGIN_SUCCESS_MESSAGE, jwtToken), HttpStatus.OK);
+	}
+
+	@PostMapping("/token")
+	public ResponseEntity<BaseResponse> reissueToken(@RequestBody TokenRequest tokenRequest) {
+		return new ResponseEntity<>(
+			BaseResponse.from(true, TOKEN_REISSUE_SUCCESS_MESSAGE, userService.reissueToken(tokenRequest)),
+			HttpStatus.OK);
 	}
 }
