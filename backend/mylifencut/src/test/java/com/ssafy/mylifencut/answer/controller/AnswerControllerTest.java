@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -26,11 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.google.gson.Gson;
 import com.ssafy.mylifencut.answer.AnswerConstant;
-import com.ssafy.mylifencut.answer.domain.State;
-import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
-import com.ssafy.mylifencut.answer.dto.AnswerResponse;
 import com.ssafy.mylifencut.answer.dto.GalleryResponse;
-import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.service.AnswerService;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
@@ -63,70 +58,6 @@ class AnswerControllerTest {
 		mockMvc = MockMvcBuilders.standaloneSetup(answerController)
 			.setControllerAdvice(new ExceptionAdvice())
 			.build();
-	}
-
-	@Test
-	@DisplayName("답변 등록 실패 - 잘못된 행성에 공개여부 선택 된 경우")
-	@Disabled
-	public void invalidState() throws Exception {
-		// given
-		final String url = "/answer";
-		final AnswerRegisterRequest answerRegisterRequest =
-			new AnswerRegisterRequest(1, 1, "답변 등록", "/dir/img",State.OPEN);
-		doThrow(new InvalidStateException())
-			.when(answerService)
-			.createAnswer(answerRegisterRequest);
-		// when
-		final ResultActions resultActions = mockMvc.perform(
-			MockMvcRequestBuilders.post(url)
-				.content(gson.toJson(answerRegisterRequest))
-				.contentType(MediaType.APPLICATION_JSON)
-		);
-		// then
-		resultActions.andExpect(status().isBadRequest());
-	}
-
-	@Test
-	@DisplayName("답변 등록 성공")
-	@Disabled
-	public void createAnswer() throws Exception {
-		// given
-		final String url = "/answer";
-		final AnswerRegisterRequest answerRegisterRequest =
-			new AnswerRegisterRequest(1, 1, "답변 등록", "/dir/img",State.CLOSE);
-		final AnswerResponse answerResponse = AnswerResponse.builder()
-			.id(1)
-			.articleId(1)
-			.questionId(answerRegisterRequest.getQuestionId())
-			.contents(answerRegisterRequest.getContents())
-			.imgUrl(answerRegisterRequest.getImgUrl())
-			.state(answerRegisterRequest.getState())
-			.build();
-		doReturn(answerResponse)
-			.when(answerService)
-			.createAnswer(answerRegisterRequest);
-
-		// when
-		final ResultActions resultActions = mockMvc.perform(
-			MockMvcRequestBuilders.post(url)
-				.content(gson.toJson(answerRegisterRequest))
-				.contentType(MediaType.APPLICATION_JSON)
-		);
-
-		// then
-		resultActions.andExpect(status().isOk());
-
-		final BaseResponse response = gson.fromJson(resultActions.andReturn()
-			.getResponse()
-			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
-
-		Map map = (Map)response.getData();
-		assertEquals((double)answerResponse.getId(), map.get("id"));
-		assertEquals((double)answerResponse.getArticleId(), map.get("articleId"));
-		assertEquals((double)answerResponse.getQuestionId(), map.get("questionId"));
-		assertEquals(answerResponse.getImgUrl(),map.get("imgUrl"));
-		assertEquals(answerResponse.getContents(), map.get("contents"));
-		assertEquals(answerResponse.getState().toString(), map.get("state"));
 	}
 
 	@Nested

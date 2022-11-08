@@ -1,5 +1,6 @@
 package com.ssafy.mylifencut.article.service;
 
+import static com.ssafy.mylifencut.answer.AnswerConstant.*;
 import static com.ssafy.mylifencut.article.ArticleConstant.*;
 import static com.ssafy.mylifencut.user.UserConstant.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,11 +20,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
+import com.ssafy.mylifencut.answer.exception.CanNotBeOpenedAnswerException;
 import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.article.dto.ArticleRequest;
 import com.ssafy.mylifencut.article.dto.ArticleResponse;
-import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnough;
+import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnoughException;
 import com.ssafy.mylifencut.article.repository.ArticleRepository;
 import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
@@ -116,7 +119,7 @@ class ArticleServiceTest {
 			final List<AnswerRegisterRequest> answers = answerRegisterRequests(ANSWERS_MIN_SIZE - 1);
 
 			//when
-			final AnswersSizeIsNotEnough result = assertThrows(AnswersSizeIsNotEnough.class
+			final AnswersSizeIsNotEnoughException result = assertThrows(AnswersSizeIsNotEnoughException.class
 				, () -> articleService.createArticle(new ArticleRequest(
 					userId, answers, LocalDateTime.now())
 				)
@@ -124,6 +127,39 @@ class ArticleServiceTest {
 
 			//then
 			assertEquals(result.getMessage(), ARTICLE_ANSWERS_SIZE_IS_NOT_ENOUGH_ERROR_MESSAGE);
+		}
+
+		@Test
+		@DisplayName("[실패] - OPEN 가능한 질문이 아닌데 OPEN 상태로 온 답변이 있을 경우")
+		public void registerArticle_canNotBeOpenedAnswerError() {
+			//given
+			final Integer userId = 5;
+			final String userName = "유저이름";
+			doReturn(Optional.of(User.builder().build())).when(userRepository).findById(userId);
+
+			final List<AnswerRegisterRequest> answers = new ArrayList<>();
+			for (int i = 0; i < ANSWERS_MIN_SIZE; i++) {
+				answers.add(AnswerRegisterRequest.builder()
+					.questionId(1)
+					.state(State.OPEN)
+					.build());
+			}
+
+			final ArticleRequest request = ArticleRequest.builder()
+				.userId(userId)
+				.answers(answers)
+				.createDate(LocalDateTime.now())
+				.build();
+			final Article article = Article.from(request, User.builder().id(userId).name(userName).build());
+			doReturn(article).when(articleRepository).save(any(Article.class));
+
+			//when
+			final CanNotBeOpenedAnswerException result = assertThrows(CanNotBeOpenedAnswerException.class
+				, () -> articleService.createArticle(request)
+			);
+
+			//then
+			assertEquals(result.getMessage(), CAN_NOT_BE_OPENED_ANSWER_ERROR_MESSAGE);
 		}
 
 		@Test
@@ -154,7 +190,7 @@ class ArticleServiceTest {
 		private List<AnswerRegisterRequest> answerRegisterRequests(final int answerSize) {
 			final List<AnswerRegisterRequest> answers = new ArrayList<>();
 			for (int i = 0; i < answerSize; i++) {
-				answers.add(AnswerRegisterRequest.builder().build());
+				answers.add(AnswerRegisterRequest.builder().questionId(1).state(State.CLOSE).build());
 			}
 			return answers;
 		}
