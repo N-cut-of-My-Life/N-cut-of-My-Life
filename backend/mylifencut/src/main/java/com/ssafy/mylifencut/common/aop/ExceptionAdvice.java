@@ -17,12 +17,4 @@ public class ExceptionAdvice {
 			HttpStatus.BAD_REQUEST
 		);
 	}
-
-	@ExceptionHandler(InvalidRefreshTokenException.class)
-	public ResponseEntity<BaseResponse> invalidRefreshTokenException(InvalidRefreshTokenException exception) {
-		return new ResponseEntity<>(
-			BaseResponse.from(false, exception.getMessage()),
-			HttpStatus.BAD_REQUEST
-		);
-	}
 }
