@@ -52,7 +52,7 @@ public class UserService {
 		UserInfo userInfo = getUserInfo(getAccessToken(token));
 
 		User user = userRepository.findByEmail(userInfo.getEmail())
-			.orElse(join(userInfo));
+			.orElseGet(() -> join(userInfo));
 
 		TokenResponse tokenResponse = jwtTokenProvider.createToken(Integer.toString(user.getId()));
 		RefreshToken refreshToken = RefreshToken.builder()
