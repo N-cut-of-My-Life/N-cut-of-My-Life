@@ -171,6 +171,7 @@ public class UserService implements UserDetailsService {
 			.orElseThrow(UserNotFoundException::new);
 	}
 
+	@Transactional
 	public TokenResponse reissueToken(TokenRequest tokenRequest) {
 
 		if (!jwtTokenProvider.validateToken(tokenRequest.getRefreshToken())) {
