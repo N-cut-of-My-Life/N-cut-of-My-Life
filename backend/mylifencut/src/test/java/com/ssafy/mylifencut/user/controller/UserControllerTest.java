@@ -1,5 +1,6 @@
 package com.ssafy.mylifencut.user.controller;
 
+import static com.ssafy.mylifencut.user.UserConstant.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -77,6 +78,11 @@ public class UserControllerTest {
 
 			//then
 			resultActions.andExpect(status().isBadRequest());
+			BaseResponse response = gson.fromJson(resultActions.andReturn()
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+			assertFalse(response.isSuccess());
+			assertEquals(response.getMessage(), INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE);
 		}
 
 		@Test
@@ -113,6 +119,8 @@ public class UserControllerTest {
 			Map map = (Map)response.getData();
 			assertEquals(map.get("accessToken"), jwtToken.getAccessToken());
 			assertEquals(map.get("refreshToken"), jwtToken.getRefreshToken());
+			assertTrue(response.isSuccess());
+			assertEquals(response.getMessage(), KAKAO_LOGIN_SUCCESS_MESSAGE);
 		}
 	}
 
@@ -142,6 +150,11 @@ public class UserControllerTest {
 
 			// then
 			resultActions.andExpect(status().isBadRequest());
+			final BaseResponse response = gson.fromJson(resultActions.andReturn()
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+			assertFalse(response.isSuccess());
+			assertEquals(response.getMessage(), INVALID_REFRESH_TOKEN_ERROR_MESSAGE);
 		}
 
 		@Test
@@ -166,6 +179,11 @@ public class UserControllerTest {
 
 			// then
 			resultActions.andExpect(status().isBadRequest());
+			final BaseResponse response = gson.fromJson(resultActions.andReturn()
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+			assertFalse(response.isSuccess());
+			assertEquals(response.getMessage(), INVALID_REFRESH_TOKEN_ERROR_MESSAGE);
 		}
 
 		@Test
@@ -202,7 +220,8 @@ public class UserControllerTest {
 			Map map = (Map)response.getData();
 			assertEquals(map.get("accessToken"), tokenResponse.getAccessToken());
 			assertEquals(map.get("refreshToken"), tokenResponse.getRefreshToken());
-
+			assertTrue(response.isSuccess());
+			assertEquals(response.getMessage(), TOKEN_REISSUE_SUCCESS_MESSAGE);
 		}
 	}
 }
