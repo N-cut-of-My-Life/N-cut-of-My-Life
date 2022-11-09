@@ -118,25 +118,29 @@ public class UserService {
 
 			String result = getResult(conn);
 
-			//Gson 라이브러리로 JSON파싱
-			JsonElement element = JsonParser.parseString(result);
-
-			return UserInfo.builder()
-				.email(element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString())
-				.name(element.getAsJsonObject()
-					.get("kakao_account")
-					.getAsJsonObject()
-					.get("profile")
-					.getAsJsonObject()
-					.get("nickname")
-					.getAsString())
-				.build();
+			return getUserInfoFromKakaoProfile(result);
 		} catch (IOException e) {
 			throw new InvalidKakaoAccessTokenException();
 		}
 	}
 
-	private String getResult(HttpURLConnection conn) throws IOException {
+	public UserInfo getUserInfoFromKakaoProfile(String json) {
+		//Gson 라이브러리로 JSON파싱
+		JsonElement element = JsonParser.parseString(json);
+
+		return UserInfo.builder()
+			.email(element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString())
+			.name(element.getAsJsonObject()
+				.get("kakao_account")
+				.getAsJsonObject()
+				.get("profile")
+				.getAsJsonObject()
+				.get("nickname")
+				.getAsString())
+			.build();
+	}
+
+	public String getResult(HttpURLConnection conn) throws IOException {
 		//결과 코드가 200이라면 성공
 		int responseCode = conn.getResponseCode();
 		log.info("responseCode : " + responseCode);
