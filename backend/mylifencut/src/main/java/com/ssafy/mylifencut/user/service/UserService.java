@@ -64,7 +64,7 @@ public class UserService {
 	}
 
 	public String getAccessToken(String code) {
-		System.out.println(code);
+		log.info(code);
 		String access_Token;
 		String refresh_Token;
 		String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -104,7 +104,6 @@ public class UserService {
 	}
 
 	public UserInfo getUserInfo(String token) {
-		System.out.println(token);
 		String reqURL = "https://kapi.kakao.com/v2/user/me";
 
 		//access_token을 이용하여 사용자 정보 조회
