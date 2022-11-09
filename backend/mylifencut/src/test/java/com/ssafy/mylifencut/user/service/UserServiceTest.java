@@ -62,7 +62,7 @@ public class UserServiceTest {
 				() -> userService.getAccessToken(token));
 
 			// then
-			assertEquals(result.getMessage(), UserConstant.INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE);
+			assertEquals(UserConstant.INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE, result.getMessage());
 		}
 
 		@Test
@@ -76,7 +76,7 @@ public class UserServiceTest {
 				() -> userService.getUserInfo(token));
 
 			//then
-			assertEquals(result.getMessage(), UserConstant.INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE);
+			assertEquals(UserConstant.INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE, result.getMessage());
 		}
 
 		@Test
@@ -141,7 +141,7 @@ public class UserServiceTest {
 				() -> userService.login(userInfo));
 
 			// then
-			assertEquals(result.getMessage(), USER_NOT_FOUND_ERROR_MESSAGE);
+			assertEquals(USER_NOT_FOUND_ERROR_MESSAGE, result.getMessage());
 		}
 
 		@Test
@@ -176,7 +176,7 @@ public class UserServiceTest {
 				() -> userService.kakaoLogin(token));
 
 			// then
-			assertEquals(result.getMessage(), INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE);
+			assertEquals(INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE, result.getMessage());
 		}
 	}
 
