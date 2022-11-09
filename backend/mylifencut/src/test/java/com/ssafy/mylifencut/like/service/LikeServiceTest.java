@@ -37,10 +37,10 @@ class LikeServiceTest {
 	private final Integer answerId = 3;
 
 	@Nested
-	@DisplayName("좋아요 추가 테스트")
+	@DisplayName("[좋아요 추가]")
 	class RegisterLikeTest{
 		@Test
-		@DisplayName("좋아요 추가 실패 - 같은 답변에 대해 좋아요가 이미 선택되어있음")
+		@DisplayName("[실패] - 같은 답변에 대해 좋아요가 이미 선택되어있음")
 		void alreadyLike() {
 
 			IsLike isLike = IsLike.builder().build();
@@ -54,7 +54,7 @@ class LikeServiceTest {
 		}
 
 		@Test
-		@DisplayName("좋아요 추가 성공")
+		@DisplayName("[성공] - 좋아요 추가")
 		void addLike() {
 			//given
 			doReturn(Optional.empty()).when(likeRepository).findByUserIdAndAnswerId(userId, answerId);
@@ -69,10 +69,10 @@ class LikeServiceTest {
 	}
 
 	@Nested
-	@DisplayName("좋아요 삭제 테스트")
+	@DisplayName("[좋아요 삭제]")
 	class DeleteLikeTest{
 		@Test
-		@DisplayName("좋아요 삭제 실패 - 좋아요를 누르지 않았음")
+		@DisplayName("[실패] - 좋아요를 누르지 않았음")
 		void notExistLike() {
 			//given
 			doReturn(Optional.empty()).when(likeRepository).findByUserIdAndAnswerId(userId, answerId);
@@ -84,7 +84,7 @@ class LikeServiceTest {
 		}
 
 		@Test
-		@DisplayName("좋아요 삭제 성공")
+		@DisplayName("[성공] - 좋아요 삭제")
 		void deleteLike() {
 			//given
 			final IsLike isLike = isLike();
