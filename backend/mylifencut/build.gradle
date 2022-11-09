@@ -106,7 +106,6 @@ jacocoTestCoverageVerification {
                         '**.*Filter']
         }
     }
-    finalizedBy('sonarqube')
 }
 
 sonarqube {
