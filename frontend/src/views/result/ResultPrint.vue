@@ -2,7 +2,7 @@
 	<section class="result-print">
 			<ol>
 					<li>
-						<div>
+						<div style="left: 0rem;">
 							<p class="ttl">하하호호행성</p>
 							<p class="ctnt">가장 행복했던 때가<br>언제였는지 적어줘!</p>
 						</div>
@@ -11,7 +11,7 @@
 					<li>
 						<div>
 							<p class="ttl">넌너무소중행성</p>
-							<p class="ctnt">“너에게<br> 가장 소중한 사람은 누구니? </p>
+							<p class="ctnt">너에게<br> 가장 소중한 사람은 누구니? </p>
 						</div>
 							<img class="planet" src="@/assets/planet/dearyou.png" style="width:12rem; height:12rem; border-radius:50%; transform: scale(0.8);">
 					</li>
@@ -51,12 +51,12 @@
 							<img class="planet" src="@\assets\planet\music.png" style="width:12rem; height:12rem;">
 					</li>
 					<li>
-						<!-- <div style="left: -5vw; ">
+						<div class="genie" style="left: -1rem; top: 17rem; z-index: 22;">
 							<p class="ttl">지니행성</p>
 							<p class="ctnt">너의 소원은 무엇이니?<br>무엇이든 좋으니 적어볼래?</p>
-						</div> -->
-						<img src="@/assets/space.svg" style="position:absolute; left: 10vw; bottom: -5vh;" >
-						<img src="@/assets/genie.svg" style="position:absolute; bottom: -50vh; left: 5vw" >
+						</div>
+						<img src="@/assets/space.svg" style="position:absolute; top: -10rem;">
+						<img src="@/assets/genie.svg" style="position:absolute; top: 10rem; left: 4rem;">
 					</li>
 			</ol>
 	</section>
@@ -69,9 +69,13 @@ export default {
 </script>
 <style scoped>
 
+.genie::before{
+	border-block-width: 0px !important;
+}
+
+
 .planet{
 	position: absolute;
-	transform-origin: 50%;
 }
 
 .result-print ol li:nth-child(odd) img {
@@ -108,12 +112,15 @@ export default {
 		position: relative;
 		display: inline-block;
 		list-style-type: none;
-		width: 10rem;
+		width: 11.2%;
 		height: 0.5rem;
 		background: #fff;
 }
+.result-print ol li:first-child {
+		width: 8%;
+}
 .result-print ol li:last-child {
-		width: 17rem;
+		width: 12%;
 }
 .result-print ol li:not(:first-child) {
 		margin-left: 1rem;
@@ -136,21 +143,33 @@ export default {
 		left: calc(50% - 2.5rem);
 		width: 16rem;
 		padding: 1rem;
+		padding-left: 5rem;
 		font-size: 1rem;
-		white-space: normal;
+		white-space: nowrap;
 		color: white;
 		background: transparent;
 }
 
-.result-print ol li div::before {
+.result-print ol li:first-child div::before {
 		content: '';
 		position: absolute;
 		top: 100%;
-		left: 50%;
+		left: 8.2rem;
 		width: 0;
 		height: 0;
 		border-style: solid;
-		border-block-width: 40px;
+		border-block-width: 4rem;
+}
+
+.result-print ol li:not(:first-child) div::before {
+		content: '';
+		position: absolute;
+		top: 100%;
+		left: 8.2rem;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-block-width: 4rem;
 }
 
 .result-print ol li:nth-child(odd) div {
@@ -159,22 +178,23 @@ export default {
 }
 
 .result-print ol li:nth-child(odd) div::before {
-		top: 150%;
+		top: 120%;
 }
 
 
 .result-print ol li:nth-child(even) div {
-		top: calc(100% + 12.5rem);
+		top: calc(100% + 16rem);
 }
 
 .result-print ol li:nth-child(even) div::before {
-		top: -100%;
+		top: -144%;
 		
 }
 .ttl {
 	font-size: 1.2rem;
 	font-weight: bold;
 	margin-bottom: 0.5rem;
+	text-indent: 0.1rem;
 }
 .ctnt {
   overflow-wrap: normal;
