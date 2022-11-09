@@ -36,7 +36,7 @@ class ArticleRepositoryTest {
 
 		//then
 		assertNotNull(articles);
-		assertEquals(articles.size(), 0);
+		assertEquals(0, articles.size());
 	}
 
 	@Test
@@ -65,7 +65,7 @@ class ArticleRepositoryTest {
 		//then
 		final List<Article> articles = articleRepository.findAll();
 		assertNotNull(articles);
-		assertEquals(articles.size(), 2);
+		assertEquals(2, articles.size());
 
 		for (Article article : articles) {
 			assertEquals(article.getUser().getName(), user.getName());

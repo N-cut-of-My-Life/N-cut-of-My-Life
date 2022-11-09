@@ -58,7 +58,7 @@ class ArticleServiceTest {
 				, () -> articleService.retrieveArticles(userId));
 
 			//then
-			assertEquals(result.getMessage(), USER_NOT_FOUND_ERROR_MESSAGE);
+			assertEquals(USER_NOT_FOUND_ERROR_MESSAGE, result.getMessage());
 		}
 
 		@Test
@@ -106,7 +106,7 @@ class ArticleServiceTest {
 			);
 
 			//then
-			assertEquals(result.getMessage(), USER_NOT_FOUND_ERROR_MESSAGE);
+			assertEquals(USER_NOT_FOUND_ERROR_MESSAGE, result.getMessage());
 		}
 
 		@Test
@@ -126,7 +126,7 @@ class ArticleServiceTest {
 			);
 
 			//then
-			assertEquals(result.getMessage(), ARTICLE_ANSWERS_SIZE_IS_NOT_ENOUGH_ERROR_MESSAGE);
+			assertEquals(ARTICLE_ANSWERS_SIZE_IS_NOT_ENOUGH_ERROR_MESSAGE, result.getMessage());
 		}
 
 		@Test
@@ -159,7 +159,7 @@ class ArticleServiceTest {
 			);
 
 			//then
-			assertEquals(result.getMessage(), CAN_NOT_BE_OPENED_ANSWER_ERROR_MESSAGE);
+			assertEquals(CAN_NOT_BE_OPENED_ANSWER_ERROR_MESSAGE, result.getMessage());
 		}
 
 		@Test
