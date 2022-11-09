@@ -19,7 +19,7 @@ public class UserRepositoryTest {
 
 	@Test
 	@DisplayName("회원 저장 성공")
-	public void register() {
+	void register() {
 		// given
 		final User user = User.builder()
 			.name("홍길동")
@@ -38,7 +38,7 @@ public class UserRepositoryTest {
 
 	@Test
 	@DisplayName("이메일로 회원 여부 검사 - 신규회원")
-	public void findUserByEmailFail() {
+	void findUserByEmailFail() {
 		// given
 		final String email = "ssafy@email.com";
 
@@ -51,7 +51,7 @@ public class UserRepositoryTest {
 
 	@Test
 	@DisplayName("이메일로 회원 여부 검사 - 기존회원")
-	public void findUserByEmailSuccess() {
+	void findUserByEmailSuccess() {
 		// given
 		final User user = User.builder()
 			.name("홍길동")
