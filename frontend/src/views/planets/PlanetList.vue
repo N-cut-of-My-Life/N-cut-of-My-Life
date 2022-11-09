@@ -154,12 +154,11 @@ video {
   margin-top: -81px;
   margin-left: -20.34px;
   cursor: pointer;
+  opacity: 0;
 }
 
-
-.stars_line:hover+.stars {
-  filter: none;
-  -webkit-filter: none;
+.teapot:hover {
+  opacity: 1;
 }
 
 .stars:hover {
@@ -167,9 +166,6 @@ video {
   -webkit-filter: none;
 }
 
-.stars_line:hover+.teapot {
-  display: block;
-}
 
 .planet:nth-child(1) {
   display: none;
