@@ -26,7 +26,7 @@ import com.ssafy.mylifencut.like.domain.IsLike;
 import com.ssafy.mylifencut.user.domain.User;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("답변 service 테스트 코드")
+@DisplayName("답변 서비스 test")
 class AnswerServiceTest {
 
 	@InjectMocks
@@ -35,10 +35,10 @@ class AnswerServiceTest {
 	private AnswerRepository answerRepository;
 
 	@Nested
-	@DisplayName("갤러리 조회 테스트")
+	@DisplayName("[갤러리 조회]")
 	class GalleryReadTest{
 		@Test
-		@DisplayName("갤러리 조회 - 성공")
+		@DisplayName("[성공] - 갤러리 조회")
 		void readGallery() {
 			//given
 			final LocalDateTime nowTime = LocalDateTime.now();
