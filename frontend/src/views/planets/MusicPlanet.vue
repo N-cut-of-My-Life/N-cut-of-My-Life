@@ -21,7 +21,7 @@
         </b-button>
     </div>
     <div v-if="currentImage === (images.length - 1)" class="last">
-        <b-button v-show="elementVisible" class="button_2" size="md">
+        <b-button v-show="elementVisible" class="button_2" size="md" @click="musicStore.getMusicData()">
             <div class="wave">
                 <span style="--i: 1">음</span>
                 <span style="--i: 2">악</span>
@@ -37,55 +37,100 @@
             </div>
         </b-button>
     </div>
+    <div class="temp">{{ musicStore.items }}</div>
 </template>
 
-<script>
-export default {
-    data() {
-        return {
-            images: [
+// <script setup>
+import { onUpdated, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useMusicStore } from '@/store/index'
+// export default {
+//     data() {
+//         return {
+//             images: [
+//                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_1.svg'),
+//                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_2.svg'),
+//                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_3.svg'),
+//                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_4.svg'),
+//                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_5.svg'),
+//             ],
+//             audios: [
+//             // 병합 예정    
+//             // require('@/assets/audio/booty-in-the-nest.mp3'),
+//                 require('@/assets/audio/come-on-boy.mp3')
+//             ],
+//             currentImage: 0,
+//             elementVisible: false,
+//             currentAudio: 0,
+//         }
+//     },
+//     methods: {
+//         nextImage() {
+//             if (this.currentImage !== (this.images.length - 1))
+//                 this.currentImage++;
+//         },
+
+//         previousImage() {
+//             if (this.currentImage !== 0)
+//                 this.currentImage--;
+//         },
+
+//         gotoPage(link) {
+//             this.$router.push(link)
+//         },
+
+//         // toggleMute() {
+//         //     var myAudio = document.getElementById('myaudios');
+//         //     myAudio.muted = !myAudio.muted;
+//         // }        
+//     },
+//     updated() {
+//         if (this.currentImage == (this.images.length - 1)) {
+//             setTimeout(() => this.elementVisible = true, 2000)
+//         }
+//     },
+    
+    
+    
+// }
+
+// 경계선
+const router = useRouter()
+const musicStore = useMusicStore()
+
+const images = [
                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_1.svg'),
                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_2.svg'),
                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_3.svg'),
                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_4.svg'),
                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_5.svg'),
-            ],
-            audios: [
+                ]
+const audios = [
             // 병합 예정    
             // require('@/assets/audio/booty-in-the-nest.mp3'),
                 require('@/assets/audio/come-on-boy.mp3')
-            ],
-            currentImage: 0,
-            elementVisible: false,
-            currentAudio: 0,
-        }
-    },
-    methods: {
-        nextImage() {
-            if (this.currentImage !== (this.images.length - 1))
-                this.currentImage++;
-        },
+            ]
+let currentImage =  ref(0)
+let elementVisible = ref(false)
+const currentAudio = ref(0)
 
-        previousImage() {
-            if (this.currentImage !== 0)
-                this.currentImage--;
-        },
-
-        gotoPage(link) {
-            this.$router.push(link)
-        },
-
-        // toggleMute() {
-        //     var myAudio = document.getElementById('myaudios');
-        //     myAudio.muted = !myAudio.muted;
-        // }        
-    },
-    updated() {
-        if (this.currentImage == (this.images.length - 1)) {
-            setTimeout(() => this.elementVisible = true, 2000)
-        }
-    },
+const nextImage = () => {
+  if (currentImage.value !== (images.length - 1))
+    currentImage.value++;
 }
+const previousImage = () => {
+  if (currentImage.value !== 0)
+    currentImage.value--;
+}
+const gotoPage = (link) => {
+            router.push(link)
+        }
+onUpdated(() => {
+  if (currentImage.value == (images.length - 1)) {
+      setTimeout(() => elementVisible.value = true, 2000)
+  }
+})
+
 </script>
 
 <style scoped>
