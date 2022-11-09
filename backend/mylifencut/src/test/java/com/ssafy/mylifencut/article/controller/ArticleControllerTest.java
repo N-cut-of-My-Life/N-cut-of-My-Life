@@ -53,7 +53,7 @@ class ArticleControllerTest {
 	private Gson gson;
 
 	@BeforeEach
-	public void init() {
+	void init() {
 		gson = new Gson();
 		mockMvc = MockMvcBuilders.standaloneSetup(articleController)
 			.setControllerAdvice(new ExceptionAdvice())
@@ -65,7 +65,7 @@ class ArticleControllerTest {
 	class RetrieveTest {
 		@Test
 		@DisplayName("[실패] - 존재하지 않는 userId일때")
-		public void retrieveArticle_notFoundUserError() throws Exception {
+		void retrieveArticle_notFoundUserError() throws Exception {
 			final int userId = -1;
 			final String url = "/article/" + userId;
 
@@ -90,7 +90,7 @@ class ArticleControllerTest {
 
 		@Test
 		@DisplayName("[성공]")
-		public void retrieveArticle_success() throws Exception {
+		void retrieveArticle_success() throws Exception {
 			//given
 			final int userId = 5;
 			final String url = "/article/" + userId;
@@ -129,7 +129,7 @@ class ArticleControllerTest {
 	@ParameterizedTest
 	@MethodSource("registerArticleErrorParameter")
 	@DisplayName("[여행일지 등록 실패] - service에서 예외가 발생했을 때")
-	public void registerArticle_error(RuntimeException exception, String errorMessage) throws
+	void registerArticle_error(RuntimeException exception, String errorMessage) throws
 		Exception {
 		//given
 		final String url = "/article";
@@ -166,7 +166,7 @@ class ArticleControllerTest {
 
 	@Test
 	@DisplayName("[여행일지 등록 성공]")
-	public void registerArticle_success() throws Exception {
+	void registerArticle_success() throws Exception {
 		//given
 		final String url = "/article";
 		final ArticleRequest articleRequest = ArticleRequest.builder()

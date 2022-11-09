@@ -8,7 +8,6 @@ import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +47,7 @@ class ArticleServiceTest {
 	class retrieveTest {
 		@Test
 		@DisplayName("[실패] - 존재하지않는 UserId일 때")
-		public void retrieveArticle_notFoundUserError() {
+		void retrieveArticle_notFoundUserError() {
 			//given
 			final int userId = 5;
 			doReturn(Optional.empty()).when(userRepository).findById(userId);
@@ -58,12 +57,12 @@ class ArticleServiceTest {
 				, () -> articleService.retrieveArticles(userId));
 
 			//then
-			assertEquals(result.getMessage(), USER_NOT_FOUND_ERROR_MESSAGE);
+			assertEquals(USER_NOT_FOUND_ERROR_MESSAGE, result.getMessage());
 		}
 
 		@Test
 		@DisplayName("[성공]")
-		public void retrieveArticle_success() {
+		void retrieveArticle_success() {
 			//given
 			final int userId = 5;
 			final String userName = "여행일지유저";
@@ -93,25 +92,23 @@ class ArticleServiceTest {
 	class registerTest {
 		@Test
 		@DisplayName("[실패] - 존재하지 않는 userId일 때")
-		public void registerArticle_notFoundUserError() {
+		void registerArticle_notFoundUserError() {
 			//given
 			final Integer userId = 5;
 			doReturn(Optional.empty()).when(userRepository).findById(userId);
 
 			//when
 			final UserNotFoundException result = assertThrows(UserNotFoundException.class
-				, () -> articleService.createArticle(new ArticleRequest(
-					userId, Collections.emptyList(), LocalDateTime.now())
-				)
+				, () -> articleService.createArticle(ArticleRequest.builder().userId(userId).build())
 			);
 
 			//then
-			assertEquals(result.getMessage(), USER_NOT_FOUND_ERROR_MESSAGE);
+			assertEquals(USER_NOT_FOUND_ERROR_MESSAGE, result.getMessage());
 		}
 
 		@Test
 		@DisplayName("[실패] - 답변 리스트 개수가 3개 미만일때")
-		public void registerArticle_answersSizeIsNotEnoughError() {
+		void registerArticle_answersSizeIsNotEnoughError() {
 			//given
 			final Integer userId = 3;
 			doReturn(Optional.of(User.builder().build())).when(userRepository).findById(userId);
@@ -120,18 +117,16 @@ class ArticleServiceTest {
 
 			//when
 			final AnswersSizeIsNotEnoughException result = assertThrows(AnswersSizeIsNotEnoughException.class
-				, () -> articleService.createArticle(new ArticleRequest(
-					userId, answers, LocalDateTime.now())
-				)
+				, () -> articleService.createArticle(ArticleRequest.builder().userId(userId).build())
 			);
 
 			//then
-			assertEquals(result.getMessage(), ARTICLE_ANSWERS_SIZE_IS_NOT_ENOUGH_ERROR_MESSAGE);
+			assertEquals(ARTICLE_ANSWERS_SIZE_IS_NOT_ENOUGH_ERROR_MESSAGE, result.getMessage());
 		}
 
 		@Test
 		@DisplayName("[실패] - OPEN 가능한 질문이 아닌데 OPEN 상태로 온 답변이 있을 경우")
-		public void registerArticle_canNotBeOpenedAnswerError() {
+		void registerArticle_canNotBeOpenedAnswerError() {
 			//given
 			final Integer userId = 5;
 			final String userName = "유저이름";
@@ -159,12 +154,12 @@ class ArticleServiceTest {
 			);
 
 			//then
-			assertEquals(result.getMessage(), CAN_NOT_BE_OPENED_ANSWER_ERROR_MESSAGE);
+			assertEquals(CAN_NOT_BE_OPENED_ANSWER_ERROR_MESSAGE, result.getMessage());
 		}
 
 		@Test
 		@DisplayName("[성공]")
-		public void registerArticle_success() {
+		void registerArticle_success() {
 			//given
 			final Integer userId = 5;
 			final String userName = "유저이름";
