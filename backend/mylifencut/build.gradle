@@ -56,6 +56,7 @@ jacocoTestReport {
         }
         xml {
             enabled true
+            destination file('build/reports/jacocoReport.xml')
         }
     }
     afterEvaluate {
@@ -118,6 +119,6 @@ sonarqube {
         property "sonar.java.binaries", "${buildDir}/classes"
         property "sonar.test.inclusions", "**/*Test.java"
         property "sonar.exclusions", "**/resources/static/**, **/test/**"
-        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacocoReport.xml"
     }
 }

@@ -117,7 +117,7 @@ class ArticleServiceTest {
 
 			//when
 			final AnswersSizeIsNotEnoughException result = assertThrows(AnswersSizeIsNotEnoughException.class
-				, () -> articleService.createArticle(ArticleRequest.builder().userId(userId).build())
+				, () -> articleService.createArticle(ArticleRequest.builder().userId(userId).answers(answers).build())
 			);
 
 			//then
