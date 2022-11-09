@@ -43,10 +43,10 @@ public class UserService {
 	private final RefreshTokenRepository refreshTokenRepository;
 
 	@Value("${oauth2.kakao.restApiKey}")
-	private String kakao_restApiKey;
+	private String kakaoRestApiKey;
 
 	@Value("${oauth2.kakao.redirectUri}")
-	private String kakao_redirectUri;
+	private String kakaoRedirectUri;
 
 	public TokenResponse kakaoLogin(String token) {
 		UserInfo userInfo = getUserInfo(getAccessToken(token));
@@ -64,7 +64,7 @@ public class UserService {
 	}
 
 	public String getAccessToken(String code) {
-		System.out.println(code);
+		log.info(code);
 		String access_Token;
 		String refresh_Token;
 		String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -79,8 +79,8 @@ public class UserService {
 
 			//POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-			String sb = "grant_type=authorization_code" + "&client_id=" + kakao_restApiKey + "&redirect_uri="
-				+ kakao_redirectUri + "&code=" + code;
+			String sb = "grant_type=authorization_code" + "&client_id=" + kakaoRestApiKey + "&redirect_uri="
+				+ kakaoRedirectUri + "&code=" + code;
 			bw.write(sb);
 			bw.flush();
 			bw.close();
@@ -104,7 +104,6 @@ public class UserService {
 	}
 
 	public UserInfo getUserInfo(String token) {
-		System.out.println(token);
 		String reqURL = "https://kapi.kakao.com/v2/user/me";
 
 		//access_token을 이용하여 사용자 정보 조회
