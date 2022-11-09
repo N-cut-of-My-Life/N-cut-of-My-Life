@@ -53,7 +53,7 @@ public class UserServiceTest {
 	class loginAndRegisterTest {
 		@Test
 		@DisplayName("카카오 로그인 - 카카오 엑세스 토큰 오류")
-		public void getKakaoAccessTokenFail() {
+		void getKakaoAccessTokenFail() {
 			// given
 			final String token = "INVALID_TOKEN";
 
@@ -67,7 +67,7 @@ public class UserServiceTest {
 
 		@Test
 		@DisplayName("카카오 로그인 - 사용자 정보 받아오기 실패")
-		public void getUserInfoFromKakaoFail() {
+		void getUserInfoFromKakaoFail() {
 			// given
 			final String token = "INVALID_TOKEN";
 
@@ -81,7 +81,7 @@ public class UserServiceTest {
 
 		@Test
 		@DisplayName("카카오 로그인 - 사용자 정보로 신규유저 여부 확인(신규유저)")
-		public void isNewUser() {
+		void isNewUser() {
 			// given
 			final UserInfo userInfo = newUserInfo();
 			doReturn(Optional.empty()).when(userRepository).findByEmail(userInfo.getEmail());
@@ -95,7 +95,7 @@ public class UserServiceTest {
 
 		@Test
 		@DisplayName("카카오 로그인 - 신규유저 유저 회원가입")
-		public void loginNewUser() {
+		void loginNewUser() {
 			// given
 			final UserInfo userInfo = newUserInfo();
 			final User user = User.builder()
@@ -116,7 +116,7 @@ public class UserServiceTest {
 
 		@Test
 		@DisplayName("카카오 로그인 - 사용자 정보로 신규유저 여부 확인(기존유저)")
-		public void isExistingUser() {
+		void isExistingUser() {
 			// given
 			final UserInfo userInfo = newUserInfo();
 			final User user = User.builder().build();
@@ -131,7 +131,7 @@ public class UserServiceTest {
 
 		@Test
 		@DisplayName("카카오 로그인 - 로그인 실패")
-		public void loginExistingUserFail() {
+		void loginExistingUserFail() {
 			// given
 			final UserInfo userInfo = newUserInfo();
 			doReturn(Optional.empty()).when(userRepository).findByEmail(email);
@@ -146,7 +146,7 @@ public class UserServiceTest {
 
 		@Test
 		@DisplayName("카카오 로그인 - 기존유저 로그인")
-		public void loginExistingUserSuccess() {
+		void loginExistingUserSuccess() {
 			// given
 			final UserInfo userInfo = newUserInfo();
 			final User user = User.builder()
@@ -167,7 +167,7 @@ public class UserServiceTest {
 
 		@Test
 		@DisplayName("카카오 로그인 - 실패")
-		public void kakaoLoginFail() {
+		void kakaoLoginFail() {
 			// given
 			String token = "INVALID_TOKEN";
 
