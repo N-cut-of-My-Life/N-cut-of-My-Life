@@ -1,5 +1,9 @@
 package com.ssafy.mylifencut.like;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LikeConstant {
 
 	public static final String CREATE_LIKE_SUCCESS_MESSAGE = "좋아요가 등록되었습니다.";
