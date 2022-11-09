@@ -20,10 +20,10 @@ class AnswerRepositoryTest {
 	private AnswerRepository answerRepository;
 
 	@Nested
-	@DisplayName("갤러리 조회 실패 테스트")
+	@DisplayName("[갤러리 조회]")
 	class GalleryReadFailTest{
 		@Test
-		@DisplayName("갤러리 조회 실패 - 등록된 답변이 없음")
+		@DisplayName("[실패] - 등록된 답변이 없음")
 		void answerListSizeZero() {
 			//given
 			//when
@@ -33,7 +33,7 @@ class AnswerRepositoryTest {
 		}
 
 		@Test
-		@DisplayName("갤러리 조회 실패 - 등록된 답변의 상태가 OPEN인 답변이 없음")
+		@DisplayName("[실패] - 등록된 답변의 상태가 OPEN인 답변이 없음")
 		void notExistAnswerStateOpen() {
 			//given
 			//when
@@ -42,13 +42,8 @@ class AnswerRepositoryTest {
 			assertThat(result.size()).isZero();
 		}
 
-	}
-
-	@Nested
-	@DisplayName("갤러리 조회 성공 테스트")
-	class GalleryReadSuccessTest{
 		@Test
-		@DisplayName("갤러리 조회 성공 ")
+		@DisplayName("[성공] - 갤러리 조회")
 		void readGallery() {
 			//given
 			final Answer answer = Answer.builder()
@@ -60,12 +55,12 @@ class AnswerRepositoryTest {
 				.questionId(9)
 				.contents("답변 내용입니다.")
 				.state(State.OPEN)
-					.build();
+				.build();
 			final Answer answer3 = Answer.builder()
-					.questionId(3)
-					.contents("답변 내용이지롱.")
-					.state(State.CLOSE)
-					.build();
+				.questionId(3)
+				.contents("답변 내용이지롱.")
+				.state(State.CLOSE)
+				.build();
 			answerRepository.save(answer);
 			answerRepository.save(answer2);
 			answerRepository.save(answer3);
@@ -74,5 +69,7 @@ class AnswerRepositoryTest {
 			//then
 			assertThat(result.size()).isEqualTo(2);
 		}
+
 	}
+
 }
