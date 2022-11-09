@@ -4,6 +4,9 @@ import static com.ssafy.mylifencut.user.UserConstant.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.ssafy.mylifencut.user.JwtTokenProvider;
 import com.ssafy.mylifencut.user.UserConstant;
 import com.ssafy.mylifencut.user.domain.RefreshToken;
@@ -343,6 +348,23 @@ public class UserServiceTest {
 			assertEquals(tokenResponse.getRefreshToken(), result.getRefreshToken());
 			assertEquals(tokenResponse.getAccessToken(), result.getAccessToken());
 		}
+	}
+
+	@Test
+	@DisplayName("결과 가져오기 테스트")
+	void getResultSuccess() throws IOException {
+		// given
+		final URL url = new URL("https://my-json-server.typicode.com/qulip/apitest/kakao");
+		final HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+		final String testToken = "API_TEST_TOKEN";
+
+		// when
+		final String result = userService.getResult(conn);
+
+		// then
+		JsonElement element = JsonParser.parseString(result);
+		assertEquals(testToken, element.getAsJsonObject().get("access_token").getAsString());
+		assertEquals(testToken, element.getAsJsonObject().get("refresh_token").getAsString());
 	}
 
 	public UserInfo newUserInfo() {
