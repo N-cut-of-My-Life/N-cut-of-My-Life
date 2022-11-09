@@ -79,7 +79,7 @@ public class UserControllerTest {
 				.getResponse()
 				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 			assertFalse(response.isSuccess());
-			assertEquals(response.getMessage(), INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE);
+			assertEquals(INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE, response.getMessage());
 		}
 
 		@Test
@@ -114,7 +114,7 @@ public class UserControllerTest {
 			assertEquals(map.get("accessToken"), jwtToken.getAccessToken());
 			assertEquals(map.get("refreshToken"), jwtToken.getRefreshToken());
 			assertTrue(response.isSuccess());
-			assertEquals(response.getMessage(), KAKAO_LOGIN_SUCCESS_MESSAGE);
+			assertEquals(KAKAO_LOGIN_SUCCESS_MESSAGE, response.getMessage());
 		}
 	}
 
@@ -148,7 +148,7 @@ public class UserControllerTest {
 				.getResponse()
 				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 			assertFalse(response.isSuccess());
-			assertEquals(response.getMessage(), INVALID_REFRESH_TOKEN_ERROR_MESSAGE);
+			assertEquals(INVALID_REFRESH_TOKEN_ERROR_MESSAGE, response.getMessage());
 		}
 
 		@Test
@@ -177,7 +177,7 @@ public class UserControllerTest {
 				.getResponse()
 				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 			assertFalse(response.isSuccess());
-			assertEquals(response.getMessage(), INVALID_REFRESH_TOKEN_ERROR_MESSAGE);
+			assertEquals(INVALID_REFRESH_TOKEN_ERROR_MESSAGE, response.getMessage());
 		}
 
 		@Test
@@ -215,7 +215,7 @@ public class UserControllerTest {
 			assertEquals(map.get("accessToken"), tokenResponse.getAccessToken());
 			assertEquals(map.get("refreshToken"), tokenResponse.getRefreshToken());
 			assertTrue(response.isSuccess());
-			assertEquals(response.getMessage(), TOKEN_REISSUE_SUCCESS_MESSAGE);
+			assertEquals(TOKEN_REISSUE_SUCCESS_MESSAGE, response.getMessage());
 		}
 	}
 }
