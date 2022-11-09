@@ -29,7 +29,7 @@ class AnswerRepositoryTest {
 			//when
 			List<Answer> result = answerRepository.findAll();
 			//then
-			assertThat(result.size()).isEqualTo(0);
+			assertThat(result.size()).isZero();
 		}
 
 		@Test
@@ -39,7 +39,7 @@ class AnswerRepositoryTest {
 			//when
 			List<Answer> result = answerRepository.findAllByState(State.OPEN);
 			//then
-			assertThat(result.size()).isEqualTo(0);
+			assertThat(result.size()).isZero();
 		}
 
 	}
