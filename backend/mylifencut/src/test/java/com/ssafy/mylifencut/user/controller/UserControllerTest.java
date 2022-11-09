@@ -57,7 +57,7 @@ public class UserControllerTest {
 	class loginTest {
 		@Test
 		@DisplayName("카카오 로그인 AccessToken 오류")
-		public void invalidToken() throws Exception {
+		void invalidToken() throws Exception {
 			// given
 			final String url = "/user/login";
 			final Map<String, String> token = new HashMap<>();
@@ -84,7 +84,7 @@ public class UserControllerTest {
 
 		@Test
 		@DisplayName("로그인 성공")
-		public void loginSuccess() throws Exception {
+		void loginSuccess() throws Exception {
 			// given
 			final String url = "/user/login";
 			final Map<String, String> token = new HashMap<>();
@@ -124,7 +124,7 @@ public class UserControllerTest {
 
 		@Test
 		@DisplayName("잘못된 리프레쉬 토큰")
-		public void expiredRefreshToken() throws Exception {
+		void expiredRefreshToken() throws Exception {
 			// given
 			final String url = "/user/token";
 			final TokenRequest tokenRequest = TokenRequest.builder()
@@ -153,7 +153,7 @@ public class UserControllerTest {
 
 		@Test
 		@DisplayName("만료된 리프레쉬 토큰")
-		public void invalidRefreshToken() throws Exception {
+		void invalidRefreshToken() throws Exception {
 			// given
 			final String url = "/user/token";
 			final TokenRequest tokenRequest = TokenRequest.builder()
@@ -182,7 +182,7 @@ public class UserControllerTest {
 
 		@Test
 		@DisplayName("유효한 리프레쉬 토큰")
-		public void validRefreshToken() throws Exception {
+		void validRefreshToken() throws Exception {
 			// given
 			final String url = "/user/token";
 			final TokenRequest tokenRequest = TokenRequest.builder()
