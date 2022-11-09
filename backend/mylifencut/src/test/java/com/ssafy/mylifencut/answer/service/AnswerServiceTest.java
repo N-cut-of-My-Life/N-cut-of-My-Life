@@ -79,7 +79,7 @@ class AnswerServiceTest {
 			//when
 			final List<GalleryResponse> result = answerService.getGalleryList();
 			//then
-			assertThat(result.size()).isEqualTo(2);
+			assertThat(result).hasSize(2);
 		}
 	}
 }

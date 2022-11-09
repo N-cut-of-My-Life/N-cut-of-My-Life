@@ -1,5 +1,9 @@
 package com.ssafy.mylifencut.answer;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AnswerConstant {
 
 	public static final String READ_GALLERY_SUCCESS_MESSAGE = "갤러리가 조회되었습니다.";

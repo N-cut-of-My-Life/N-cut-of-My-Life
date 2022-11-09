@@ -18,7 +18,7 @@ import com.ssafy.mylifencut.user.exception.UserNotFoundException;
 import com.ssafy.mylifencut.user.repository.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("시큐리티 Service 테스트")
+@DisplayName("[시큐리티 서비스]")
 class SecurityServiceTest {
 
 	@InjectMocks
@@ -27,7 +27,7 @@ class SecurityServiceTest {
 	private UserRepository userRepository;
 
 	@Test
-	@DisplayName("사용자 검색 실패")
+	@DisplayName("[실패] - 사용자 검색")
 	void searchUserFail() {
 		// given
 		String userId = "1";
@@ -43,7 +43,7 @@ class SecurityServiceTest {
 	}
 
 	@Test
-	@DisplayName("사용자 검색 성공")
+	@DisplayName("[성공] - 사용자 검색")
 	void searchUserSuccess() {
 		// given
 		String userId = "1";
