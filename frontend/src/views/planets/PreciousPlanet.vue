@@ -2,7 +2,7 @@
     <div class="jumbotron">
         <div class="title">넌너무소중 행성</div>
     </div>
-    <img class="bubble" :src="images[currentImage]" alt=""/>
+    <img class="bubble" :src="images[currentImage]" alt="" />
     <audio loop autoplay volume="0.3">
         <source src="@/assets/audio/mix_precious.mp3" type="audio/mp3">
     </audio>
@@ -30,39 +30,41 @@
                 <span style="--i: 4">&nbsp;</span>
                 <span style="--i: 5">사</span>
                 <span style="--i: 6">람</span>
-                <span style="--i: 7">&nbsp;</span>
-                <span style="--i: 8">기</span>
-                <span style="--i: 9">록</span>
-                <span style="--i: 10">하</span>
-                <span style="--i: 11">기</span>
-                <span style="--i: 12">!</span>
+                <span style="--i: 7">에</span>
+                <span style="--i: 8">게</span>
+                <span style="--i: 9">&nbsp;</span>
+                <span style="--i: 10">편</span>
+                <span style="--i: 11">지</span>
+                <span style="--i: 12">&nbsp;</span>
+                <span style="--i: 13">쓰</span>
+                <span style="--i: 14">기</span>
+                <span style="--i: 15">!</span>
             </div>
         </b-button>
     </div>
     <b-modal :no-close-on-backdrop="true" id="modal-precious" centered no-stacking hide-header hide-footer
         style="text-align: center; border-radius: 1vw;">
-        <b-popover target="addon" placement="left">
-            <input type="file" accept="image/*" @change="onUpload" />
-            <div>
-                <img v-if="item.imageUrl" :src="item.imageUrl" style="max-width: 16vw; height: auto;" alt="">
-                <div v-else>
-                    <div><strong>소중한 순간을 담아주세요!</strong></div>
-                    <img src="@/assets/v-pose.svg" alt="">
-                </div>
-            </div>
-        </b-popover>
         <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_happy.svg"
-            style="cursor:pointer; float: right;" alt=""/>
-        <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">소중한 사람과의 추억을 기록해보세요!</div>
+            style="cursor:pointer; float: right;" alt="" />
+        <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 4%; font-weight: 400;">소중한 사람에게 짧은 편지를 남겨보세요!</div>
         <b-container ref="form" style="margin-bottom:3.8%">
+            <b-row style="margin-bottom:3%">
+                <b-col cols="1" style="padding:0; font-size: 1vw; color:#C6753E; text-align: right;">
+                    To.
+                </b-col>
+                <b-col cols="11">
+                    <b-form-input id="dear" placeholder=""
+                        style="background-color: #FDFCFA; padding:2px 4px; border:none">
+                    </b-form-input>
+                </b-col>
+            </b-row>
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
-                style="border-radius: 1vw; background-color: #FDFCFA;">
+                style="background-color: #FDFCFA; border:none;">
             </b-form-textarea>
         </b-container>
         <b-button text @click="submit"
             style="color: #ffffff; background-color: #C6753E; border: none; border-radius: 1vw;">저장
         </b-button>
-        <b-button class='img-btn' id="addon"><img class="upload" src="@\assets\enter-image-upload.svg" alt=""></b-button>
     </b-modal>
 </template>
 
@@ -70,10 +72,6 @@
 export default {
     data() {
         return {
-            item: {
-                image: null,
-                imageUrl: null,
-            },
             images: [
                 require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_1.svg'),
                 require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_2.svg'),
@@ -85,11 +83,6 @@ export default {
         }
     },
     methods: {
-        onUpload(e) {
-            const file = e.target.files[0]
-            this.image = file
-            this.item.imageUrl = URL.createObjectURL(file)
-        },
         nextImage() {
             if (this.currentImage !== (this.images.length - 1))
                 this.currentImage++;
@@ -113,6 +106,10 @@ export default {
 </script>
 
 <style scoped>
+.upload {
+    width: 50%
+}
+
 body {
     margin: 0;
 }
@@ -202,7 +199,7 @@ body {
 .button_2::before {
     content: '';
     border-radius: 1000px;
-    min-width: calc(220px + 12px);
+    min-width: calc(260px + 12px);
     min-height: calc(60px + 12px);
     box-shadow: 0 0 60px #ffffff;
     ;
@@ -261,18 +258,6 @@ body {
     animation-delay: calc(0.1s * var(--i));
 }
 
-.img-btn {
-    left: 0%;
-    bottom: 0%;
-    background-color: transparent;
-    border: none;
-    position: absolute;
-}
-
-.img-btn:active {
-    background-color: transparent;
-}
-
 @keyframes wave {
 
     0%,
@@ -296,4 +281,8 @@ body {
     display: none;
     z-index: -1;
 } */
+.form-control {
+  box-shadow: none !important;
+  outline: none !important;
+}
 </style>

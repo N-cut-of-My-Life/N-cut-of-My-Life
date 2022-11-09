@@ -6,7 +6,7 @@
     <audio id="myaudios" loop autoplay :src="audios[currentAudio]" :muted="mute" volume="0.3">
     </audio>
     <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
-    <img class="story" :src="images[currentImage]" alt=""/>
+    <img class="story" :src="images[currentImage]" alt="" />
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
@@ -49,11 +49,22 @@
     <b-modal centered no-stacking id="modal-happy" hide-header hide-footer :no-close-on-backdrop="true"
         style="text-align: center; border-radius: 1vw;">
         <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_happy.svg"
-            style="cursor:pointer; float: right;" alt=""/>
-        <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">가장 행복했던 순간을 이 곳에 적어주세요!</div>
+            style="cursor:pointer; float: right;" alt="" />
+        <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 2%; font-weight: 400;">가장 행복했던 순간을 이 곳에 적어주세요!</div>
+        <b-button class='img-btn' id="addon" size="x-sm" style="margin-right:3%; border-color: #ffffff; padding:2px 4px; color:#ffffff; font-size: 0.7vw; margin-bottom:1%">사진 첨부
+        </b-button>
         <b-container ref="form" style="margin-bottom:3.8%">
+            <b-popover target="addon" placement="right" style="margin-left:1%;">
+                <input type="file" accept="image/*" @change="onUpload" />
+                <div>
+                    <img v-if="item.imageUrl" :src="item.imageUrl" style="margin-top:2%; max-width: 16vw; height: auto;" alt="">
+                    <div v-else>
+                        <div style="margin-top:1vh"><strong style="font-size:1.1vw">행복했던 순간을 담아주세요!</strong></div>
+                    </div>
+                </div>
+            </b-popover>
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
-                style="border-radius: 1vw; background-color: #f7eadb;">
+                style="border-radius: 1vw; background-color: #f7eadb; border:none;">
             </b-form-textarea>
         </b-container>
         <b-button text @click="submit"
@@ -64,10 +75,13 @@
 
 <script>
 // import VueAudio from 'vue-audio'
-
 export default {
     data() {
         return {
+            item: {
+                image: null,
+                imageUrl: null,
+            },
             images: [
                 require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_1.svg'),
                 require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_2.svg'),
@@ -93,6 +107,11 @@ export default {
         }
     },
     methods: {
+        onUpload(e) {
+            const file = e.target.files[0]
+            this.image = file
+            this.item.imageUrl = URL.createObjectURL(file)
+        },
         nextImage() {
             if (this.currentImage !== (this.images.length - 1))
                 this.currentImage++;
@@ -149,6 +168,17 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
+}
+.img-btn {
+    /* left: 0%;
+    top: 0%; */
+    background-color: transparent;
+    float: right;
+    /* position: absolute; */
+}
+
+.img-btn:active {
+    background-color: transparent;
 }
 
 .jump {
@@ -296,5 +326,10 @@ body {
 
 #modal-happy .modal-header .btn-close {
     color: white;
+}
+.popover{
+    --bs-popover-arrow-width: 0rem;
+    --bs-popover-arrow-height: 0rem;
+    --bs-popover-body-margin-x: 1rem;
 }
 </style>

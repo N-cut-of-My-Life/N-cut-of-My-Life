@@ -190,8 +190,8 @@ video {
   max-width: 20%;
   height: 256px;
   width: 256px;
-  margin-left: 10px;
-  margin-top: -150px;
+  margin-left: 60px;
+  margin-top: -170px;
   filter: grayscale(75%);
   -webkit-filter: grayscale(75%);
   animation: rotation_4 20s infinite linear;
