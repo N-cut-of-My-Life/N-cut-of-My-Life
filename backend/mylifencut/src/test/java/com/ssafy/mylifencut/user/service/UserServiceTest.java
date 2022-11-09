@@ -33,7 +33,7 @@ import com.ssafy.mylifencut.user.repository.RefreshTokenRepository;
 import com.ssafy.mylifencut.user.repository.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("유저 Service 테스트 코드")
+@DisplayName("[유저 서비스]")
 public class UserServiceTest {
 
 	@InjectMocks
@@ -49,10 +49,10 @@ public class UserServiceTest {
 	private final String name = "홍길동";
 
 	@Nested
-	@DisplayName("로그인 및 회원가입 테스트")
-	class loginAndRegisterTest {
+	@DisplayName("[카카오 정보 받기]")
+	class getData {
 		@Test
-		@DisplayName("카카오 로그인 - 카카오 엑세스 토큰 오류")
+		@DisplayName("[실패] - 카카오 엑세스 토큰 오류")
 		void getKakaoAccessTokenFail() {
 			// given
 			final String token = "INVALID_TOKEN";
@@ -66,7 +66,7 @@ public class UserServiceTest {
 		}
 
 		@Test
-		@DisplayName("카카오 로그인 - 사용자 정보 받아오기 실패")
+		@DisplayName("[실패] - 사용자 정보 받아오기 오류")
 		void getUserInfoFromKakaoFail() {
 			// given
 			final String token = "INVALID_TOKEN";
@@ -80,7 +80,49 @@ public class UserServiceTest {
 		}
 
 		@Test
-		@DisplayName("카카오 로그인 - 사용자 정보로 신규유저 여부 확인(신규유저)")
+		@DisplayName("[성공] - Json 결과 가져오기")
+		void getResultSuccess() throws IOException {
+			// given
+			final URL url = new URL("https://my-json-server.typicode.com/qulip/apitest/kakao");
+			final HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+			final String testToken = "API_TEST_TOKEN";
+
+			// when
+			final String result = userService.getResult(conn);
+
+			// then
+			JsonElement element = JsonParser.parseString(result);
+			assertEquals(testToken, element.getAsJsonObject().get("access_token").getAsString());
+			assertEquals(testToken, element.getAsJsonObject().get("refresh_token").getAsString());
+		}
+	}
+
+	@Nested
+	@DisplayName("[로그인 및 회원가입]")
+	class loginAndRegisterTest {
+
+		@Test
+		@DisplayName("[성공] - 카카오 정보으로 UserInfo 생성")
+		void getUserInfoFromKakao() throws IOException {
+			// given
+			final URL url = new URL("https://my-json-server.typicode.com/qulip/apitest/userInfo");
+			final HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+			final String json = userService.getResult(conn);
+			final UserInfo userInfo = UserInfo.builder()
+				.email("apiTest@email.com")
+				.name("싸피")
+				.build();
+
+			// when
+			UserInfo result = userService.getUserInfoFromKakaoProfile(json);
+
+			// then
+			assertEquals(userInfo.getEmail(), result.getEmail());
+			assertEquals(userInfo.getName(), result.getName());
+		}
+
+		@Test
+		@DisplayName("[성공] - 사용자 정보로 신규유저 여부 확인(신규유저)")
 		void isNewUser() {
 			// given
 			final UserInfo userInfo = newUserInfo();
@@ -94,7 +136,7 @@ public class UserServiceTest {
 		}
 
 		@Test
-		@DisplayName("카카오 로그인 - 신규유저 유저 회원가입")
+		@DisplayName("[성공] - 신규유저 유저 회원가입")
 		void loginNewUser() {
 			// given
 			final UserInfo userInfo = newUserInfo();
@@ -115,7 +157,7 @@ public class UserServiceTest {
 		}
 
 		@Test
-		@DisplayName("카카오 로그인 - 사용자 정보로 신규유저 여부 확인(기존유저)")
+		@DisplayName("[성공] - 사용자 정보로 신규유저 여부 확인(기존유저)")
 		void isExistingUser() {
 			// given
 			final UserInfo userInfo = newUserInfo();
@@ -130,7 +172,7 @@ public class UserServiceTest {
 		}
 
 		@Test
-		@DisplayName("카카오 로그인 - 로그인 실패")
+		@DisplayName("[실패] - 로그인 실패")
 		void loginExistingUserFail() {
 			// given
 			final UserInfo userInfo = newUserInfo();
@@ -145,7 +187,7 @@ public class UserServiceTest {
 		}
 
 		@Test
-		@DisplayName("카카오 로그인 - 기존유저 로그인")
+		@DisplayName("[성공] - 기존유저 로그인")
 		void loginExistingUserSuccess() {
 			// given
 			final UserInfo userInfo = newUserInfo();
@@ -166,7 +208,7 @@ public class UserServiceTest {
 		}
 
 		@Test
-		@DisplayName("카카오 로그인 - 실패")
+		@DisplayName("[실패] - 카카오 토큰 오류")
 		void kakaoLoginFail() {
 			// given
 			String token = "INVALID_TOKEN";
@@ -181,11 +223,11 @@ public class UserServiceTest {
 	}
 
 	@Nested
-	@DisplayName("리프레쉬 토큰 테스트")
+	@DisplayName("[리프레쉬 토큰]")
 	class refreshTokenTest {
 
 		@Test
-		@DisplayName("발급되지 않았던 리프레쉬 토큰")
+		@DisplayName("[실패] - 발급되지 않았던 리프레쉬 토큰")
 		void notValidRefreshToken() {
 			// given
 			TokenRequest tokenRequest = TokenRequest.builder()
@@ -203,7 +245,7 @@ public class UserServiceTest {
 		}
 
 		@Test
-		@DisplayName("만료된 리프레쉬 토큰")
+		@DisplayName("[실패] - 만료된 리프레쉬 토큰")
 		void expiredRefreshToken() {
 			// given
 			TokenRequest tokenRequest = TokenRequest.builder()
@@ -221,7 +263,7 @@ public class UserServiceTest {
 		}
 
 		@Test
-		@DisplayName("리프레쉬 토큰에 ID가 올바르지 않은 경우")
+		@DisplayName("[실패] - 리프레쉬 토큰에 ID가 올바르지 않은 경우")
 		void notValidUserId() {
 			// given
 			TokenRequest tokenRequest = TokenRequest.builder()
@@ -245,7 +287,7 @@ public class UserServiceTest {
 		}
 
 		@Test
-		@DisplayName("저장된 리프레쉬 토큰이 없는 경우")
+		@DisplayName("[실패] - 저장된 리프레쉬 토큰이 없는 경우")
 		void isNotInRefreshToken() {
 			// given
 			TokenRequest tokenRequest = TokenRequest.builder()
@@ -272,7 +314,7 @@ public class UserServiceTest {
 		}
 
 		@Test
-		@DisplayName("저장된 리프레쉬 토큰이 다른 경우")
+		@DisplayName("[실패] - 저장된 리프레쉬 토큰이 다른 경우")
 		void isDifferentRefreshToken() {
 			// given
 			TokenRequest tokenRequest = TokenRequest.builder()
@@ -306,7 +348,7 @@ public class UserServiceTest {
 		}
 
 		@Test
-		@DisplayName("올바른 리프레쉬 토큰")
+		@DisplayName("[성공] - 올바른 리프레쉬 토큰")
 		void validRefreshToken() {
 			// given
 			TokenRequest tokenRequest = TokenRequest.builder()
@@ -348,43 +390,6 @@ public class UserServiceTest {
 			assertEquals(tokenResponse.getRefreshToken(), result.getRefreshToken());
 			assertEquals(tokenResponse.getAccessToken(), result.getAccessToken());
 		}
-	}
-
-	@Test
-	@DisplayName("Json 결과 가져오기 테스트")
-	void getResultSuccess() throws IOException {
-		// given
-		final URL url = new URL("https://my-json-server.typicode.com/qulip/apitest/kakao");
-		final HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-		final String testToken = "API_TEST_TOKEN";
-
-		// when
-		final String result = userService.getResult(conn);
-
-		// then
-		JsonElement element = JsonParser.parseString(result);
-		assertEquals(testToken, element.getAsJsonObject().get("access_token").getAsString());
-		assertEquals(testToken, element.getAsJsonObject().get("refresh_token").getAsString());
-	}
-
-	@Test
-	@DisplayName("카카오에서 받은 값으로 UserInfo 생성")
-	void getUserInfoFromKakao() throws IOException {
-		// given
-		final URL url = new URL("https://my-json-server.typicode.com/qulip/apitest/userInfo");
-		final HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-		final String json = userService.getResult(conn);
-		final UserInfo userInfo = UserInfo.builder()
-			.email("apiTest@email.com")
-			.name("싸피")
-			.build();
-
-		// when
-		UserInfo result = userService.getUserInfoFromKakaoProfile(json);
-
-		// then
-		assertEquals(userInfo.getEmail(), result.getEmail());
-		assertEquals(userInfo.getName(), result.getName());
 	}
 
 	public UserInfo newUserInfo() {
