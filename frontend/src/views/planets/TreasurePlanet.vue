@@ -2,7 +2,7 @@
     <div class="jumbotron">
         <div class="title">반짝반짝 행성</div>
     </div>
-    <img class="bubble" :src="images[currentImage]" alt=""/>
+    <img class="bubble" :src="images[currentImage]" alt="" />
     <audio loop autoplay volume="0.3">
         <source src="@/assets/audio/shining-diamond.mp3" type="audio/mp3">
     </audio>
@@ -50,9 +50,20 @@
     <b-modal id="modal-treasure" hide-header hide-footer centered no-stacking :no-close-on-backdrop="true"
         style="text-align: center; border-radius: 1vw;">
         <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg"
-            style="cursor:pointer; float: right;" alt=""/>
-        <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">당신의 가장 소중한 물건을 적어주세요!</div>
+            style="cursor:pointer; float: right;" alt="" />
+        <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 2%; font-weight: 400;">당신의 가장 소중한 물건을 적어주세요!</div>
+        <b-button class='img-btn' id="addon" size="x-sm" style="margin-right:3%; border-color: #ffffff; padding:2px 4px; color:#ffffff; font-size: 0.7vw; margin-bottom:1%">사진 첨부
+        </b-button>
         <b-container ref="form" style="margin-bottom:3.8%">
+            <b-popover target="addon" placement="right" style="margin-left:1%;">
+                <input type="file" accept="image/*" @change="onUpload" />
+                <div>
+                    <img v-if="item.imageUrl" :src="item.imageUrl" style="margin-top:2%; max-width: 16vw; height: auto;" alt="">
+                    <div v-else>
+                        <div style="margin-top:1vh"><strong style="font-size:1.1vw">소중한 물건을 담아주세요!</strong></div>
+                    </div>
+                </div>
+            </b-popover>
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
                 style="border-radius: 1vw; background-color:#e3ecfc">
             </b-form-textarea>
@@ -69,6 +80,10 @@
 export default {
     data() {
         return {
+            item: {
+                image: null,
+                imageUrl: null,
+            },
             images: [
                 require('@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_1.svg'),
                 require('@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_2.svg'),
@@ -86,6 +101,11 @@ export default {
         }
     },
     methods: {
+        onUpload(e) {
+            const file = e.target.files[0]
+            this.image = file
+            this.item.imageUrl = URL.createObjectURL(file)
+        },
         nextImage() {
             if (this.currentImage !== (this.images.length - 1))
                 this.currentImage++;
@@ -134,6 +154,17 @@ body {
     text-align: right;
 }
 
+.img-btn {
+    /* left: 0%;
+    top: 0%; */
+    background-color: transparent;
+    float: right;
+    /* position: absolute; */
+}
+
+.img-btn:active {
+    background-color: transparent;
+}
 .jumbotron {
     background: url("@/assets/PlanetBackground/treasure.svg") no-repeat center center fixed;
     -webkit-background-size: cover;
@@ -283,5 +314,10 @@ body {
 
 #modal-treasure .modal-header .btn-close {
     color: white;
+}
+.popover{
+    --bs-popover-arrow-width: 0rem;
+    --bs-popover-arrow-height: 0rem;
+    --bs-popover-body-margin-x: 1rem;
 }
 </style>

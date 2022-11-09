@@ -5,7 +5,7 @@
     <audio id="myaudios" loop autoplay :src="audios[currentAudio]" volume="0.2">
     </audio>
     <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
-    <img :src="images[currentImage]" alt=""/>
+    <img :src="images[currentImage]" alt="" />
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
@@ -51,8 +51,8 @@ export default {
                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_5.svg'),
             ],
             audios: [
-            // 병합 예정    
-            // require('@/assets/audio/booty-in-the-nest.mp3'),
+                // 병합 예정    
+                // require('@/assets/audio/booty-in-the-nest.mp3'),
                 require('@/assets/audio/come-on-boy.mp3')
             ],
             currentImage: 0,
