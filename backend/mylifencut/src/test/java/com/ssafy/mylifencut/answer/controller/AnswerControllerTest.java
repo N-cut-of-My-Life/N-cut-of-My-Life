@@ -37,7 +37,7 @@ import com.ssafy.mylifencut.like.service.LikeService;
 
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("답변 컨트롤러 테스트")
+@DisplayName("[답변 컨트롤러]")
 class AnswerControllerTest {
 
 	@InjectMocks
@@ -61,19 +61,19 @@ class AnswerControllerTest {
 	}
 
 	@Nested
-	@DisplayName("좋아요 추가 테스트")
+	@DisplayName("[좋아요 추가]")
 	class LikeRegisterTest{
 		@Test
-		@DisplayName("좋아요 추가 실패 - 이미 좋아요가 추가된 답변에 좋아요 등록")
-		public void alreadyLike() throws Exception {
+		@DisplayName("[실패] - 이미 좋아요가 추가된 답변에 좋아요 등록")
+		void alreadyLike() throws Exception {
 			//given
 			final String url = "/answer/3/1";
 			final Integer answerId = 3;
 			final Integer userId = 1;
 
 			doThrow(new AlreadyLikeException())
-					.when(likeService)
-					.createLike(userId, answerId);
+				.when(likeService)
+				.createLike(userId, answerId);
 			//when
 			final ResultActions resultActions = mockMvc.perform(
 					MockMvcRequestBuilders.post(url)
@@ -94,32 +94,32 @@ class AnswerControllerTest {
 		}
 
 		@Test
-		@DisplayName("좋아요 추가 성공")
-		public void createLike() throws Exception {
+		@DisplayName("[성공] - 좋아요 추가")
+		void createLike() throws Exception {
 			//given
 			final String url = "/answer/3/1";
 			final Integer answerId = 3;
 			final Integer userId = 1;
 			final IsLikeResponse isLikeResponse = IsLikeResponse.builder()
-					.id(1)
-					.answer_id(answerId)
-					.user_id(userId)
-					.build();
+				.id(1)
+				.answerId(answerId)
+				.userId(userId)
+				.build();
 			doReturn(isLikeResponse).when(likeService).createLike(userId, answerId);
 			//when
 			final ResultActions resultActions = mockMvc.perform(
-					MockMvcRequestBuilders.post(url)
-							.contentType(MediaType.APPLICATION_JSON)
+				MockMvcRequestBuilders.post(url)
+					.contentType(MediaType.APPLICATION_JSON)
 			);
 			//then
 			resultActions.andExpect(status().isOk());
 			final BaseResponse response = gson.fromJson(resultActions.andReturn()
-					.getResponse()
-					.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 			Map map = (Map)response.getData();
 			assertEquals((double)isLikeResponse.getId(), map.get("id"));
-			assertEquals((double)isLikeResponse.getAnswer_id(), map.get("answer_id"));
-			assertEquals((double)isLikeResponse.getUser_id(), map.get("user_id"));
+			assertEquals((double)isLikeResponse.getAnswerId(), map.get("answer_id"));
+			assertEquals((double)isLikeResponse.getUserId(), map.get("user_id"));
 			assertTrue(response.isSuccess());
 			assertEquals(LikeConstant.CREATE_LIKE_SUCCESS_MESSAGE, response.getMessage());
 
@@ -127,48 +127,48 @@ class AnswerControllerTest {
 	}
 
 	@Nested
-	@DisplayName("좋아요 삭제 테스트")
+	@DisplayName("[좋아요 삭제]")
 	class DeleteLikeTest{
 		@Test
-		@DisplayName("좋아요 삭제 실패 - 좋아요가 눌리지 않은 답변에 좋아요 삭제 시도")
-		public void notExistLike() throws Exception {
+		@DisplayName("[실패] - 좋아요가 눌리지 않은 답변에 좋아요 삭제 시도")
+		void notExistLike() throws Exception {
 			//given
 			final String url = "/answer/3/1";
 			final Integer answerId = 3;
 			final Integer userId = 1;
 			doThrow(new NotExistLikeException())
-					.when(likeService)
-					.deleteLike(userId, answerId);
+				.when(likeService)
+				.deleteLike(userId, answerId);
 			//when
 			final ResultActions resultActions = mockMvc.perform(
-					MockMvcRequestBuilders.delete(url)
+				MockMvcRequestBuilders.delete(url)
 							.contentType(MediaType.APPLICATION_JSON)
 			);
 			//then
 			resultActions.andExpect(status().isBadRequest());
 			final BaseResponse response = gson.fromJson(resultActions.andReturn()
-					.getResponse()
-					.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 			Map map = (Map)response.getData();
 			assertNull(response.getData());
 			assertFalse(response.isSuccess());
 			assertEquals(LikeConstant.NOT_EXIST_LIKE_ERROR_MESSAGE, response.getMessage());
 
-
 		}
+
 		@Test
-		@DisplayName("좋아요 삭제 성공")
-		public void deleteLike() throws Exception {
+		@DisplayName("[성공] - 좋아요 삭제")
+		void deleteLike() throws Exception {
 			//given
 			final String url = "/answer/3/1";
 			//when
 			final ResultActions resultActions = mockMvc.perform(
-					MockMvcRequestBuilders.delete(url)
+				MockMvcRequestBuilders.delete(url)
 			);
 			//then
 			resultActions.andExpect(status().isNoContent());
 			final BaseResponse response = gson.fromJson(resultActions.andReturn()
-					.getResponse()
+				.getResponse()
 					.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 			Map map = (Map)response.getData();
 			assertNull(response.getData());
@@ -180,21 +180,21 @@ class AnswerControllerTest {
 	}
 
 	@Nested
-	@DisplayName("갤러리 조회 테스트")
+	@DisplayName("[갤러리 조회]")
 	class ReadGalleryTest{
 		@Test
-		@DisplayName("갤러리 조회 성공")
-		public void readGallery() throws Exception {
+		@DisplayName("[성공] - 갤러리 조회")
+		void readGallery() throws Exception {
 			//given
 			final String url = "/answer";
 			doReturn(Arrays.asList(
-					GalleryResponse.builder().id(1).userId(3).contents("답변내용").like(10).build(),
-					GalleryResponse.builder().id(2).userId(4).contents("답변내용이지롱").like(11).build(),
-					GalleryResponse.builder().id(3).userId(5).contents("답변내용입니당").like(12).build()
+				GalleryResponse.builder().id(1).userId(3).contents("답변내용").like(10).build(),
+				GalleryResponse.builder().id(2).userId(4).contents("답변내용이지롱").like(11).build(),
+				GalleryResponse.builder().id(3).userId(5).contents("답변내용입니당").like(12).build()
 			)).when(answerService).getGalleryList();
 			//when
 			final ResultActions resultActions = mockMvc.perform(
-					MockMvcRequestBuilders.get(url)
+				MockMvcRequestBuilders.get(url)
 			);
 			final BaseResponse response =  gson.fromJson(resultActions.andReturn()
 				.getResponse()
