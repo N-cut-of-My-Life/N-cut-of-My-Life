@@ -81,7 +81,6 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             element = 'CLASS'
-            includes = ['com.ssafy.mylifencut.*']
 
             limit {
                 counter = 'BRANCH'
