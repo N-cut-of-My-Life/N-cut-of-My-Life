@@ -351,7 +351,7 @@ public class UserServiceTest {
 	}
 
 	@Test
-	@DisplayName("결과 가져오기 테스트")
+	@DisplayName("Json 결과 가져오기 테스트")
 	void getResultSuccess() throws IOException {
 		// given
 		final URL url = new URL("https://my-json-server.typicode.com/qulip/apitest/kakao");
@@ -365,6 +365,26 @@ public class UserServiceTest {
 		JsonElement element = JsonParser.parseString(result);
 		assertEquals(testToken, element.getAsJsonObject().get("access_token").getAsString());
 		assertEquals(testToken, element.getAsJsonObject().get("refresh_token").getAsString());
+	}
+
+	@Test
+	@DisplayName("카카오에서 받은 값으로 UserInfo 생성")
+	void getUserInfoFromKakao() throws IOException {
+		// given
+		final URL url = new URL("https://my-json-server.typicode.com/qulip/apitest/userInfo");
+		final HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+		final String json = userService.getResult(conn);
+		final UserInfo userInfo = UserInfo.builder()
+			.email("apiTest@email.com")
+			.name("싸피")
+			.build();
+
+		// when
+		UserInfo result = userService.getUserInfoFromKakaoProfile(json);
+
+		// then
+		assertEquals(userInfo.getEmail(), result.getEmail());
+		assertEquals(userInfo.getName(), result.getName());
 	}
 
 	public UserInfo newUserInfo() {
