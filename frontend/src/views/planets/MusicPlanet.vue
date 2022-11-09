@@ -5,7 +5,7 @@
     <audio id="myaudios" loop autoplay :src="audios[currentAudio]" volume="0.2">
     </audio>
     <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
-    <img :src="images[currentImage]" />
+    <img :src="images[currentImage]" alt=""/>
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기

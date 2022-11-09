@@ -7,18 +7,24 @@
     <source src="@/assets/audio/daylight.mp3" type="audio/mp3">
   </audio>
   <div class="other">
-        <b-button @click="gotoPage({ name: 'introfirstpage' })" class="button_prev" size="sm">
-            <strong>&lt;</strong>&nbsp;&nbsp;돌아가기
-        </b-button>
-    </div>
+    <b-button @click="gotoPage({ name: 'introfirstpage' })" class="button_prev" size="sm">
+      <strong>&lt;</strong>&nbsp;&nbsp;돌아가기
+    </b-button>
+  </div>
   <div class="bg">
     <div class="planet"></div>
-    <div class="planet" @click="gotoPage({ name: 'sadplanet'})"></div>
-    <div class="planet" @click="gotoPage({ name: 'happyplanet'})"></div>
-    <img class="planet" src="../../assets/planet/music.png" alt="" @click="gotoPage({ name: 'musicplanet' })" />
-    <div class="planet" @click="gotoPage({ name: 'dreamplanet'})"></div>
-    <div class="planet" @click="gotoPage({ name: 'regretplanet'})"></div>
-    <div class="planet" @click="gotoPage({ name: 'preciousplanet'})"></div>
+    <div class="planet" @click="gotoPage({ name: 'sadplanet' })"><span class="planet_name"
+        style="transform:rotate(-30deg)">훌쩍훌쩍 행성</span></div>
+    <div class="planet" @click="gotoPage({ name: 'happyplanet' })"><span class="planet_name"
+        style="transform:rotate(-70deg)">하하호호 행성</span></div>
+    <div class="planet" @click="gotoPage({ name: 'musicplanet' })"><span class="planet_name"
+        style="transform:rotate(-160deg) translate(100%) rotate(-359deg)">둠칫둠칫 행성</span></div>
+    <div class="planet" @click="gotoPage({ name: 'dreamplanet' })"><span class="planet_name"
+        style="transform:rotate(-195deg)">이루지못 행성</span></div>
+    <div class="planet" @click="gotoPage({ name: 'regretplanet' })"><span class="planet_name"
+        style="transform:rotate(-200deg)">괜히글 행성</span></div>
+    <div class="planet" @click="gotoPage({ name: 'preciousplanet' })"><span class="planet_name"
+        style="transform:rotate(-250deg)">넌너무소중 행성</span></div>
     <img class="planet" src="../../assets/planet/blink.png" alt="" @click="gotoPage({ name: 'treasureplanet' })" />
     <img class="stars" src="../../assets/planet/stars.png" alt="">
     <img class="stars_line blink_star" src="../../assets/planet/stars-line.png" alt="">
@@ -37,6 +43,27 @@ export default {
 </script>
 
 <style scoped>
+/* Tooltip text */
+.planet_name {
+  visibility: hidden;
+  width: fit-content;
+  background-color: rgb(20, 20, 20, 0.3);
+  color: #fff;
+  text-align: center;
+  padding: 5px 5px 5px 5px;
+  border-radius: 1vw;
+  font-size: 2vw;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.planet:hover .planet_name {
+  visibility: visible;
+}
+
 video {
   position: fixed;
   right: 0;
@@ -63,17 +90,17 @@ video {
 }
 
 .button_prev {
-    background-color: #ffffff;
-    color: #141414;
-    border-radius: 0.8vw;
-    border-color: #ffffff;
+  background-color: #ffffff;
+  color: #141414;
+  border-radius: 0.8vw;
+  border-color: #ffffff;
 }
 
 .other {
-    position: absolute;
-    left: 1%;
-    top: 2.5%;
-    margin: auto;
+  position: absolute;
+  left: 1%;
+  top: 2.5%;
+  margin: auto;
 }
 
 /* .bg{
@@ -86,7 +113,7 @@ video {
   overflow: hidden;
 } */
 .planet {
-  display: block;
+  display: inline-block;
   position: absolute;
   border-radius: 50%;
   left: 50%;
@@ -118,7 +145,7 @@ video {
 }
 
 .teapot {
-  display:block;
+  display: block;
   max-width: 16%;
   height: auto;
   position: absolute;
@@ -191,14 +218,18 @@ video {
 }
 
 .planet:nth-child(4) {
-  max-width: 15%;
-  height: auto;
+  max-width: 20%;
+  height: 256px;
+  width: 256px;
   margin-left: 10px;
   margin-top: -150px;
   filter: grayscale(75%);
   -webkit-filter: grayscale(75%);
   animation: rotation_4 20s infinite linear;
   cursor: pointer;
+  background: rgb(20, 20, 20, 0) url("../../assets/planet/music.png") repeat-x 0% 0%;
+  background-size: 256px 256px;
+  max-height: auto;
 }
 
 .planet:nth-child(5) {

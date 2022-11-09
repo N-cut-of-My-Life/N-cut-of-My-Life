@@ -2,7 +2,7 @@
     <div class="jumbotron">
         <div class="title">넌너무소중 행성</div>
     </div>
-    <img class="bubble" :src="images[currentImage]" />
+    <img class="bubble" :src="images[currentImage]" alt=""/>
     <audio loop autoplay volume="0.3">
         <source src="@/assets/audio/mix_precious.mp3" type="audio/mp3">
     </audio>
@@ -44,15 +44,15 @@
         <b-popover target="addon" placement="left">
             <input type="file" accept="image/*" @change="onUpload" />
             <div>
-                <img v-if="item.imageUrl" :src="item.imageUrl" style="max-width: 16vw; height: auto;">
+                <img v-if="item.imageUrl" :src="item.imageUrl" style="max-width: 16vw; height: auto;" alt="">
                 <div v-else>
                     <div><strong>소중한 순간을 담아주세요!</strong></div>
-                    <img src="@/assets/v-pose.svg">
+                    <img src="@/assets/v-pose.svg" alt="">
                 </div>
             </div>
         </b-popover>
         <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_happy.svg"
-            style="cursor:pointer; float: right;" />
+            style="cursor:pointer; float: right;" alt=""/>
         <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">소중한 사람과의 추억을 기록해보세요!</div>
         <b-container ref="form" style="margin-bottom:3.8%">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
@@ -62,7 +62,7 @@
         <b-button text @click="submit"
             style="color: #ffffff; background-color: #C6753E; border: none; border-radius: 1vw;">저장
         </b-button>
-        <b-button class='img-btn' id="addon"><img class="upload" src="@\assets\enter-image-upload.svg"></b-button>
+        <b-button class='img-btn' id="addon"><img class="upload" src="@\assets\enter-image-upload.svg" alt=""></b-button>
     </b-modal>
 </template>
 

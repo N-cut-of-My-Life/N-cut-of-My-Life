@@ -3,12 +3,12 @@
         <div class="title">지니 행성</div>
     </div>
     <div class="img-box">
-        <img src="@/assets/genie_charac.png" class="img-genie genie-bounce" />
+        <img src="@/assets/genie_charac.png" class="img-genie genie-bounce" alt=""/>
     </div>
     <audio loop autoplay volume="0.3">
         <source src="@/assets/audio/disco-funk-paradise.mp3" type="audio/mp3">
     </audio>
-    <img class="bubble" :src="images[currentImage]" />
+    <img class="bubble" :src="images[currentImage]" alt=""/>
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
@@ -43,7 +43,7 @@
     <b-modal centered no-stacking id="modal-genie" hide-header hide-footer
         style="text-align: center; border-radius: 1vw;" :no-close-on-backdrop="true">
         <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_genie.svg"
-            style="cursor:pointer; float: right;" />
+            style="cursor:pointer; float: right;" alt=""/>
         <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">당신의 소원을 적어주세요!</div>
         <b-container ref="form" style="margin-bottom:3.8%">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
