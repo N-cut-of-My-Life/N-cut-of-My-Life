@@ -1,5 +1,9 @@
 package com.ssafy.mylifencut.user;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserConstant {
 	public static final String KAKAO_LOGIN_SUCCESS_MESSAGE = "로그인이 완료되었습니다.";
 	public static final String TOKEN_REISSUE_SUCCESS_MESSAGE = "토큰이 성공적으로 발급되었습니다.";
