@@ -118,8 +118,8 @@ class AnswerControllerTest {
 				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 			Map map = (Map)response.getData();
 			assertEquals((double)isLikeResponse.getId(), map.get("id"));
-			assertEquals((double)isLikeResponse.getAnswerId(), map.get("answer_id"));
-			assertEquals((double)isLikeResponse.getUserId(), map.get("user_id"));
+			assertEquals((double)isLikeResponse.getAnswerId(), map.get("answerId"));
+			assertEquals((double)isLikeResponse.getUserId(), map.get("userId"));
 			assertTrue(response.isSuccess());
 			assertEquals(LikeConstant.CREATE_LIKE_SUCCESS_MESSAGE, response.getMessage());
 
