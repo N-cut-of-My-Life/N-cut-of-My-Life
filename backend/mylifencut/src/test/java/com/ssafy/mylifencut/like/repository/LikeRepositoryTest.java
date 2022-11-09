@@ -18,7 +18,7 @@ import com.ssafy.mylifencut.like.domain.IsLike;
 import com.ssafy.mylifencut.user.domain.User;
 
 @DataJpaTest
-@DisplayName("좋아요 레포지토리 테스트")
+@DisplayName("좋아요 레포지토리")
 @Nested
 class LikeRepositoryTest {
 
@@ -26,21 +26,21 @@ class LikeRepositoryTest {
 	private LikeRepository likeRepository;
 
 	@Nested
-	@DisplayName("좋아요 추가 테스트")
+	@DisplayName("[좋아요 추가]")
 	class RegisterLikeTest{
 		@Test
-		@DisplayName("좋아요 추가 성공")
-		public void createLike() {
+		@DisplayName("[성공] - 좋아요 추가")
+		void createLike() {
 			//given
 			final User user = User.builder()
-					.articles(Collections.emptyList())
-					.email("test@email.com")
-					.name("테스트")
-					.build();
+				.articles(Collections.emptyList())
+				.email("test@email.com")
+				.name("테스트")
+				.build();
 
 			final LocalDateTime nowTime = LocalDateTime.now();
 			final Article article = Article.builder()
-					.user(user)
+				.user(user)
 					.answers(Collections.emptyList())
 					.createDate(nowTime)
 					.build();
@@ -63,23 +63,22 @@ class LikeRepositoryTest {
 		}
 	}
 
-
 	@Nested
-	@DisplayName("좋아요 삭제 테스트")
+	@DisplayName("[좋아요 삭제]")
 	class DeleteLikeTest{
 		@Test
-		@DisplayName("좋아요 삭제 성공")
-		public void deleteLike() {
+		@DisplayName("[성공] - 좋아요 삭제")
+		void deleteLike() {
 			//given
 			final User user = User.builder()
-					.articles(Collections.emptyList())
-					.email("test@email.com")
-					.name("테스트")
-					.build();
+				.articles(Collections.emptyList())
+				.email("test@email.com")
+				.name("테스트")
+				.build();
 			final LocalDateTime nowTime = LocalDateTime.now();
 			final Article article = Article.builder()
-					.user(user)
-					.answers(Collections.emptyList())
+				.user(user)
+				.answers(Collections.emptyList())
 					.createDate(nowTime)
 					.build();
 			final Answer answer = Answer.builder()
