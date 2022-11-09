@@ -19,7 +19,7 @@ class RefreshTokenRepositoryTest {
 
 	@DisplayName("리프레쉬 토큰으로 UserId 검색")
 	@Test
-	public void findUserIdByRefreshTokenFail() {
+	void findUserIdByRefreshTokenFail() {
 		// given
 		String refreshToken = "REFRESH_TOKEN";
 
@@ -32,7 +32,7 @@ class RefreshTokenRepositoryTest {
 
 	@DisplayName("userId으로 리프레쉬 토큰 검색")
 	@Test
-	public void findRefreshTokenByUserIdFail() {
+	void findRefreshTokenByUserIdFail() {
 		// given
 		Integer userId = 1;
 
@@ -45,7 +45,7 @@ class RefreshTokenRepositoryTest {
 
 	@DisplayName("리프레쉬 토큰 저장")
 	@Test
-	public void findUserIdByRefreshTokenSuccess() {
+	void findUserIdByRefreshTokenSuccess() {
 		// given
 		RefreshToken refreshToken = RefreshToken.builder()
 			.userId(1)
