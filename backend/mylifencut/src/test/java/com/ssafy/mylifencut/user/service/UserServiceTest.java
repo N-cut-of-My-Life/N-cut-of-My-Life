@@ -28,6 +28,7 @@ import com.ssafy.mylifencut.user.repository.RefreshTokenRepository;
 import com.ssafy.mylifencut.user.repository.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("유저 Service 테스트 코드")
 public class UserServiceTest {
 
 	@InjectMocks
