@@ -12,12 +12,12 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import com.ssafy.mylifencut.user.domain.RefreshToken;
 
 @DataJpaTest
-@DisplayName("리프레쉬 토큰 레포 테스트")
+@DisplayName("[리프레쉬 토큰]")
 class RefreshTokenRepositoryTest {
 	@Autowired
 	private RefreshTokenRepository refreshTokenRepository;
 
-	@DisplayName("리프레쉬 토큰으로 UserId 검색")
+	@DisplayName("[실패] -  UserId로 토큰 검색")
 	@Test
 	void findUserIdByRefreshTokenFail() {
 		// given
@@ -30,7 +30,7 @@ class RefreshTokenRepositoryTest {
 		assertFalse(userId.isPresent());
 	}
 
-	@DisplayName("userId으로 리프레쉬 토큰 검색")
+	@DisplayName("[실패] - 리프레쉬 토큰 검색")
 	@Test
 	void findRefreshTokenByUserIdFail() {
 		// given
@@ -43,7 +43,7 @@ class RefreshTokenRepositoryTest {
 		assertFalse(result.isPresent());
 	}
 
-	@DisplayName("리프레쉬 토큰 저장")
+	@DisplayName("[성공] - 리프레쉬 토큰 저장")
 	@Test
 	void findUserIdByRefreshTokenSuccess() {
 		// given
