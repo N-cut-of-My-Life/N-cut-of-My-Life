@@ -24,7 +24,7 @@ class AnswerRepositoryTest {
 	class GalleryReadFailTest{
 		@Test
 		@DisplayName("갤러리 조회 실패 - 등록된 답변이 없음")
-		public void answerListSizeZero() {
+		void answerListSizeZero() {
 			//given
 			//when
 			List<Answer> result = answerRepository.findAll();
@@ -34,7 +34,7 @@ class AnswerRepositoryTest {
 
 		@Test
 		@DisplayName("갤러리 조회 실패 - 등록된 답변의 상태가 OPEN인 답변이 없음")
-		public void notExistAnswerStateOpen() {
+		void notExistAnswerStateOpen() {
 			//given
 			//when
 			List<Answer> result = answerRepository.findAllByState(State.OPEN);
@@ -49,17 +49,17 @@ class AnswerRepositoryTest {
 	class GalleryReadSuccessTest{
 		@Test
 		@DisplayName("갤러리 조회 성공 ")
-		public void readGallery() {
+		void readGallery() {
 			//given
 			final Answer answer = Answer.builder()
-					.questionId(9)
-					.contents("답변 내용")
-					.state(State.OPEN)
-					.build();
+				.questionId(9)
+				.contents("답변 내용")
+				.state(State.OPEN)
+				.build();
 			final Answer answer2 = Answer.builder()
-					.questionId(9)
-					.contents("답변 내용입니다.")
-					.state(State.OPEN)
+				.questionId(9)
+				.contents("답변 내용입니다.")
+				.state(State.OPEN)
 					.build();
 			final Answer answer3 = Answer.builder()
 					.questionId(3)
