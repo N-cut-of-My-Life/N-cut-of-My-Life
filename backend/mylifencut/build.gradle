@@ -58,6 +58,21 @@ jacocoTestReport {
             enabled true
         }
     }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: [
+                            '**/MylifencutApplication',
+                            '**/*Request*',
+                            '**/*Response*',
+                            '**/*Dto*',
+                            '**/common*',
+                            '**/*Exception*',
+                            '**/*Constant*',
+                            '**/*Filter*'
+                    ])
+        }))
+    }
     finalizedBy('jacocoTestCoverageVerification')
 }
 
@@ -65,24 +80,29 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             element = 'CLASS'
-            includes = ['org.gradle.*']
+//            includes = ['org.gradle.*']
 
             limit {
                 counter = 'BRANCH'
                 value = 'COVEREDRATIO'
-                minimum = 0.80
+                minimum = 0.70
             }
             limit {
                 counter = 'LINE'
                 value = 'COVEREDRATIO'
-                minimum = 0.80
+                minimum = 0.70
             }
             limit {
                 counter = 'LINE'
                 value = 'TOTALCOUNT'
                 maximum = 250
             }
-            excludes = []
+            excludes = ['**.MylifencutApplication',
+                        '**.*Request*',
+                        '**.*Response*',
+                        '**.*Dto*',
+                        '**.*Constant*',
+                        '**.*Filter']
         }
     }
 }
