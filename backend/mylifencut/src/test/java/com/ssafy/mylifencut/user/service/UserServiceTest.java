@@ -4,6 +4,9 @@ import static com.ssafy.mylifencut.user.UserConstant.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.ssafy.mylifencut.user.JwtTokenProvider;
 import com.ssafy.mylifencut.user.UserConstant;
 import com.ssafy.mylifencut.user.domain.RefreshToken;
@@ -28,6 +33,7 @@ import com.ssafy.mylifencut.user.repository.RefreshTokenRepository;
 import com.ssafy.mylifencut.user.repository.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("유저 Service 테스트 코드")
 public class UserServiceTest {
 
 	@InjectMocks
@@ -266,6 +272,40 @@ public class UserServiceTest {
 		}
 
 		@Test
+		@DisplayName("저장된 리프레쉬 토큰이 다른 경우")
+		void isDifferentRefreshToken() {
+			// given
+			TokenRequest tokenRequest = TokenRequest.builder()
+				.accessToken("TOKEN_BEFORE")
+				.refreshToken("TOKEN_BEFORE")
+				.build();
+			RefreshToken refreshToken = RefreshToken.builder()
+				.token("TOKEN_DIFFERENT")
+				.userId(1)
+				.build();
+			User user = User.builder()
+				.id(1)
+				.build();
+			doReturn(true)
+				.when(jwtTokenProvider)
+				.validateToken(any());
+			doReturn("1")
+				.when(jwtTokenProvider)
+				.getUserId(any());
+			doReturn(Optional.of(user))
+				.when(userRepository)
+				.findById(1);
+			doReturn(Optional.of(refreshToken))
+				.when(refreshTokenRepository)
+				.findByUserId(1);
+
+			// when
+
+			// then
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(tokenRequest));
+		}
+
+		@Test
 		@DisplayName("올바른 리프레쉬 토큰")
 		void validRefreshToken() {
 			// given
@@ -308,6 +348,43 @@ public class UserServiceTest {
 			assertEquals(tokenResponse.getRefreshToken(), result.getRefreshToken());
 			assertEquals(tokenResponse.getAccessToken(), result.getAccessToken());
 		}
+	}
+
+	@Test
+	@DisplayName("Json 결과 가져오기 테스트")
+	void getResultSuccess() throws IOException {
+		// given
+		final URL url = new URL("https://my-json-server.typicode.com/qulip/apitest/kakao");
+		final HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+		final String testToken = "API_TEST_TOKEN";
+
+		// when
+		final String result = userService.getResult(conn);
+
+		// then
+		JsonElement element = JsonParser.parseString(result);
+		assertEquals(testToken, element.getAsJsonObject().get("access_token").getAsString());
+		assertEquals(testToken, element.getAsJsonObject().get("refresh_token").getAsString());
+	}
+
+	@Test
+	@DisplayName("카카오에서 받은 값으로 UserInfo 생성")
+	void getUserInfoFromKakao() throws IOException {
+		// given
+		final URL url = new URL("https://my-json-server.typicode.com/qulip/apitest/userInfo");
+		final HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+		final String json = userService.getResult(conn);
+		final UserInfo userInfo = UserInfo.builder()
+			.email("apiTest@email.com")
+			.name("싸피")
+			.build();
+
+		// when
+		UserInfo result = userService.getUserInfoFromKakaoProfile(json);
+
+		// then
+		assertEquals(userInfo.getEmail(), result.getEmail());
+		assertEquals(userInfo.getName(), result.getName());
 	}
 
 	public UserInfo newUserInfo() {
