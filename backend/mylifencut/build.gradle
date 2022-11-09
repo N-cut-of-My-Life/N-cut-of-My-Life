@@ -63,11 +63,11 @@ jacocoTestReport {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it,
                     exclude: [
-                            '**/MylifencutApplication',
+                            '**/MylifencutApplication*',
                             '**/*Request*',
                             '**/*Response*',
-                            '**/*Dto*',
-                            '**/common*',
+                            '**/*dto/**',
+                            '**/common/**',
                             '**/*Exception*',
                             '**/*Constant*',
                             '**/*Filter*'
@@ -102,8 +102,10 @@ jacocoTestCoverageVerification {
                         '**.*Request*',
                         '**.*Response*',
                         '**.*Dto*',
+                        '**.common*',
                         '**.*Constant*',
-                        '**.*Filter']
+                        '**.*Exception*',
+                        '**.*Filter*']
         }
     }
 }
@@ -118,7 +120,7 @@ sonarqube {
         property "sonar.profile", "Sonar way"
         property "sonar.java.binaries", "${buildDir}/classes"
         property "sonar.test.inclusions", "**/*Test.java"
-        property "sonar.exclusions", "**/resources/static/**, **/test/**, **/MylifencutApplication, **/*Request*, **/*Response*, **/*Dto*, **/*Constant*, **/*Filter"
+        property "sonar.exclusions", "**/resources/static/**, **/test/**, **/MylifencutApplication*, **/*Request*, **/*Response*, **/dto/**, **/*Constant*, **/*Filter*, **/*Exception*, **/common/**"
         property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacocoReport.xml"
     }
 }
