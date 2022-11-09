@@ -48,7 +48,7 @@ class ArticleServiceTest {
 	class retrieveTest {
 		@Test
 		@DisplayName("[실패] - 존재하지않는 UserId일 때")
-		public void retrieveArticle_notFoundUserError() {
+		void retrieveArticle_notFoundUserError() {
 			//given
 			final int userId = 5;
 			doReturn(Optional.empty()).when(userRepository).findById(userId);
@@ -63,7 +63,7 @@ class ArticleServiceTest {
 
 		@Test
 		@DisplayName("[성공]")
-		public void retrieveArticle_success() {
+		void retrieveArticle_success() {
 			//given
 			final int userId = 5;
 			final String userName = "여행일지유저";
@@ -93,7 +93,7 @@ class ArticleServiceTest {
 	class registerTest {
 		@Test
 		@DisplayName("[실패] - 존재하지 않는 userId일 때")
-		public void registerArticle_notFoundUserError() {
+		void registerArticle_notFoundUserError() {
 			//given
 			final Integer userId = 5;
 			doReturn(Optional.empty()).when(userRepository).findById(userId);
@@ -111,7 +111,7 @@ class ArticleServiceTest {
 
 		@Test
 		@DisplayName("[실패] - 답변 리스트 개수가 3개 미만일때")
-		public void registerArticle_answersSizeIsNotEnoughError() {
+		void registerArticle_answersSizeIsNotEnoughError() {
 			//given
 			final Integer userId = 3;
 			doReturn(Optional.of(User.builder().build())).when(userRepository).findById(userId);
@@ -131,7 +131,7 @@ class ArticleServiceTest {
 
 		@Test
 		@DisplayName("[실패] - OPEN 가능한 질문이 아닌데 OPEN 상태로 온 답변이 있을 경우")
-		public void registerArticle_canNotBeOpenedAnswerError() {
+		void registerArticle_canNotBeOpenedAnswerError() {
 			//given
 			final Integer userId = 5;
 			final String userName = "유저이름";
@@ -164,7 +164,7 @@ class ArticleServiceTest {
 
 		@Test
 		@DisplayName("[성공]")
-		public void registerArticle_success() {
+		void registerArticle_success() {
 			//given
 			final Integer userId = 5;
 			final String userName = "유저이름";
