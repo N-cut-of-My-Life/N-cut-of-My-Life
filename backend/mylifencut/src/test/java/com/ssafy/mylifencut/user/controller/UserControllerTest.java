@@ -33,7 +33,7 @@ import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.service.UserService;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("회원 관리 컨트롤러 테스트")
+@DisplayName("[유저 컨트롤러]")
 public class UserControllerTest {
 
 	@InjectMocks
@@ -56,7 +56,7 @@ public class UserControllerTest {
 	@DisplayName("카카오 로그인")
 	class loginTest {
 		@Test
-		@DisplayName("카카오 로그인 AccessToken 오류")
+		@DisplayName("[실패] - AccessToken 오류")
 		void invalidToken() throws Exception {
 			// given
 			final String url = "/user/login";
@@ -83,7 +83,7 @@ public class UserControllerTest {
 		}
 
 		@Test
-		@DisplayName("로그인 성공")
+		@DisplayName("[성공] - 로그인 성공")
 		void loginSuccess() throws Exception {
 			// given
 			final String url = "/user/login";
@@ -119,11 +119,11 @@ public class UserControllerTest {
 	}
 
 	@Nested
-	@DisplayName("리프레쉬 토큰 테스트")
+	@DisplayName("[리프레쉬 토큰]")
 	class refreshTokenTest {
 
 		@Test
-		@DisplayName("잘못된 리프레쉬 토큰")
+		@DisplayName("[실패] - 잘못된 리프레쉬 토큰")
 		void expiredRefreshToken() throws Exception {
 			// given
 			final String url = "/user/token";
@@ -152,7 +152,7 @@ public class UserControllerTest {
 		}
 
 		@Test
-		@DisplayName("만료된 리프레쉬 토큰")
+		@DisplayName("[실패] - 만료된 리프레쉬 토큰")
 		void invalidRefreshToken() throws Exception {
 			// given
 			final String url = "/user/token";
@@ -181,7 +181,7 @@ public class UserControllerTest {
 		}
 
 		@Test
-		@DisplayName("유효한 리프레쉬 토큰")
+		@DisplayName("[성공] - 유효한 리프레쉬 토큰")
 		void validRefreshToken() throws Exception {
 			// given
 			final String url = "/user/token";
