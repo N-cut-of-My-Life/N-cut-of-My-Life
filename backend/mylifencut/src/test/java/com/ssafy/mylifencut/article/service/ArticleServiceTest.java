@@ -8,7 +8,6 @@ import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -100,9 +99,7 @@ class ArticleServiceTest {
 
 			//when
 			final UserNotFoundException result = assertThrows(UserNotFoundException.class
-				, () -> articleService.createArticle(new ArticleRequest(
-					userId, Collections.emptyList(), LocalDateTime.now())
-				)
+				, () -> articleService.createArticle(ArticleRequest.builder().userId(userId).build())
 			);
 
 			//then
@@ -120,9 +117,7 @@ class ArticleServiceTest {
 
 			//when
 			final AnswersSizeIsNotEnoughException result = assertThrows(AnswersSizeIsNotEnoughException.class
-				, () -> articleService.createArticle(new ArticleRequest(
-					userId, answers, LocalDateTime.now())
-				)
+				, () -> articleService.createArticle(ArticleRequest.builder().userId(userId).build())
 			);
 
 			//then
