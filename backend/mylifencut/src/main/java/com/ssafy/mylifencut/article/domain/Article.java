@@ -53,8 +53,6 @@ public class Article {
 
 	public void addAnswer(Answer answer) {
 		answers.add(answer);
-		if (answer.getArticle() != this) {
-			answer.setArticle(this);
-		}
+		answer.setArticle(this);
 	}
 }

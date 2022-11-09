@@ -34,7 +34,7 @@
   </b-navbar>
   <br /><br /><br /><br /><br />
   <div class="img-box">
-    <img src="@/assets/astronaut_riding.png" class="img-rocket rocket-bounce" />
+    <img src="@/assets/astronaut_riding.png" class="img-rocket rocket-bounce" alt=""/>
   </div>
   <br /><br /><br /><br />
   <div class="box">
@@ -204,7 +204,7 @@ video {
   text-align: center;
   background-color: #ffffff;
   border-radius: 10px;
-  font-family: 'kakao';
+  font-family: kakao;
   font-size: 1.5rem;
   width: 10%;
   height: auto;

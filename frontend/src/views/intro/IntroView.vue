@@ -118,28 +118,28 @@ video {
 .title {
   color: #EBEAEA;
   font-size: 5.7rem;
-  font-family: 'MaplestoryOTFBold';
+  font-family: MaplestoryOTFBold;
 }
 
 .subtitle {
   color: #E2636A;
   font-size: 2rem;
   margin-top: 8%;
-  font-family: 'MaplestoryOTFBold';
+  font-family: MaplestoryOTFBold;
 }
 
 .title-ment {
   color: #FFFFFF;
   font-size: 1.43rem;
   margin-top: 4%;
-  font-family: 'MaplestoryOTFBold';
+  font-family: MaplestoryOTFBold;
 }
 
 .login-btn {
   text-align: center;
   background-color: #FEF01B;
   border-radius: 10px;
-  font-family: 'kakao';
+  font-family: kakao;
   font-size: 1.5rem;
   width: 12%;
   height: auto;

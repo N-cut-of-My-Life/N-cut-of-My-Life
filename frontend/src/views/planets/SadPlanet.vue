@@ -40,13 +40,14 @@
     <div class="waterdrop waterdrop-small"></div>
     <div class="waterdrop waterdrop-big"></div>
   </div>
-  <img class="bubble" :src="images[currentImage]" />
+  <img class="bubble" :src="images[currentImage]" alt="" />
   <audio loop autoplay volume="0.3">
     <source src="@/assets/audio/mix_sad.mp3" type="audio/mp3">
   </audio>
   <div class="other">
     <b-button @click="gotoPage({ name: 'planetlist' })" variant="primary" class="button_prev" size="sm">
-      <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기</b-button>
+      <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
+    </b-button>
   </div>
   <div class="jump">
     <b-button @click="previousImage()" variant="primary" class="button" size="sm" :disabled="currentImage === 0">
@@ -75,8 +76,10 @@
       </div>
     </b-button>
   </div>
-  <b-modal id="modal-sad" hide-header hide-footer centered no-stacking style="text-align: center; border-radius: 1vw;" :no-close-on-backdrop="true">
-    <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_sad.svg" style="cursor:pointer; float: right;"/>
+  <b-modal id="modal-sad" hide-header hide-footer centered no-stacking style="text-align: center; border-radius: 1vw;"
+    :no-close-on-backdrop="true">
+    <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_sad.svg"
+      style="cursor:pointer; float: right;" alt="" />
     <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">슬펐던 기억들을 이곳에 적어주세요!</div>
     <b-container ref="form" style="margin-bottom:3.8%">
       <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
@@ -209,7 +212,7 @@ body {
 }
 
 .x_button {
-    width: 4%;
+  width: 4%;
 }
 
 .button_2::before {
