@@ -6,7 +6,7 @@
     <audio id="myaudios" loop autoplay :src="audios[currentAudio]" :muted="mute" volume="0.3">
     </audio>
     <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
-    <img class="story" :src="images[currentImage]" />
+    <img class="story" :src="images[currentImage]" alt=""/>
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
@@ -49,7 +49,7 @@
     <b-modal centered no-stacking id="modal-happy" hide-header hide-footer :no-close-on-backdrop="true"
         style="text-align: center; border-radius: 1vw;">
         <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_happy.svg"
-            style="cursor:pointer; float: right;" />
+            style="cursor:pointer; float: right;" alt=""/>
         <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">가장 행복했던 순간을 이 곳에 적어주세요!</div>
         <b-container ref="form" style="margin-bottom:3.8%">
             <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
