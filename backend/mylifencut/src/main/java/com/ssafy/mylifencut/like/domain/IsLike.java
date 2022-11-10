@@ -35,4 +35,7 @@ public class IsLike {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	public static IsLike from() {
+		return IsLike.builder().build();
+	}
 }
