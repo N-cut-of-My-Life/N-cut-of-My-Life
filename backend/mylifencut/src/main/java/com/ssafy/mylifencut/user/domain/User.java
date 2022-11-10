@@ -41,7 +41,7 @@ public class User implements UserDetails {
 	private Integer id;
 
 	@Builder.Default
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Article> articles = new ArrayList<>();
 
 	private String email;
@@ -49,7 +49,7 @@ public class User implements UserDetails {
 	private String name;
 
 	@Builder.Default
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<IsLike> likes = new ArrayList<>();
 
 	@Builder.Default
