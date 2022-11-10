@@ -6,6 +6,9 @@
     <audio loop autoplay volume="0.3">
         <source src="@/assets/audio/mix_precious.mp3" type="audio/mp3">
     </audio>
+    <div class="train">
+    <img src="@/assets/trainman.svg" alt=""/>
+  </div>
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" variant="warning" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
@@ -106,6 +109,12 @@ export default {
 </script>
 
 <style scoped>
+.train{
+    position:absolute;
+    bottom:2.3%;
+    right:0%;
+}
+
 .upload {
     width: 50%
 }
