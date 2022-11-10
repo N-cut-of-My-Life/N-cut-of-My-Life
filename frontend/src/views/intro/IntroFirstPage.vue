@@ -45,11 +45,16 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+
 const router = useRouter()
+const route = useRoute()
+const code = route.query.code;
+
 
 // 클릭 시 로켓 발사
 const rocketLaunch = () => {
+  console.log(code)
   const rocket = document.querySelector('.img-rocket')
   document.getElementById('cosmos').pause();
   document.getElementById('burung').play();
@@ -60,7 +65,7 @@ const rocketLaunch = () => {
       router.push({ name: 'introstory' })
     }
   });
-}
+};
 </script>
 
 <style scoped>
