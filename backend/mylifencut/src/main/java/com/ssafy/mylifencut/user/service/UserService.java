@@ -65,8 +65,8 @@ public class UserService {
 
 	public String getAccessToken(String code) {
 		log.info(code);
-		String access_Token;
-		String refresh_Token;
+		String accessToken;
+		String refreshToken;
 		String reqURL = "https://kauth.kakao.com/oauth/token";
 
 		try {
@@ -90,17 +90,17 @@ public class UserService {
 			//Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
 			JsonElement element = JsonParser.parseString(result);
 
-			access_Token = element.getAsJsonObject().get("access_token").getAsString();
-			refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
+			accessToken = element.getAsJsonObject().get("access_token").getAsString();
+			refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
 
-			log.info("access_token : " + access_Token);
-			log.info("refresh_token : " + refresh_Token);
+			log.info("access_token : " + accessToken);
+			log.info("refresh_token : " + refreshToken);
 
 		} catch (IOException e) {
 			throw new InvalidKakaoAccessTokenException();
 		}
 
-		return access_Token;
+		return accessToken;
 	}
 
 	public UserInfo getUserInfo(String token) {
