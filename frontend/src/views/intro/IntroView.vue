@@ -7,7 +7,7 @@
   </video>
   <div class="menu-box">
     <div class="text-box">
-      <div class="title">인생 N컷</div>
+      <span class="title">인생 </span><span class="n">N</span><span class="title">컷</span>
       <div class="subtitle">당신을 기록하는 우주여행</div>
       <div class="title-ment">
         <div class="wave">
@@ -86,6 +86,20 @@ export default {
   font-style: normal;
 }
 
+@font-face {
+    font-family: 'establishRetrosansOTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SDSamliphopangche_Outline';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .wave {
   position: relative;
   /* -webkit-box-reflect: below -1px linear-gradient(transparent, #FFFFFF); */
@@ -132,7 +146,13 @@ video {
 .title {
   color: #EBEAEA;
   font-size: 5.7rem;
-  font-family: MaplestoryOTFBold;
+  font-family: SDSamliphopangche_Outline;
+}
+
+.n{
+  color: #a3c7d6;
+  font-size: 5.7rem;
+  font-family: SDSamliphopangche_Outline;
 }
 
 .subtitle {
