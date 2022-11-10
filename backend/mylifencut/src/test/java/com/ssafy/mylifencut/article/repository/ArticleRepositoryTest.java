@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.ssafy.mylifencut.article.domain.Article;
-import com.ssafy.mylifencut.user.domain.User;
 
 @DataJpaTest
 @DisplayName("여행일지 repository 테스트")
@@ -43,39 +42,22 @@ class ArticleRepositoryTest {
 	@DisplayName("[성공] 여행일지 저장 후 조회")
 	void SaveArticleAndRetrieve() {
 		//given
-		final User user = user();
 		final Article article1 = Article.builder()
-			.user(user)
 			.answers(Collections.emptyList())
 			.createDate(LocalDateTime.now())
 			.build();
 		final Article article2 = Article.builder()
-			.user(user)
 			.answers(Collections.emptyList())
 			.createDate(LocalDateTime.now())
 			.build();
 
 		//when
-		Article savedArticle1 = articleRepository.save(article1);
-		Article savedArticle2 = articleRepository.save(article2);
-
-		savedArticle1.getUser().addArticle(article1);
-		savedArticle2.getUser().addArticle(article2);
+		articleRepository.save(article1);
+		articleRepository.save(article2);
+		final List<Article> articles = articleRepository.findAll();
 
 		//then
-		final List<Article> articles = articleRepository.findAll();
 		assertNotNull(articles);
 		assertEquals(2, articles.size());
-
-		for (Article article : articles) {
-			assertEquals(article.getUser().getName(), user.getName());
-		}
-	}
-
-	private User user() {
-		return User.builder()
-			.email("test@email.com")
-			.name("이름")
-			.build();
 	}
 }
