@@ -185,7 +185,7 @@ class ArticleServiceTest {
 		private List<AnswerRegisterRequest> answerRegisterRequests(final int answerSize) {
 			final List<AnswerRegisterRequest> answers = new ArrayList<>();
 			for (int i = 0; i < answerSize; i++) {
-				answers.add(AnswerRegisterRequest.builder().questionId(1).state(State.CLOSE).build());
+				answers.add(AnswerRegisterRequest.builder().userId(1).questionId(1).state(State.CLOSE).build());
 			}
 			return answers;
 		}
