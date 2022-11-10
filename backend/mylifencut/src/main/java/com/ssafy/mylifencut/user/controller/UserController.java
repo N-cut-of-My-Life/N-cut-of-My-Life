@@ -2,8 +2,6 @@ package com.ssafy.mylifencut.user.controller;
 
 import static com.ssafy.mylifencut.user.UserConstant.*;
 
-import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.mylifencut.common.dto.BaseResponse;
-import com.ssafy.mylifencut.user.JwtTokenProvider;
+import com.ssafy.mylifencut.user.dto.KakaoRequest;
 import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.service.UserService;
@@ -28,14 +26,13 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final UserService userService;
-	private final JwtTokenProvider jwtTokenProvider;
 
 	@PostMapping("/login")
 	@ApiOperation(value = "카카오 로그인", notes = "카카오 AccessToken으로 로그인")
-	public ResponseEntity<BaseResponse> kakaoLogin(@RequestBody Map<String, String> json) {
-		String accessToken = json.get("accessToken");
-		TokenResponse jwtToken = jwtTokenProvider.createToken(Integer.toString(userService.kakaoLogin(accessToken)));
-		return new ResponseEntity<>(BaseResponse.from(true, KAKAO_LOGIN_SUCCESS_MESSAGE, jwtToken), HttpStatus.OK);
+	public ResponseEntity<BaseResponse> kakaoLogin(@RequestBody KakaoRequest kakaoRequest) {
+		String accessToken = kakaoRequest.getAccessToken();
+		return new ResponseEntity<>(
+			BaseResponse.from(true, KAKAO_LOGIN_SUCCESS_MESSAGE, userService.kakaoLogin(accessToken)), HttpStatus.OK);
 	}
 
 	@PostMapping("/token")

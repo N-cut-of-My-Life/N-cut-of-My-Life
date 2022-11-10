@@ -12,14 +12,14 @@ import lombok.RequiredArgsConstructor;
 public class IsLikeResponse {
 
 	private final Integer id;
-	private final Integer user_id;
-	private final Integer answer_id;
+	private final Integer userId;
+	private final Integer answerId;
 
 	public static IsLikeResponse of(IsLike isLike) {
 		return IsLikeResponse.builder()
 			.id(isLike.getId())
-			.user_id(isLike.getUser().getId())
-			.answer_id(isLike.getAnswer().getId())
+			.userId(isLike.getUser().getId())
+			.answerId(isLike.getAnswer().getId())
 			.build();
 	}
 }

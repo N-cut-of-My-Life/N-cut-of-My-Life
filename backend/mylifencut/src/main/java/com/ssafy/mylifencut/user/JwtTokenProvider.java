@@ -27,8 +27,8 @@ public class JwtTokenProvider {
 
 	@Value("${spring.jwt.secretKey}")
 	private String secretKey;
-	private final long accessTokenValidTime = 30 * 60 * 1000L;    // access 토큰 유효시간 30분
-	private final long refreshTokenValidTime = 14 * 24 * 60 * 60 * 1000L;    // refresh 토큰 유효시간 14일
+	private static final long ACCESS_TOKEN_VALID_TIME = 30 * 60 * 1000L;    // access 토큰 유효시간 30분
+	private static final long REFRESH_TOKEN_VALID_TIME = 14 * 24 * 60 * 60 * 1000L;    // refresh 토큰 유효시간 14일
 	private final SecurityService securityService;
 
 	@PostConstruct
@@ -45,12 +45,12 @@ public class JwtTokenProvider {
 		String accessToken = Jwts.builder()
 			.setClaims(claims)
 			.setIssuedAt(now)
-			.setExpiration(new Date(now.getTime() + accessTokenValidTime))
+			.setExpiration(new Date(now.getTime() + ACCESS_TOKEN_VALID_TIME))
 			.signWith(SignatureAlgorithm.HS256, secretKey)
 			.compact();
 
 		String refreshToken = Jwts.builder()
-			.setExpiration(new Date(now.getTime() + refreshTokenValidTime))
+			.setExpiration(new Date(now.getTime() + REFRESH_TOKEN_VALID_TIME))
 			.signWith(SignatureAlgorithm.HS256, secretKey)
 			.compact();
 

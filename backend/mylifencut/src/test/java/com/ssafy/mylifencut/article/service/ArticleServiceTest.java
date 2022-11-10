@@ -1,5 +1,6 @@
 package com.ssafy.mylifencut.article.service;
 
+import static com.ssafy.mylifencut.answer.AnswerConstant.*;
 import static com.ssafy.mylifencut.article.ArticleConstant.*;
 import static com.ssafy.mylifencut.user.UserConstant.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,7 +8,6 @@ import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,11 +19,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
+import com.ssafy.mylifencut.answer.exception.CanNotBeOpenedAnswerException;
 import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.article.dto.ArticleRequest;
 import com.ssafy.mylifencut.article.dto.ArticleResponse;
-import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnough;
+import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnoughException;
 import com.ssafy.mylifencut.article.repository.ArticleRepository;
 import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
@@ -45,7 +47,7 @@ class ArticleServiceTest {
 	class retrieveTest {
 		@Test
 		@DisplayName("[실패] - 존재하지않는 UserId일 때")
-		public void retrieveArticle_notFoundUserError() {
+		void retrieveArticle_notFoundUserError() {
 			//given
 			final int userId = 5;
 			doReturn(Optional.empty()).when(userRepository).findById(userId);
@@ -55,17 +57,16 @@ class ArticleServiceTest {
 				, () -> articleService.retrieveArticles(userId));
 
 			//then
-			assertEquals(result.getMessage(), USER_NOT_FOUND_ERROR_MESSAGE);
+			assertEquals(USER_NOT_FOUND_ERROR_MESSAGE, result.getMessage());
 		}
 
 		@Test
 		@DisplayName("[성공]")
-		public void retrieveArticle_success() {
+		void retrieveArticle_success() {
 			//given
 			final int userId = 5;
-			final String userName = "여행일지유저";
 			final User user = User.builder()
-				.name(userName)
+				.id(userId)
 				.build();
 			final List<Article> articles = new ArrayList<>();
 			articles.add(Article.builder().user(user).build());
@@ -78,9 +79,9 @@ class ArticleServiceTest {
 			//then
 			final List<ArticleResponse> result = articleService.retrieveArticles(userId);
 			assertNotNull(result);
-			assertEquals(result.size(), 2);
+			assertEquals(2, result.size());
 			for (ArticleResponse response : result) {
-				assertEquals(response.getUser().getName(), userName);
+				assertEquals(userId, response.getUserId());
 			}
 		}
 	}
@@ -90,45 +91,75 @@ class ArticleServiceTest {
 	class registerTest {
 		@Test
 		@DisplayName("[실패] - 존재하지 않는 userId일 때")
-		public void registerArticle_notFoundUserError() {
+		void registerArticle_notFoundUserError() {
 			//given
 			final Integer userId = 5;
+			final ArticleRequest articleRequest = ArticleRequest.builder().userId(userId).build();
 			doReturn(Optional.empty()).when(userRepository).findById(userId);
 
 			//when
 			final UserNotFoundException result = assertThrows(UserNotFoundException.class
-				, () -> articleService.createArticle(new ArticleRequest(
-					userId, Collections.emptyList(), LocalDateTime.now())
-				)
+				, () -> articleService.createArticle(articleRequest)
 			);
 
 			//then
-			assertEquals(result.getMessage(), USER_NOT_FOUND_ERROR_MESSAGE);
+			assertEquals(USER_NOT_FOUND_ERROR_MESSAGE, result.getMessage());
 		}
 
 		@Test
 		@DisplayName("[실패] - 답변 리스트 개수가 3개 미만일때")
-		public void registerArticle_answersSizeIsNotEnoughError() {
+		void registerArticle_answersSizeIsNotEnoughError() {
 			//given
 			final Integer userId = 3;
 			doReturn(Optional.of(User.builder().build())).when(userRepository).findById(userId);
 
 			final List<AnswerRegisterRequest> answers = answerRegisterRequests(ANSWERS_MIN_SIZE - 1);
-
+			ArticleRequest articleRequest = ArticleRequest.builder().userId(userId).answers(answers).build();
 			//when
-			final AnswersSizeIsNotEnough result = assertThrows(AnswersSizeIsNotEnough.class
-				, () -> articleService.createArticle(new ArticleRequest(
-					userId, answers, LocalDateTime.now())
-				)
+			final AnswersSizeIsNotEnoughException result = assertThrows(AnswersSizeIsNotEnoughException.class
+				, () -> articleService.createArticle(articleRequest)
 			);
 
 			//then
-			assertEquals(result.getMessage(), ARTICLE_ANSWERS_SIZE_IS_NOT_ENOUGH_ERROR_MESSAGE);
+			assertEquals(ARTICLE_ANSWERS_SIZE_IS_NOT_ENOUGH_ERROR_MESSAGE, result.getMessage());
+		}
+
+		@Test
+		@DisplayName("[실패] - OPEN 가능한 질문이 아닌데 OPEN 상태로 온 답변이 있을 경우")
+		void registerArticle_canNotBeOpenedAnswerError() {
+			//given
+			final Integer userId = 5;
+			final String userName = "유저이름";
+			doReturn(Optional.of(User.builder().build())).when(userRepository).findById(userId);
+
+			final List<AnswerRegisterRequest> answers = new ArrayList<>();
+			for (int i = 0; i < ANSWERS_MIN_SIZE; i++) {
+				answers.add(AnswerRegisterRequest.builder()
+					.questionId(1)
+					.state(State.OPEN)
+					.build());
+			}
+
+			final ArticleRequest request = ArticleRequest.builder()
+				.userId(userId)
+				.answers(answers)
+				.createDate(LocalDateTime.now())
+				.build();
+			final Article article = Article.from(request, User.builder().id(userId).name(userName).build());
+			doReturn(article).when(articleRepository).save(any(Article.class));
+
+			//when
+			final CanNotBeOpenedAnswerException result = assertThrows(CanNotBeOpenedAnswerException.class
+				, () -> articleService.createArticle(request)
+			);
+
+			//then
+			assertEquals(CAN_NOT_BE_OPENED_ANSWER_ERROR_MESSAGE, result.getMessage());
 		}
 
 		@Test
 		@DisplayName("[성공]")
-		public void registerArticle_success() {
+		void registerArticle_success() {
 			//given
 			final Integer userId = 5;
 			final String userName = "유저이름";
@@ -154,7 +185,7 @@ class ArticleServiceTest {
 		private List<AnswerRegisterRequest> answerRegisterRequests(final int answerSize) {
 			final List<AnswerRegisterRequest> answers = new ArrayList<>();
 			for (int i = 0; i < answerSize; i++) {
-				answers.add(AnswerRegisterRequest.builder().build());
+				answers.add(AnswerRegisterRequest.builder().questionId(1).state(State.CLOSE).build());
 			}
 			return answers;
 		}

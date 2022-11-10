@@ -16,18 +16,18 @@ import com.ssafy.mylifencut.user.domain.User;
 
 @DataJpaTest
 @DisplayName("여행일지 repository 테스트")
-public class ArticleRepositoryTest {
+class ArticleRepositoryTest {
 	@Autowired
 	private ArticleRepository articleRepository;
 
 	@Test
-	public void repositoryIsNotNull() {
+	void repositoryIsNotNull() {
 		assertNotNull(articleRepository);
 	}
 
 	@Test
 	@DisplayName("[성공] 여행일지가 없을 때(사이즈가 0이어야함) 조회")
-	public void retrieveArticle_empty() {
+	void retrieveArticle_empty() {
 		//given
 		final List<Article> articles;
 
@@ -36,12 +36,12 @@ public class ArticleRepositoryTest {
 
 		//then
 		assertNotNull(articles);
-		assertEquals(articles.size(), 0);
+		assertEquals(0, articles.size());
 	}
 
 	@Test
 	@DisplayName("[성공] 여행일지 저장 후 조회")
-	public void SaveArticleAndRetrieve() {
+	void SaveArticleAndRetrieve() {
 		//given
 		final User user = user();
 		final Article article1 = Article.builder()
@@ -65,7 +65,7 @@ public class ArticleRepositoryTest {
 		//then
 		final List<Article> articles = articleRepository.findAll();
 		assertNotNull(articles);
-		assertEquals(articles.size(), 2);
+		assertEquals(2, articles.size());
 
 		for (Article article : articles) {
 			assertEquals(article.getUser().getName(), user.getName());

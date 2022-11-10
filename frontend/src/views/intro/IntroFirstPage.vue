@@ -34,7 +34,7 @@
   </b-navbar>
   <br /><br /><br /><br /><br />
   <div class="img-box">
-    <img src="@/assets/astronaut_riding.png" class="img-rocket rocket-bounce" />
+    <img src="@/assets/astronaut_riding.png" class="img-rocket rocket-bounce" alt=""/>
   </div>
   <br /><br /><br /><br />
   <div class="box">
@@ -45,11 +45,16 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+
 const router = useRouter()
+const route = useRoute()
+const code = route.query.code;
+
 
 // 클릭 시 로켓 발사
 const rocketLaunch = () => {
+  console.log(code)
   const rocket = document.querySelector('.img-rocket')
   document.getElementById('cosmos').pause();
   document.getElementById('burung').play();
@@ -60,7 +65,7 @@ const rocketLaunch = () => {
       router.push({ name: 'introstory' })
     }
   });
-}
+};
 </script>
 
 <style scoped>
@@ -204,7 +209,7 @@ video {
   text-align: center;
   background-color: #ffffff;
   border-radius: 10px;
-  font-family: 'kakao';
+  font-family: kakao;
   font-size: 1.5rem;
   width: 10%;
   height: auto;

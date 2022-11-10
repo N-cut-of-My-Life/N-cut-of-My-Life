@@ -33,8 +33,7 @@ public class LikeService {
 			.answer(Answer.builder().id(answerId).build())
 			.build();
 		final IsLike savedIsLike = likeRepository.save(isLike);
-		IsLikeResponse isLikeResponse = IsLikeResponse.of(savedIsLike);
-		return isLikeResponse;
+		return IsLikeResponse.of(savedIsLike);
 	}
 
 	@Transactional

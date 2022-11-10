@@ -43,24 +43,30 @@ public class UserService {
 	private final RefreshTokenRepository refreshTokenRepository;
 
 	@Value("${oauth2.kakao.restApiKey}")
-	private String kakao_restApiKey;
+	private String kakaoRestApiKey;
 
 	@Value("${oauth2.kakao.redirectUri}")
-	private String kakao_redirectUri;
+	private String kakaoRedirectUri;
 
-	public Integer kakaoLogin(String token) {
+	public TokenResponse kakaoLogin(String token) {
 		UserInfo userInfo = getUserInfo(getAccessToken(token));
 
 		User user = userRepository.findByEmail(userInfo.getEmail())
-			.orElse(join(userInfo));
+			.orElseGet(() -> join(userInfo));
 
-		return user.getId();
+		TokenResponse tokenResponse = jwtTokenProvider.createToken(Integer.toString(user.getId()));
+		RefreshToken refreshToken = RefreshToken.builder()
+			.userId(user.getId())
+			.token(tokenResponse.getRefreshToken())
+			.build();
+		refreshTokenRepository.save(refreshToken);
+		return tokenResponse;
 	}
 
 	public String getAccessToken(String code) {
-		System.out.println(code);
-		String access_Token;
-		String refresh_Token;
+		log.info(code);
+		String accessToken;
+		String refreshToken;
 		String reqURL = "https://kauth.kakao.com/oauth/token";
 
 		try {
@@ -73,8 +79,8 @@ public class UserService {
 
 			//POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-			String sb = "grant_type=authorization_code" + "&client_id=" + kakao_restApiKey + "&redirect_uri="
-				+ kakao_redirectUri + "&code=" + code;
+			String sb = "grant_type=authorization_code" + "&client_id=" + kakaoRestApiKey + "&redirect_uri="
+				+ kakaoRedirectUri + "&code=" + code;
 			bw.write(sb);
 			bw.flush();
 			bw.close();
@@ -84,21 +90,20 @@ public class UserService {
 			//Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
 			JsonElement element = JsonParser.parseString(result);
 
-			access_Token = element.getAsJsonObject().get("access_token").getAsString();
-			refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
+			accessToken = element.getAsJsonObject().get("access_token").getAsString();
+			refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
 
-			log.info("access_token : " + access_Token);
-			log.info("refresh_token : " + refresh_Token);
+			log.info("access_token : " + accessToken);
+			log.info("refresh_token : " + refreshToken);
 
 		} catch (IOException e) {
 			throw new InvalidKakaoAccessTokenException();
 		}
 
-		return access_Token;
+		return accessToken;
 	}
 
 	public UserInfo getUserInfo(String token) {
-		System.out.println(token);
 		String reqURL = "https://kapi.kakao.com/v2/user/me";
 
 		//access_token을 이용하여 사용자 정보 조회
@@ -112,25 +117,29 @@ public class UserService {
 
 			String result = getResult(conn);
 
-			//Gson 라이브러리로 JSON파싱
-			JsonElement element = JsonParser.parseString(result);
-
-			return UserInfo.builder()
-				.email(element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString())
-				.name(element.getAsJsonObject()
-					.get("kakao_account")
-					.getAsJsonObject()
-					.get("profile")
-					.getAsJsonObject()
-					.get("nickname")
-					.getAsString())
-				.build();
+			return getUserInfoFromKakaoProfile(result);
 		} catch (IOException e) {
 			throw new InvalidKakaoAccessTokenException();
 		}
 	}
 
-	private String getResult(HttpURLConnection conn) throws IOException {
+	public UserInfo getUserInfoFromKakaoProfile(String json) {
+		//Gson 라이브러리로 JSON파싱
+		JsonElement element = JsonParser.parseString(json);
+
+		return UserInfo.builder()
+			.email(element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString())
+			.name(element.getAsJsonObject()
+				.get("kakao_account")
+				.getAsJsonObject()
+				.get("profile")
+				.getAsJsonObject()
+				.get("nickname")
+				.getAsString())
+			.build();
+	}
+
+	public String getResult(HttpURLConnection conn) throws IOException {
 		//결과 코드가 200이라면 성공
 		int responseCode = conn.getResponseCode();
 		log.info("responseCode : " + responseCode);

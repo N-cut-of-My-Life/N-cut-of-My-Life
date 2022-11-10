@@ -24,7 +24,6 @@ import com.ssafy.mylifencut.user.dto.UserInfo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,7 +32,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Getter
-@EqualsAndHashCode
 @Table(name = "member")
 public class User implements UserDetails {
 	@Id
@@ -41,7 +39,7 @@ public class User implements UserDetails {
 	private Integer id;
 
 	@Builder.Default
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Article> articles = new ArrayList<>();
 
 	private String email;
@@ -49,7 +47,7 @@ public class User implements UserDetails {
 	private String name;
 
 	@Builder.Default
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<IsLike> likes = new ArrayList<>();
 
 	@Builder.Default

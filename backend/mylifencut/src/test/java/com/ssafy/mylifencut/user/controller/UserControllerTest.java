@@ -26,7 +26,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.google.gson.Gson;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
-import com.ssafy.mylifencut.user.JwtTokenProvider;
 import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
@@ -34,15 +33,13 @@ import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.service.UserService;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("회원 관리 컨트롤러 테스트")
+@DisplayName("[유저 컨트롤러]")
 public class UserControllerTest {
 
 	@InjectMocks
 	private UserController userController;
 	@Mock
 	private UserService userService;
-	@Mock
-	private JwtTokenProvider jwtTokenProvider;
 
 	private MockMvc mockMvc;
 	private Gson gson;
@@ -59,8 +56,8 @@ public class UserControllerTest {
 	@DisplayName("카카오 로그인")
 	class loginTest {
 		@Test
-		@DisplayName("카카오 로그인 AccessToken 오류")
-		public void invalidToken() throws Exception {
+		@DisplayName("[실패] - AccessToken 오류")
+		void invalidToken() throws Exception {
 			// given
 			final String url = "/user/login";
 			final Map<String, String> token = new HashMap<>();
@@ -82,12 +79,12 @@ public class UserControllerTest {
 				.getResponse()
 				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 			assertFalse(response.isSuccess());
-			assertEquals(response.getMessage(), INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE);
+			assertEquals(INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE, response.getMessage());
 		}
 
 		@Test
-		@DisplayName("로그인 성공")
-		public void loginSuccess() throws Exception {
+		@DisplayName("[성공] - 로그인 성공")
+		void loginSuccess() throws Exception {
 			// given
 			final String url = "/user/login";
 			final Map<String, String> token = new HashMap<>();
@@ -97,12 +94,9 @@ public class UserControllerTest {
 				.refreshToken("NEW_TOKEN")
 				.build();
 
-			doReturn(1)
+			doReturn(jwtToken)
 				.when(userService)
 				.kakaoLogin(any());
-			doReturn(jwtToken)
-				.when(jwtTokenProvider)
-				.createToken(any());
 
 			// when
 			final ResultActions resultActions = mockMvc.perform(
@@ -120,17 +114,17 @@ public class UserControllerTest {
 			assertEquals(map.get("accessToken"), jwtToken.getAccessToken());
 			assertEquals(map.get("refreshToken"), jwtToken.getRefreshToken());
 			assertTrue(response.isSuccess());
-			assertEquals(response.getMessage(), KAKAO_LOGIN_SUCCESS_MESSAGE);
+			assertEquals(KAKAO_LOGIN_SUCCESS_MESSAGE, response.getMessage());
 		}
 	}
 
 	@Nested
-	@DisplayName("리프레쉬 토큰 테스트")
+	@DisplayName("[리프레쉬 토큰]")
 	class refreshTokenTest {
 
 		@Test
-		@DisplayName("잘못된 리프레쉬 토큰")
-		public void expiredRefreshToken() throws Exception {
+		@DisplayName("[실패] - 잘못된 리프레쉬 토큰")
+		void expiredRefreshToken() throws Exception {
 			// given
 			final String url = "/user/token";
 			final TokenRequest tokenRequest = TokenRequest.builder()
@@ -154,12 +148,12 @@ public class UserControllerTest {
 				.getResponse()
 				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 			assertFalse(response.isSuccess());
-			assertEquals(response.getMessage(), INVALID_REFRESH_TOKEN_ERROR_MESSAGE);
+			assertEquals(INVALID_REFRESH_TOKEN_ERROR_MESSAGE, response.getMessage());
 		}
 
 		@Test
-		@DisplayName("만료된 리프레쉬 토큰")
-		public void invalidRefreshToken() throws Exception {
+		@DisplayName("[실패] - 만료된 리프레쉬 토큰")
+		void invalidRefreshToken() throws Exception {
 			// given
 			final String url = "/user/token";
 			final TokenRequest tokenRequest = TokenRequest.builder()
@@ -183,12 +177,12 @@ public class UserControllerTest {
 				.getResponse()
 				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 			assertFalse(response.isSuccess());
-			assertEquals(response.getMessage(), INVALID_REFRESH_TOKEN_ERROR_MESSAGE);
+			assertEquals(INVALID_REFRESH_TOKEN_ERROR_MESSAGE, response.getMessage());
 		}
 
 		@Test
-		@DisplayName("유효한 리프레쉬 토큰")
-		public void validRefreshToken() throws Exception {
+		@DisplayName("[성공] - 유효한 리프레쉬 토큰")
+		void validRefreshToken() throws Exception {
 			// given
 			final String url = "/user/token";
 			final TokenRequest tokenRequest = TokenRequest.builder()
@@ -221,7 +215,7 @@ public class UserControllerTest {
 			assertEquals(map.get("accessToken"), tokenResponse.getAccessToken());
 			assertEquals(map.get("refreshToken"), tokenResponse.getRefreshToken());
 			assertTrue(response.isSuccess());
-			assertEquals(response.getMessage(), TOKEN_REISSUE_SUCCESS_MESSAGE);
+			assertEquals(TOKEN_REISSUE_SUCCESS_MESSAGE, response.getMessage());
 		}
 	}
 }

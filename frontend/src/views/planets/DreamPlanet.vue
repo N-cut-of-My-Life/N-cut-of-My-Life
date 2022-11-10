@@ -2,7 +2,7 @@
     <div class="jumbotron">
         <div class="title">이루지못 행성</div>
     </div>
-    <img class="bubble" :src="images[currentImage]" />
+    <img class="bubble" :src="images[currentImage]" alt="" />
     <audio loop autoplay volume="0.3">
         <source src="@/assets/audio/mix_dream.mp3" type="audio/mp3">
     </audio>
@@ -39,7 +39,7 @@
     <b-modal centered no-stacking id="modal-dream" hide-header hide-footer :no-close-on-backdrop="true"
         style="text-align: center; border-radius: 1vw;">
         <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_dream.svg"
-            style="cursor:pointer; float: right;" />
+            style="cursor:pointer; float: right;" alt="" />
         <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">아쉽게 이루지 못한 꿈을 이 곳에 적어주세요!
         </div>
         <b-container ref="form" style="margin-bottom:3.8%">

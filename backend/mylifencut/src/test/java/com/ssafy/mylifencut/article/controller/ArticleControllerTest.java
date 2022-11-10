@@ -32,12 +32,11 @@ import com.google.gson.Gson;
 import com.ssafy.mylifencut.article.ArticleConstant;
 import com.ssafy.mylifencut.article.dto.ArticleRequest;
 import com.ssafy.mylifencut.article.dto.ArticleResponse;
-import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnough;
+import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnoughException;
 import com.ssafy.mylifencut.article.service.ArticleService;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.user.UserConstant;
-import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
@@ -53,7 +52,7 @@ class ArticleControllerTest {
 	private Gson gson;
 
 	@BeforeEach
-	public void init() {
+	void init() {
 		gson = new Gson();
 		mockMvc = MockMvcBuilders.standaloneSetup(articleController)
 			.setControllerAdvice(new ExceptionAdvice())
@@ -65,7 +64,7 @@ class ArticleControllerTest {
 	class RetrieveTest {
 		@Test
 		@DisplayName("[실패] - 존재하지 않는 userId일때")
-		public void retrieveArticle_notFoundUserError() throws Exception {
+		void retrieveArticle_notFoundUserError() throws Exception {
 			final int userId = -1;
 			final String url = "/article/" + userId;
 
@@ -90,7 +89,7 @@ class ArticleControllerTest {
 
 		@Test
 		@DisplayName("[성공]")
-		public void retrieveArticle_success() throws Exception {
+		void retrieveArticle_success() throws Exception {
 			//given
 			final int userId = 5;
 			final String url = "/article/" + userId;
@@ -99,7 +98,7 @@ class ArticleControllerTest {
 			for (int i = 0; i < 3; i++) {
 				articleResponses.add(ArticleResponse.builder()
 					.id(i + 1)
-					.user(User.builder().id(userId).build())
+					.userId(userId)
 					.createDate(LocalDateTime.now())
 					.build());
 			}
@@ -129,7 +128,7 @@ class ArticleControllerTest {
 	@ParameterizedTest
 	@MethodSource("registerArticleErrorParameter")
 	@DisplayName("[여행일지 등록 실패] - service에서 예외가 발생했을 때")
-	public void registerArticle_error(RuntimeException exception, String errorMessage) throws
+	void registerArticle_error(RuntimeException exception, String errorMessage) throws
 		Exception {
 		//given
 		final String url = "/article";
@@ -159,14 +158,14 @@ class ArticleControllerTest {
 	private static Stream<Arguments> registerArticleErrorParameter() {
 		return Stream.of(
 			Arguments.of(new UserNotFoundException(), UserConstant.USER_NOT_FOUND_ERROR_MESSAGE),
-			Arguments.of(new AnswersSizeIsNotEnough(),
+			Arguments.of(new AnswersSizeIsNotEnoughException(),
 				ArticleConstant.ARTICLE_ANSWERS_SIZE_IS_NOT_ENOUGH_ERROR_MESSAGE)
 		);
 	}
 
 	@Test
 	@DisplayName("[여행일지 등록 성공]")
-	public void registerArticle_success() throws Exception {
+	void registerArticle_success() throws Exception {
 		//given
 		final String url = "/article";
 		final ArticleRequest articleRequest = ArticleRequest.builder()

@@ -7,7 +7,7 @@
   </video>
   <div class="menu-box">
     <div class="text-box">
-      <div class="title">인생 N컷</div>
+      <span class="title">인생 </span><span class="n">N</span><span class="title">컷</span>
       <div class="subtitle">당신을 기록하는 우주여행</div>
       <div class="title-ment">
         <div class="wave">
@@ -35,16 +35,30 @@
       </div>
     </div>
 
-    <div class="login-btn">
+    <!-- <div class="login-btn">
       <router-link :to="{ name: 'introfirstpage' }" class="nav-link" style="text-decoration: none; color: inherit;">
         &nbsp;카카오 로그인
       </router-link>
+    </div> -->
+    <div class="login-btn">
+      <div @click="login()" class="nav-link" style="text-decoration: none; color: inherit;"></div>
     </div>
+
 
   </div>
 </template>
 
-<script setup>
+<script>
+export default {
+  methods: {
+    login() {
+      const params = {
+        redirectUri: process.env.VUE_APP_KAKAO_REDIRECT_URI,
+      };
+      window.Kakao.Auth.authorize(params);
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -70,6 +84,20 @@
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+}
+
+@font-face {
+    font-family: 'establishRetrosansOTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SDSamliphopangche_Outline';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 .wave {
@@ -118,28 +146,34 @@ video {
 .title {
   color: #EBEAEA;
   font-size: 5.7rem;
-  font-family: 'MaplestoryOTFBold';
+  font-family: SDSamliphopangche_Outline;
+}
+
+.n{
+  color: #a3c7d6;
+  font-size: 5.7rem;
+  font-family: SDSamliphopangche_Outline;
 }
 
 .subtitle {
   color: #E2636A;
   font-size: 2rem;
   margin-top: 8%;
-  font-family: 'MaplestoryOTFBold';
+  font-family: MaplestoryOTFBold;
 }
 
 .title-ment {
   color: #FFFFFF;
   font-size: 1.43rem;
   margin-top: 4%;
-  font-family: 'MaplestoryOTFBold';
+  font-family: MaplestoryOTFBold;
 }
 
 .login-btn {
   text-align: center;
   background-color: #FEF01B;
   border-radius: 10px;
-  font-family: 'kakao';
+  font-family: kakao;
   font-size: 1.5rem;
   width: 12%;
   height: auto;

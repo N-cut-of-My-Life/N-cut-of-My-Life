@@ -7,11 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.mylifencut.answer.domain.Answer;
+import com.ssafy.mylifencut.answer.exception.CanNotBeOpenedAnswerException;
 import com.ssafy.mylifencut.article.ArticleConstant;
 import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.article.dto.ArticleRequest;
 import com.ssafy.mylifencut.article.dto.ArticleResponse;
-import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnough;
+import com.ssafy.mylifencut.article.exception.AnswersSizeIsNotEnoughException;
 import com.ssafy.mylifencut.article.repository.ArticleRepository;
 import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
@@ -38,11 +39,16 @@ public class ArticleService {
 		User user = userRepository.findById(articleRequest.getUserId()).orElseThrow(UserNotFoundException::new);
 
 		if (articleRequest.getAnswers().size() < ArticleConstant.ANSWERS_MIN_SIZE) {
-			throw new AnswersSizeIsNotEnough();
+			throw new AnswersSizeIsNotEnoughException();
 		}
 		Article article = articleRepository.save(Article.from(articleRequest, user));
 		articleRequest.getAnswers().stream()
 			.map(answerRegisterRequest -> Answer.from(answerRegisterRequest, article))
-			.forEach(article::addAnswer);
+			.forEach(answer -> {
+				if (answer.isCanNotBeOpenedAnswer()) {
+					throw new CanNotBeOpenedAnswerException();
+				}
+				article.addAnswer(answer);
+			});
 	}
 }

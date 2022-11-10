@@ -33,12 +33,12 @@ public class Article {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 
 	@Builder.Default
-	@OneToMany(mappedBy = "article")
+	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
 	private List<Answer> answers = new ArrayList<>();
 
 	@Builder.Default
@@ -53,8 +53,6 @@ public class Article {
 
 	public void addAnswer(Answer answer) {
 		answers.add(answer);
-		if (answer.getArticle() != this) {
-			answer.setArticle(this);
-		}
+		answer.setArticle(this);
 	}
 }

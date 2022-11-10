@@ -6,14 +6,9 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
-import com.ssafy.mylifencut.answer.dto.AnswerRegisterRequest;
-import com.ssafy.mylifencut.answer.dto.AnswerResponse;
 import com.ssafy.mylifencut.answer.dto.GalleryResponse;
-import com.ssafy.mylifencut.answer.exception.InvalidStateException;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
-import com.ssafy.mylifencut.article.domain.Article;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,16 +17,6 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 public class AnswerService {
 	private final AnswerRepository answerRepository;
-
-	@Transactional
-	public AnswerResponse createAnswer(AnswerRegisterRequest answerRegisterRequest) {
-		Answer result = answerRepository.save(Answer.from(answerRegisterRequest, Article.builder().build()));
-		AnswerResponse answerResponse = AnswerResponse.of(result);
-		if (result.getQuestionId() != 9 && result.getState().equals(State.OPEN)) {
-			throw new InvalidStateException();
-		}
-		return answerResponse;
-	}
 
 	public List<GalleryResponse> getGalleryList() {
 		return answerRepository.findAllByState(State.OPEN).stream()
