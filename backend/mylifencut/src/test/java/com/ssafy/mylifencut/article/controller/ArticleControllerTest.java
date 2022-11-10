@@ -37,7 +37,6 @@ import com.ssafy.mylifencut.article.service.ArticleService;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.user.UserConstant;
-import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
@@ -99,7 +98,7 @@ class ArticleControllerTest {
 			for (int i = 0; i < 3; i++) {
 				articleResponses.add(ArticleResponse.builder()
 					.id(i + 1)
-					.user(User.builder().id(userId).build())
+					.userId(userId)
 					.createDate(LocalDateTime.now())
 					.build());
 			}

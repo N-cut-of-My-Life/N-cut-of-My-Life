@@ -65,9 +65,8 @@ class ArticleServiceTest {
 		void retrieveArticle_success() {
 			//given
 			final int userId = 5;
-			final String userName = "여행일지유저";
 			final User user = User.builder()
-				.name(userName)
+				.id(userId)
 				.build();
 			final List<Article> articles = new ArrayList<>();
 			articles.add(Article.builder().user(user).build());
@@ -82,7 +81,7 @@ class ArticleServiceTest {
 			assertNotNull(result);
 			assertEquals(2, result.size());
 			for (ArticleResponse response : result) {
-				assertEquals(response.getUser().getName(), userName);
+				assertEquals(userId, response.getUserId());
 			}
 		}
 	}
