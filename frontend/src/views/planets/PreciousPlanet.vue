@@ -2,19 +2,20 @@
     <div class="jumbotron">
         <div class="title">넌너무소중 행성</div>
     </div>
-    <img class="bubble" :src="images[currentImage]" alt="" />
-    <audio loop autoplay volume="0.3">
+    <img v-show="!elementVisible" class="bubble" :src="images[currentImage]" alt="" />
+    <audio id="mix_precious" loop autoplay volume="0.3">
         <source src="@/assets/audio/mix_precious.mp3" type="audio/mp3">
     </audio>
-    <div class="train">
-    <img src="@/assets/trainman.svg" alt=""/>
-  </div>
+    <audio id="trainsound" volume="0.3">
+        <source src="@/assets/audio/train_sound.mp3" type="audio/mp3">
+    </audio>
+    <img src="@/assets/trainman.svg" class="trainman" alt="" />
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" variant="warning" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
         </b-button>
     </div>
-    <div class="jump">
+    <div v-show="!elementVisible" class="jump">
         <b-button @click="previousImage()" variant="warning" class="button" size="sm" :disabled="currentImage === 0">
             뒤로
         </b-button>
@@ -25,7 +26,8 @@
         </b-button>
     </div>
     <div v-if="currentImage === (images.length - 1)" class="last">
-        <b-button v-show="elementVisible" variant="warning" class="button_2" size="md">
+        <b-button v-show="elementVisible && !elementVisible_2 && !elementVisible_3" variant="warning" class="button_2"
+            size="md">
             <div class="wave" v-b-modal.modal-precious>
                 <span style="--i: 1">소</span>
                 <span style="--i: 2">중</span>
@@ -65,10 +67,43 @@
                 style="background-color: #FDFCFA; border:none;">
             </b-form-textarea>
         </b-container>
-        <b-button text @click="submit"
+        <b-button text @click="submit()" data-bs-dismiss="modal" aria-label="Close"
             style="color: #ffffff; background-color: #C6753E; border: none; border-radius: 1vw;">저장
         </b-button>
     </b-modal>
+    <img v-show="elementVisible_2" class="bubble" :src="images_2[currentImage_2]" alt="" />
+    <div v-show="elementVisible_2" class="jump">
+        <b-button @click="previousImage_2()" variant="warning" class="button" size="sm"
+            :disabled="currentImage_2 === 0">
+            뒤로
+        </b-button>
+        &nbsp;
+        <b-button @click="nextImage_2()" variant="warning" class="button" size="sm"
+            :disabled="currentImage_2 === (images_2.length - 1)">
+            다음
+        </b-button>
+    </div>
+    <div class="last">
+        <b-button v-show="elementVisible_4" @click="trainLaunch" class="button_2" size="md">
+            <div class="wave">
+                <span style="--i: 1">넌</span>
+                <span style="--i: 2">너</span>
+                <span style="--i: 3">무</span>
+                <span style="--i: 4">소</span>
+                <span style="--i: 5">중</span>
+                <span style="--i: 6">&nbsp;</span>
+                <span style="--i: 7">행</span>
+                <span style="--i: 8">성</span>
+                <span style="--i: 9">&nbsp;</span>
+                <span style="--i: 10">여</span>
+                <span style="--i: 11">행</span>
+                <span style="--i: 12">&nbsp;</span>
+                <span style="--i: 13">마</span>
+                <span style="--i: 14">치</span>
+                <span style="--i: 15">기</span>
+            </div>
+        </b-button>
+    </div>
 </template>
 
 <script>
@@ -77,11 +112,22 @@ export default {
         return {
             images: [
                 require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_1.svg'),
-                // require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_2.svg'),
-                // require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_3.svg'),
+                require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_2.svg'),
+                require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_3.svg'),
+                require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_4.svg'),
+                require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_5.svg'),
+                require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_6.svg'),
+            ],
+            images_2: [
+                require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_7.svg'),
+                require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_8.svg'),
             ],
             currentImage: 0,
+            currentImage_2: 0,
             elementVisible: false,
+            elementVisible_2: false,
+            elementVisible_3: false,
+            elementVisible_4: false
             // modalShow: false
         }
     },
@@ -96,27 +142,65 @@ export default {
                 this.currentImage--;
         },
 
+        nextImage_2() {
+            if (this.currentImage_2 !== (this.images_2.length - 1))
+                this.currentImage_2++;
+        },
+
+        previousImage_2() {
+            if (this.currentImage_2 !== 0)
+                this.currentImage_2--;
+        },
+
         gotoPage(link) {
             this.$router.push(link)
+        },
+
+        submit() {
+            this.elementVisible = true
+            this.elementVisible_3 = true
+            setTimeout(() => this.elementVisible_2 = true, 800)
+            // this.elementVisible_2 = true
         }
+
     },
     updated() {
         if (this.currentImage == (this.images.length - 1)) {
             setTimeout(() => this.elementVisible = true, 2000)
         }
+        if (this.currentImage_2 == (this.images_2.length - 1)) {
+            setTimeout(() => this.elementVisible_4 = true, 2000)
+        }
     },
 }
 </script>
+<script setup>
+import { useRouter, useRoute } from 'vue-router'
+
+const router = useRouter()
+const route = useRoute()
+const code = route.query.code;
+
+// 클릭 시 열차 출발
+const trainLaunch = () => {
+    console.log(code)
+    const train = document.querySelector('.trainman')
+    document.getElementById('mix_precious').pause();
+    document.getElementById('trainsound').play();
+    train.classList.add('train-launch')
+    train.addEventListener('animationend', (event) => {
+        if (event.animationName.includes('launch')) {
+            router.push({ name: 'planetlist' })
+        }
+    });
+};
+</script>
 
 <style scoped>
-.train{
-    position:absolute;
-    bottom:2.3%;
-    right:0%;
-}
-
-.upload {
-    width: 50%
+.trainman {
+    position: absolute;
+    bottom: 2.3%;
+    right: 0;
 }
 
 body {
@@ -279,6 +363,23 @@ body {
         transform: translateY(-3px);
     }
 }
+
+.train-launch {
+    animation-name: launch;
+    animation-duration: 4s;
+    animation-timing-function: ease-in, ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes launch {
+    0% {
+        transform: translateX(0px);
+    }
+
+    100% {
+        transform: translate(-450px, 300px);
+    }
+}
 </style>
 <style>
 #modal-precious .modal-content {
@@ -291,7 +392,7 @@ body {
     z-index: -1;
 } */
 .form-control {
-  box-shadow: none !important;
-  outline: none !important;
+    box-shadow: none !important;
+    outline: none !important;
 }
 </style>
