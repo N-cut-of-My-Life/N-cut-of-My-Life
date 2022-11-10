@@ -24,7 +24,6 @@ import com.ssafy.mylifencut.user.dto.UserInfo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,7 +32,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Getter
-@EqualsAndHashCode
 @Table(name = "member")
 public class User implements UserDetails {
 	@Id
