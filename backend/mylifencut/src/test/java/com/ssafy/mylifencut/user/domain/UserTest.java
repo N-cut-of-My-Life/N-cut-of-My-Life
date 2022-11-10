@@ -21,4 +21,16 @@ class UserTest {
 		assertNull(result);
 	}
 
+	@Test
+	@DisplayName("[성공] - 회원 기간 확인")
+	void isAccountNonExpired() {
+		// given
+		final User user = User.builder().build();
+
+		// when
+		boolean result = user.isAccountNonExpired();
+
+		// then
+		assertFalse(result);
+	}
 }
