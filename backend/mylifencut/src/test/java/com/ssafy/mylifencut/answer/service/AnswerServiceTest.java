@@ -26,7 +26,7 @@ import com.ssafy.mylifencut.like.domain.IsLike;
 import com.ssafy.mylifencut.user.domain.User;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("답변 service 테스트 코드")
+@DisplayName("답변 서비스 test")
 class AnswerServiceTest {
 
 	@InjectMocks
@@ -35,21 +35,21 @@ class AnswerServiceTest {
 	private AnswerRepository answerRepository;
 
 	@Nested
-	@DisplayName("갤러리 조회 테스트")
+	@DisplayName("[갤러리 조회]")
 	class GalleryReadTest{
 		@Test
-		@DisplayName("갤러리 조회 - 성공")
-		public void readGallery() {
+		@DisplayName("[성공] - 갤러리 조회")
+		void readGallery() {
 			//given
 			final LocalDateTime nowTime = LocalDateTime.now();
 			final User user = User.builder()
-					.id(1)
-					.articles(Collections.emptyList())
-					.name("최주희")
-					.build();
+				.id(1)
+				.articles(Collections.emptyList())
+				.name("최주희")
+				.build();
 			final User user1 = User.builder()
-					.id(2)
-					.articles(Collections.emptyList())
+				.id(2)
+				.articles(Collections.emptyList())
 					.name("유일권")
 					.build();
 			final Article article = Article.builder()
@@ -79,18 +79,7 @@ class AnswerServiceTest {
 			//when
 			final List<GalleryResponse> result = answerService.getGalleryList();
 			//then
-			assertThat(result.size()).isEqualTo(2);
+			assertThat(result).hasSize(2);
 		}
 	}
-
-	private Answer newAnswer() {
-		return Answer.builder()
-			.id(1)
-			.article(Article.builder().build())
-			.contents("답변 내용")
-			.state(State.CLOSE)
-			.questionId(2)
-			.build();
-	}
-
 }

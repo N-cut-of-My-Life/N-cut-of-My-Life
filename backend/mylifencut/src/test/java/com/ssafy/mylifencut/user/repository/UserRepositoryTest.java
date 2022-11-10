@@ -13,13 +13,14 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import com.ssafy.mylifencut.user.domain.User;
 
 @DataJpaTest
-public class UserRepositoryTest {
+@DisplayName("[유저 레포]")
+class UserRepositoryTest {
 	@Autowired
 	private UserRepository userRepository;
 
 	@Test
-	@DisplayName("회원 저장 성공")
-	public void register() {
+	@DisplayName("[성공] - 회원 가입")
+	void register() {
 		// given
 		final User user = User.builder()
 			.name("홍길동")
@@ -37,8 +38,8 @@ public class UserRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("이메일로 회원 여부 검사 - 신규회원")
-	public void findUserByEmailFail() {
+	@DisplayName("[성공] - 이메일로 회원 여부 검사(신규회원)")
+	void findUserByEmailFail() {
 		// given
 		final String email = "ssafy@email.com";
 
@@ -50,8 +51,8 @@ public class UserRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("이메일로 회원 여부 검사 - 기존회원")
-	public void findUserByEmailSuccess() {
+	@DisplayName("[성공] - 이메일로 회원 여부 검사(기존회원)")
+	void findUserByEmailSuccess() {
 		// given
 		final User user = User.builder()
 			.name("홍길동")

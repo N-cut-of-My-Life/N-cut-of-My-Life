@@ -14,7 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.service.UserService;
 
-@DisplayName("JWT 토큰 테스트")
+@DisplayName("[JWT 토큰]")
 @ExtendWith(MockitoExtension.class)
 class JwtTokenProviderTest {
 
@@ -28,7 +28,7 @@ class JwtTokenProviderTest {
 		jwtTokenProvider.init();
 	}
 
-	@DisplayName("유효한 토큰이 생성된 후 원하는 payload로 변환되는지 검증한다.")
+	@DisplayName("[성공] - 토큰 생성 후 payload검증")
 	@Test
 	void checkPayloadAfterIssuingToken() {
 		// given
@@ -42,11 +42,11 @@ class JwtTokenProviderTest {
 		System.out.println(accessToken.getRefreshToken());
 	}
 
-	@DisplayName("엑세스 토큰 검증")
+	@DisplayName("[엑세스 토큰]")
 	@Nested
 	class TokenValidationTest {
 
-		@DisplayName("토큰 검증 정확한 토큰")
+		@DisplayName("[성공] - 정확한 토큰")
 		@Test
 		void validToken() {
 			// given
@@ -59,7 +59,7 @@ class JwtTokenProviderTest {
 			assertTrue(jwtTokenProvider.validateToken(accessToken.getAccessToken()));
 		}
 
-		@DisplayName("토큰 검증 만료된 토큰이면 false")
+		@DisplayName("[실패] - 만료된 토큰")
 		@Test
 		void expiredToken() {
 			// given
@@ -72,7 +72,7 @@ class JwtTokenProviderTest {
 			assertFalse(result);
 		}
 
-		@DisplayName("토큰 검증 발급되지 않은 토큰이면 false")
+		@DisplayName("[실패] - 발급되지 않은 토큰")
 		@Test
 		void invalidToken() {
 			// given
@@ -87,9 +87,9 @@ class JwtTokenProviderTest {
 	}
 
 	@Nested
-	@DisplayName("리프레쉬 토큰 검증")
+	@DisplayName("[리프레쉬 토큰]")
 	class refreshTokenValidation {
-		@DisplayName("만료된 리프레쉬 토큰인 경우")
+		@DisplayName("[실패] - 만료된 토큰")
 		@Test
 		void expiredToken() {
 			// given
@@ -102,7 +102,7 @@ class JwtTokenProviderTest {
 			assertFalse(result);
 		}
 
-		@DisplayName("기간이 남아있는 리프레쉬 토큰인 경우")
+		@DisplayName("[성공] - 올바른 리프레쉬 토큰")
 		@Test
 		void validToken() {
 			// given
@@ -115,7 +115,7 @@ class JwtTokenProviderTest {
 			assertTrue(result);
 		}
 
-		@DisplayName("토큰 검증 발급되지 않은 토큰이면 false")
+		@DisplayName("[실패] - 발급되지 않은 토큰")
 		@Test
 		void invalidToken() {
 			// given

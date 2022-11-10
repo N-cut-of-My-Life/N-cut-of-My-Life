@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import com.ssafy.mylifencut.answer.dto.AnswerResponse;
 import com.ssafy.mylifencut.article.domain.Article;
-import com.ssafy.mylifencut.user.domain.User;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -15,14 +14,14 @@ import lombok.Getter;
 @Builder
 public class ArticleResponse {
 	private Integer id;
-	private User user;
+	private Integer userId;
 	private List<AnswerResponse> answers;
 	private LocalDateTime createDate;
 
 	public static ArticleResponse of(Article article) {
 		return ArticleResponse.builder()
 			.id(article.getId())
-			.user(article.getUser())
+			.userId(article.getUser().getId())
 			.answers(article.getAnswers().stream()
 				.map(AnswerResponse::of)
 				.collect(Collectors.toList()))

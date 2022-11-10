@@ -52,21 +52,22 @@ jacocoTestReport {
             destination file('build/reports/jacocoReport.html')
         }
         csv {
-            enabled true
+            enabled false
         }
         xml {
             enabled true
+            destination file('build/reports/jacocoReport.xml')
         }
     }
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it,
                     exclude: [
-                            '**/MylifencutApplication',
+                            '**/MylifencutApplication*',
                             '**/*Request*',
                             '**/*Response*',
-                            '**/*Dto*',
-                            '**/common*',
+                            '**/*dto/**',
+                            '**/common/**',
                             '**/*Exception*',
                             '**/*Constant*',
                             '**/*Filter*'
@@ -80,7 +81,7 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             element = 'CLASS'
-//            includes = ['org.gradle.*']
+            includes = ['com.ssafy.mylifencut.*']
 
             limit {
                 counter = 'BRANCH'
@@ -101,8 +102,10 @@ jacocoTestCoverageVerification {
                         '**.*Request*',
                         '**.*Response*',
                         '**.*Dto*',
+                        '**.common*',
                         '**.*Constant*',
-                        '**.*Filter']
+                        '**.*Exception*',
+                        '**.*Filter*']
         }
     }
 }
@@ -117,7 +120,7 @@ sonarqube {
         property "sonar.profile", "Sonar way"
         property "sonar.java.binaries", "${buildDir}/classes"
         property "sonar.test.inclusions", "**/*Test.java"
-        property "sonar.exclusions", "**/resources/static/**, **/Q*.class, **/test/**"
-        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+        property "sonar.exclusions", "**/resources/static/**, **/test/**, **/MylifencutApplication*, **/*Request*, **/*Response*, **/dto/**, **/*Constant*, **/*Filter*, **/*Exception*, **/common/**"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacocoReport.xml"
     }
 }

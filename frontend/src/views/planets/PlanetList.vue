@@ -13,22 +13,16 @@
   </div>
   <div class="bg">
     <div class="planet"></div>
-    <div class="planet" @click="gotoPage({ name: 'sadplanet' })"><span class="planet_name"
-        style="transform:rotate(-30deg)">훌쩍훌쩍 행성</span></div>
-    <div class="planet" @click="gotoPage({ name: 'happyplanet' })"><span class="planet_name"
-        style="transform:rotate(-70deg)">하하호호 행성</span></div>
-    <div class="planet" @click="gotoPage({ name: 'musicplanet' })"><span class="planet_name"
-        style="transform:rotate(-160deg) translate(100%) rotate(-359deg)">둠칫둠칫 행성</span></div>
-    <div class="planet" @click="gotoPage({ name: 'dreamplanet' })"><span class="planet_name"
-        style="transform:rotate(-195deg)">이루지못 행성</span></div>
-    <div class="planet" @click="gotoPage({ name: 'regretplanet' })"><span class="planet_name"
-        style="transform:rotate(-200deg)">괜히글 행성</span></div>
-    <div class="planet" @click="gotoPage({ name: 'preciousplanet' })"><span class="planet_name"
-        style="transform:rotate(-250deg)">넌너무소중 행성</span></div>
-    <img class="planet" src="../../assets/planet/blink.png" alt="" @click="gotoPage({ name: 'treasureplanet' })" />
+    <div class="planet" @click="gotoPage({ name: 'sadplanet' })" v-b-tooltip.hover.top="'훌쩍훌쩍 행성'"></div>
+    <div class="planet" @click="gotoPage({ name: 'happyplanet' })" v-b-tooltip.hover.left="'하하호호 행성'"></div>
+    <div class="planet" @click="gotoPage({ name: 'musicplanet' })" v-b-tooltip.hover.bottom="'둠칫둠칫 행성'"></div>
+    <div class="planet" @click="gotoPage({ name: 'dreamplanet' })" v-b-tooltip.hover.top="'이루지못 행성'"></div>
+    <div class="planet" @click="gotoPage({ name: 'regretplanet' })" v-b-tooltip.hover.bottom="'괜히글 행성'"></div>
+    <div class="planet" @click="gotoPage({ name: 'preciousplanet' })" v-b-tooltip.hover.top="'넌너무소중 행성'"></div>
+        <img class="planet" src="../../assets/planet/blink.png" alt="" @click="gotoPage({ name: 'treasureplanet' })" v-b-tooltip.hover.right="'반짝반짝 행성'"/>
     <img class="stars" src="../../assets/planet/stars.png" alt="">
     <img class="stars_line blink_star" src="../../assets/planet/stars-line.png" alt="">
-    <img class="teapot" src="../../assets/planet/teapot.png" alt="" @click="gotoPage({ name: 'genieplanet' })" />
+    <img class="teapot" src="../../assets/planet/teapot.png" alt="" @click="gotoPage({ name: 'genieplanet' })" v-b-tooltip.hover.top="'지니 행성'"/>
   </div>
 </template>
 
@@ -43,27 +37,6 @@ export default {
 </script>
 
 <style scoped>
-/* Tooltip text */
-.planet_name {
-  visibility: hidden;
-  width: fit-content;
-  background-color: rgb(20, 20, 20, 0.3);
-  color: #fff;
-  text-align: center;
-  padding: 5px 5px 5px 5px;
-  border-radius: 1vw;
-  font-size: 2vw;
-
-  /* Position the tooltip text - see examples below! */
-  position: absolute;
-  z-index: 1;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.planet:hover .planet_name {
-  visibility: visible;
-}
-
 video {
   position: fixed;
   right: 0;
@@ -217,8 +190,8 @@ video {
   max-width: 20%;
   height: 256px;
   width: 256px;
-  margin-left: 10px;
-  margin-top: -150px;
+  margin-left: 60px;
+  margin-top: -170px;
   filter: grayscale(75%);
   -webkit-filter: grayscale(75%);
   animation: rotation_4 20s infinite linear;

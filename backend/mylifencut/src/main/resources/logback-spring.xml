@@ -25,17 +25,12 @@
     <!-- 콘솔에서 로그를 작성할 때 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <!--  <pattern>%msg%n</pattern> -->
             <pattern>"[%d{yyyy-MM-dd HH:mm:ss}:%-3relative] %clr(%-5level) %clr(${PID:-}){magenta} %clr(---){faint}
                 %clr([%15.15thread]){faint} %clr(%-40.40logger{36}){cyan} %clr(:){faint} %msg%n"
             </pattern>
         </encoder>
     </appender>
 
-<!--    &lt;!&ndash; 프로그램에서 적용될 로그 레벨 &ndash;&gt;-->
-<!--    <root level="INFO">-->
-<!--        <appender-ref ref="STDOUT"/>-->
-<!--    </root>-->
     <!-- spring profile별 로그 설정 -->
     <!--  local 환경  -->
     <springProfile name="local">
