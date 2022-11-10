@@ -2,8 +2,12 @@ package com.ssafy.mylifencut.user.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.core.GrantedAuthority;
 
 @DisplayName("[유저 도메인]")
 class UserTest {
@@ -71,5 +75,23 @@ class UserTest {
 
 		// then
 		assertFalse(result);
+	}
+
+	@Test
+	@DisplayName("[성공] - 역할 확인")
+	void getAuthorities() {
+		// given
+		final User user = User.builder()
+			.authorities(Collections.singletonList(
+				Authority.builder()
+					.role(Role.USER)
+					.build()))
+			.build();
+
+		// given
+		Collection<? extends GrantedAuthority> result = user.getAuthorities();
+
+		// when
+		assertEquals(1, result.size());
 	}
 }
