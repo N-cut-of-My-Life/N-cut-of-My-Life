@@ -77,8 +77,8 @@ export default {
         return {
             images: [
                 require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_1.svg'),
-                require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_2.svg'),
-                require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_3.svg'),
+                // require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_2.svg'),
+                // require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_3.svg'),
             ],
             currentImage: 0,
             elementVisible: false,
@@ -127,8 +127,8 @@ body {
     position: absolute;
     /* top: 0;
     left: 0; */
-    right: 15%;
-    bottom: 20%;
+    right: 2%;
+    bottom: 45%;
     /* height: 50%; */
     margin: auto;
 }
