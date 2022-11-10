@@ -46,4 +46,30 @@ class UserTest {
 		// then
 		assertFalse(result);
 	}
+
+	@Test
+	@DisplayName("[성공] - 신임 여부 확인")
+	void isCredentialsNonExpired() {
+		// given
+		final User user = User.builder().build();
+
+		// when
+		boolean result = user.isCredentialsNonExpired();
+
+		// then
+		assertFalse(result);
+	}
+
+	@Test
+	@DisplayName("[성공] - 유효성 확인")
+	void isEnabled() {
+		// given
+		final User user = User.builder().build();
+
+		// when
+		boolean result = user.isEnabled();
+
+		// then
+		assertFalse(result);
+	}
 }
