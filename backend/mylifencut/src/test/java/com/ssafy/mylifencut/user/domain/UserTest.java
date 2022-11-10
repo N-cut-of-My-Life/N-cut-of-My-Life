@@ -33,4 +33,17 @@ class UserTest {
 		// then
 		assertFalse(result);
 	}
+
+	@Test
+	@DisplayName("[성공] - 회원 잠금 여부 확인")
+	void isAccountNonLocked() {
+		// given
+		final User user = User.builder().build();
+
+		// when
+		boolean result = user.isAccountNonLocked();
+
+		// then
+		assertFalse(result);
+	}
 }
