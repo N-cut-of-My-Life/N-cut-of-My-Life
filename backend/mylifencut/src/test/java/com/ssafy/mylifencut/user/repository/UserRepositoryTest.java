@@ -14,7 +14,7 @@ import com.ssafy.mylifencut.user.domain.User;
 
 @DataJpaTest
 @DisplayName("[유저 레포]")
-public class UserRepositoryTest {
+class UserRepositoryTest {
 	@Autowired
 	private UserRepository userRepository;
 

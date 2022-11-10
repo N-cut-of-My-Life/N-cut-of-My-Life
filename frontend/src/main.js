@@ -10,3 +10,4 @@ import './firebase.js'
 
 
 createApp(App).use(createPinia()).use(router).use(BootstrapVue3).use(MasonryWall).mount('#app')
+window.Kakao.init(process.env.VUE_APP_KAKAO_JS_SDK)

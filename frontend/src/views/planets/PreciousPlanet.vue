@@ -6,6 +6,9 @@
     <audio loop autoplay volume="0.3">
         <source src="@/assets/audio/mix_precious.mp3" type="audio/mp3">
     </audio>
+    <div class="train">
+    <img src="@/assets/trainman.svg" alt=""/>
+  </div>
     <div class="other">
         <b-button @click="gotoPage({ name: 'planetlist' })" variant="warning" class="button_prev" size="sm">
             <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
@@ -74,8 +77,8 @@ export default {
         return {
             images: [
                 require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_1.svg'),
-                require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_2.svg'),
-                require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_3.svg'),
+                // require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_2.svg'),
+                // require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_3.svg'),
             ],
             currentImage: 0,
             elementVisible: false,
@@ -106,6 +109,12 @@ export default {
 </script>
 
 <style scoped>
+.train{
+    position:absolute;
+    bottom:2.3%;
+    right:0%;
+}
+
 .upload {
     width: 50%
 }
@@ -118,8 +127,8 @@ body {
     position: absolute;
     /* top: 0;
     left: 0; */
-    right: 15%;
-    bottom: 20%;
+    right: 2%;
+    bottom: 45%;
     /* height: 50%; */
     margin: auto;
 }
