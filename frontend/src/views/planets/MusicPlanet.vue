@@ -1,4 +1,5 @@
 <template>
+    <music-modal></music-modal>
     <div class="jumbotron">
         <div class="title">둠칫둠칫 행성</div>
     </div>
@@ -21,7 +22,7 @@
         </b-button>
     </div>
     <div v-if="currentImage === (images.length - 1)" class="last">
-        <b-button v-show="elementVisible" class="button_2" size="md" @click="musicStore.getMusicData()">
+        <b-button v-show="elementVisible" class="button_2" size="md" href="#openModal-about">
             <div class="wave">
                 <span style="--i: 1">음</span>
                 <span style="--i: 2">악</span>
@@ -37,13 +38,12 @@
             </div>
         </b-button>
     </div>
-    <div class="temp">{{ musicStore.items }}</div>
 </template>
 
 // <script setup>
+import MusicModal from '@/components/planets/MusicModal.vue'
 import { onUpdated, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useMusicStore } from '@/store/index'
 // export default {
 //     data() {
 //         return {
@@ -96,7 +96,6 @@ import { useMusicStore } from '@/store/index'
 
 // 경계선
 const router = useRouter()
-const musicStore = useMusicStore()
 
 const images = [
                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_1.svg'),
