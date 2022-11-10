@@ -3,6 +3,7 @@ package com.ssafy.mylifencut.answer.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -51,7 +52,7 @@ public class Answer {
 	private State state;
 
 	@Builder.Default
-	@OneToMany(mappedBy = "answer")
+	@OneToMany(mappedBy = "answer", cascade = CascadeType.ALL)
 	private List<IsLike> likes = new ArrayList<>();
 
 	public static Answer from(AnswerRegisterRequest answerRegisterRequest, Article article) {
