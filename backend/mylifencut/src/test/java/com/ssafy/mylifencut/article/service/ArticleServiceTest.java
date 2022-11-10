@@ -80,7 +80,7 @@ class ArticleServiceTest {
 			//then
 			final List<ArticleResponse> result = articleService.retrieveArticles(userId);
 			assertNotNull(result);
-			assertEquals(result.size(), 2);
+			assertEquals(2, result.size());
 			for (ArticleResponse response : result) {
 				assertEquals(response.getUser().getName(), userName);
 			}
@@ -95,11 +95,12 @@ class ArticleServiceTest {
 		void registerArticle_notFoundUserError() {
 			//given
 			final Integer userId = 5;
+			final ArticleRequest articleRequest = ArticleRequest.builder().userId(userId).build();
 			doReturn(Optional.empty()).when(userRepository).findById(userId);
 
 			//when
 			final UserNotFoundException result = assertThrows(UserNotFoundException.class
-				, () -> articleService.createArticle(ArticleRequest.builder().userId(userId).build())
+				, () -> articleService.createArticle(articleRequest)
 			);
 
 			//then
@@ -114,10 +115,10 @@ class ArticleServiceTest {
 			doReturn(Optional.of(User.builder().build())).when(userRepository).findById(userId);
 
 			final List<AnswerRegisterRequest> answers = answerRegisterRequests(ANSWERS_MIN_SIZE - 1);
-
+			ArticleRequest articleRequest = ArticleRequest.builder().userId(userId).answers(answers).build();
 			//when
 			final AnswersSizeIsNotEnoughException result = assertThrows(AnswersSizeIsNotEnoughException.class
-				, () -> articleService.createArticle(ArticleRequest.builder().userId(userId).answers(answers).build())
+				, () -> articleService.createArticle(articleRequest)
 			);
 
 			//then
