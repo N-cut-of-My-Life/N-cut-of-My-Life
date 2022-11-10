@@ -56,6 +56,7 @@ class LikeServiceTest {
 		@Test
 		@DisplayName("[성공] - 좋아요 추가")
 		void addLike() {
+			IsLike.from();
 			//given
 			doReturn(Optional.empty()).when(likeRepository).findByUserIdAndAnswerId(userId, answerId);
 			doReturn(isLike()).when(likeRepository).save(any(IsLike.class));
