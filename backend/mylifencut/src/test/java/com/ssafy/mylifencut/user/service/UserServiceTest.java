@@ -340,6 +340,25 @@ public class UserServiceTest {
 		}
 	}
 
+	@Nested
+	@DisplayName("토큰으로 회원 정보")
+	class TokenToUserInfo {
+		@Test
+		@DisplayName("[실패] - 토큰이 올바르지 않은 경우")
+		void notValidTokenError() {
+			// given
+			final String accessToken = "INVALID_TOKEN";
+			doReturn(false)
+				.when(jwtTokenProvider)
+				.validateToken(any());
+
+			// when
+
+			// then
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.getUserResponse(accessToken));
+		}
+	}
+
 	public UserInfo newUserInfo() {
 		return UserInfo.builder()
 			.email(email)
