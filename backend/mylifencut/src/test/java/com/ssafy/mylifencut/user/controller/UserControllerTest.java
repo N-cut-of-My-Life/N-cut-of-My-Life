@@ -223,7 +223,7 @@ public class UserControllerTest {
 	@DisplayName("[실패] - 엑세스 토큰이 없는 경우")
 	void noAccessToken() throws Exception {
 		// given
-		final String url = "/user/token";
+		final String url = "/user/exception";
 
 		// when
 		final ResultActions resultActions = mockMvc.perform(
