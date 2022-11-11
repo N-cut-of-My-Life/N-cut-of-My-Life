@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.user.dto.KakaoRequest;
 import com.ssafy.mylifencut.user.dto.Token;
+import com.ssafy.mylifencut.user.exception.InvalidAccessTokenException;
 import com.ssafy.mylifencut.user.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -32,6 +34,12 @@ public class UserController {
 	private static final int COOKIE_EXPIRE_TIME = 60 * 60 * 24 * 14;    // 쿠키 14일 유지
 
 	private final UserService userService;
+
+	@GetMapping("/exception")
+	@ApiOperation(value = "Header에 JWT가 없을 경우")
+	public void noAccessToken() {
+		throw new InvalidAccessTokenException();
+	}
 
 	@PostMapping("/login")
 	@ApiOperation(value = "카카오 로그인", notes = "카카오 AccessToken으로 로그인")

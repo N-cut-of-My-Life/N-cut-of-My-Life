@@ -198,13 +198,14 @@ const trainLaunch = () => {
 
 <style scoped>
 .trainman {
-    position: absolute;
-    bottom: 2.3%;
-    right: 0;
+    position: fixed;
+    top: 51%;
+    left: 78%;
 }
 
 body {
     margin: 0;
+
 }
 
 .bubble {

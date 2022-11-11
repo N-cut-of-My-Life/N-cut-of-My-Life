@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.ssafy.mylifencut.common.CommonAuthenticationEntryPoint;
 import com.ssafy.mylifencut.common.filter.JwtAuthenticationFilter;
 import com.ssafy.mylifencut.user.JwtTokenProvider;
 
@@ -38,6 +39,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers("/user/*").permitAll()
 			.anyRequest().hasAuthority("USER")
+			.and()
+			.exceptionHandling().authenticationEntryPoint(new CommonAuthenticationEntryPoint())
 			.and()
 			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 	}
