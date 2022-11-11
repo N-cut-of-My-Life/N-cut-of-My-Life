@@ -40,7 +40,13 @@ export const useMusicStore = defineStore('music', {
     },
     isSoundActive() {
       console.log(this.isMute)
-      
+      if(this.isMute === true){
+        document.querySelector('audio').muted = true
+        console.log(document.querySelector('audio'))
+      } else {
+        document.querySelector('audio').muted = false
+        console.log(document.querySelector('audio'))
+      }
     },
     
     getMusicData(keyword) {

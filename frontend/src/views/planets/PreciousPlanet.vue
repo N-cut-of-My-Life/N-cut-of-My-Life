@@ -107,6 +107,7 @@
 </template>
 
 <script>
+import { useMusicStore } from '@/store/index'
 export default {
     data() {
         return {
@@ -172,6 +173,16 @@ export default {
             setTimeout(() => this.elementVisible_4 = true, 2000)
         }
     },
+    mounted() {
+        const isMute = useMusicStore().isMute
+        if(isMute === true){
+            document.querySelector('#mix_precious').muted = true
+            console.log(document.querySelector('audio'))
+        } else {
+            document.querySelector('#mix_precious').muted = false
+            console.log(document.querySelector('audio'))
+        }
+    }
 }
 </script>
 <script setup>

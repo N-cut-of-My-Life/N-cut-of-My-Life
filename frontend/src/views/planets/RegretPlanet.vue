@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { useMusicStore } from '@/store/index'
 export default {
     data() {
         return {
@@ -81,7 +82,10 @@ export default {
         gotoPage(link) {
             this.$router.push(link)
         }
-    }
+    },
+    mounted() {
+        useMusicStore().isSoundActive()
+    },
 }
 </script>
 

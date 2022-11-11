@@ -46,6 +46,8 @@
 
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
+import { useMusicStore } from '@/store/index'
+import { onMounted } from 'vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -66,6 +68,17 @@ const rocketLaunch = () => {
     }
   });
 };
+
+onMounted(() => {
+  const isMute = useMusicStore().isMute
+  if(isMute === true){
+    document.querySelector('#cosmos').muted = true
+    console.log(document.querySelector('audio'))
+  } else {
+    document.querySelector('#cosmos').muted = false
+    console.log(document.querySelector('audio'))
+  }
+})
 </script>
 
 <style scoped>

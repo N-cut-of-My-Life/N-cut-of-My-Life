@@ -27,12 +27,16 @@
 </template>
 
 <script>
+import { useMusicStore } from '@/store/index'
 export default {
   methods: {
     gotoPage(link) {
       this.$router.push(link)
     }
-  }
+  },
+  mounted() {
+        useMusicStore().isSoundActive()
+    },
 }
 </script>
 
