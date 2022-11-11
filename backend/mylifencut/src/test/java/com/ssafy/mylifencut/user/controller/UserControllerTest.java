@@ -237,6 +237,6 @@ public class UserControllerTest {
 			.getResponse()
 			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 		assertFalse(response.isSuccess());
-		assertEquals(NO_ACCESS_TOKEN_ERROR_MESSAGE, response.getMessage());
+		assertEquals(INVALID_ACCESS_TOKEN_ERROR_MESSAGE, response.getMessage());
 	}
 }

@@ -4,6 +4,6 @@ import static com.ssafy.mylifencut.user.UserConstant.*;
 
 public class InvalidAccessTokenException extends RuntimeException {
 	public InvalidAccessTokenException() {
-		super(NO_ACCESS_TOKEN_ERROR_MESSAGE);
+		super(INVALID_ACCESS_TOKEN_ERROR_MESSAGE);
 	}
 }
