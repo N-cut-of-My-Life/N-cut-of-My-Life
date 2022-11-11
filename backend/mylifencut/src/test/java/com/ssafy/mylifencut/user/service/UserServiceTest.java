@@ -378,7 +378,7 @@ public class UserServiceTest {
 
 		@Test
 		@DisplayName("[성공] - 유효한 토큰 및 사용자 존재")
-		void userNotFoundError() {
+		void userFoundError() {
 			// given
 			final String accessToken = "VALID_TOKEN";
 			User user = User.builder()
