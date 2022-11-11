@@ -23,9 +23,10 @@ import com.ssafy.mylifencut.user.JwtTokenProvider;
 import com.ssafy.mylifencut.user.UserConstant;
 import com.ssafy.mylifencut.user.domain.RefreshToken;
 import com.ssafy.mylifencut.user.domain.User;
-import com.ssafy.mylifencut.user.dto.TokenRequest;
-import com.ssafy.mylifencut.user.dto.TokenResponse;
+import com.ssafy.mylifencut.user.dto.Token;
 import com.ssafy.mylifencut.user.dto.UserInfo;
+import com.ssafy.mylifencut.user.dto.UserResponse;
+import com.ssafy.mylifencut.user.exception.InvalidAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
@@ -227,13 +228,22 @@ public class UserServiceTest {
 	class refreshTokenTest {
 
 		@Test
+		@DisplayName("[실패] - 토큰이 null 일 경우")
+		void nullRefreshToken() {
+			// given
+			final String refreshToken = null;
+
+			// when
+
+			// then
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(refreshToken));
+		}
+
+		@Test
 		@DisplayName("[실패] - 발급되지 않았던 리프레쉬 토큰")
 		void notValidRefreshToken() {
 			// given
-			TokenRequest tokenRequest = TokenRequest.builder()
-				.accessToken("TOKEN")
-				.refreshToken("TOKEN")
-				.build();
+			final String refreshToken = "INVALID_TOKEN";
 			doReturn(false)
 				.when(jwtTokenProvider)
 				.validateToken(any());
@@ -241,17 +251,14 @@ public class UserServiceTest {
 			// when
 
 			// then
-			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(tokenRequest));
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(refreshToken));
 		}
 
 		@Test
 		@DisplayName("[실패] - 만료된 리프레쉬 토큰")
 		void expiredRefreshToken() {
 			// given
-			TokenRequest tokenRequest = TokenRequest.builder()
-				.accessToken("TOKEN")
-				.refreshToken("TOKEN")
-				.build();
+			final String refreshToken = "INVALID_TOKEN";
 			doReturn(false)
 				.when(jwtTokenProvider)
 				.validateToken(any());
@@ -259,17 +266,105 @@ public class UserServiceTest {
 			// when
 
 			// then
-			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(tokenRequest));
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(refreshToken));
 		}
 
 		@Test
-		@DisplayName("[실패] - 리프레쉬 토큰에 ID가 올바르지 않은 경우")
-		void notValidUserId() {
+		@DisplayName("[실패] - 저장된 리프레쉬 토큰이 없는 경우")
+		void isNotInRefreshToken() {
 			// given
-			TokenRequest tokenRequest = TokenRequest.builder()
-				.accessToken("TOKEN_BEFORE")
-				.refreshToken("TOKEN_BEFORE")
+			final String refreshToken = "VALID_TOKEN";
+			doReturn(true)
+				.when(jwtTokenProvider)
+				.validateToken(any());
+			doReturn(Optional.empty())
+				.when(refreshTokenRepository)
+				.findByToken(any());
+
+			// when
+
+			// then
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(refreshToken));
+		}
+
+		@Test
+		@DisplayName("[실패] - 저장된 리프레쉬 토큰이 다른 경우")
+		void isDifferentRefreshToken() {
+			// given
+			final String request = "VALID_TOKEN";
+			final RefreshToken refreshToken = RefreshToken.builder()
+				.token("TOKEN_DIFFERENT")
+				.userId(1)
 				.build();
+			doReturn(true)
+				.when(jwtTokenProvider)
+				.validateToken(any());
+			doReturn(Optional.of(refreshToken))
+				.when(refreshTokenRepository)
+				.findByToken(any());
+
+			// when
+
+			// then
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(request));
+		}
+
+		@Test
+		@DisplayName("[성공] - 올바른 리프레쉬 토큰")
+		void validRefreshToken() {
+			// given
+			final String request = "TOKEN_BEFORE";
+			Token token = Token.builder()
+				.accessToken("TOKEN_AFTER")
+				.refreshToken("TOKEN_AFTER")
+				.build();
+			RefreshToken refreshToken = RefreshToken.builder()
+				.token("TOKEN_BEFORE")
+				.userId(1)
+				.build();
+
+			doReturn(true)
+				.when(jwtTokenProvider)
+				.validateToken(any());
+			doReturn(Optional.of(refreshToken))
+				.when(refreshTokenRepository)
+				.findByToken(any());
+			doReturn(token)
+				.when(jwtTokenProvider)
+				.createToken(any());
+
+			// when
+			Token result = userService.reissueToken(request);
+
+			// then
+			assertEquals(token.getRefreshToken(), result.getRefreshToken());
+			assertEquals(token.getAccessToken(), result.getAccessToken());
+		}
+	}
+
+	@Nested
+	@DisplayName("토큰으로 회원 정보")
+	class TokenToUserInfo {
+		@Test
+		@DisplayName("[실패] - 토큰이 올바르지 않은 경우")
+		void notValidTokenError() {
+			// given
+			final String accessToken = "INVALID_TOKEN";
+			doReturn(false)
+				.when(jwtTokenProvider)
+				.validateToken(any());
+
+			// when
+
+			// then
+			assertThrows(InvalidAccessTokenException.class, () -> userService.getUserResponse(accessToken));
+		}
+
+		@Test
+		@DisplayName("[실패] - 유효한 토큰 및 사용자 없음")
+		void userNotFoundError() {
+			// given
+			final String accessToken = "VALID_TOKEN";
 			doReturn(true)
 				.when(jwtTokenProvider)
 				.validateToken(any());
@@ -283,20 +378,20 @@ public class UserServiceTest {
 			// when
 
 			// then
-			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(tokenRequest));
+			assertThrows(UserNotFoundException.class, () -> userService.getUserResponse(accessToken));
 		}
 
 		@Test
-		@DisplayName("[실패] - 저장된 리프레쉬 토큰이 없는 경우")
-		void isNotInRefreshToken() {
+		@DisplayName("[성공] - 유효한 토큰 및 사용자 존재")
+		void userFoundError() {
 			// given
-			TokenRequest tokenRequest = TokenRequest.builder()
-				.accessToken("TOKEN_BEFORE")
-				.refreshToken("TOKEN_BEFORE")
-				.build();
+			final String accessToken = "VALID_TOKEN";
 			User user = User.builder()
 				.id(1)
+				.email("ssafy@email.com")
+				.name("홍길동")
 				.build();
+
 			doReturn(true)
 				.when(jwtTokenProvider)
 				.validateToken(any());
@@ -308,87 +403,13 @@ public class UserServiceTest {
 				.findById(1);
 
 			// when
+			final UserResponse result = userService.getUserResponse(accessToken);
 
 			// then
-			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(tokenRequest));
-		}
-
-		@Test
-		@DisplayName("[실패] - 저장된 리프레쉬 토큰이 다른 경우")
-		void isDifferentRefreshToken() {
-			// given
-			TokenRequest tokenRequest = TokenRequest.builder()
-				.accessToken("TOKEN_BEFORE")
-				.refreshToken("TOKEN_BEFORE")
-				.build();
-			RefreshToken refreshToken = RefreshToken.builder()
-				.token("TOKEN_DIFFERENT")
-				.userId(1)
-				.build();
-			User user = User.builder()
-				.id(1)
-				.build();
-			doReturn(true)
-				.when(jwtTokenProvider)
-				.validateToken(any());
-			doReturn("1")
-				.when(jwtTokenProvider)
-				.getUserId(any());
-			doReturn(Optional.of(user))
-				.when(userRepository)
-				.findById(1);
-			doReturn(Optional.of(refreshToken))
-				.when(refreshTokenRepository)
-				.findByUserId(1);
-
-			// when
-
-			// then
-			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(tokenRequest));
-		}
-
-		@Test
-		@DisplayName("[성공] - 올바른 리프레쉬 토큰")
-		void validRefreshToken() {
-			// given
-			TokenRequest tokenRequest = TokenRequest.builder()
-				.accessToken("TOKEN_BEFORE")
-				.refreshToken("TOKEN_BEFORE")
-				.build();
-			TokenResponse tokenResponse = TokenResponse.builder()
-				.accessToken("TOKEN_AFTER")
-				.refreshToken("TOKEN_AFTER")
-				.build();
-			RefreshToken refreshToken = RefreshToken.builder()
-				.token("TOKEN_BEFORE")
-				.userId(1)
-				.build();
-			User user = User.builder()
-				.id(1)
-				.build();
-
-			doReturn(true)
-				.when(jwtTokenProvider)
-				.validateToken(any());
-			doReturn("1")
-				.when(jwtTokenProvider)
-				.getUserId(any());
-			doReturn(Optional.of(user))
-				.when(userRepository)
-				.findById(1);
-			doReturn(Optional.of(refreshToken))
-				.when(refreshTokenRepository)
-				.findByUserId(1);
-			doReturn(tokenResponse)
-				.when(jwtTokenProvider)
-				.createToken(any());
-
-			// when
-			TokenResponse result = userService.reissueToken(tokenRequest);
-
-			// then
-			assertEquals(tokenResponse.getRefreshToken(), result.getRefreshToken());
-			assertEquals(tokenResponse.getAccessToken(), result.getAccessToken());
+			assertEquals(user.getId(), result.getUserId());
+			assertEquals(user.getEmail(), result.getEmail());
+			assertEquals(user.getName(), result.getName());
+			assertEquals(accessToken, result.getAccessToken());
 		}
 	}
 
