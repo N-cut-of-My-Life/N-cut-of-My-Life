@@ -21,7 +21,6 @@ import com.ssafy.mylifencut.user.domain.RefreshToken;
 import com.ssafy.mylifencut.user.domain.Role;
 import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.dto.Token;
-import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
@@ -180,26 +179,22 @@ public class UserService {
 	}
 
 	@Transactional
-	public Token reissueToken(TokenRequest tokenRequest) {
+	public Token reissueToken(String refreshToken) {
 
-		if (!jwtTokenProvider.validateToken(tokenRequest.getRefreshToken())) {
+		if (!jwtTokenProvider.validateToken(refreshToken)) {
 			throw new InvalidRefreshTokenException();
 		}
 
-		String accessToken = tokenRequest.getAccessToken();
-
-		User user = userRepository.findById(Integer.parseInt(jwtTokenProvider.getUserId(accessToken)))
-			.orElseThrow(InvalidRefreshTokenException::new);
-		RefreshToken refreshToken = refreshTokenRepository.findByUserId(user.getId())
+		RefreshToken newToken = refreshTokenRepository.findByToken(refreshToken)
 			.orElseThrow(InvalidRefreshTokenException::new);
 
-		if (!refreshToken.getToken().equals(tokenRequest.getRefreshToken())) {
+		if (!newToken.getToken().equals(refreshToken)) {
 			throw new InvalidRefreshTokenException();
 		}
 
-		Token token = jwtTokenProvider.createToken(Integer.toString(user.getId()));
-		refreshToken.updateToken(token.getRefreshToken());
-		refreshTokenRepository.save(refreshToken);
+		Token token = jwtTokenProvider.createToken(Integer.toString(newToken.getUserId()));
+		newToken.updateToken(token.getRefreshToken());
+		refreshTokenRepository.save(newToken);
 
 		return token;
 	}
