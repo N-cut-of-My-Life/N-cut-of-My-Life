@@ -127,6 +127,7 @@ router.beforeEach(function (to, from, next) {
       next();
     } else {
       alert("로그인 필요");
+      router.push({ name: "intro" });
     }
   }
 });
