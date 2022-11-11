@@ -14,7 +14,6 @@ public class CommonAuthenticationEntryPoint implements AuthenticationEntryPoint 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 		AuthenticationException authException) throws IOException, ServletException {
-		System.out.println("EXCEPTION");
 		response.sendRedirect("/user/exception");
 	}
 }
