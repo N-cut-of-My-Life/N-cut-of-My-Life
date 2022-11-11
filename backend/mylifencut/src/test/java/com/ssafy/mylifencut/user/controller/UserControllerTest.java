@@ -29,6 +29,7 @@ import com.google.gson.Gson;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.user.dto.Token;
+import com.ssafy.mylifencut.user.dto.UserResponse;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.service.UserService;
@@ -89,15 +90,24 @@ public class UserControllerTest {
 			// given
 			final String url = "/user/login";
 			final Map<String, String> token = new HashMap<>();
-			token.put("accessToken", "INVALID_TOKEN");
+			token.put("accessToken", "VALID_TOKEN");
 			final Token jwtToken = Token.builder()
 				.accessToken("NEW_TOKEN")
 				.refreshToken("NEW_TOKEN")
+				.build();
+			final UserResponse userResponse = UserResponse.builder()
+				.userId(1)
+				.name("홍길동")
+				.email("ssafy@email.com")
+				.accessToken("NEW_TOKEN")
 				.build();
 
 			doReturn(jwtToken)
 				.when(userService)
 				.kakaoLogin(any());
+			doReturn(userResponse)
+				.when(userService)
+				.getUserResponse(jwtToken.getAccessToken());
 
 			// when
 			final ResultActions resultActions = mockMvc.perform(
@@ -112,10 +122,13 @@ public class UserControllerTest {
 				.getResponse()
 				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 			Map map = (Map)response.getData();
-			assertEquals(map.get("accessToken"), jwtToken.getAccessToken());
-			assertEquals(map.get("refreshToken"), jwtToken.getRefreshToken());
+			assertEquals(map.get("userId"), (double)userResponse.getUserId());
+			assertEquals(map.get("name"), userResponse.getName());
+			assertEquals(map.get("email"), userResponse.getEmail());
+			assertEquals(map.get("accessToken"), userResponse.getAccessToken());
 			assertTrue(response.isSuccess());
 			assertEquals(KAKAO_LOGIN_SUCCESS_MESSAGE, response.getMessage());
+			cookie().value("refreshToken", jwtToken.getRefreshToken());
 		}
 	}
 
@@ -185,9 +198,18 @@ public class UserControllerTest {
 				.accessToken("NEW_TOKEN")
 				.refreshToken("NEW_TOKEN")
 				.build();
+			final UserResponse userResponse = UserResponse.builder()
+				.userId(1)
+				.name("홍길동")
+				.email("ssafy@email.com")
+				.accessToken("NEW_TOKEN")
+				.build();
 			doReturn(token)
 				.when(userService)
 				.reissueToken(any());
+			doReturn(userResponse)
+				.when(userService)
+				.getUserResponse(token.getAccessToken());
 
 			// when
 			final ResultActions resultActions = mockMvc.perform(
@@ -203,7 +225,11 @@ public class UserControllerTest {
 				.getResponse()
 				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 
-			assertEquals(token.getAccessToken(), response.getData());
+			Map map = (Map)response.getData();
+			assertEquals(map.get("userId"), (double)userResponse.getUserId());
+			assertEquals(map.get("name"), userResponse.getName());
+			assertEquals(map.get("email"), userResponse.getEmail());
+			assertEquals(map.get("accessToken"), userResponse.getAccessToken());
 			assertTrue(response.isSuccess());
 			assertEquals(TOKEN_REISSUE_SUCCESS_MESSAGE, response.getMessage());
 			cookie().value("refreshToken", token.getRefreshToken());
