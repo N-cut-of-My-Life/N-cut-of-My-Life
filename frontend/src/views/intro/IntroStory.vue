@@ -1,11 +1,15 @@
 <template>
   <video muted autoplay loop playbackRate="0.7">
-    <source src="@/assets/intro_video.mp4" type="video/mp4">
+    <source src="@/assets/intro_video.mp4" type="video/mp4" />
   </video>
   <audio loop autoplay volume="0.7">
-    <source src="@/assets/audio/piano-moment.mp3" type="audio/mp3">
+    <source src="@/assets/audio/piano-moment.mp3" type="audio/mp3" />
   </audio>
-  <splide id="carousel" :options="options" @splide:arrows:updated="checkLastSlide">
+  <splide
+    id="carousel"
+    :options="options"
+    @splide:arrows:updated="checkLastSlide"
+  >
     <splide-slide>
       <h1>
         안녕하세요<br />
@@ -83,7 +87,7 @@
 <script>
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import "@splidejs/splide/dist/css/themes/splide-default.min.css";
-import { useMusicStore } from '@/store/index'
+import { useMusicStore } from "@/store/index";
 
 export default {
   name: "MainSlider",
@@ -104,34 +108,33 @@ export default {
         autoplay: true,
       },
       isLast: false,
-      elementVisible: false
-    }
+      elementVisible: false,
+    };
   },
   updated() {
     if (this.isLast === true) {
-      setTimeout(() => this.elementVisible = true, 2000)
+      setTimeout(() => (this.elementVisible = true), 2000);
     }
   },
   methods: {
     checkLastSlide(splide, prev, next, prevIndex, nextIndex) {
       if (nextIndex === -1) {
-        this.isLast = true
+        this.isLast = true;
       } else {
-        this.isLast = false
+        this.isLast = false;
       }
-
-    }
+    },
   },
   mounted() {
-        useMusicStore().isSoundActive()
-    },
+    useMusicStore().isSoundActive();
+  },
 };
 </script>
 
 <style scoped>
 @font-face {
-  font-family: 'kakao';
-  src: url('@/fonts/KakaoBold.ttf') format('truetype');
+  font-family: "kakao";
+  src: url("@/fonts/KakaoBold.ttf") format("truetype");
 }
 
 body {
@@ -185,7 +188,6 @@ h1 {
 }
 
 @keyframes wave {
-
   0%,
   40%,
   100% {
@@ -200,25 +202,24 @@ h1 {
 .button_2 {
   border-radius: 2vw;
   border: none;
-  background: linear-gradient(to right, #8bbccc , #4c6793);
+  background: linear-gradient(to right, #8bbccc, #4c6793);
   position: relative;
   margin: 300px auto 0;
   transition: all 0.3s ease-in-out 0s;
 }
 
 .button_2::before {
-  content: '';
+  content: "";
   border-radius: 1000px;
   min-width: calc(160px + 12px);
   min-height: calc(60px + 12px);
   box-shadow: 0 0 60px #ffffff;
-  ;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0.5;
-  transition: all .3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
   animation: ring 1.5s infinite;
 }
 

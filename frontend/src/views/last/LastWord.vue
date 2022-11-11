@@ -1,231 +1,280 @@
 <template>
-    <video muted autoplay loop playbackRate="1.0" style="width:100%;">
-        <source src="@/assets/space_window.mp4" type="video/mp4">
-    </video>
-    <audio id="myaudios" loop autoplay :src="audios[currentAudio]" volume="0.2">
-    </audio>
-    <img class="bubble" :src="images[currentImage]" alt="" />
-    <div class="jump">
-        <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
-            뒤로
-        </b-button>
-        &nbsp;
-        <b-button @click="nextImage()" class="button" size="sm" :disabled="currentImage === (images.length - 1)">
-            다음
-        </b-button>
+  <video muted autoplay loop playbackRate="1.0" style="width: 100%">
+    <source src="@/assets/space_window.mp4" type="video/mp4" />
+  </video>
+  <audio
+    id="myaudios"
+    loop
+    autoplay
+    :src="audios[currentAudio]"
+    volume="0.2"
+  ></audio>
+  <img class="bubble" :src="images[currentImage]" alt="" />
+  <div class="jump">
+    <b-button
+      @click="previousImage()"
+      class="button"
+      size="sm"
+      :disabled="currentImage === 0"
+    >
+      뒤로
+    </b-button>
+    &nbsp;
+    <b-button
+      @click="nextImage()"
+      class="button"
+      size="sm"
+      :disabled="currentImage === images.length - 1"
+    >
+      다음
+    </b-button>
+  </div>
+  <div v-if="currentImage === images.length - 1" class="last">
+    <b-button
+      v-show="elementVisible"
+      class="button_2"
+      size="md"
+      href="#openModal-about"
+    >
+      <div class="wave" v-b-modal.modal-last>
+        <span style="--i: 1">나</span>
+        <span style="--i: 2">에</span>
+        <span style="--i: 3">게</span>
+        <span style="--i: 4">&nbsp;</span>
+        <span style="--i: 5">남</span>
+        <span style="--i: 6">기</span>
+        <span style="--i: 7">는</span>
+        <span style="--i: 8">&nbsp;</span>
+        <span style="--i: 9">마</span>
+        <span style="--i: 10">지</span>
+        <span style="--i: 11">막</span>
+        <span style="--i: 12">&nbsp;</span>
+        <span style="--i: 13">말</span>
+        <span style="--i: 14">을</span>
+        <span style="--i: 15">&nbsp;</span>
+        <span style="--i: 16">이</span>
+        <span style="--i: 17">&nbsp;</span>
+        <span style="--i: 18">곳</span>
+        <span style="--i: 19">에</span>
+        <span style="--i: 20">&nbsp;</span>
+        <span style="--i: 21">남</span>
+        <span style="--i: 22">겨</span>
+        <span style="--i: 23">주</span>
+        <span style="--i: 24">세</span>
+        <span style="--i: 25">요</span>
+        <span style="--i: 26">!</span>
+      </div>
+    </b-button>
+  </div>
+  <b-modal
+    id="modal-last"
+    hide-header
+    hide-footer
+    centered
+    no-stacking
+    style="text-align: center; border-radius: 1vw"
+    :no-close-on-backdrop="true"
+  >
+    <img
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      class="x_button"
+      src="@/assets/xButton/x_sad.svg"
+      style="cursor: pointer; float: right"
+      alt=""
+    />
+    <div
+      style="
+        font-size: 1.3vw;
+        margin-top: 5%;
+        margin-bottom: 3%;
+        font-weight: 400;
+      "
+    >
+      나에게 남길 마지말 말을 적어주세요!
     </div>
-    <div v-if="currentImage === (images.length - 1)" class="last">
-        <b-button v-show="elementVisible" class="button_2" size="md" href="#openModal-about">
-            <div class="wave" v-b-modal.modal-last>
-                <span style="--i: 1">나</span>
-                <span style="--i: 2">에</span>
-                <span style="--i: 3">게</span>
-                <span style="--i: 4">&nbsp;</span>
-                <span style="--i: 5">남</span>
-                <span style="--i: 6">기</span>
-                <span style="--i: 7">는</span>
-                <span style="--i: 8">&nbsp;</span>
-                <span style="--i: 9">마</span>
-                <span style="--i: 10">지</span>
-                <span style="--i: 11">막</span>
-                <span style="--i: 12">&nbsp;</span>
-                <span style="--i: 13">말</span>
-                <span style="--i: 14">을</span>
-                <span style="--i: 15">&nbsp;</span>
-                <span style="--i: 16">이</span>
-                <span style="--i: 17">&nbsp;</span>
-                <span style="--i: 18">곳</span>
-                <span style="--i: 19">에</span>
-                <span style="--i: 20">&nbsp;</span>
-                <span style="--i: 21">남</span>
-                <span style="--i: 22">겨</span>
-                <span style="--i: 23">주</span>
-                <span style="--i: 24">세</span>
-                <span style="--i: 25">요</span>
-                <span style="--i: 26">!</span>
-            </div>
-        </b-button>
-    </div>
-    <b-modal id="modal-last" hide-header hide-footer centered no-stacking style="text-align: center; border-radius: 1vw;"
-        :no-close-on-backdrop="true">
-        <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_sad.svg"
-            style="cursor:pointer; float: right;" alt="" />
-        <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">나에게 남길 마지말 말을 적어주세요!</div>
-        <b-container ref="form" style="margin-bottom:3.8%">
-            <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
-                style="border-radius: 1vw; background-color: #CFD4DF;">
-            </b-form-textarea>
-        </b-container>
-        <b-button text @click="submit"
-            style="color: #ffffff; background-color: #25316D; border: none; border-radius: 1vw;">
-            저장
-        </b-button>
-    </b-modal>
+    <b-container ref="form" style="margin-bottom: 3.8%">
+      <b-form-textarea
+        id="content"
+        placeholder=""
+        rows="10"
+        max-rows="15"
+        required
+        style="border-radius: 1vw; background-color: #cfd4df"
+      >
+      </b-form-textarea>
+    </b-container>
+    <b-button
+      text
+      @click="submit"
+      style="
+        color: #ffffff;
+        background-color: #25316d;
+        border: none;
+        border-radius: 1vw;
+      "
+    >
+      저장
+    </b-button>
+  </b-modal>
 </template>
 
 <script setup>
-import { onUpdated, ref } from 'vue'
+import { onUpdated, ref } from "vue";
 const images = [
-    require('@/assets/PlanetSpeech/LastSpeech/last_bubble_1.svg'),
-    require('@/assets/PlanetSpeech/LastSpeech/last_bubble_2.svg'),
-    require('@/assets/PlanetSpeech/LastSpeech/last_bubble_3.svg'),
-    require('@/assets/PlanetSpeech/LastSpeech/last_bubble_4.svg'),
-    require('@/assets/PlanetSpeech/LastSpeech/last_bubble_5.svg'),
-    require('@/assets/PlanetSpeech/LastSpeech/last_bubble_6.svg'),
-
-]
-const audios = [
-    require('@/assets/audio/mix_last.mp3')
-]
-let currentImage = ref(0)
-let elementVisible = ref(false)
-const currentAudio = ref(0)
+  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_1.svg"),
+  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_2.svg"),
+  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_3.svg"),
+  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_4.svg"),
+  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_5.svg"),
+  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_6.svg"),
+];
+const audios = [require("@/assets/audio/mix_last.mp3")];
+let currentImage = ref(0);
+let elementVisible = ref(false);
+const currentAudio = ref(0);
 
 const nextImage = () => {
-    if (currentImage.value !== (images.length - 1))
-        currentImage.value++;
-}
+  if (currentImage.value !== images.length - 1) currentImage.value++;
+};
 const previousImage = () => {
-    if (currentImage.value !== 0)
-        currentImage.value--;
-}
+  if (currentImage.value !== 0) currentImage.value--;
+};
 onUpdated(() => {
-    if (currentImage.value == (images.length - 1)) {
-        setTimeout(() => elementVisible.value = true, 2000)
-    }
-})
-
+  if (currentImage.value == images.length - 1) {
+    setTimeout(() => (elementVisible.value = true), 2000);
+  }
+});
 </script>
 
 <style scoped>
 html,
 body {
-    height: 100%;
+  height: 100%;
 }
 
 .button_prev {
-    background-color: #ffffff;
-    color: #141414;
-    border-radius: 0.8vw;
-    border-color: #ffffff;
+  background-color: #ffffff;
+  color: #141414;
+  border-radius: 0.8vw;
+  border-color: #ffffff;
 }
 
 body {
-    margin: 0;
+  margin: 0;
 }
 
 .bubble {
-    position: absolute;
-    right: 46.5%;
-    bottom: 10%;
-    /* height: 50%; */
-    margin: auto;
+  position: absolute;
+  right: 46.5%;
+  bottom: 10%;
+  /* height: 50%; */
+  margin: auto;
 }
 
 .jump {
-    position: absolute;
-    right: 5%;
-    bottom: 5%;
-    margin: auto;
-    text-align: right;
-    font-size: 3rem;
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  margin: auto;
+  text-align: right;
+  font-size: 3rem;
 }
 
 .last {
-    position: absolute;
-    bottom: 50%;
-    left: 37.5%;
-    margin: auto;
+  position: absolute;
+  bottom: 50%;
+  left: 37.5%;
+  margin: auto;
 }
 
 .button {
-    background-color: #7882a4;
-    color: #ffffff;
-    border-radius: 0.8vw;
-    border-color: #7882a4;
+  background-color: #7882a4;
+  color: #ffffff;
+  border-radius: 0.8vw;
+  border-color: #7882a4;
 }
 
 .button_2 {
-    border-radius: 1vw;
-    border: none;
-    background-color: #7c99ac;
-    position: relative;
-    margin: 300px auto 0;
-    transition: all 0.3s ease-in-out 0s;
+  border-radius: 1vw;
+  border: none;
+  background-color: #7c99ac;
+  position: relative;
+  margin: 300px auto 0;
+  transition: all 0.3s ease-in-out 0s;
 }
 
 .button_2::before {
-    content: '';
-    border-radius: 1000px;
-    min-width: calc(400px + 12px);
-    min-height: calc(60px + 12px);
-    box-shadow: 0 0 60px #ffffff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0.5;
-    transition: all .3s ease-in-out 0s;
-    animation: ring 1.5s infinite;
+  content: "";
+  border-radius: 1000px;
+  min-width: calc(400px + 12px);
+  min-height: calc(60px + 12px);
+  box-shadow: 0 0 60px #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  transition: all 0.3s ease-in-out 0s;
+  animation: ring 1.5s infinite;
 }
 
 .button_2:hover,
 .button_2:focus {
-    color: #313133;
-    transform: translateY(-6px);
+  color: #313133;
+  transform: translateY(-6px);
 }
 
 .button_2:hover::before,
 .button_2:focus::before {
-    opacity: 1;
+  opacity: 1;
 }
 
 .button_2:hover::after,
 .button_2:focus::after {
-    animation: none;
-    display: none;
+  animation: none;
+  display: none;
 }
 
 @keyframes ring {
-    0% {
-        width: fit-content;
-        height: fit-content;
-        opacity: 1;
-    }
+  0% {
+    width: fit-content;
+    height: fit-content;
+    opacity: 1;
+  }
 
-    100% {
-        width: fit-content;
-        height: fit-content;
-        opacity: 0;
-    }
+  100% {
+    width: fit-content;
+    height: fit-content;
+    opacity: 0;
+  }
 }
 
 .wave {
-    position: relative;
-    /* -webkit-box-reflect: below -1px linear-gradient(transparent, #FFFFFF); */
+  position: relative;
+  /* -webkit-box-reflect: below -1px linear-gradient(transparent, #FFFFFF); */
 }
 
 .wave span {
-    position: relative;
-    display: inline-block;
-    color: #FFFFFF;
-    font-size: 1.2vw;
-    text-transform: uppercase;
-    animation: wave 3s infinite;
-    animation-delay: calc(0.1s * var(--i));
+  position: relative;
+  display: inline-block;
+  color: #ffffff;
+  font-size: 1.2vw;
+  text-transform: uppercase;
+  animation: wave 3s infinite;
+  animation-delay: calc(0.1s * var(--i));
 }
 
 @keyframes wave {
+  0%,
+  40%,
+  100% {
+    transform: translateY(0);
+  }
 
-    0%,
-    40%,
-    100% {
-        transform: translateY(0);
-    }
-
-    20% {
-        transform: translateY(-3px);
-    }
+  20% {
+    transform: translateY(-3px);
+  }
 }
 
 .x_button {
@@ -233,20 +282,20 @@ body {
 }
 
 video {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -100;
-    background-size: cover;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  background-size: cover;
 }
 </style>
 
 <style>
 #modal-last .modal-content {
-  background-color: #5F6F94;
+  background-color: #5f6f94;
 }
 </style>

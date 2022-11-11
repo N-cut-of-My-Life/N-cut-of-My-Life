@@ -1,43 +1,87 @@
 <template>
   <div class="title">행성 목록</div>
   <video muted autoplay loop playbackRate="1.0">
-    <source src="@/assets/intro_video.mp4" type="video/mp4">
+    <source src="@/assets/intro_video.mp4" type="video/mp4" />
   </video>
   <audio muted loop controls autoplay volume="0.5">
-    <source src="@/assets/audio/daylight.mp3" type="audio/mp3">
+    <source src="@/assets/audio/daylight.mp3" type="audio/mp3" />
   </audio>
   <div class="other">
-    <b-button @click="gotoPage({ name: 'introfirstpage' })" class="button_prev" size="sm">
+    <b-button
+      @click="gotoPage({ name: 'introfirstpage' })"
+      class="button_prev"
+      size="sm"
+    >
       <strong>&lt;</strong>&nbsp;&nbsp;돌아가기
     </b-button>
   </div>
   <div class="bg">
     <div class="planet"></div>
-    <div class="planet" @click="gotoPage({ name: 'sadplanet' })" v-b-tooltip.hover.top="'훌쩍훌쩍 행성'"></div>
-    <div class="planet" @click="gotoPage({ name: 'happyplanet' })" v-b-tooltip.hover.left="'하하호호 행성'"></div>
-    <div class="planet" @click="gotoPage({ name: 'musicplanet' })" v-b-tooltip.hover.bottom="'둠칫둠칫 행성'"></div>
-    <div class="planet" @click="gotoPage({ name: 'dreamplanet' })" v-b-tooltip.hover.top="'이루지못 행성'"></div>
-    <div class="planet" @click="gotoPage({ name: 'regretplanet' })" v-b-tooltip.hover.bottom="'괜히글 행성'"></div>
-    <div class="planet" @click="gotoPage({ name: 'preciousplanet' })" v-b-tooltip.hover.top="'넌너무소중 행성'"></div>
-        <img class="planet" src="../../assets/planet/blink.png" alt="" @click="gotoPage({ name: 'treasureplanet' })" v-b-tooltip.hover.right="'반짝반짝 행성'"/>
-    <img class="stars" src="../../assets/planet/stars.png" alt="">
-    <img class="stars_line blink_star" src="../../assets/planet/stars-line.png" alt="">
-    <img class="teapot" src="../../assets/planet/teapot.png" alt="" @click="gotoPage({ name: 'genieplanet' })" v-b-tooltip.hover.top="'지니 행성'"/>
+    <div
+      class="planet"
+      @click="gotoPage({ name: 'sadplanet' })"
+      v-b-tooltip.hover.top="'훌쩍훌쩍 행성'"
+    ></div>
+    <div
+      class="planet"
+      @click="gotoPage({ name: 'happyplanet' })"
+      v-b-tooltip.hover.left="'하하호호 행성'"
+    ></div>
+    <div
+      class="planet"
+      @click="gotoPage({ name: 'musicplanet' })"
+      v-b-tooltip.hover.bottom="'둠칫둠칫 행성'"
+    ></div>
+    <div
+      class="planet"
+      @click="gotoPage({ name: 'dreamplanet' })"
+      v-b-tooltip.hover.top="'이루지못 행성'"
+    ></div>
+    <div
+      class="planet"
+      @click="gotoPage({ name: 'regretplanet' })"
+      v-b-tooltip.hover.bottom="'괜히글 행성'"
+    ></div>
+    <div
+      class="planet"
+      @click="gotoPage({ name: 'preciousplanet' })"
+      v-b-tooltip.hover.top="'넌너무소중 행성'"
+    ></div>
+    <img
+      class="planet"
+      src="../../assets/planet/blink.png"
+      alt=""
+      @click="gotoPage({ name: 'treasureplanet' })"
+      v-b-tooltip.hover.right="'반짝반짝 행성'"
+    />
+    <img class="stars" src="../../assets/planet/stars.png" alt="" />
+    <img
+      class="stars_line blink_star"
+      src="../../assets/planet/stars-line.png"
+      alt=""
+    />
+    <img
+      class="teapot"
+      src="../../assets/planet/teapot.png"
+      alt=""
+      @click="gotoPage({ name: 'genieplanet' })"
+      v-b-tooltip.hover.top="'지니 행성'"
+    />
   </div>
 </template>
 
 <script>
-import { useMusicStore } from '@/store/index'
+import { useMusicStore } from "@/store/index";
 export default {
   methods: {
     gotoPage(link) {
-      this.$router.push(link)
-    }
+      this.$router.push(link);
+    },
   },
   mounted() {
-        useMusicStore().isSoundActive()
-    },
-}
+    useMusicStore().isSoundActive();
+  },
+};
 </script>
 
 <style scoped>
@@ -53,8 +97,8 @@ video {
   background-size: cover;
 }
 
-body{
-  margin:0;
+body {
+  margin: 0;
 }
 
 .title {
@@ -147,7 +191,6 @@ body{
   -webkit-filter: none;
 }
 
-
 .planet:nth-child(1) {
   display: none;
   width: 256px;
@@ -204,7 +247,8 @@ body{
   -webkit-filter: grayscale(75%);
   animation: rotation_4 20s infinite linear;
   cursor: pointer;
-  background: rgb(20, 20, 20, 0) url("../../assets/planet/music.png") repeat-x 0% 0%;
+  background: rgb(20, 20, 20, 0) url("../../assets/planet/music.png") repeat-x
+    0% 0%;
   background-size: 256px 256px;
   max-height: auto;
 }
@@ -311,7 +355,6 @@ body{
   filter: none;
 }
 
-
 @keyframes blinker {
   50% {
     opacity: 0;
@@ -325,7 +368,7 @@ body{
   }
 
   to {
-    transform: scale(0.6) rotate(0deg) translate(400%)rotate(30deg);
+    transform: scale(0.6) rotate(0deg) translate(400%) rotate(30deg);
     background-position: -511px 0;
   }
 }

@@ -42,25 +42,46 @@
   </div>
   <img class="bubble" :src="images[currentImage]" alt="" />
   <audio loop autoplay volume="0.3">
-    <source src="@/assets/audio/mix_sad.mp3" type="audio/mp3">
+    <source src="@/assets/audio/mix_sad.mp3" type="audio/mp3" />
   </audio>
   <div class="other">
-    <b-button @click="gotoPage({ name: 'planetlist' })" variant="primary" class="button_prev" size="sm">
+    <b-button
+      @click="gotoPage({ name: 'planetlist' })"
+      variant="primary"
+      class="button_prev"
+      size="sm"
+    >
       <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
     </b-button>
   </div>
   <div class="jump">
-    <b-button @click="previousImage()" variant="primary" class="button" size="sm" :disabled="currentImage === 0">
+    <b-button
+      @click="previousImage()"
+      variant="primary"
+      class="button"
+      size="sm"
+      :disabled="currentImage === 0"
+    >
       뒤로
     </b-button>
     &nbsp;
-    <b-button @click="nextImage()" variant="primary" class="button" size="sm"
-      :disabled="currentImage === (images.length - 1)">
+    <b-button
+      @click="nextImage()"
+      variant="primary"
+      class="button"
+      size="sm"
+      :disabled="currentImage === images.length - 1"
+    >
       다음
     </b-button>
   </div>
-  <div v-if="currentImage === (images.length - 1)" class="last">
-    <b-button v-show="elementVisible" variant="primary" class="button_2" size="md">
+  <div v-if="currentImage === images.length - 1" class="last">
+    <b-button
+      v-show="elementVisible"
+      variant="primary"
+      class="button_2"
+      size="md"
+    >
       <div class="wave" v-b-modal.modal-sad>
         <span style="--i: 1">슬</span>
         <span style="--i: 2">펐</span>
@@ -76,60 +97,95 @@
       </div>
     </b-button>
   </div>
-  <b-modal id="modal-sad" hide-header hide-footer centered no-stacking style="text-align: center; border-radius: 1vw;"
-    :no-close-on-backdrop="true">
-    <img data-bs-dismiss="modal" aria-label="Close" class="x_button" src="@/assets/xButton/x_sad.svg"
-      style="cursor:pointer; float: right;" alt="" />
-    <div style="font-size:1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400;">슬펐던 기억들을 이곳에 적어주세요!</div>
-    <b-container ref="form" style="margin-bottom:3.8%">
-      <b-form-textarea id="content" placeholder="" rows="10" max-rows="15" required
-        style="border-radius: 1vw; background-color: #CFD4DF;">
+  <b-modal
+    id="modal-sad"
+    hide-header
+    hide-footer
+    centered
+    no-stacking
+    style="text-align: center; border-radius: 1vw"
+    :no-close-on-backdrop="true"
+  >
+    <img
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      class="x_button"
+      src="@/assets/xButton/x_sad.svg"
+      style="cursor: pointer; float: right"
+      alt=""
+    />
+    <div
+      style="
+        font-size: 1.3vw;
+        margin-top: 5%;
+        margin-bottom: 3%;
+        font-weight: 400;
+      "
+    >
+      슬펐던 기억들을 이곳에 적어주세요!
+    </div>
+    <b-container ref="form" style="margin-bottom: 3.8%">
+      <b-form-textarea
+        id="content"
+        placeholder=""
+        rows="10"
+        max-rows="15"
+        required
+        style="border-radius: 1vw; background-color: #cfd4df"
+      >
       </b-form-textarea>
     </b-container>
-    <b-button text @click="submit" style="color: #ffffff; background-color: #25316D; border: none; border-radius: 1vw;">
+    <b-button
+      text
+      @click="submit"
+      style="
+        color: #ffffff;
+        background-color: #25316d;
+        border: none;
+        border-radius: 1vw;
+      "
+    >
       저장
     </b-button>
   </b-modal>
 </template>
 
 <script>
-import { useMusicStore } from '@/store/index'
+import { useMusicStore } from "@/store/index";
 export default {
   data() {
     return {
       images: [
-        require('@/assets/PlanetSpeech/SadSpeech/sad_bubble_1.svg'),
-        require('@/assets/PlanetSpeech/SadSpeech/sad_bubble_2.svg'),
-        require('@/assets/PlanetSpeech/SadSpeech/sad_bubble_3.svg'),
+        require("@/assets/PlanetSpeech/SadSpeech/sad_bubble_1.svg"),
+        require("@/assets/PlanetSpeech/SadSpeech/sad_bubble_2.svg"),
+        require("@/assets/PlanetSpeech/SadSpeech/sad_bubble_3.svg"),
       ],
       currentImage: 0,
-      elementVisible: false
-    }
+      elementVisible: false,
+    };
   },
   methods: {
     nextImage() {
-      if (this.currentImage !== (this.images.length - 1))
-        this.currentImage++;
+      if (this.currentImage !== this.images.length - 1) this.currentImage++;
     },
 
     previousImage() {
-      if (this.currentImage !== 0)
-        this.currentImage--;
+      if (this.currentImage !== 0) this.currentImage--;
     },
 
     gotoPage(link) {
-      this.$router.push(link)
-    }
+      this.$router.push(link);
+    },
   },
   updated() {
-    if (this.currentImage == (this.images.length - 1)) {
-      setTimeout(() => this.elementVisible = true, 2000)
+    if (this.currentImage == this.images.length - 1) {
+      setTimeout(() => (this.elementVisible = true), 2000);
     }
   },
   mounted() {
-        useMusicStore().isSoundActive()
-    },
-}
+    useMusicStore().isSoundActive();
+  },
+};
 </script>
 
 <style scoped>
@@ -157,7 +213,8 @@ body {
 }
 
 .jumbotron {
-  background: url("@/assets/PlanetBackground/sad.svg") no-repeat center center fixed;
+  background: url("@/assets/PlanetBackground/sad.svg") no-repeat center center
+    fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -193,7 +250,7 @@ body {
 }
 
 .button {
-  background-color: #08155B;
+  background-color: #08155b;
   color: #ffffff;
   border-radius: 0.8vw;
   border-color: #a28dc4;
@@ -209,7 +266,7 @@ body {
 .button_2 {
   border-radius: 0.8vw;
   /* border-color: #81c6e8; */
-  background-color: #25316D;
+  background-color: #25316d;
   position: relative;
   margin: 300px auto 0;
   transition: all 0.3s ease-in-out 0s;
@@ -220,18 +277,17 @@ body {
 }
 
 .button_2::before {
-  content: '';
+  content: "";
   border-radius: 1000px;
   min-width: calc(220px + 12px);
   min-height: calc(60px + 12px);
   box-shadow: 0 0 60px #ffffff;
-  ;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0.5;
-  transition: all .3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
   animation: ring 1.5s infinite;
 }
 
@@ -274,7 +330,7 @@ body {
 .wave span {
   position: relative;
   display: inline-block;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 1.2vw;
   text-transform: uppercase;
   animation: wave 3s infinite;
@@ -546,9 +602,7 @@ body {
   }
 }
 
-
 @keyframes wave {
-
   0%,
   40%,
   100% {
@@ -562,7 +616,6 @@ body {
 </style>
 <style>
 #modal-sad .modal-content {
-  background-color: #5F6F94;
-  ;
+  background-color: #5f6f94;
 }
 </style>
