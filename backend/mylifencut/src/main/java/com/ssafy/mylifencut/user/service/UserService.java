@@ -178,7 +178,6 @@ public class UserService {
 			.orElseThrow(UserNotFoundException::new);
 	}
 
-	@Transactional
 	public Token reissueToken(String refreshToken) {
 
 		if (refreshToken == null || !jwtTokenProvider.validateToken(refreshToken)) {
