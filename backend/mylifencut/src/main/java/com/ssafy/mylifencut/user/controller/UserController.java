@@ -35,10 +35,11 @@ public class UserController {
 
 	@PostMapping("/login")
 	@ApiOperation(value = "카카오 로그인", notes = "카카오 AccessToken으로 로그인")
-	public ResponseEntity<BaseResponse> kakaoLogin(@RequestBody KakaoRequest kakaoRequest) {
+	public ResponseEntity<BaseResponse> kakaoLogin(@RequestBody KakaoRequest kakaoRequest,
+		HttpServletResponse response) {
 		String accessToken = kakaoRequest.getAccessToken();
-		return new ResponseEntity<>(
-			BaseResponse.from(true, KAKAO_LOGIN_SUCCESS_MESSAGE, userService.kakaoLogin(accessToken)), HttpStatus.OK);
+		Token token = userService.kakaoLogin(accessToken);
+		return getUserInfo(response, token, KAKAO_LOGIN_SUCCESS_MESSAGE);
 	}
 
 	@GetMapping("/token")
@@ -51,6 +52,11 @@ public class UserController {
 		@CookieValue(value = "refreshToken", required = false) String refreshToken, HttpServletResponse response) {
 		Token token = userService.reissueToken(refreshToken);
 
+		return getUserInfo(response, token, TOKEN_REISSUE_SUCCESS_MESSAGE);
+	}
+
+	private ResponseEntity<BaseResponse> getUserInfo(HttpServletResponse response, Token token,
+		String message) {
 		Cookie cookie = new Cookie("refreshToken", token.getRefreshToken());
 
 		cookie.setSecure(true);
@@ -62,7 +68,7 @@ public class UserController {
 		response.addCookie(cookie);
 
 		return new ResponseEntity<>(
-			BaseResponse.from(true, TOKEN_REISSUE_SUCCESS_MESSAGE, token.getAccessToken()),
+			BaseResponse.from(true, message, userService.getUserResponse(token.getAccessToken())),
 			HttpStatus.OK);
 	}
 }
