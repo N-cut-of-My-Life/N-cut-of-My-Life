@@ -137,6 +137,22 @@
           />
         </li>
       </ol>
+      <div class="kakao-sharing-btn">
+        <button id="kakaotalk-sharing-result-btn" @click="kakaoShare">
+          <img
+            src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+            alt="카카오톡 공유 보내기 버튼"
+          />
+          여행일지 카카오톡 공유하기
+        </button>
+        <button id="kakaotalk-sharing-url-btn" @click="kakaoShare">
+          <img
+            src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+            alt="카카오톡 공유 보내기 버튼"
+          />
+          친구에게도 인생N컷 추천하기
+        </button>
+      </div>
     </section>
   </div>
 </template>
@@ -147,6 +163,12 @@ import html2pdf from "html2pdf.js";
 export default {
   name: "submission-detail",
   methods: {
+    kakaoShare() {
+      window.Kakao.Share.sendScrap({
+        requestUrl: "https://k7b105.p.ssafy.io/",
+        templateId: 85712,
+      });
+    },
     exportToPDF() {
       html2pdf(this.$refs.pdfarea, {
         margin: 0,
@@ -301,5 +323,10 @@ export default {
 }
 .ctnt {
   overflow-wrap: normal;
+}
+.kakao-sharing-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
