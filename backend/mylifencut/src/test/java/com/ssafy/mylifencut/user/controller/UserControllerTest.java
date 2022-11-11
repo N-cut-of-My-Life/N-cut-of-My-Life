@@ -9,6 +9,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -27,7 +29,6 @@ import com.google.gson.Gson;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.user.dto.Token;
-import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.service.UserService;
@@ -127,18 +128,15 @@ public class UserControllerTest {
 		void expiredRefreshToken() throws Exception {
 			// given
 			final String url = "/user/token";
-			final TokenRequest tokenRequest = TokenRequest.builder()
-				.accessToken("INVALID_TOKEN")
-				.refreshToken("INVALID_TOKEN")
-				.build();
+			final Cookie refreshToken = new Cookie("refreshToken", "INVALID_TOKEN");
 			doThrow(new InvalidRefreshTokenException())
 				.when(userService)
 				.reissueToken(any());
 
 			// when
 			final ResultActions resultActions = mockMvc.perform(
-				MockMvcRequestBuilders.post(url)
-					.content(gson.toJson(tokenRequest))
+				MockMvcRequestBuilders.get(url)
+					.cookie(refreshToken)
 					.contentType(MediaType.APPLICATION_JSON)
 			);
 
@@ -156,18 +154,15 @@ public class UserControllerTest {
 		void invalidRefreshToken() throws Exception {
 			// given
 			final String url = "/user/token";
-			final TokenRequest tokenRequest = TokenRequest.builder()
-				.accessToken("EXPIRED_TOKEN")
-				.refreshToken("EXPIRED_TOKEN")
-				.build();
+			final Cookie refreshToken = new Cookie("refreshToken", "EXPIRED_TOKEN");
 			doThrow(new InvalidRefreshTokenException())
 				.when(userService)
 				.reissueToken(any());
 
 			// when
 			final ResultActions resultActions = mockMvc.perform(
-				MockMvcRequestBuilders.post(url)
-					.content(gson.toJson(tokenRequest))
+				MockMvcRequestBuilders.get(url)
+					.cookie(refreshToken)
 					.contentType(MediaType.APPLICATION_JSON)
 			);
 
@@ -185,10 +180,7 @@ public class UserControllerTest {
 		void validRefreshToken() throws Exception {
 			// given
 			final String url = "/user/token";
-			final TokenRequest tokenRequest = TokenRequest.builder()
-				.accessToken("VALID_TOKEN")
-				.refreshToken("VALID_TOKEN")
-				.build();
+			final Cookie refreshToken = new Cookie("refreshToken", "VALID_TOKEN");
 			final Token token = Token.builder()
 				.accessToken("NEW_TOKEN")
 				.refreshToken("NEW_TOKEN")
@@ -199,8 +191,8 @@ public class UserControllerTest {
 
 			// when
 			final ResultActions resultActions = mockMvc.perform(
-				MockMvcRequestBuilders.post(url)
-					.content(gson.toJson(tokenRequest))
+				MockMvcRequestBuilders.get(url)
+					.cookie(refreshToken)
 					.contentType(MediaType.APPLICATION_JSON)
 			);
 
@@ -211,9 +203,7 @@ public class UserControllerTest {
 				.getResponse()
 				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 
-			Map map = (Map)response.getData();
-			assertEquals(map.get("accessToken"), token.getAccessToken());
-			assertEquals(map.get("refreshToken"), token.getRefreshToken());
+			assertEquals(token.getAccessToken(), response.getData());
 			assertTrue(response.isSuccess());
 			assertEquals(TOKEN_REISSUE_SUCCESS_MESSAGE, response.getMessage());
 		}
