@@ -22,6 +22,8 @@ import com.ssafy.mylifencut.user.domain.Role;
 import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.dto.Token;
 import com.ssafy.mylifencut.user.dto.UserInfo;
+import com.ssafy.mylifencut.user.dto.UserResponse;
+import com.ssafy.mylifencut.user.exception.InvalidAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
@@ -196,5 +198,15 @@ public class UserService {
 		refreshTokenRepository.save(newToken);
 
 		return token;
+	}
+
+	public UserResponse getUserResponse(String accessToken) {
+		if (!jwtTokenProvider.validateToken(accessToken)) {
+			throw new InvalidAccessTokenException();
+		}
+		int id = Integer.parseInt(jwtTokenProvider.getUserId(accessToken));
+		User user = userRepository.findById(id)
+			.orElseThrow(InvalidAccessTokenException::new);
+		return UserResponse.of(accessToken, user);
 	}
 }
