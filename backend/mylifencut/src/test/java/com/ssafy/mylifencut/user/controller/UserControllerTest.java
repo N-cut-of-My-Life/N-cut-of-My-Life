@@ -206,6 +206,7 @@ public class UserControllerTest {
 			assertEquals(token.getAccessToken(), response.getData());
 			assertTrue(response.isSuccess());
 			assertEquals(TOKEN_REISSUE_SUCCESS_MESSAGE, response.getMessage());
+			cookie().value("refreshToken", token.getRefreshToken());
 		}
 	}
 }
