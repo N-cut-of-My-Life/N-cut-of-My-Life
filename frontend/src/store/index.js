@@ -4,6 +4,49 @@ import axios from "axios";
 import { xml2json } from "xml-js";
 // import { ref } from 'vue'
 // for 은하 갤러리
+
+export const useAccountStore = defineStore("account", {
+  state: () => ({
+    token: null,
+  }),
+  getters: {
+    isLogin(state) {
+      return !!state.token;
+    },
+  },
+  actions: {
+    kakaoLogin(code) {
+      console.log(this.token);
+      axios({
+        url: index.account.postLogin(),
+        method: "POST",
+        data: {
+          accessToken: code,
+        },
+      })
+        .then((res) => {
+          console.log(res.data.data.accessToken);
+          this.token = res.data.data.accessToken;
+          console.log(this.token);
+          console.log(this.isLogin);
+        })
+        // .then(router.push({ name: "introfirstpage" }))
+        .catch((e) => {
+          console.log("error", e);
+          // router.push({ name: "intro" })
+        });
+    },
+    refreshToken() {
+      axios({
+        url: index.account.getRefreshToken(),
+        method: "GET",
+      }).then((res) => {
+        console.log(res);
+      });
+    },
+  },
+});
+
 export const useGalleryStore = defineStore("gallery", {
   state: () => ({
     lastWords: [],
