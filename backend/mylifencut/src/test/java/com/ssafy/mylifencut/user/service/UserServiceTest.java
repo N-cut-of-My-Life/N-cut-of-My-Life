@@ -362,7 +362,7 @@ public class UserServiceTest {
 		@DisplayName("[실패] - 유효한 토큰 및 사용자 없음")
 		void userNotFoundError() {
 			// given
-			final String accessToken = "INVALID_TOKEN";
+			final String accessToken = "VALID_TOKEN";
 			doReturn(true)
 				.when(jwtTokenProvider)
 				.validateToken(any());
@@ -374,6 +374,34 @@ public class UserServiceTest {
 
 			// then
 			assertThrows(InvalidRefreshTokenException.class, () -> userService.getUserResponse(accessToken));
+		}
+
+		@Test
+		@DisplayName("[성공] - 유효한 토큰 및 사용자 존재")
+		void userNotFoundError() {
+			// given
+			final String accessToken = "VALID_TOKEN";
+			User user = User.builder()
+				.id(1)
+				.email("ssafy@email.com")
+				.name("홍길동")
+				.build();
+
+			doReturn(true)
+				.when(jwtTokenProvider)
+				.validateToken(any());
+			doReturn(Optional.empty())
+				.when(userRepository)
+				.findById(any());
+
+			// when
+			final UserResponse result = userService.getUserResponse(accessToken);
+
+			// then
+			assertEquals(user.getId(), result.getUserId());
+			assertEquals(user.getEmail(), result.getUserId());
+			assertEquals(user.getName(), result.getUserId());
+			assertEquals(accessToken, result.getAccessToken());
 		}
 	}
 
