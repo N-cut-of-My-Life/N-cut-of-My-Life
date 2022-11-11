@@ -1,7 +1,11 @@
 <template>
-  <my-modal style="z-index: 5;"></my-modal>
+  <my-modal style="z-index: 5"></my-modal>
   <div class="other">
-    <b-button @click="router.push({ name: 'introfirstpage' })" class="button_prev" size="sm">
+    <b-button
+      @click="router.push({ name: 'introfirstpage' })"
+      class="button_prev"
+      size="sm"
+    >
       <strong>&lt;</strong>&nbsp;&nbsp;홈페이지
     </b-button>
   </div>
@@ -11,7 +15,7 @@
     <main class="content">
       <section class="profile-part">
         <div class="prof-photo-box">
-          <img src="@/assets/astronaut_riding.png" class="prof-photo">
+          <img src="@/assets/astronaut_riding.png" class="prof-photo" />
         </div>
         <div class="prof-id">test123@naver.com</div>
         <div class="prof-journal-title">OO님의 여행일지</div>
@@ -21,13 +25,12 @@
               <splide-slide>
                 <div class="prof-journals">
                   <div class="journal">
-                    <img src="@/assets/space_diary.png" class="journal-img">
+                    <img src="@/assets/space_diary.png" class="journal-img" />
                     <div class="diary-title">2022년 11월 8일의 기록</div>
                   </div>
                 </div>
               </splide-slide>
             </template>
-            
           </splide>
         </div>
       </section>
@@ -35,43 +38,48 @@
       <section class="diary-part">
         <!-- 상위 2개 아이템들 -->
         <div class="upper-items">
-    
           <div class="last-word">
-            <img src="@/assets/post_paper.png">
-            <h1 class="text-shadow">지금은 고민이 참 많을테지만, 언젠간 난 이겨낼거야</h1>
+            <img src="@/assets/post_paper.png" />
+            <h1 class="text-shadow">
+              지금은 고민이 참 많을테지만, 언젠간 난 이겨낼거야
+            </h1>
           </div>
 
           <label class="l-button letter" for="lightbox-1">
-            <img src="@/assets/mailbox.png" class="letter-img">
+            <img src="@/assets/mailbox.png" class="letter-img" />
           </label>
-          
         </div>
         <!-- 일지 상세 -->
         <div class="below-part">
           <div class="strip">
             <div class="film">
-              <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
+              <div class="film__frame">
+                <img src="https://via.placeholder.com/1920x1080" />
+              </div>
             </div>
             <div class="film">
-              <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
+              <div class="film__frame">
+                <img src="https://via.placeholder.com/1920x1080" />
+              </div>
             </div>
             <div class="film">
-              <div class="film__frame"><img src="https://via.placeholder.com/1920x1080"></div>
+              <div class="film__frame">
+                <img src="https://via.placeholder.com/1920x1080" />
+              </div>
             </div>
-          </div>       
+          </div>
         </div>
-        
       </section>
     </main>
   </div>
 </template>
 
 <script setup>
-import { Splide, SplideSlide } from '@splidejs/vue-splide';
-import '@splidejs/splide/dist/css/themes/splide-default.min.css'
-import MyModal from '@/components/mypage/MyModal.vue'
-import { useRouter } from 'vue-router'
-const router =  useRouter();
+import { Splide, SplideSlide } from "@splidejs/vue-splide";
+import "@splidejs/splide/dist/css/themes/splide-default.min.css";
+import MyModal from "@/components/mypage/MyModal.vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
 const options = {
   perPage: 2,
   pauseOnHover: false,
@@ -80,19 +88,20 @@ const options = {
   pagination: false,
   focus: 0,
   wheel: true,
-}
-
+};
 </script>
 <style scoped>
 @font-face {
-  font-family: 'MaplestoryOTFBold';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+  font-family: "MaplestoryOTFBold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
-  font-family: 'ONE-Mobile-POP';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+  font-family: "ONE-Mobile-POP";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -100,17 +109,17 @@ body {
   margin: 0;
 }
 .other {
-    position: absolute;
-    left: 1%;
-    top: 2.5%;
-    margin: auto;
+  position: absolute;
+  left: 1%;
+  top: 2.5%;
+  margin: auto;
 }
 
 .button_prev {
-    background-color: #ffffff;
-    color: #141414;
-    border-radius: 0.8vw;
-    border-color: #ffffff;
+  background-color: #ffffff;
+  color: #141414;
+  border-radius: 0.8vw;
+  border-color: #ffffff;
 }
 
 .jumbotron {
@@ -121,16 +130,16 @@ body {
   background-size: cover;
   height: 100vh;
   width: 100%;
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 }
 
 .title {
-    text-align: center;
-    padding-top: 3%;
-    color: aliceblue;
-    font-size: 2vw;
-    font-weight: 600;
+  text-align: center;
+  padding-top: 3%;
+  color: aliceblue;
+  font-size: 2vw;
+  font-weight: 600;
 }
 
 .content {
@@ -139,7 +148,6 @@ body {
   width: 80vw;
   height: 80vh;
   margin: 2vh auto;
-  
 }
 
 /* 왼쪽 파트 */
@@ -149,7 +157,6 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 2.5%;
-
 }
 
 .prof-photo-box {
@@ -162,17 +169,17 @@ body {
 .prof-photo {
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  object-fit: cover;
 }
 
 .prof-id {
-  font-family: 'MaplestoryOTFBold';
+  font-family: "MaplestoryOTFBold";
   text-align: center;
   color: rgb(224, 227, 230);
 }
 
 .prof-journal-title {
-  font-family: 'MapleStoryOTFBold';
+  font-family: "MapleStoryOTFBold";
   font-size: 2rem;
 }
 
@@ -190,10 +197,9 @@ body {
   top: 50%;
   left: 50%;
   width: 100%;
-  font-family: 'MapleStoryOTFBold';
+  font-family: "MapleStoryOTFBold";
   color: aliceblue;
   transform: translate(-33%, -350%);
-  
 }
 .journal-img:hover {
   scale: 1.05;
@@ -223,7 +229,7 @@ body {
 }
 
 .text-shadow {
-  font-family: 'MapleStoryOTFBold';
+  font-family: "MapleStoryOTFBold";
   font-size: 1.5rem;
   color: black;
   position: absolute;
@@ -231,7 +237,6 @@ body {
   top: 40%;
   left: 15%;
   word-wrap: break-word;
-
 }
 
 .l-button {
@@ -250,7 +255,6 @@ body {
 .letter-img {
   width: 15vw;
   transform: rotate(180deg) scaleY(-1);
-  
 }
 
 .letter-img:hover {
@@ -296,7 +300,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  
 }
 
 .film img {

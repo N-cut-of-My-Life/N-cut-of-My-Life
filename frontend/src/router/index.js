@@ -1,18 +1,18 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
-    path: '/:pathMatch(.*)*',
-    redirect: "/pagenotfound"
+    path: "/:pathMatch(.*)*",
+    redirect: "/pagenotfound",
   },
   {
-    path: '/',
-    name: 'intro',
-    component: () => import('@/views/intro/IntroView.vue')
+    path: "/",
+    name: "intro",
+    component: () => import("@/views/intro/IntroView.vue"),
   },
   {
-    path: '/login',
-    name: 'login',
+    path: "/login",
+    name: "login",
     component: () => import("@/views/intro/IntroFirstPage.vue"),
   },
   {
@@ -88,18 +88,18 @@ const routes = [
   {
     path: "/pagenotfound",
     name: "pagenotFound",
-    component: () => import("@/views/404/PageNotFound.vue")
+    component: () => import("@/views/404/PageNotFound.vue"),
   },
   {
     path: "/lastword",
     name: "lastword",
-    component: () => import("@/views/last/LastWord.vue")
+    component: () => import("@/views/last/LastWord.vue"),
   },
-]
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

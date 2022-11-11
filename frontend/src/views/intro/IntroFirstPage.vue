@@ -1,19 +1,27 @@
 <template>
   <video muted autoplay loop playbackRate="1.0">
-    <source src="@/assets/intro_video.mp4" type="video/mp4">
+    <source src="@/assets/intro_video.mp4" type="video/mp4" />
   </video>
   <!-- <audio id="cosmos" loop autoplay>
     <source src="@/assets/audio/cosmos.mp3" type="audio/mp3">
   </audio> -->
   <audio id="cosmos" loop autoplay volume="0.7">
-    <source src="@/assets/audio/new-horizons.mp3" type="audio/mp3">
+    <source src="@/assets/audio/new-horizons.mp3" type="audio/mp3" />
   </audio>
   <audio id="burung" volume="0.3">
-    <source src="@/assets/audio/nitro-activation.mp3" type="audio/mp3">
+    <source src="@/assets/audio/nitro-activation.mp3" type="audio/mp3" />
   </audio>
-  <div style="color: #ffffff;  text-align: right;  padding-right:78px; margin-top: 3.5%;">어서오세요, <span
-      style="font-weight:400">최재현</span>님</div>
-  <b-navbar toggleable="lg" style="float: right; margin-right: 50px;">
+  <div
+    style="
+      color: #ffffff;
+      text-align: right;
+      padding-right: 78px;
+      margin-top: 3.5%;
+    "
+  >
+    어서오세요, <span style="font-weight: 400">최재현</span>님
+  </div>
+  <b-navbar toggleable="lg" style="float: right; margin-right: 50px">
     <b-navbar-nav>
       <b-nav-item>
         <router-link :to="{ name: 'lastword' }" class="nav-link">
@@ -39,57 +47,58 @@
   </b-navbar>
   <br /><br /><br /><br /><br />
   <div class="img-box">
-    <img src="@/assets/astronaut_riding.png" class="img-rocket rocket-bounce" alt=""/>
+    <img
+      src="@/assets/astronaut_riding.png"
+      class="img-rocket rocket-bounce"
+      alt=""
+    />
   </div>
   <br /><br /><br /><br />
   <div class="box">
-    <div class="start-btn" @click="rocketLaunch">
-      여행 시작하기
-    </div>
+    <div class="start-btn" @click="rocketLaunch">여행 시작하기</div>
   </div>
 </template>
 
 <script setup>
-import { useRouter, useRoute } from 'vue-router'
-import { useMusicStore } from '@/store/index'
-import { onMounted } from 'vue'
+import { useRouter, useRoute } from "vue-router";
+import { useMusicStore } from "@/store/index";
+import { onMounted } from "vue";
 
-const router = useRouter()
-const route = useRoute()
+const router = useRouter();
+const route = useRoute();
 const code = route.query.code;
-
 
 // 클릭 시 로켓 발사
 const rocketLaunch = () => {
-  console.log(code)
-  const rocket = document.querySelector('.img-rocket')
-  document.getElementById('cosmos').pause();
-  document.getElementById('burung').play();
-  rocket.classList.remove('rocket-bounce')
-  rocket.classList.add('rocket-launch')
-  rocket.addEventListener('animationend', (event) => {
-    if (event.animationName.includes('launch')) {
-      router.push({ name: 'introstory' })
+  console.log(code);
+  const rocket = document.querySelector(".img-rocket");
+  document.getElementById("cosmos").pause();
+  document.getElementById("burung").play();
+  rocket.classList.remove("rocket-bounce");
+  rocket.classList.add("rocket-launch");
+  rocket.addEventListener("animationend", (event) => {
+    if (event.animationName.includes("launch")) {
+      router.push({ name: "introstory" });
     }
   });
 };
 
 onMounted(() => {
-  const isMute = useMusicStore().isMute
-  if(isMute === true){
-    document.querySelector('#cosmos').muted = true
-    document.querySelector('#burung').muted = true
+  const isMute = useMusicStore().isMute;
+  if (isMute === true) {
+    document.querySelector("#cosmos").muted = true;
+    document.querySelector("#burung").muted = true;
   } else {
-    document.querySelector('#cosmos').muted = false
-    document.querySelector('#burung').muted = false
+    document.querySelector("#cosmos").muted = false;
+    document.querySelector("#burung").muted = false;
   }
-})
+});
 </script>
 
 <style scoped>
 @font-face {
-  font-family: 'kakao';
-  src: url('@/fonts/KakaoBold.ttf') format('truetype');
+  font-family: "kakao";
+  src: url("@/fonts/KakaoBold.ttf") format("truetype");
 }
 
 .navbar-expand-lg .navbar-nav .nav-link a:hover {
@@ -123,9 +132,8 @@ body {
 }
 
 .rocket-bounce {
-  animation: bounce .75s infinite alternate;
-  -webkit-animation: bounce .75s infinite alternate;
-
+  animation: bounce 0.75s infinite alternate;
+  -webkit-animation: bounce 0.75s infinite alternate;
 }
 
 @keyframes bounce {

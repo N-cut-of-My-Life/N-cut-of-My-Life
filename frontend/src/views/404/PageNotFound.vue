@@ -10,25 +10,24 @@
 
 <script>
 export default {
-  methods:{
-    goBack(){
+  methods: {
+    goBack() {
       this.$router.go(-1);
     },
-    goHome(){
-      this.$router.push('/');
-    }
-  }
-
-}
+    goHome() {
+      this.$router.push("/");
+    },
+  },
+};
 </script>
 
 <style>
 body {
-  margin:0;
+  margin: 0;
   background-color: #141414;
 }
-.buttons{
-  display : flex;
+.buttons {
+  display: flex;
   width: 393px;
   justify-content: center;
 }
@@ -58,11 +57,11 @@ body {
   color: white;
   border-radius: 10%;
   margin: 28px 8px;
-  padding: 6px 40px 8px ;
+  padding: 6px 40px 8px;
   font-size: 20px;
   font-family: Exo;
 }
-.button-go-back:hover{
+.button-go-back:hover {
   background-color: white;
   color: #141414;
 }
@@ -72,11 +71,11 @@ body {
   color: white;
   border-radius: 10%;
   margin: 28px 8px;
-  padding: 6px 40px 8px ;
+  padding: 6px 40px 8px;
   font-size: 20px;
   font-family: Exo;
 }
-.button-go-home:hover{
+.button-go-home:hover {
   background-color: white;
   color: #141414;
 }
