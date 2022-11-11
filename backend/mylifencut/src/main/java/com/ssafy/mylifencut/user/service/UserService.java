@@ -206,7 +206,7 @@ public class UserService {
 		}
 		int id = Integer.parseInt(jwtTokenProvider.getUserId(accessToken));
 		User user = userRepository.findById(id)
-			.orElseThrow(InvalidAccessTokenException::new);
+			.orElseThrow(UserNotFoundException::new);
 		return UserResponse.of(accessToken, user);
 	}
 }
