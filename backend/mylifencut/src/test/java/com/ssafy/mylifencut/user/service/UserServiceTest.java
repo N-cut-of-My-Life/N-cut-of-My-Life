@@ -378,7 +378,7 @@ public class UserServiceTest {
 			// when
 
 			// then
-			assertThrows(InvalidAccessTokenException.class, () -> userService.getUserResponse(accessToken));
+			assertThrows(UserNotFoundException.class, () -> userService.getUserResponse(accessToken));
 		}
 
 		@Test
