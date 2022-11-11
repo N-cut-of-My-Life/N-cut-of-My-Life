@@ -75,6 +75,7 @@
 
 <script>
 // import VueAudio from 'vue-audio'
+import { useMusicStore } from '@/store/index'
 export default {
     data() {
         return {
@@ -133,7 +134,10 @@ export default {
         toggleMute() {
             this.mute = !this.mute
         }
-    }
+    },
+    mounted() {
+        useMusicStore().isSoundActive()
+    },
 }
 </script>
 

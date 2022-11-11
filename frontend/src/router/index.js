@@ -89,7 +89,12 @@ const routes = [
     path: "/pagenotfound",
     name: "pagenotFound",
     component: () => import("@/views/404/PageNotFound.vue")
-},
+  },
+  {
+    path: "/lastword",
+    name: "lastword",
+    component: () => import("@/views/last/LastWord.vue")
+  },
 ]
 
 const router = createRouter({

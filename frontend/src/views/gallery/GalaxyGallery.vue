@@ -7,6 +7,9 @@
 
   <div class="jumbotron">
     <div class="title">은 하 갤 러 리</div>
+    <audio loop autoplay volume="0.3">
+        <source src="@/assets/audio/mix_gallery.mp3" type="audio/mp3">
+    </audio>
     <!-- masonry 영역 ver2 -->
     <MasonryWall :items="items" :ssr-columns="1" :column-width="200" :gap="16">
     <template #default="{ item }">

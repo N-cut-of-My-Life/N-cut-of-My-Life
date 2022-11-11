@@ -20,9 +20,10 @@ import com.ssafy.mylifencut.user.domain.Authority;
 import com.ssafy.mylifencut.user.domain.RefreshToken;
 import com.ssafy.mylifencut.user.domain.Role;
 import com.ssafy.mylifencut.user.domain.User;
-import com.ssafy.mylifencut.user.dto.TokenRequest;
-import com.ssafy.mylifencut.user.dto.TokenResponse;
+import com.ssafy.mylifencut.user.dto.Token;
 import com.ssafy.mylifencut.user.dto.UserInfo;
+import com.ssafy.mylifencut.user.dto.UserResponse;
+import com.ssafy.mylifencut.user.exception.InvalidAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
@@ -48,13 +49,13 @@ public class UserService {
 	@Value("${oauth2.kakao.redirectUri}")
 	private String kakaoRedirectUri;
 
-	public TokenResponse kakaoLogin(String token) {
+	public Token kakaoLogin(String token) {
 		UserInfo userInfo = getUserInfo(getAccessToken(token));
 
 		User user = userRepository.findByEmail(userInfo.getEmail())
 			.orElseGet(() -> join(userInfo));
 
-		TokenResponse tokenResponse = jwtTokenProvider.createToken(Integer.toString(user.getId()));
+		Token tokenResponse = jwtTokenProvider.createToken(Integer.toString(user.getId()));
 		RefreshToken refreshToken = RefreshToken.builder()
 			.userId(user.getId())
 			.token(tokenResponse.getRefreshToken())
@@ -179,28 +180,33 @@ public class UserService {
 			.orElseThrow(UserNotFoundException::new);
 	}
 
-	@Transactional
-	public TokenResponse reissueToken(TokenRequest tokenRequest) {
+	public Token reissueToken(String refreshToken) {
 
-		if (!jwtTokenProvider.validateToken(tokenRequest.getRefreshToken())) {
+		if (refreshToken == null || !jwtTokenProvider.validateToken(refreshToken)) {
 			throw new InvalidRefreshTokenException();
 		}
 
-		String accessToken = tokenRequest.getAccessToken();
-
-		User user = userRepository.findById(Integer.parseInt(jwtTokenProvider.getUserId(accessToken)))
-			.orElseThrow(InvalidRefreshTokenException::new);
-		RefreshToken refreshToken = refreshTokenRepository.findByUserId(user.getId())
+		RefreshToken newToken = refreshTokenRepository.findByToken(refreshToken)
 			.orElseThrow(InvalidRefreshTokenException::new);
 
-		if (!refreshToken.getToken().equals(tokenRequest.getRefreshToken())) {
+		if (!newToken.getToken().equals(refreshToken)) {
 			throw new InvalidRefreshTokenException();
 		}
 
-		TokenResponse tokenResponse = jwtTokenProvider.createToken(Integer.toString(user.getId()));
-		refreshToken.updateToken(tokenResponse.getRefreshToken());
-		refreshTokenRepository.save(refreshToken);
+		Token token = jwtTokenProvider.createToken(Integer.toString(newToken.getUserId()));
+		newToken.updateToken(token.getRefreshToken());
+		refreshTokenRepository.save(newToken);
 
-		return tokenResponse;
+		return token;
+	}
+
+	public UserResponse getUserResponse(String accessToken) {
+		if (!jwtTokenProvider.validateToken(accessToken)) {
+			throw new InvalidAccessTokenException();
+		}
+		int id = Integer.parseInt(jwtTokenProvider.getUserId(accessToken));
+		User user = userRepository.findById(id)
+			.orElseThrow(UserNotFoundException::new);
+		return UserResponse.of(accessToken, user);
 	}
 }

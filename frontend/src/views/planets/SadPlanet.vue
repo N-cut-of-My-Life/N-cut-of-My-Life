@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import { useMusicStore } from '@/store/index'
 export default {
   data() {
     return {
@@ -125,6 +126,9 @@ export default {
       setTimeout(() => this.elementVisible = true, 2000)
     }
   },
+  mounted() {
+        useMusicStore().isSoundActive()
+    },
 }
 </script>
 

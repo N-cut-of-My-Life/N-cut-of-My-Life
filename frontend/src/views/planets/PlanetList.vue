@@ -3,7 +3,7 @@
   <video muted autoplay loop playbackRate="1.0">
     <source src="@/assets/intro_video.mp4" type="video/mp4">
   </video>
-  <audio loop autoplay volume="0.5">
+  <audio muted loop controls autoplay volume="0.5">
     <source src="@/assets/audio/daylight.mp3" type="audio/mp3">
   </audio>
   <div class="other">
@@ -27,12 +27,16 @@
 </template>
 
 <script>
+import { useMusicStore } from '@/store/index'
 export default {
   methods: {
     gotoPage(link) {
       this.$router.push(link)
     }
-  }
+  },
+  mounted() {
+        useMusicStore().isSoundActive()
+    },
 }
 </script>
 
@@ -47,6 +51,10 @@ video {
   height: auto;
   z-index: -100;
   background-size: cover;
+}
+
+body{
+  margin:0;
 }
 
 .title {
@@ -163,7 +171,7 @@ video {
   max-height: auto;
   background: #666 url("../../assets/planet/weep.png") repeat-x 0% 0%;
   background-size: 512px 256px;
-  margin-left: 0px;
+  margin-left: 40px;
   margin-top: -250px;
   filter: grayscale(75%);
   -webkit-filter: grayscale(75%);
@@ -178,8 +186,8 @@ video {
   max-height: auto;
   background: #666 url("../../assets/planet/haho.png") repeat-x 0% 0%;
   background-size: 512px 256px;
-  margin-left: -50px;
-  margin-top: -128px;
+  margin-left: 20px;
+  margin-top: -136px;
   filter: grayscale(75%);
   -webkit-filter: grayscale(75%);
   animation: rotation_3 20s infinite linear;

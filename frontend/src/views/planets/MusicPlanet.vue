@@ -42,59 +42,10 @@
 
 // <script setup>
 import MusicModal from '@/components/planets/MusicModal.vue'
-import { onUpdated, ref } from 'vue'
+import { onMounted, onUpdated, ref } from 'vue'
 import { useRouter } from 'vue-router'
-// export default {
-//     data() {
-//         return {
-//             images: [
-//                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_1.svg'),
-//                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_2.svg'),
-//                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_3.svg'),
-//                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_4.svg'),
-//                 require('@/assets/PlanetSpeech/MusicSpeech/music_bubble_5.svg'),
-//             ],
-//             audios: [
-//             // 병합 예정    
-//             // require('@/assets/audio/booty-in-the-nest.mp3'),
-//                 require('@/assets/audio/come-on-boy.mp3')
-//             ],
-//             currentImage: 0,
-//             elementVisible: false,
-//             currentAudio: 0,
-//         }
-//     },
-//     methods: {
-//         nextImage() {
-//             if (this.currentImage !== (this.images.length - 1))
-//                 this.currentImage++;
-//         },
+import { useMusicStore } from '@/store/index'
 
-//         previousImage() {
-//             if (this.currentImage !== 0)
-//                 this.currentImage--;
-//         },
-
-//         gotoPage(link) {
-//             this.$router.push(link)
-//         },
-
-//         // toggleMute() {
-//         //     var myAudio = document.getElementById('myaudios');
-//         //     myAudio.muted = !myAudio.muted;
-//         // }        
-//     },
-//     updated() {
-//         if (this.currentImage == (this.images.length - 1)) {
-//             setTimeout(() => this.elementVisible = true, 2000)
-//         }
-//     },
-    
-    
-    
-// }
-
-// 경계선
 const router = useRouter()
 
 const images = [
@@ -129,6 +80,10 @@ onUpdated(() => {
   if (currentImage.value == (images.length - 1)) {
       setTimeout(() => elementVisible.value = true, 2000)
   }
+})
+onMounted(() => {
+    // 브금 온 오프용 함수
+    useMusicStore().isSoundActive()
 })
 
 </script>

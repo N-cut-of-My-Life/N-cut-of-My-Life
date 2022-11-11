@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import index from '@/api/index'
 import axios from 'axios'
 import { xml2json } from 'xml-js'
-
+// import { ref } from 'vue'
 // for 은하 갤러리
 export const useGalleryStore = defineStore('gallery', {
   state: () => ({
@@ -36,8 +36,15 @@ export const useMusicStore = defineStore('music', {
   },
   actions: {
     toggleMute() {
-      var myAudio = document.getElementById('myaudios');
-      myAudio.muted = !myAudio.muted;
+      this.isMute = !this.isMute
+    },
+    isSoundActive() {
+      console.log(this.isMute)
+      if(this.isMute === true){
+        document.querySelector('audio').muted = true
+      } else {
+        document.querySelector('audio').muted = false
+      }
     },
     
     getMusicData(keyword) {

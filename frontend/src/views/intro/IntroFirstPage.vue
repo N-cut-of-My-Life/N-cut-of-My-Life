@@ -16,6 +16,11 @@
   <b-navbar toggleable="lg" style="float: right; margin-right: 50px;">
     <b-navbar-nav>
       <b-nav-item>
+        <router-link :to="{ name: 'lastword' }" class="nav-link">
+          나에게 하는 한마디
+        </router-link>
+      </b-nav-item>
+      <b-nav-item>
         <router-link :to="{ name: 'traveldiary' }" class="nav-link">
           나의 여행 일지
         </router-link>
@@ -46,6 +51,8 @@
 
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
+import { useMusicStore } from '@/store/index'
+import { onMounted } from 'vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -66,6 +73,17 @@ const rocketLaunch = () => {
     }
   });
 };
+
+onMounted(() => {
+  const isMute = useMusicStore().isMute
+  if(isMute === true){
+    document.querySelector('#cosmos').muted = true
+    document.querySelector('#burung').muted = true
+  } else {
+    document.querySelector('#cosmos').muted = false
+    document.querySelector('#burung').muted = false
+  }
+})
 </script>
 
 <style scoped>
