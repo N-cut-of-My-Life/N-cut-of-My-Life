@@ -26,6 +26,7 @@ import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.dto.Token;
 import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.user.dto.UserResponse;
+import com.ssafy.mylifencut.user.exception.InvalidAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
@@ -374,7 +375,7 @@ public class UserServiceTest {
 			// when
 
 			// then
-			assertThrows(InvalidRefreshTokenException.class, () -> userService.getUserResponse(accessToken));
+			assertThrows(InvalidAccessTokenException.class, () -> userService.getUserResponse(accessToken));
 		}
 
 		@Test
