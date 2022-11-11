@@ -218,4 +218,25 @@ public class UserControllerTest {
 			assertEquals(TOKEN_REISSUE_SUCCESS_MESSAGE, response.getMessage());
 		}
 	}
+
+	@Test
+	@DisplayName("[실패] - 엑세스 토큰이 없는 경우")
+	void noAccessToken() throws Exception {
+		// given
+		final String url = "/user/token";
+
+		// when
+		final ResultActions resultActions = mockMvc.perform(
+			MockMvcRequestBuilders.get(url)
+				.contentType(MediaType.APPLICATION_JSON)
+		);
+
+		// then
+		resultActions.andExpect(status().isForbidden());
+		final BaseResponse response = gson.fromJson(resultActions.andReturn()
+			.getResponse()
+			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+		assertFalse(response.isSuccess());
+		assertEquals(NO_ACCESS_TOKEN_ERROR_MESSAGE, response.getMessage());
+	}
 }
