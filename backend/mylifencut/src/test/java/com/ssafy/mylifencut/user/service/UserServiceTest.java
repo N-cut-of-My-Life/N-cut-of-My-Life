@@ -24,7 +24,6 @@ import com.ssafy.mylifencut.user.UserConstant;
 import com.ssafy.mylifencut.user.domain.RefreshToken;
 import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.dto.Token;
-import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
@@ -230,10 +229,7 @@ public class UserServiceTest {
 		@DisplayName("[실패] - 발급되지 않았던 리프레쉬 토큰")
 		void notValidRefreshToken() {
 			// given
-			TokenRequest tokenRequest = TokenRequest.builder()
-				.accessToken("TOKEN")
-				.refreshToken("TOKEN")
-				.build();
+			final String refreshToken = "INVALID_TOKEN";
 			doReturn(false)
 				.when(jwtTokenProvider)
 				.validateToken(any());
@@ -241,17 +237,14 @@ public class UserServiceTest {
 			// when
 
 			// then
-			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(tokenRequest));
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(refreshToken));
 		}
 
 		@Test
 		@DisplayName("[실패] - 만료된 리프레쉬 토큰")
 		void expiredRefreshToken() {
 			// given
-			TokenRequest tokenRequest = TokenRequest.builder()
-				.accessToken("TOKEN")
-				.refreshToken("TOKEN")
-				.build();
+			final String refreshToken = "INVALID_TOKEN";
 			doReturn(false)
 				.when(jwtTokenProvider)
 				.validateToken(any());
@@ -259,78 +252,54 @@ public class UserServiceTest {
 			// when
 
 			// then
-			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(tokenRequest));
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(refreshToken));
 		}
 
 		@Test
 		@DisplayName("[실패] - 저장된 리프레쉬 토큰이 없는 경우")
 		void isNotInRefreshToken() {
 			// given
-			TokenRequest tokenRequest = TokenRequest.builder()
-				.accessToken("TOKEN_BEFORE")
-				.refreshToken("TOKEN_BEFORE")
-				.build();
-			User user = User.builder()
-				.id(1)
-				.build();
+			final String refreshToken = "VALID_TOKEN";
 			doReturn(true)
 				.when(jwtTokenProvider)
 				.validateToken(any());
-			doReturn("1")
-				.when(jwtTokenProvider)
-				.getUserId(any());
-			doReturn(Optional.of(user))
-				.when(userRepository)
-				.findById(1);
+			doReturn(Optional.empty())
+				.when(refreshTokenRepository)
+				.findByToken(any());
 
 			// when
 
 			// then
-			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(tokenRequest));
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(refreshToken));
 		}
 
 		@Test
 		@DisplayName("[실패] - 저장된 리프레쉬 토큰이 다른 경우")
 		void isDifferentRefreshToken() {
 			// given
-			TokenRequest tokenRequest = TokenRequest.builder()
-				.accessToken("TOKEN_BEFORE")
-				.refreshToken("TOKEN_BEFORE")
-				.build();
-			RefreshToken refreshToken = RefreshToken.builder()
+			final String request = "VALID_TOKEN";
+			final RefreshToken refreshToken = RefreshToken.builder()
 				.token("TOKEN_DIFFERENT")
 				.userId(1)
-				.build();
-			User user = User.builder()
-				.id(1)
 				.build();
 			doReturn(true)
 				.when(jwtTokenProvider)
 				.validateToken(any());
-			doReturn("1")
-				.when(jwtTokenProvider)
-				.getUserId(any());
-			doReturn(Optional.of(user))
-				.when(userRepository)
-				.findById(1);
 			doReturn(Optional.of(refreshToken))
 				.when(refreshTokenRepository)
-				.findByUserId(1);
+				.findByToken(any());
 
 			// when
 
 			// then
-			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(tokenRequest));
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(request));
 		}
 
 		@Test
 		@DisplayName("[성공] - 올바른 리프레쉬 토큰")
 		void validRefreshToken() {
 			// given
-			TokenRequest tokenRequest = TokenRequest.builder()
-				.accessToken("TOKEN_BEFORE")
-				.refreshToken("TOKEN_BEFORE")
-				.build();
+			final String request = "TOKEN_BEFORE";
 			Token token = Token.builder()
 				.accessToken("TOKEN_AFTER")
 				.refreshToken("TOKEN_AFTER")
@@ -339,28 +308,19 @@ public class UserServiceTest {
 				.token("TOKEN_BEFORE")
 				.userId(1)
 				.build();
-			User user = User.builder()
-				.id(1)
-				.build();
 
 			doReturn(true)
 				.when(jwtTokenProvider)
 				.validateToken(any());
-			doReturn("1")
-				.when(jwtTokenProvider)
-				.getUserId(any());
-			doReturn(Optional.of(user))
-				.when(userRepository)
-				.findById(1);
 			doReturn(Optional.of(refreshToken))
 				.when(refreshTokenRepository)
-				.findByUserId(1);
+				.findByToken(any());
 			doReturn(token)
 				.when(jwtTokenProvider)
 				.createToken(any());
 
 			// when
-			Token result = userService.reissueToken(tokenRequest);
+			Token result = userService.reissueToken(request);
 
 			// then
 			assertEquals(token.getRefreshToken(), result.getRefreshToken());
