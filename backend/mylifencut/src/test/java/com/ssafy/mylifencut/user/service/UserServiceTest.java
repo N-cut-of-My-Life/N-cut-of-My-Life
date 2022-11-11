@@ -25,6 +25,7 @@ import com.ssafy.mylifencut.user.domain.RefreshToken;
 import com.ssafy.mylifencut.user.domain.User;
 import com.ssafy.mylifencut.user.dto.Token;
 import com.ssafy.mylifencut.user.dto.UserInfo;
+import com.ssafy.mylifencut.user.dto.UserResponse;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
@@ -399,8 +400,8 @@ public class UserServiceTest {
 
 			// then
 			assertEquals(user.getId(), result.getUserId());
-			assertEquals(user.getEmail(), result.getUserId());
-			assertEquals(user.getName(), result.getUserId());
+			assertEquals(user.getEmail(), result.getEmail());
+			assertEquals(user.getName(), result.getName());
 			assertEquals(accessToken, result.getAccessToken());
 		}
 	}
