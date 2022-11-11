@@ -20,8 +20,8 @@ import com.ssafy.mylifencut.user.domain.Authority;
 import com.ssafy.mylifencut.user.domain.RefreshToken;
 import com.ssafy.mylifencut.user.domain.Role;
 import com.ssafy.mylifencut.user.domain.User;
+import com.ssafy.mylifencut.user.dto.Token;
 import com.ssafy.mylifencut.user.dto.TokenRequest;
-import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
@@ -48,13 +48,13 @@ public class UserService {
 	@Value("${oauth2.kakao.redirectUri}")
 	private String kakaoRedirectUri;
 
-	public TokenResponse kakaoLogin(String token) {
+	public Token kakaoLogin(String token) {
 		UserInfo userInfo = getUserInfo(getAccessToken(token));
 
 		User user = userRepository.findByEmail(userInfo.getEmail())
 			.orElseGet(() -> join(userInfo));
 
-		TokenResponse tokenResponse = jwtTokenProvider.createToken(Integer.toString(user.getId()));
+		Token tokenResponse = jwtTokenProvider.createToken(Integer.toString(user.getId()));
 		RefreshToken refreshToken = RefreshToken.builder()
 			.userId(user.getId())
 			.token(tokenResponse.getRefreshToken())
@@ -180,7 +180,7 @@ public class UserService {
 	}
 
 	@Transactional
-	public TokenResponse reissueToken(TokenRequest tokenRequest) {
+	public Token reissueToken(TokenRequest tokenRequest) {
 
 		if (!jwtTokenProvider.validateToken(tokenRequest.getRefreshToken())) {
 			throw new InvalidRefreshTokenException();
@@ -197,10 +197,10 @@ public class UserService {
 			throw new InvalidRefreshTokenException();
 		}
 
-		TokenResponse tokenResponse = jwtTokenProvider.createToken(Integer.toString(user.getId()));
-		refreshToken.updateToken(tokenResponse.getRefreshToken());
+		Token token = jwtTokenProvider.createToken(Integer.toString(user.getId()));
+		refreshToken.updateToken(token.getRefreshToken());
 		refreshTokenRepository.save(refreshToken);
 
-		return tokenResponse;
+		return token;
 	}
 }

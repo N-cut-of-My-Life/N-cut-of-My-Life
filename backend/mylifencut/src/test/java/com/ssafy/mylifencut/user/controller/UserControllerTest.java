@@ -26,8 +26,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.google.gson.Gson;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
+import com.ssafy.mylifencut.user.dto.Token;
 import com.ssafy.mylifencut.user.dto.TokenRequest;
-import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.service.UserService;
@@ -89,7 +89,7 @@ public class UserControllerTest {
 			final String url = "/user/login";
 			final Map<String, String> token = new HashMap<>();
 			token.put("accessToken", "INVALID_TOKEN");
-			final TokenResponse jwtToken = TokenResponse.builder()
+			final Token jwtToken = Token.builder()
 				.accessToken("NEW_TOKEN")
 				.refreshToken("NEW_TOKEN")
 				.build();
@@ -189,11 +189,11 @@ public class UserControllerTest {
 				.accessToken("VALID_TOKEN")
 				.refreshToken("VALID_TOKEN")
 				.build();
-			final TokenResponse tokenResponse = TokenResponse.builder()
+			final Token token = Token.builder()
 				.accessToken("NEW_TOKEN")
 				.refreshToken("NEW_TOKEN")
 				.build();
-			doReturn(tokenResponse)
+			doReturn(token)
 				.when(userService)
 				.reissueToken(any());
 
@@ -212,8 +212,8 @@ public class UserControllerTest {
 				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 
 			Map map = (Map)response.getData();
-			assertEquals(map.get("accessToken"), tokenResponse.getAccessToken());
-			assertEquals(map.get("refreshToken"), tokenResponse.getRefreshToken());
+			assertEquals(map.get("accessToken"), token.getAccessToken());
+			assertEquals(map.get("refreshToken"), token.getRefreshToken());
 			assertTrue(response.isSuccess());
 			assertEquals(TOKEN_REISSUE_SUCCESS_MESSAGE, response.getMessage());
 		}

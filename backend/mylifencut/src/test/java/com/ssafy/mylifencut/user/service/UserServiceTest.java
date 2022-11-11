@@ -23,8 +23,8 @@ import com.ssafy.mylifencut.user.JwtTokenProvider;
 import com.ssafy.mylifencut.user.UserConstant;
 import com.ssafy.mylifencut.user.domain.RefreshToken;
 import com.ssafy.mylifencut.user.domain.User;
+import com.ssafy.mylifencut.user.dto.Token;
 import com.ssafy.mylifencut.user.dto.TokenRequest;
-import com.ssafy.mylifencut.user.dto.TokenResponse;
 import com.ssafy.mylifencut.user.dto.UserInfo;
 import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
 import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
@@ -355,7 +355,7 @@ public class UserServiceTest {
 				.accessToken("TOKEN_BEFORE")
 				.refreshToken("TOKEN_BEFORE")
 				.build();
-			TokenResponse tokenResponse = TokenResponse.builder()
+			Token token = Token.builder()
 				.accessToken("TOKEN_AFTER")
 				.refreshToken("TOKEN_AFTER")
 				.build();
@@ -379,16 +379,16 @@ public class UserServiceTest {
 			doReturn(Optional.of(refreshToken))
 				.when(refreshTokenRepository)
 				.findByUserId(1);
-			doReturn(tokenResponse)
+			doReturn(token)
 				.when(jwtTokenProvider)
 				.createToken(any());
 
 			// when
-			TokenResponse result = userService.reissueToken(tokenRequest);
+			Token result = userService.reissueToken(tokenRequest);
 
 			// then
-			assertEquals(tokenResponse.getRefreshToken(), result.getRefreshToken());
-			assertEquals(tokenResponse.getAccessToken(), result.getAccessToken());
+			assertEquals(token.getRefreshToken(), result.getRefreshToken());
+			assertEquals(token.getAccessToken(), result.getAccessToken());
 		}
 	}
 

@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.ssafy.mylifencut.user.dto.TokenResponse;
+import com.ssafy.mylifencut.user.dto.Token;
 import com.ssafy.mylifencut.user.service.UserService;
 
 @DisplayName("[JWT 토큰]")
@@ -35,7 +35,7 @@ class JwtTokenProviderTest {
 		final String userId = "1";
 
 		//when
-		final TokenResponse accessToken = jwtTokenProvider.createToken(userId);
+		final Token accessToken = jwtTokenProvider.createToken(userId);
 
 		// then
 		assertEquals(userId, jwtTokenProvider.getUserId(accessToken.getAccessToken()));
@@ -53,7 +53,7 @@ class JwtTokenProviderTest {
 			final String userId = "1";
 
 			// when
-			final TokenResponse accessToken = jwtTokenProvider.createToken(userId);
+			final Token accessToken = jwtTokenProvider.createToken(userId);
 
 			// then
 			assertTrue(jwtTokenProvider.validateToken(accessToken.getAccessToken()));
@@ -106,10 +106,10 @@ class JwtTokenProviderTest {
 		@Test
 		void validToken() {
 			// given
-			final TokenResponse tokenResponse = jwtTokenProvider.createToken("1");
+			final Token token = jwtTokenProvider.createToken("1");
 
 			// when
-			boolean result = jwtTokenProvider.validateToken(tokenResponse.getRefreshToken());
+			boolean result = jwtTokenProvider.validateToken(token.getRefreshToken());
 
 			//then
 			assertTrue(result);

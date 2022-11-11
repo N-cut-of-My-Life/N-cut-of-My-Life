@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.ssafy.mylifencut.user.dto.TokenResponse;
+import com.ssafy.mylifencut.user.dto.Token;
 import com.ssafy.mylifencut.user.service.SecurityService;
 
 import io.jsonwebtoken.Claims;
@@ -38,7 +38,7 @@ public class JwtTokenProvider {
 		secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
 	}
 
-	public TokenResponse createToken(String userId) {
+	public Token createToken(String userId) {
 		Claims claims = Jwts.claims().setSubject(userId);
 		Date now = new Date();
 
@@ -54,7 +54,7 @@ public class JwtTokenProvider {
 			.signWith(SignatureAlgorithm.HS256, secretKey)
 			.compact();
 
-		return TokenResponse.builder()
+		return Token.builder()
 			.accessToken(accessToken)
 			.refreshToken(refreshToken)
 			.build();
