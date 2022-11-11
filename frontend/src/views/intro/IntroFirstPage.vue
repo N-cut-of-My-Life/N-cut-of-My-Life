@@ -73,10 +73,10 @@ onMounted(() => {
   const isMute = useMusicStore().isMute
   if(isMute === true){
     document.querySelector('#cosmos').muted = true
-    console.log(document.querySelector('audio'))
+    document.querySelector('#burung').muted = true
   } else {
     document.querySelector('#cosmos').muted = false
-    console.log(document.querySelector('audio'))
+    document.querySelector('#burung').muted = false
   }
 })
 </script>

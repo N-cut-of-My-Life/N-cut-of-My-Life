@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import index from '@/api/index'
 import axios from 'axios'
 import { xml2json } from 'xml-js'
-import { ref } from 'vue'
+// import { ref } from 'vue'
 // for 은하 갤러리
 export const useGalleryStore = defineStore('gallery', {
   state: () => ({
@@ -29,7 +29,7 @@ export const useGalleryStore = defineStore('gallery', {
 // for 둠칫둠칫 행성
 export const useMusicStore = defineStore('music', {
   state: () => ({
-      isMute: ref(false), 
+      isMute: false, 
       songs: [],
     }),
   getters: {
@@ -42,10 +42,8 @@ export const useMusicStore = defineStore('music', {
       console.log(this.isMute)
       if(this.isMute === true){
         document.querySelector('audio').muted = true
-        console.log(document.querySelector('audio'))
       } else {
         document.querySelector('audio').muted = false
-        console.log(document.querySelector('audio'))
       }
     },
     

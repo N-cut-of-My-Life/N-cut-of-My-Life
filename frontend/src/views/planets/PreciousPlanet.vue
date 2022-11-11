@@ -177,10 +177,10 @@ export default {
         const isMute = useMusicStore().isMute
         if(isMute === true){
             document.querySelector('#mix_precious').muted = true
-            console.log(document.querySelector('audio'))
+            document.querySelector('#trainsound').muted = true
         } else {
             document.querySelector('#mix_precious').muted = false
-            console.log(document.querySelector('audio'))
+            document.querySelector('#trainsound').muted = false
         }
     }
 }
