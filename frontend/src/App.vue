@@ -8,11 +8,14 @@
 import PageLoader from "@/load/PageLoader.vue";
 import { useMusicStore } from '@/store/index'
 import { watch } from 'vue'
+
 const musicStore = useMusicStore()
+
 
  watch(() => musicStore.isMute, function() {
   musicStore.isSoundActive()
-})
+},
+)
 </script>
 
 <style>
