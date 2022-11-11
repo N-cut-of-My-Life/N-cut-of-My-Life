@@ -357,7 +357,7 @@ public class UserServiceTest {
 			// when
 
 			// then
-			assertThrows(InvalidRefreshTokenException.class, () -> userService.getUserResponse(accessToken));
+			assertThrows(InvalidAccessTokenException.class, () -> userService.getUserResponse(accessToken));
 		}
 
 		@Test
@@ -368,9 +368,12 @@ public class UserServiceTest {
 			doReturn(true)
 				.when(jwtTokenProvider)
 				.validateToken(any());
+			doReturn("1")
+				.when(jwtTokenProvider)
+				.getUserId(any());
 			doReturn(Optional.empty())
 				.when(userRepository)
-				.findById(any());
+				.findById(1);
 
 			// when
 
@@ -392,9 +395,12 @@ public class UserServiceTest {
 			doReturn(true)
 				.when(jwtTokenProvider)
 				.validateToken(any());
-			doReturn(Optional.empty())
+			doReturn("1")
+				.when(jwtTokenProvider)
+				.getUserId(any());
+			doReturn(Optional.of(user))
 				.when(userRepository)
-				.findById(any());
+				.findById(1);
 
 			// when
 			final UserResponse result = userService.getUserResponse(accessToken);
