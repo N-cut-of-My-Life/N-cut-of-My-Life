@@ -181,7 +181,7 @@ public class UserService {
 	@Transactional
 	public Token reissueToken(String refreshToken) {
 
-		if (!jwtTokenProvider.validateToken(refreshToken)) {
+		if (refreshToken == null || !jwtTokenProvider.validateToken(refreshToken)) {
 			throw new InvalidRefreshTokenException();
 		}
 
