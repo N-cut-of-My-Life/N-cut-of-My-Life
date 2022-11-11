@@ -1,19 +1,23 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useAccountStore } from "@/store";
 
 const routes = [
   {
     path: "/:pathMatch(.*)*",
     redirect: "/pagenotfound",
+    meta: { authNotReq: true },
   },
   {
     path: "/",
     name: "intro",
     component: () => import("@/views/intro/IntroView.vue"),
+    meta: { authNotReq: true },
   },
   {
     path: "/login",
     name: "login",
-    component: () => import("@/views/intro/IntroFirstPage.vue"),
+    component: () => import("@/views/login/KakaoLogin.vue"),
+    meta: { authNotReq: true },
   },
   {
     path: "/introfirstpage",
@@ -103,3 +107,26 @@ const router = createRouter({
 });
 
 export default router;
+
+router.beforeEach(function (to, from, next) {
+  // const isLogin = accountStore.isLogin
+  const token = useAccountStore().token;
+
+  console.log("라우팅");
+  // console.log(isLogin)
+  console.log(token);
+
+  if (
+    to.matched.some(function (routeInfo) {
+      return routeInfo.meta.authNotReq;
+    })
+  ) {
+    next();
+  } else {
+    if (token) {
+      next();
+    } else {
+      alert("로그인 필요");
+    }
+  }
+});
