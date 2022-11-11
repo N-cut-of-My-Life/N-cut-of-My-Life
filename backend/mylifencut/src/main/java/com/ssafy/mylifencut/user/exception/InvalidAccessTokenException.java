@@ -2,8 +2,8 @@ package com.ssafy.mylifencut.user.exception;
 
 import static com.ssafy.mylifencut.user.UserConstant.*;
 
-public class NoAccessTokenException extends RuntimeException {
-	public NoAccessTokenException() {
+public class InvalidAccessTokenException extends RuntimeException {
+	public InvalidAccessTokenException() {
 		super(NO_ACCESS_TOKEN_ERROR_MESSAGE);
 	}
 }

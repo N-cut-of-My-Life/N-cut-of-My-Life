@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.common.exception.BadRequestException;
-import com.ssafy.mylifencut.user.exception.NoAccessTokenException;
+import com.ssafy.mylifencut.user.exception.InvalidAccessTokenException;
 
 @RestControllerAdvice
 public class ExceptionAdvice {
@@ -19,8 +19,8 @@ public class ExceptionAdvice {
 		);
 	}
 
-	@ExceptionHandler(NoAccessTokenException.class)
-	public ResponseEntity<BaseResponse> noAccessTokenException(NoAccessTokenException exception) {
+	@ExceptionHandler(InvalidAccessTokenException.class)
+	public ResponseEntity<BaseResponse> noAccessTokenException(InvalidAccessTokenException exception) {
 		return new ResponseEntity<>(
 			BaseResponse.from(false, exception.getMessage()),
 			HttpStatus.FORBIDDEN

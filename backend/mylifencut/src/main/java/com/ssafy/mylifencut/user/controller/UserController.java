@@ -14,7 +14,7 @@ import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.user.dto.KakaoRequest;
 import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.TokenResponse;
-import com.ssafy.mylifencut.user.exception.NoAccessTokenException;
+import com.ssafy.mylifencut.user.exception.InvalidAccessTokenException;
 import com.ssafy.mylifencut.user.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +32,7 @@ public class UserController {
 	@GetMapping("/exception")
 	@ApiOperation(value = "Header에 JWT가 없을 경우")
 	public void noAccessToken() {
-		throw new NoAccessTokenException();
+		throw new InvalidAccessTokenException();
 	}
 
 	@PostMapping("/login")
