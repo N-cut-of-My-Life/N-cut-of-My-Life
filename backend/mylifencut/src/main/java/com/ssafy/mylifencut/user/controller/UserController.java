@@ -4,6 +4,7 @@ import static com.ssafy.mylifencut.user.UserConstant.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.user.dto.KakaoRequest;
 import com.ssafy.mylifencut.user.dto.TokenRequest;
 import com.ssafy.mylifencut.user.dto.TokenResponse;
+import com.ssafy.mylifencut.user.exception.NoAccessTokenException;
 import com.ssafy.mylifencut.user.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +28,12 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final UserService userService;
+
+	@GetMapping("/exception")
+	@ApiOperation(value = "Header에 JWT가 없을 경우")
+	public void noAccessToken() {
+		throw new NoAccessTokenException();
+	}
 
 	@PostMapping("/login")
 	@ApiOperation(value = "카카오 로그인", notes = "카카오 AccessToken으로 로그인")
