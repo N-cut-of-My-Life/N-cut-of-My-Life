@@ -226,6 +226,18 @@ public class UserServiceTest {
 	class refreshTokenTest {
 
 		@Test
+		@DisplayName("[실패] - 토큰이 null 일 경우")
+		void nullRefreshToken() {
+			// given
+			final String refreshToken = null;
+
+			// when
+
+			// then
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.reissueToken(refreshToken));
+		}
+
+		@Test
 		@DisplayName("[실패] - 발급되지 않았던 리프레쉬 토큰")
 		void notValidRefreshToken() {
 			// given
