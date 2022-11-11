@@ -49,6 +49,10 @@ video {
   background-size: cover;
 }
 
+body{
+  margin:0;
+}
+
 .title {
   padding-right: 1%;
   padding-top: 1%;
@@ -163,7 +167,7 @@ video {
   max-height: auto;
   background: #666 url("../../assets/planet/weep.png") repeat-x 0% 0%;
   background-size: 512px 256px;
-  margin-left: 0px;
+  margin-left: 40px;
   margin-top: -250px;
   filter: grayscale(75%);
   -webkit-filter: grayscale(75%);
@@ -178,8 +182,8 @@ video {
   max-height: auto;
   background: #666 url("../../assets/planet/haho.png") repeat-x 0% 0%;
   background-size: 512px 256px;
-  margin-left: -50px;
-  margin-top: -128px;
+  margin-left: 20px;
+  margin-top: -136px;
   filter: grayscale(75%);
   -webkit-filter: grayscale(75%);
   animation: rotation_3 20s infinite linear;

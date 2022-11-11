@@ -16,6 +16,11 @@
   <b-navbar toggleable="lg" style="float: right; margin-right: 50px;">
     <b-navbar-nav>
       <b-nav-item>
+        <router-link :to="{ name: 'lastword' }" class="nav-link">
+          나에게 하는 한마디
+        </router-link>
+      </b-nav-item>
+      <b-nav-item>
         <router-link :to="{ name: 'traveldiary' }" class="nav-link">
           나의 여행 일지
         </router-link>
