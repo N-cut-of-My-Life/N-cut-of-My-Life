@@ -357,6 +357,24 @@ public class UserServiceTest {
 			// then
 			assertThrows(InvalidRefreshTokenException.class, () -> userService.getUserResponse(accessToken));
 		}
+
+		@Test
+		@DisplayName("[실패] - 유효한 토큰 및 사용자 없음")
+		void userNotFoundError() {
+			// given
+			final String accessToken = "INVALID_TOKEN";
+			doReturn(true)
+				.when(jwtTokenProvider)
+				.validateToken(any());
+			doReturn(Optional.empty())
+				.when(userRepository)
+				.findById(any());
+
+			// when
+
+			// then
+			assertThrows(InvalidRefreshTokenException.class, () -> userService.getUserResponse(accessToken));
+		}
 	}
 
 	public UserInfo newUserInfo() {
