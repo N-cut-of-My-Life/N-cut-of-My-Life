@@ -16,5 +16,6 @@ export default {
 
   article: {
     getDiary: (userID) => HOST + ARTICLE + `${userID}`,
+    postDiary: () => HOST + ARTICLE,
   },
 };

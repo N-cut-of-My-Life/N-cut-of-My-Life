@@ -122,6 +122,7 @@
         </div>
       </b-popover>
       <b-form-textarea
+        v-model="answer"
         id="content"
         placeholder=""
         rows="10"
@@ -134,7 +135,7 @@
     <span>
       <b-button
         text
-        @click="submit"
+        @click="complete"
         data-bs-dismiss="modal"
         aria-label="Close"
         style="
@@ -150,7 +151,7 @@
 </template>
 
 <script>
-import { useMusicStore } from "@/store/index";
+import { useMusicStore, usePlanetStore } from "@/store/index";
 export default {
   data() {
     return {
@@ -167,6 +168,7 @@ export default {
       ],
       currentImage: 0,
       elementVisible: false,
+      answer: "",
     };
   },
   updated() {
@@ -190,6 +192,9 @@ export default {
 
     gotoPage(link) {
       this.$router.push(link);
+    },
+    complete() {
+      usePlanetStore().completePlanet(3, this.answer);
     },
   },
   mounted() {

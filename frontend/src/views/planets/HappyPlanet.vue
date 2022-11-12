@@ -127,6 +127,7 @@
         </div>
       </b-popover>
       <b-form-textarea
+        v-model="answer"
         id="content"
         placeholder=""
         rows="10"
@@ -138,7 +139,7 @@
     </b-container>
     <b-button
       text
-      @click="submit"
+      @click="complete"
       style="
         color: #ffffff;
         background-color: #d2aa62;
@@ -152,7 +153,7 @@
 
 <script>
 // import VueAudio from 'vue-audio'
-import { useMusicStore } from "@/store/index";
+import { useMusicStore, usePlanetStore } from "@/store/index";
 export default {
   data() {
     return {
@@ -174,6 +175,7 @@ export default {
       elementVisible: false,
       currentAudio: 0,
       mute: false,
+      answer: "",
     };
   },
   // components: {
@@ -200,6 +202,9 @@ export default {
 
     gotoPage(link) {
       this.$router.push(link);
+    },
+    complete() {
+      usePlanetStore().completePlanet(1, this.answer);
     },
 
     // toggleMute() {

@@ -79,6 +79,7 @@
     </div>
     <b-container ref="form" style="margin-bottom: 3.8%">
       <b-form-textarea
+        v-model="answer"
         id="content"
         placeholder=""
         rows="10"
@@ -90,7 +91,7 @@
     </b-container>
     <b-button
       text
-      @click="submit"
+      @click="complete"
       style="
         color: #ffffff;
         background-color: #b1afff;
@@ -103,7 +104,7 @@
 </template>
 
 <script>
-import { useMusicStore } from "@/store/index";
+import { useMusicStore, usePlanetStore } from "@/store/index";
 export default {
   data() {
     return {
@@ -115,6 +116,7 @@ export default {
       ],
       currentImage: 0,
       elementVisible: false,
+      answer: "",
     };
   },
   // created로 하면 생명주기가 더 앞 순위이기에 페이지가 열리고 바로 카운트된다.
@@ -134,6 +136,9 @@ export default {
 
     gotoPage(link) {
       this.$router.push(link);
+    },
+    complete() {
+      usePlanetStore().completePlanet(4, this.answer);
     },
   },
   mounted() {
