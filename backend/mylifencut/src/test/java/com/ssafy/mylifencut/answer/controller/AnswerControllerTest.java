@@ -188,9 +188,9 @@ class AnswerControllerTest {
 			//given
 			final String url = "/answer";
 			doReturn(Arrays.asList(
-					GalleryResponse.builder().id(1).userId(3).answerId(3).contents("답변내용").like(10).build(),
-					GalleryResponse.builder().id(2).userId(4).answerId(4).contents("답변내용이지롱").like(11).build(),
-					GalleryResponse.builder().id(3).userId(5).answerId(5).contents("답변내용입니당").like(12).build()
+					GalleryResponse.builder().id(1).userId(3).answerId(3).contents("답변내용").imgUrl("src/image").like(10).build(),
+					GalleryResponse.builder().id(2).userId(4).answerId(4).contents("답변내용이지롱").imgUrl("src/image").like(11).build(),
+					GalleryResponse.builder().id(3).userId(5).answerId(5).contents("답변내용입니당").imgUrl("src/image").like(12).build()
 			)).when(answerService).getGalleryList();
 			//when
 			final ResultActions resultActions = mockMvc.perform(
@@ -212,6 +212,7 @@ class AnswerControllerTest {
 				assertEquals((double) (i + 1), galleryResponse.get("id"));
 				assertEquals((double) (i + 3), galleryResponse.get("userId"));
 				assertEquals((double) (i + 10), galleryResponse.get("like"));
+				assertEquals("src/image", galleryResponse.get("imgUrl"));
 				assertEquals((double) (i + 3), galleryResponse.get("answerId"));
 				assertEquals(contentsList[i], galleryResponse.get("contents"));
 			}
