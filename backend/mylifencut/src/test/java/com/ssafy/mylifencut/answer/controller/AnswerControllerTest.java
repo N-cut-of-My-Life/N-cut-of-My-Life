@@ -1,14 +1,16 @@
 package com.ssafy.mylifencut.answer.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
+import com.google.gson.Gson;
+import com.ssafy.mylifencut.answer.AnswerConstant;
+import com.ssafy.mylifencut.answer.dto.GalleryResponse;
+import com.ssafy.mylifencut.answer.service.AnswerService;
+import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
+import com.ssafy.mylifencut.common.dto.BaseResponse;
+import com.ssafy.mylifencut.like.LikeConstant;
+import com.ssafy.mylifencut.like.dto.IsLikeResponse;
+import com.ssafy.mylifencut.like.exception.AlreadyLikeException;
+import com.ssafy.mylifencut.like.exception.NotExistLikeException;
+import com.ssafy.mylifencut.like.service.LikeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -23,17 +25,15 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.google.gson.Gson;
-import com.ssafy.mylifencut.answer.AnswerConstant;
-import com.ssafy.mylifencut.answer.dto.GalleryResponse;
-import com.ssafy.mylifencut.answer.service.AnswerService;
-import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
-import com.ssafy.mylifencut.common.dto.BaseResponse;
-import com.ssafy.mylifencut.like.LikeConstant;
-import com.ssafy.mylifencut.like.dto.IsLikeResponse;
-import com.ssafy.mylifencut.like.exception.AlreadyLikeException;
-import com.ssafy.mylifencut.like.exception.NotExistLikeException;
-import com.ssafy.mylifencut.like.service.LikeService;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -188,9 +188,9 @@ class AnswerControllerTest {
 			//given
 			final String url = "/answer";
 			doReturn(Arrays.asList(
-				GalleryResponse.builder().id(1).userId(3).contents("답변내용").like(10).build(),
-				GalleryResponse.builder().id(2).userId(4).contents("답변내용이지롱").like(11).build(),
-				GalleryResponse.builder().id(3).userId(5).contents("답변내용입니당").like(12).build()
+					GalleryResponse.builder().id(1).userId(3).answerId(3).contents("답변내용").like(10).build(),
+					GalleryResponse.builder().id(2).userId(4).answerId(4).contents("답변내용이지롱").like(11).build(),
+					GalleryResponse.builder().id(3).userId(5).answerId(5).contents("답변내용입니당").like(12).build()
 			)).when(answerService).getGalleryList();
 			//when
 			final ResultActions resultActions = mockMvc.perform(
@@ -208,10 +208,11 @@ class AnswerControllerTest {
 			List<GalleryResponse> list = (List<GalleryResponse>)response.getData();
 			String[] contentsList = {"답변내용", "답변내용이지롱", "답변내용입니당"};
 			for (int i = 0; i < list.size(); i++) {
-				Map galleryResponse = (Map)list.get(i);
-				assertEquals((double)(i+1), galleryResponse.get("id"));
-				assertEquals((double)(i+3), galleryResponse.get("userId"));
-				assertEquals((double)(i+10), galleryResponse.get("like"));
+				Map galleryResponse = (Map) list.get(i);
+				assertEquals((double) (i + 1), galleryResponse.get("id"));
+				assertEquals((double) (i + 3), galleryResponse.get("userId"));
+				assertEquals((double) (i + 10), galleryResponse.get("like"));
+				assertEquals((double) (i + 3), galleryResponse.get("answerId"));
 				assertEquals(contentsList[i], galleryResponse.get("contents"));
 			}
 		}
