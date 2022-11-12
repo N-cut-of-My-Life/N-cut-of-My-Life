@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getStorage  } from "firebase/storage";
+import { getStorage } from "firebase/storage";
 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/learn-more#config-object
@@ -11,15 +11,14 @@ const firebaseConfig = {
   storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.VUE_APP_FIREBASE_APP_ID,
-  measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENT_ID
+  measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-
 // Initialize Cloud Storage and get a reference to the service
-getStorage(app)
+getStorage(app);
 // const storage = getStorage(app);
 // const storageRef = ref(storage, 'hi/logo.png');
 
@@ -27,7 +26,6 @@ getStorage(app)
 // uploadBytes(storageRef, file).then(() => {
 //   console.log('Uploaded a blob or file!');
 // });
-
 
 // Get the download URL
 // getDownloadURL(storageRef)

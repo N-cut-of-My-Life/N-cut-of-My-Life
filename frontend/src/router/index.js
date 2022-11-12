@@ -1,105 +1,133 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+// import { useAccountStore } from "@/store";
 
 const routes = [
   {
     path: '/:pathMatch(.*)*',
-    redirect: "/pagenotfound"
+    redirect: '/pagenotfound',
+    meta: { authNotReq: true },
   },
   {
     path: '/',
     name: 'intro',
-    component: () => import('@/views/intro/IntroView.vue')
+    component: () => import('@/views/intro/IntroView.vue'),
+    meta: { authNotReq: true },
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import("@/views/intro/IntroFirstPage.vue"),
+    component: () => import('@/views/login/KakaoLogin.vue'),
+    meta: { authNotReq: true },
   },
   {
-    path: "/introfirstpage",
-    name: "introfirstpage",
-    component: () => import("@/views/intro/IntroFirstPage.vue"),
+    path: '/introfirstpage',
+    name: 'introfirstpage',
+    component: () => import('@/views/intro/IntroFirstPage.vue'),
   },
   {
-    path: "/introstory",
-    name: "introstory",
-    component: () => import("@/views/intro/IntroStory.vue"),
+    path: '/introstory',
+    name: 'introstory',
+    component: () => import('@/views/intro/IntroStory.vue'),
   },
   {
-    path: "/galaxygallery",
-    name: "galaxygallery",
-    component: () => import("@/views/gallery/GalaxyGallery.vue"),
+    path: '/galaxygallery',
+    name: 'galaxygallery',
+    component: () => import('@/views/gallery/GalaxyGallery.vue'),
   },
   {
-    path: "/traveldiary",
-    name: "traveldiary",
-    component: () => import("@/views/mypage/TravelDiary.vue"),
+    path: '/traveldiary',
+    name: 'traveldiary',
+    component: () => import('@/views/mypage/TravelDiary.vue'),
   },
   {
-    path: "/planetlist",
-    name: "planetlist",
-    component: () => import("@/views/planets/PlanetList.vue"),
+    path: '/planetlist',
+    name: 'planetlist',
+    component: () => import('@/views/planets/PlanetList.vue'),
   },
   {
-    path: "/musicplanet",
-    name: "musicplanet",
-    component: () => import("@/views/planets/MusicPlanet.vue"),
+    path: '/musicplanet',
+    name: 'musicplanet',
+    component: () => import('@/views/planets/MusicPlanet.vue'),
   },
   {
-    path: "/dreamplanet",
-    name: "dreamplanet",
-    component: () => import("@/views/planets/DreamPlanet.vue"),
+    path: '/dreamplanet',
+    name: 'dreamplanet',
+    component: () => import('@/views/planets/DreamPlanet.vue'),
   },
   {
-    path: "/happyplanet",
-    name: "happyplanet",
-    component: () => import("@/views/planets/HappyPlanet.vue"),
+    path: '/happyplanet',
+    name: 'happyplanet',
+    component: () => import('@/views/planets/HappyPlanet.vue'),
   },
   {
-    path: "/sadplanet",
-    name: "sadplanet",
-    component: () => import("@/views/planets/SadPlanet.vue"),
+    path: '/sadplanet',
+    name: 'sadplanet',
+    component: () => import('@/views/planets/SadPlanet.vue'),
   },
   {
-    path: "/genieplanet",
-    name: "genieplanet",
-    component: () => import("@/views/planets/GeniePlanet.vue"),
+    path: '/genieplanet',
+    name: 'genieplanet',
+    component: () => import('@/views/planets/GeniePlanet.vue'),
   },
   {
-    path: "/preciousplanet",
-    name: "preciousplanet",
-    component: () => import("@/views/planets/PreciousPlanet.vue"),
+    path: '/preciousplanet',
+    name: 'preciousplanet',
+    component: () => import('@/views/planets/PreciousPlanet.vue'),
   },
   {
-    path: "/regretplanet",
-    name: "regretplanet",
-    component: () => import("@/views/planets/RegretPlanet.vue"),
+    path: '/regretplanet',
+    name: 'regretplanet',
+    component: () => import('@/views/planets/RegretPlanet.vue'),
   },
   {
-    path: "/treasureplanet",
-    name: "treasureplanet",
-    component: () => import("@/views/planets/TreasurePlanet.vue"),
+    path: '/treasureplanet',
+    name: 'treasureplanet',
+    component: () => import('@/views/planets/TreasurePlanet.vue'),
   },
   {
-    path: "/resultprint",
-    name: "resultprint",
-    component: () => import("@/views/result/ResultPrint.vue"),
+    path: '/resultprint',
+    name: 'resultprint',
+    component: () => import('@/views/result/ResultPrint.vue'),
   },
   {
-    path: "/pagenotfound",
-    name: "pagenotFound",
-    component: () => import("@/views/404/PageNotFound.vue")
+    path: '/pagenotfound',
+    name: 'pagenotFound',
+    component: () => import('@/views/404/PageNotFound.vue'),
   },
   {
-    path: "/lastword",
-    name: "lastword",
-    component: () => import("@/views/last/LastWord.vue")
+    path: '/lastword',
+    name: 'lastword',
+    component: () => import('@/views/last/LastWord.vue'),
   },
-]
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
+
+// router.beforeEach(function (to, from, next) {
+//   // const isLogin = accountStore.isLogin
+//   const token = useAccountStore().token;
+
+//   console.log("라우팅");
+//   // console.log(isLogin)
+//   console.log(token);
+
+//   if (
+//     to.matched.some(function (routeInfo) {
+//       return routeInfo.meta.authNotReq;
+//     })
+//   ) {
+//     next();
+//   } else {
+//     if (token) {
+//       next();
+//     } else {
+//       alert("로그인 필요");
+//       router.push({ name: "intro" });
+//     }
+//   }
+// });

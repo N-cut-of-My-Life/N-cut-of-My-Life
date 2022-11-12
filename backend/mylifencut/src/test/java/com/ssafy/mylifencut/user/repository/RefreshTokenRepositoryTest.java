@@ -1,62 +1,124 @@
 package com.ssafy.mylifencut.user.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.ssafy.mylifencut.user.domain.RefreshToken;
+import java.util.List;
 import java.util.Optional;
-
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import com.ssafy.mylifencut.user.domain.RefreshToken;
-
 @DataJpaTest
 @DisplayName("[리프레쉬 토큰]")
 class RefreshTokenRepositoryTest {
-	@Autowired
-	private RefreshTokenRepository refreshTokenRepository;
+    @Autowired
+    private RefreshTokenRepository refreshTokenRepository;
 
-	@DisplayName("[실패] -  UserId로 토큰 검색")
-	@Test
-	void findUserIdByRefreshTokenFail() {
-		// given
-		String refreshToken = "REFRESH_TOKEN";
+    @DisplayName("토큰 검색")
+    @Nested
+    class findToken {
 
-		// when
-		final Optional<RefreshToken> userId = refreshTokenRepository.findByToken(refreshToken);
+        @DisplayName("[실패] -  UserId로 토큰 검색")
+        @Test
+        void findByRefreshTokenFail() {
+            // given
+            String refreshToken = "REFRESH_TOKEN";
 
-		// then
-		assertFalse(userId.isPresent());
-	}
+            // when
+            final Optional<RefreshToken> userId = refreshTokenRepository.findByToken(refreshToken);
 
-	@DisplayName("[실패] - 리프레쉬 토큰 검색")
-	@Test
-	void findRefreshTokenByUserIdFail() {
-		// given
-		Integer userId = 1;
+            // then
+            assertFalse(userId.isPresent());
+        }
 
-		// when
-		final Optional<RefreshToken> result = refreshTokenRepository.findByUserId(userId);
+        @DisplayName("[성공]")
+        @Test
+        void findByRefreshTokenSuccess() {
+            //given
+            final RefreshToken refreshToken = RefreshToken.builder()
+                    .token("TOKEN")
+                    .userId(1)
+                    .build();
+            refreshTokenRepository.save(refreshToken);
 
-		// then
-		assertFalse(result.isPresent());
-	}
+            // when
+            Optional<RefreshToken> result = refreshTokenRepository.findByToken("TOKEN");
 
-	@DisplayName("[성공] - 리프레쉬 토큰 저장")
-	@Test
-	void findUserIdByRefreshTokenSuccess() {
-		// given
-		RefreshToken refreshToken = RefreshToken.builder()
-			.userId(1)
-			.token("TOKEN")
-			.build();
+            // then
+            assertTrue(result.isPresent());
+            assertEquals(result.get().getToken(), refreshToken.getToken());
+            assertEquals(result.get().getUserId(), refreshToken.getUserId());
+        }
+    }
 
-		// when
-		final RefreshToken result = refreshTokenRepository.save(refreshToken);
+    @DisplayName("UserId로 전체 리스트 검색")
+    @Nested
+    class FindAllByUser {
 
-		// then
-		assertEquals(refreshToken.getUserId(), refreshToken.getUserId());
-		assertEquals(refreshToken.getToken(), refreshToken.getToken());
-	}
+        @DisplayName("[실패] - 리프레쉬 토큰 없음")
+        @Test
+        void findAllByUserIdFail() {
+            // given
+            final Integer userId = 1;
+
+            // when
+            final List<RefreshToken> result = refreshTokenRepository.findAllByUserId(userId);
+
+            // then
+            assertEquals(result.size(), 0);
+        }
+
+        @DisplayName("[성공]")
+        @Test
+        void findAllByUserIdSuccess() {
+            // given
+            final Integer userId = 1;
+            final RefreshToken refreshToken1 = RefreshToken.builder()
+                    .token("TOKEN1")
+                    .userId(userId)
+                    .build();
+            final RefreshToken refreshToken2 = RefreshToken.builder()
+                    .token("TOKEN2")
+                    .userId(userId)
+                    .build();
+            final RefreshToken refreshToken3 = RefreshToken.builder()
+                    .token("TOKEN3")
+                    .userId(2)
+                    .build();
+            refreshTokenRepository.save(refreshToken1);
+            refreshTokenRepository.save(refreshToken2);
+            refreshTokenRepository.save(refreshToken3);
+
+            // when
+            List<RefreshToken> result = refreshTokenRepository.findAllByUserId(userId);
+
+            // then
+            assertEquals(result.size(), 2);
+            result.forEach(token -> {
+                assertEquals(token.getUserId(), userId);
+            });
+        }
+    }
+
+    @DisplayName("[성공] - 리프레쉬 토큰 저장")
+    @Test
+    void findUserIdByRefreshTokenSuccess() {
+        // given
+        RefreshToken refreshToken = RefreshToken.builder()
+                .userId(1)
+                .token("TOKEN")
+                .build();
+
+        // when
+        final RefreshToken result = refreshTokenRepository.save(refreshToken);
+
+        // then
+        assertEquals(refreshToken.getUserId(), refreshToken.getUserId());
+        assertEquals(refreshToken.getToken(), refreshToken.getToken());
+    }
 }

@@ -1,13 +1,14 @@
 <template>
   <audio loop autoplay volume="0.5">
-    <source src="@/assets/audio/daylight.mp3" type="audio/mp3">
+    <source src="@/assets/audio/daylight.mp3" type="audio/mp3" />
   </audio>
   <video muted autoplay loop playbackRate="0.5">
-    <source src="@/assets/space.mp4" type="video/mp4">
+    <source src="@/assets/space.mp4" type="video/mp4" />
   </video>
   <div class="menu-box">
     <div class="text-box">
-      <span class="title">인생 </span><span class="n">N</span><span class="title">컷</span>
+      <span class="title">인생 </span><span class="n">N</span
+      ><span class="title">컷</span>
       <div class="subtitle">당신을 기록하는 우주여행</div>
       <div class="title-ment">
         <div class="wave">
@@ -30,21 +31,26 @@
           <span style="--i: 17">아</span>
           <span style="--i: 18">요</span>
           <span style="--i: 19">!</span>
-
         </div>
       </div>
     </div>
 
-    <div class="login-btn">
-      <router-link :to="{ name: 'introfirstpage' }" class="nav-link" style="text-decoration: none; color: inherit;">
+    <!-- <div class="login-btn">
+      <router-link
+        :to="{ name: 'introfirstpage' }"
+        class="nav-link"
+        style="text-decoration: none; color: inherit"
+      >
         &nbsp;카카오 로그인
       </router-link>
-    </div>
-    <!-- <div class="login-btn">
-      <div @click="login()" class="nav-link" style="text-decoration: none; color: inherit;"></div>
     </div> -->
-
-
+    <div class="login-btn">
+      <div
+        @click="login()"
+        class="nav-link"
+        style="text-decoration: none; color: inherit"
+      ></div>
+    </div>
   </div>
 </template>
 
@@ -58,47 +64,50 @@ export default {
       window.Kakao.Auth.authorize(params);
     },
   },
-  
-}
+};
 </script>
 
 <style scoped>
 @font-face {
-  font-family: 'kakao';
-  src: url('@/fonts/KakaoBold.ttf') format('truetype');
+  font-family: "kakao";
+  src: url("@/fonts/KakaoBold.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'yun';
-  src: url('@/fonts/YunTaemin.ttf') format('truetype');
+  font-family: "yun";
+  src: url("@/fonts/YunTaemin.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'ONE-Mobile-POP';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+  font-family: "ONE-Mobile-POP";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'MaplestoryOTFBold';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+  font-family: "MaplestoryOTFBold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-    font-family: 'establishRetrosansOTF';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "establishRetrosansOTF";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'SDSamliphopangche_Outline';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "SDSamliphopangche_Outline";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 .wave {
@@ -109,14 +118,13 @@ export default {
 .wave span {
   position: relative;
   display: inline-block;
-  color: #FFFFFF;
+  color: #ffffff;
   text-transform: uppercase;
   animation: wave 4s infinite;
   animation-delay: calc(0.1s * var(--i));
 }
 
 @keyframes wave {
-
   0%,
   40%,
   100% {
@@ -145,26 +153,26 @@ video {
 }
 
 .title {
-  color: #EBEAEA;
+  color: #ebeaea;
   font-size: 5.7rem;
   font-family: SDSamliphopangche_Outline;
 }
 
-.n{
+.n {
   color: #a3c7d6;
   font-size: 5.7rem;
   font-family: SDSamliphopangche_Outline;
 }
 
 .subtitle {
-  color: #E2636A;
+  color: #e2636a;
   font-size: 2rem;
   margin-top: 8%;
   font-family: MaplestoryOTFBold;
 }
 
 .title-ment {
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 1.43rem;
   margin-top: 4%;
   font-family: MaplestoryOTFBold;
@@ -172,7 +180,7 @@ video {
 
 .login-btn {
   text-align: center;
-  background-color: #FEF01B;
+  background-color: #fef01b;
   border-radius: 10px;
   font-family: kakao;
   font-size: 1.5rem;
