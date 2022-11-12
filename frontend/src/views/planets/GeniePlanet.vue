@@ -87,6 +87,7 @@
     </div>
     <b-container ref="form" style="margin-bottom: 3.8%">
       <b-form-textarea
+        v-model="answer"
         id="content"
         placeholder=""
         rows="10"
@@ -98,7 +99,7 @@
     </b-container>
     <b-button
       text
-      @click="submit"
+      @click="complete"
       style="
         color: #ffffff;
         background-color: #9985c6;
@@ -111,7 +112,7 @@
 </template>
 
 <script>
-import { useMusicStore } from "@/store/index";
+import { useMusicStore, usePlanetStore } from "@/store/index";
 export default {
   data() {
     return {
@@ -124,6 +125,7 @@ export default {
       ],
       currentImage: 0,
       elementVisible: false,
+      answer: "",
     };
   },
   updated() {
@@ -142,6 +144,9 @@ export default {
 
     gotoPage(link) {
       this.$router.push(link);
+    },
+    complete() {
+      usePlanetStore().completePlanet(7, this.answer);
     },
   },
   mounted() {

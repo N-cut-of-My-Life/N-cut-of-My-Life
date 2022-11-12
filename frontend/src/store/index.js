@@ -8,6 +8,7 @@ import { xml2json } from "xml-js";
 export const useAccountStore = defineStore("account", {
   state: () => ({
     token: null,
+    userInfo: {},
   }),
   getters: {
     isLogin(state) {
@@ -25,9 +26,13 @@ export const useAccountStore = defineStore("account", {
         },
       })
         .then((res) => {
-          console.log(res.data.data.accessToken);
+          console.log(res.data);
           this.token = res.data.data.accessToken;
+          this.userInfo.userId = res.data.data.userId;
+          this.userInfo.name = res.data.data.name;
+          this.userInfo.email = res.data.data.email;
           console.log(this.token);
+          console.log(this.userInfo);
           console.log(this.isLogin);
         })
         // .then(router.push({ name: "introfirstpage" }))
@@ -54,16 +59,67 @@ export const useGalleryStore = defineStore("gallery", {
   getters: {},
   actions: {
     getLastWord() {
-      axios({
+      ({
         url: index.answer.getLastWord(),
         method: "GET",
-      })
+      }
         .then((res) => {
           console.log(res);
           this.lastWords = res.data;
         })
         .catch((err) => {
           console.log(err);
+        }));
+    },
+  },
+});
+
+export const usePlanetStore = defineStore("planet", {
+  state: () => ({
+    completeCount: 0,
+    minimumConditionsMet: false,
+    articleRequest: {
+      userId: Number,
+      answers: [
+        // {
+        //   questionId: Number,
+        //   contents: String,
+        //   imgUrl: String,
+        //   state: String,
+        // },
+      ],
+    },
+  }),
+  actions: {
+    completePlanet(planetId, answer) {
+      this.completeCount++;
+      if (this.completeCount === 3) {
+        this.minimumConditionsMet = true;
+      }
+      this.articleRequest.userId = 1;
+      this.articleRequest.answers.push({
+        questionId: planetId,
+        contents: answer,
+        imgUrlL: "url",
+        state: "CLOSE",
+      });
+    },
+    finishTravel() {
+      axios({
+        url: index.article.postDiary(),
+        method: "POST",
+        headers: { "X-AUTH-TOKEN": useAccountStore().token },
+        data: {
+          articleRequest: this.articleRequest,
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+        })
+        // .then(router.push({ name: "introfirstpage" }))
+        .catch((e) => {
+          console.log("error", e);
+          // router.push({ name: "intro" })
         });
     },
   },
