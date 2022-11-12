@@ -108,7 +108,7 @@ const router = createRouter({
 
 export default router;
 
-router.beforeEach(function (to, from, next) {
+router.beforeEach(function () {
   // const isLogin = accountStore.isLogin
   const token = useAccountStore().token;
 
@@ -116,18 +116,18 @@ router.beforeEach(function (to, from, next) {
   // console.log(isLogin)
   console.log(token);
 
-  if (
-    to.matched.some(function (routeInfo) {
-      return routeInfo.meta.authNotReq;
-    })
-  ) {
-    next();
-  } else {
-    if (token) {
-      next();
-    } else {
-      alert("로그인 필요");
-      router.push({ name: "intro" });
-    }
-  }
+  // if (
+  //   to.matched.some(function (routeInfo) {
+  //     return routeInfo.meta.authNotReq;
+  //   })
+  // ) {
+  //   next();
+  // } else {
+  //   if (token) {
+  //     next();
+  //   } else {
+  //     alert("로그인 필요");
+  //     router.push({ name: "intro" });
+  //   }
+  // }
 });

@@ -109,6 +109,7 @@
         </b-col>
         <b-col cols="11">
           <b-form-input
+            v-model="answer_dear"
             id="dear"
             placeholder=""
             style="background-color: #fdfcfa; padding: 2px 4px; border: none"
@@ -117,6 +118,7 @@
         </b-col>
       </b-row>
       <b-form-textarea
+        v-model="answer_content"
         id="content"
         placeholder=""
         rows="10"
@@ -128,7 +130,7 @@
     </b-container>
     <b-button
       text
-      @click="submit()"
+      @click="complete"
       data-bs-dismiss="modal"
       aria-label="Close"
       style="
@@ -196,7 +198,7 @@
 </template>
 
 <script>
-import { useMusicStore } from "@/store/index";
+import { useMusicStore, usePlanetStore } from "@/store/index";
 export default {
   data() {
     return {
@@ -218,6 +220,8 @@ export default {
       elementVisible_2: false,
       elementVisible_3: false,
       elementVisible_4: false,
+      answer_dear: "",
+      answer_content: "",
       // modalShow: false
     };
   },
@@ -242,12 +246,18 @@ export default {
     gotoPage(link) {
       this.$router.push(link);
     },
-
     submit() {
       this.elementVisible = true;
       this.elementVisible_3 = true;
       setTimeout(() => (this.elementVisible_2 = true), 800);
       // this.elementVisible_2 = true
+    },
+    complete() {
+      this.submit();
+      usePlanetStore().completePlanet(
+        8,
+        this.answer_dear + "\n" + this.answer_content
+      );
     },
   },
   updated() {

@@ -68,14 +68,23 @@
       v-b-tooltip.hover.top="'지니 행성'"
     />
   </div>
+  <b-button v-show="getMinimumConditionsMet() === true" @click="finishTravel">
+    <strong>여행마치기</strong>
+  </b-button>
 </template>
 
 <script>
-import { useMusicStore } from "@/store/index";
+import { useMusicStore, usePlanetStore } from "@/store/index";
 export default {
   methods: {
     gotoPage(link) {
       this.$router.push(link);
+    },
+    getMinimumConditionsMet() {
+      return usePlanetStore().minimumConditionsMet;
+    },
+    finishTravel() {
+      usePlanetStore().finishTravel();
     },
   },
   mounted() {

@@ -61,6 +61,7 @@
         <span style="--i: 11">!</span>
       </div>
     </b-button>
+    <button @click="complete"></button>
   </div>
 </template>
 
@@ -69,7 +70,7 @@
 import MusicModal from "@/components/planets/MusicModal.vue";
 import { onMounted, onUpdated, ref } from "vue";
 import { useRouter } from "vue-router";
-import { useMusicStore } from "@/store/index";
+import { useMusicStore, usePlanetStore } from "@/store/index";
 
 const router = useRouter();
 
@@ -97,6 +98,9 @@ const previousImage = () => {
 };
 const gotoPage = (link) => {
   router.push(link);
+};
+const complete = () => {
+  usePlanetStore().completePlanet(6);  //TODO answer 추가
 };
 onUpdated(() => {
   if (currentImage.value == images.length - 1) {
