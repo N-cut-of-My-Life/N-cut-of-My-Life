@@ -1,16 +1,30 @@
 package com.ssafy.mylifencut.user.controller;
 
-import static com.ssafy.mylifencut.user.UserConstant.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static com.ssafy.mylifencut.user.UserConstant.INVALID_KAKAO_ACCESS_TOKEN_ERROR_MESSAGE;
+import static com.ssafy.mylifencut.user.UserConstant.INVALID_REFRESH_TOKEN_ERROR_MESSAGE;
+import static com.ssafy.mylifencut.user.UserConstant.KAKAO_LOGIN_SUCCESS_MESSAGE;
+import static com.ssafy.mylifencut.user.UserConstant.TOKEN_REISSUE_SUCCESS_MESSAGE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.google.gson.Gson;
+import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
+import com.ssafy.mylifencut.common.dto.BaseResponse;
+import com.ssafy.mylifencut.user.dto.Token;
+import com.ssafy.mylifencut.user.dto.UserResponse;
+import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
+import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
+import com.ssafy.mylifencut.user.service.UserService;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.http.Cookie;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -24,15 +38,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import com.google.gson.Gson;
-import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
-import com.ssafy.mylifencut.common.dto.BaseResponse;
-import com.ssafy.mylifencut.user.dto.Token;
-import com.ssafy.mylifencut.user.dto.UserResponse;
-import com.ssafy.mylifencut.user.exception.InvalidKakaoAccessTokenException;
-import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
-import com.ssafy.mylifencut.user.service.UserService;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[유저 컨트롤러]")
@@ -234,26 +239,5 @@ public class UserControllerTest {
 			assertEquals(TOKEN_REISSUE_SUCCESS_MESSAGE, response.getMessage());
 			cookie().value("refreshToken", token.getRefreshToken());
 		}
-	}
-
-	@Test
-	@DisplayName("[실패] - 엑세스 토큰이 없는 경우")
-	void noAccessToken() throws Exception {
-		// given
-		final String url = "/user/exception";
-
-		// when
-		final ResultActions resultActions = mockMvc.perform(
-			MockMvcRequestBuilders.get(url)
-				.contentType(MediaType.APPLICATION_JSON)
-		);
-
-		// then
-		resultActions.andExpect(status().isForbidden());
-		final BaseResponse response = gson.fromJson(resultActions.andReturn()
-			.getResponse()
-			.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
-		assertFalse(response.isSuccess());
-		assertEquals(INVALID_ACCESS_TOKEN_ERROR_MESSAGE, response.getMessage());
 	}
 }
