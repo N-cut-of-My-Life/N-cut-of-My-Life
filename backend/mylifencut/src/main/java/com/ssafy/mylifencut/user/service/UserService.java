@@ -1,18 +1,5 @@
 package com.ssafy.mylifencut.user.service;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Collections;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.ssafy.mylifencut.user.JwtTokenProvider;
@@ -29,9 +16,19 @@ import com.ssafy.mylifencut.user.exception.InvalidRefreshTokenException;
 import com.ssafy.mylifencut.user.exception.UserNotFoundException;
 import com.ssafy.mylifencut.user.repository.RefreshTokenRepository;
 import com.ssafy.mylifencut.user.repository.UserRepository;
-
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,13 +50,15 @@ public class UserService {
 		UserInfo userInfo = getUserInfo(getAccessToken(token));
 
 		User user = userRepository.findByEmail(userInfo.getEmail())
-			.orElseGet(() -> join(userInfo));
+				.orElseGet(() -> join(userInfo));
+
+		refreshTokenRepository.deleteAll(refreshTokenRepository.findAllByUserId(user.getId()));
 
 		Token tokenResponse = jwtTokenProvider.createToken(Integer.toString(user.getId()));
 		RefreshToken refreshToken = RefreshToken.builder()
-			.userId(user.getId())
-			.token(tokenResponse.getRefreshToken())
-			.build();
+				.userId(user.getId())
+				.token(tokenResponse.getRefreshToken())
+				.build();
 		refreshTokenRepository.save(refreshToken);
 		return tokenResponse;
 	}
