@@ -229,7 +229,7 @@ export default {
         8,
         this.answer_dear + "\n" + this.answer_content
       );
-
+    },
     trainLaunch() {
       this.elementVisible_2 = false;
       const train = document.querySelector('.trainman');
@@ -241,7 +241,7 @@ export default {
           router.push({ name: 'planetlist' });
         }
       });
-    },
+    }
   },
   updated() {
     if (this.currentImage == this.images.length - 1) {
