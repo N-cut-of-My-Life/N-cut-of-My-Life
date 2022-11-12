@@ -8,6 +8,7 @@ import { xml2json } from "xml-js";
 export const useAccountStore = defineStore("account", {
   state: () => ({
     token: null,
+    userInfo: {},
   }),
   getters: {
     isLogin(state) {
@@ -25,9 +26,13 @@ export const useAccountStore = defineStore("account", {
         },
       })
         .then((res) => {
-          console.log(res.data.data.accessToken);
+          console.log(res.data);
           this.token = res.data.data.accessToken;
+          this.userInfo.userId = res.data.data.userId;
+          this.userInfo.name = res.data.data.name;
+          this.userInfo.email = res.data.data.email;
           console.log(this.token);
+          console.log(this.userInfo);
           console.log(this.isLogin);
         })
         // .then(router.push({ name: "introfirstpage" }))
