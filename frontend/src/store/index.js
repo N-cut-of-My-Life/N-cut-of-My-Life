@@ -52,28 +52,6 @@ export const useAccountStore = defineStore("account", {
   },
 });
 
-export const useGalleryStore = defineStore("gallery", {
-  state: () => ({
-    lastWords: [],
-  }),
-  getters: {},
-  actions: {
-    getLastWord() {
-      ({
-        url: index.answer.getLastWord(),
-        method: "GET",
-      }
-        .then((res) => {
-          console.log(res);
-          this.lastWords = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        }));
-    },
-  },
-});
-
 export const usePlanetStore = defineStore("planet", {
   state: () => ({
     completeCount: 0,
