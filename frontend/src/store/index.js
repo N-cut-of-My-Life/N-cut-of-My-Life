@@ -100,18 +100,17 @@ export const usePlanetStore = defineStore("planet", {
       this.articleRequest.answers.push({
         questionId: planetId,
         contents: answer,
-        imgUrlL: "url",
+        imgUrl: "url",
         state: "CLOSE",
       });
     },
     finishTravel() {
+      console.log(this.articleRequest);
       axios({
         url: index.article.postDiary(),
         method: "POST",
         headers: { "X-AUTH-TOKEN": useAccountStore().token },
-        data: {
-          articleRequest: this.articleRequest,
-        },
+        data: this.articleRequest,
       })
         .then((res) => {
           console.log(res.data);
