@@ -2,26 +2,17 @@
   <div class="jumbotron">
     <div class="title">이루지못 행성</div>
   </div>
-  <img class="bubble" :src="images[currentImage]" alt="" />
+  <img v-show="!elementVisible_2" class="bubble" :src="images[currentImage]" alt="" />
   <audio loop autoplay volume="0.3">
     <source src="@/assets/audio/mix_dream.mp3" type="audio/mp3" />
   </audio>
   <div class="other">
-    <b-button
-      @click="gotoPage({ name: 'planetlist' })"
-      class="button_prev"
-      size="sm"
-    >
+    <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
       <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
     </b-button>
   </div>
   <div class="jump">
-    <b-button
-      @click="previousImage()"
-      class="button"
-      size="sm"
-      :disabled="currentImage === 0"
-    >
+    <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
       뒤로
     </b-button>
     &nbsp;
@@ -35,7 +26,7 @@
     </b-button>
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
-    <b-button v-show="elementVisible" class="button_2" size="md">
+    <b-button v-show="elementVisible && !elementVisible_3" class="button_2" size="md">
       <div class="wave" v-b-modal.modal-dream>
         <span style="--i: 1">꿈</span>
         <span style="--i: 2">&nbsp;</span>
@@ -67,14 +58,7 @@
       style="cursor: pointer; float: right"
       alt=""
     />
-    <div
-      style="
-        font-size: 1.3vw;
-        margin-top: 5%;
-        margin-bottom: 3%;
-        font-weight: 400;
-      "
-    >
+    <div style="font-size: 1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400">
       아쉽게 이루지 못한 꿈을 이 곳에 적어주세요!
     </div>
     <b-container ref="form" style="margin-bottom: 3.8%">
@@ -92,31 +76,51 @@
     <b-button
       text
       @click="complete"
-      style="
-        color: #ffffff;
-        background-color: #b1afff;
-        border: none;
-        border-radius: 1vw;
-      "
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      style="color: #ffffff; background-color: #b1afff; border: none; border-radius: 1vw"
       >저장
     </b-button>
   </b-modal>
+  <div class="last">
+    <b-button v-show="elementVisible_4" class="button_3" size="md" @click="endthisPlanet()">
+      <div class="wave">
+        <span style="--i: 1">이</span>
+        <span style="--i: 2">루</span>
+        <span style="--i: 3">지</span>
+        <span style="--i: 4">못</span>
+        <span style="--i: 5">&nbsp;</span>
+        <span style="--i: 6">행</span>
+        <span style="--i: 7">성</span>
+        <span style="--i: 8">&nbsp;</span>
+        <span style="--i: 9">여</span>
+        <span style="--i: 10">행</span>
+        <span style="--i: 11">&nbsp;</span>
+        <span style="--i: 12">마</span>
+        <span style="--i: 13">치</span>
+        <span style="--i: 14">기</span>
+      </div>
+    </b-button>
+  </div>
 </template>
 
 <script>
-import { useMusicStore, usePlanetStore } from "@/store/index";
+import { useMusicStore, usePlanetStore } from '@/store/index';
 export default {
   data() {
     return {
       images: [
-        require("@/assets/PlanetSpeech/DreamSpeech/dream_bubble_1.svg"),
-        require("@/assets/PlanetSpeech/DreamSpeech/dream_bubble_2.svg"),
-        require("@/assets/PlanetSpeech/DreamSpeech/dream_bubble_3.svg"),
-        require("@/assets/PlanetSpeech/DreamSpeech/dream_bubble_4.svg"),
+        require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_1.svg'),
+        require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_2.svg'),
+        require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_3.svg'),
+        require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_4.svg'),
       ],
       currentImage: 0,
       elementVisible: false,
-      answer: "",
+      elementVisible_2: false,
+      elementVisible_3: false,
+      elementVisible_4: false,
+      answer: '',
     };
   },
   // created로 하면 생명주기가 더 앞 순위이기에 페이지가 열리고 바로 카운트된다.
@@ -138,7 +142,13 @@ export default {
       this.$router.push(link);
     },
     complete() {
+      this.elementVisible_2 = true;
+      this.elementVisible_3 = true;
+      setTimeout(() => (this.elementVisible_4 = true), 1000);
       usePlanetStore().completePlanet(4, this.answer);
+    },
+    endthisPlanet() {
+      this.$router.push({ name: 'planetlist' });
     },
   },
   mounted() {
@@ -172,8 +182,7 @@ body {
 }
 
 .jumbotron {
-  background: url("@/assets/PlanetBackground/dream.svg") no-repeat center center
-    fixed;
+  background: url('@/assets/PlanetBackground/dream.svg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -221,15 +230,6 @@ body {
   border-color: #ffffff;
 }
 
-.button_2 {
-  border-radius: 0.8vw;
-  border: none;
-  background-color: #81c6e8;
-  position: relative;
-  margin: 300px auto 0;
-  transition: all 0.3s ease-in-out 0s;
-}
-
 .x_button {
   width: 4%;
 }
@@ -241,8 +241,17 @@ body {
   border-color: #ffffff;
 }
 
+.button_2 {
+  border-radius: 0.8vw;
+  border: none;
+  background-color: #81c6e8;
+  position: relative;
+  margin: 300px auto 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
 .button_2::before {
-  content: "";
+  content: '';
   border-radius: 1000px;
   min-width: calc(190px + 12px);
   min-height: calc(60px + 12px);
@@ -273,6 +282,46 @@ body {
   display: none;
 }
 
+.button_3 {
+  border-radius: 0.8vw;
+  border: none;
+  background-color: #81c6e8;
+  position: relative;
+  margin: 300px auto 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.button_3::before {
+  content: '';
+  border-radius: 1000px;
+  min-width: calc(250px + 12px);
+  min-height: calc(60px + 12px);
+  box-shadow: 0 0 60px #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  transition: all 0.3s ease-in-out 0s;
+  animation: ring 1.5s infinite;
+}
+
+.button_3:hover,
+.button_3:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.button_3:hover::before,
+.button_3:focus::before {
+  opacity: 1;
+}
+
+.button_3:hover::after,
+.button_3:focus::after {
+  animation: none;
+  display: none;
+}
 @keyframes ring {
   0% {
     width: fit-content;
