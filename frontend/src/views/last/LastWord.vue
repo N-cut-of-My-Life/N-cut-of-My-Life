@@ -2,10 +2,26 @@
   <video muted autoplay loop playbackRate="0.75" style="width: 100%">
     <source src="@/assets/space_window.mp4" type="video/mp4" />
   </video>
-  <audio id="myaudios" loop autoplay :src="audios[currentAudio]" volume="0.2"></audio>
-  <img v-show="!elementVisible_2" class="bubble" :src="images[currentImage]" alt="" />
+  <audio
+    id="myaudios"
+    loop
+    autoplay
+    :src="audios[currentAudio]"
+    volume="0.2"
+  ></audio>
+  <img
+    v-show="!elementVisible_2"
+    class="bubble"
+    :src="images[currentImage]"
+    alt=""
+  />
   <div class="jump" v-show="!elementVisible_2">
-    <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
+    <b-button
+      @click="previousImage()"
+      class="button"
+      size="sm"
+      :disabled="currentImage === 0"
+    >
       뒤로
     </b-button>
     &nbsp;
@@ -72,7 +88,14 @@
       style="cursor: pointer; float: right"
       alt=""
     />
-    <div style="font-size: 1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400">
+    <div
+      style="
+        font-size: 1.3vw;
+        margin-top: 5%;
+        margin-bottom: 3%;
+        font-weight: 400;
+      "
+    >
       나에게 남길 마지막 말을 적어주세요!
     </div>
     <b-container ref="form" style="margin-bottom: 3.8%">
@@ -91,13 +114,23 @@
       @click="submit"
       data-bs-dismiss="modal"
       aria-label="Close"
-      style="color: #ffffff; background-color: #25316d; border: none; border-radius: 1vw"
+      style="
+        color: #ffffff;
+        background-color: #25316d;
+        border: none;
+        border-radius: 1vw;
+      "
     >
       저장
     </b-button>
   </b-modal>
   <div class="last">
-    <b-button v-show="elementVisible_4" class="button_2" size="md" @click="gotoPrint">
+    <b-button
+      v-show="elementVisible_4"
+      class="button_2"
+      size="md"
+      @click="gotoPrint"
+    >
       <div class="wave">
         <span style="--i: 1">수</span>
         <span style="--i: 2">고</span>
@@ -131,19 +164,24 @@
 </template>
 
 <script setup>
-import { onUpdated, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { onUpdated, ref, onMounted } from "vue";
+import { useMusicStore } from "@/store/music";
+import { useRouter } from "vue-router";
+
+onMounted(() => {
+  useMusicStore().isSoundActive();
+});
 
 const router = useRouter();
 const images = [
-  require('@/assets/PlanetSpeech/LastSpeech/last_bubble_1.svg'),
-  require('@/assets/PlanetSpeech/LastSpeech/last_bubble_2.svg'),
-  require('@/assets/PlanetSpeech/LastSpeech/last_bubble_3.svg'),
-  require('@/assets/PlanetSpeech/LastSpeech/last_bubble_4.svg'),
-  require('@/assets/PlanetSpeech/LastSpeech/last_bubble_5.svg'),
-  require('@/assets/PlanetSpeech/LastSpeech/last_bubble_6.svg'),
+  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_1.svg"),
+  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_2.svg"),
+  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_3.svg"),
+  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_4.svg"),
+  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_5.svg"),
+  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_6.svg"),
 ];
-const audios = [require('@/assets/audio/mix_last.mp3')];
+const audios = [require("@/assets/audio/mix_last.mp3")];
 let currentImage = ref(0);
 let elementVisible = ref(false);
 let elementVisible_2 = ref(false);
@@ -163,7 +201,7 @@ const submit = () => {
   setTimeout(() => (elementVisible_4.value = true), 1000);
 };
 const gotoPrint = () => {
-  router.push({ name: 'resultprint' });
+  router.push({ name: "resultprint" });
 };
 onUpdated(() => {
   if (currentImage.value == images.length - 1) {
@@ -230,7 +268,7 @@ body {
 }
 
 .button_2::before {
-  content: '';
+  content: "";
   border-radius: 1000px;
   min-width: calc(400px + 12px);
   min-height: calc(60px + 12px);
