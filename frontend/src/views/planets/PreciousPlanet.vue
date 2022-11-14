@@ -2,7 +2,12 @@
   <div class="jumbotron">
     <div class="title">넌너무소중 행성</div>
   </div>
-  <img v-show="!elementVisible" class="bubble" :src="images[currentImage]" alt="" />
+  <img
+    v-show="!elementVisible"
+    class="bubble"
+    :src="images[currentImage]"
+    alt=""
+  />
   <audio id="mix_precious" loop autoplay volume="0.3">
     <source src="@/assets/audio/mix_precious.mp3" type="audio/mp3" />
   </audio>
@@ -84,12 +89,22 @@
       style="cursor: pointer; float: right"
       alt=""
     />
-    <div style="font-size: 1.3vw; margin-top: 5%; margin-bottom: 4%; font-weight: 400">
+    <div
+      style="
+        font-size: 1.3vw;
+        margin-top: 5%;
+        margin-bottom: 4%;
+        font-weight: 400;
+      "
+    >
       소중한 사람에게 짧은 편지를 남겨보세요!
     </div>
     <b-container ref="form" style="margin-bottom: 3.8%">
       <b-row style="margin-bottom: 3%">
-        <b-col cols="1" style="padding: 0; font-size: 1vw; color: #c6753e; text-align: right">
+        <b-col
+          cols="1"
+          style="padding: 0; font-size: 1vw; color: #c6753e; text-align: right"
+        >
           To.
         </b-col>
         <b-col cols="11">
@@ -118,11 +133,21 @@
       @click="complete"
       data-bs-dismiss="modal"
       aria-label="Close"
-      style="color: #ffffff; background-color: #c6753e; border: none; border-radius: 1vw"
+      style="
+        color: #ffffff;
+        background-color: #c6753e;
+        border: none;
+        border-radius: 1vw;
+      "
       >저장
     </b-button>
   </b-modal>
-  <img v-show="elementVisible_2" class="bubble" :src="images_2[currentImage_2]" alt="" />
+  <img
+    v-show="elementVisible_2"
+    class="bubble"
+    :src="images_2[currentImage_2]"
+    alt=""
+  />
   <div v-show="elementVisible_2" class="jump">
     <b-button
       @click="previousImage_2()"
@@ -145,7 +170,12 @@
     </b-button>
   </div>
   <div class="last">
-    <b-button v-show="elementVisible_4" @click="trainLaunch" class="button_2" size="md">
+    <b-button
+      v-show="elementVisible_4"
+      @click="trainLaunch"
+      class="button_2"
+      size="md"
+    >
       <div class="wave">
         <span style="--i: 1">넌</span>
         <span style="--i: 2">너</span>
@@ -168,23 +198,24 @@
 </template>
 
 <script>
-import { useMusicStore, usePlanetStore } from "@/store/index";
-import router from '@/router/index.js';
+import { useMusicStore } from "@/store/music";
+import { usePlanetStore } from "@/store/planet";
+import router from "@/router/index.js";
 
 export default {
   data() {
     return {
       images: [
-        require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_1.svg'),
-        require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_2.svg'),
-        require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_3.svg'),
-        require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_4.svg'),
-        require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_5.svg'),
-        require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_6.svg'),
+        require("@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_1.svg"),
+        require("@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_2.svg"),
+        require("@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_3.svg"),
+        require("@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_4.svg"),
+        require("@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_5.svg"),
+        require("@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_6.svg"),
       ],
       images_2: [
-        require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_7.svg'),
-        require('@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_8.svg'),
+        require("@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_7.svg"),
+        require("@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_8.svg"),
       ],
       currentImage: 0,
       currentImage_2: 0,
@@ -207,7 +238,8 @@ export default {
     },
 
     nextImage_2() {
-      if (this.currentImage_2 !== this.images_2.length - 1) this.currentImage_2++;
+      if (this.currentImage_2 !== this.images_2.length - 1)
+        this.currentImage_2++;
     },
 
     previousImage_2() {
@@ -232,16 +264,16 @@ export default {
     },
     trainLaunch() {
       this.elementVisible_2 = false;
-      const train = document.querySelector('.trainman');
-      document.getElementById('mix_precious').pause();
-      document.getElementById('trainsound').play();
-      train.classList.add('train-launch');
-      train.addEventListener('animationend', (event) => {
-        if (event.animationName.includes('launch')) {
-          router.push({ name: 'planetlist' });
+      const train = document.querySelector(".trainman");
+      document.getElementById("mix_precious").pause();
+      document.getElementById("trainsound").play();
+      train.classList.add("train-launch");
+      train.addEventListener("animationend", (event) => {
+        if (event.animationName.includes("launch")) {
+          router.push({ name: "planetlist" });
         }
       });
-    }
+    },
   },
   updated() {
     if (this.currentImage == this.images.length - 1) {
@@ -254,11 +286,11 @@ export default {
   mounted() {
     const isMute = useMusicStore().isMute;
     if (isMute === true) {
-      document.querySelector('#mix_precious').muted = true;
-      document.querySelector('#trainsound').muted = true;
+      document.querySelector("#mix_precious").muted = true;
+      document.querySelector("#trainsound").muted = true;
     } else {
-      document.querySelector('#mix_precious').muted = false;
-      document.querySelector('#trainsound').muted = false;
+      document.querySelector("#mix_precious").muted = false;
+      document.querySelector("#trainsound").muted = false;
     }
   },
 };
@@ -316,7 +348,8 @@ body {
 }
 
 .jumbotron {
-  background: url('@/assets/PlanetBackground/precious.svg') no-repeat center center fixed;
+  background: url("@/assets/PlanetBackground/precious.svg") no-repeat center
+    center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -378,7 +411,7 @@ body {
 }
 
 .button_2::before {
-  content: '';
+  content: "";
   border-radius: 1000px;
   min-width: calc(260px + 12px);
   min-height: calc(60px + 12px);

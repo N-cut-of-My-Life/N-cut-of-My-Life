@@ -87,7 +87,8 @@
 <script>
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import "@splidejs/splide/dist/css/themes/splide-default.min.css";
-import { useMusicStore } from "@/store/index";
+import { useMusicStore } from "@/store/music";
+// import { usePlanetStore } from "@/store/planet";
 
 export default {
   name: "MainSlider",

@@ -3,16 +3,37 @@
     <div class="title">하하호호 행성</div>
   </div>
   <!-- <vue-audio :file="audios[currentAudio]" autoplay/> -->
-  <audio id="myaudios" loop autoplay :src="audios[currentAudio]" :muted="mute" volume="0.3"></audio>
+  <audio
+    id="myaudios"
+    loop
+    autoplay
+    :src="audios[currentAudio]"
+    :muted="mute"
+    volume="0.3"
+  ></audio>
   <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
-  <img v-show="!elementVisible_2" class="story" :src="images[currentImage]" alt="" />
+  <img
+    v-show="!elementVisible_2"
+    class="story"
+    :src="images[currentImage]"
+    alt=""
+  />
   <div class="other">
-    <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
+    <b-button
+      @click="gotoPage({ name: 'planetlist' })"
+      class="button_prev"
+      size="sm"
+    >
       <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
     </b-button>
   </div>
   <div class="jump">
-    <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
+    <b-button
+      @click="previousImage()"
+      class="button"
+      size="sm"
+      :disabled="currentImage === 0"
+    >
       뒤로
     </b-button>
     &nbsp;
@@ -26,7 +47,11 @@
     </b-button>
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
-    <b-button v-show="elementVisible && !elementVisible_3" class="button_2" size="md">
+    <b-button
+      v-show="elementVisible && !elementVisible_3"
+      class="button_2"
+      size="md"
+    >
       <div class="wave" v-b-modal.modal-happy>
         <span style="--i: 1">가</span>
         <span style="--i: 2">장</span>
@@ -67,7 +92,14 @@
       style="cursor: pointer; float: right"
       alt=""
     />
-    <div style="font-size: 1.3vw; margin-top: 5%; margin-bottom: 2%; font-weight: 400">
+    <div
+      style="
+        font-size: 1.3vw;
+        margin-top: 5%;
+        margin-bottom: 2%;
+        font-weight: 400;
+      "
+    >
       가장 행복했던 순간을 이 곳에 적어주세요!
     </div>
     <b-button
@@ -96,7 +128,9 @@
           />
           <div v-else>
             <div style="margin-top: 1vh">
-              <strong style="font-size: 1.1vw">행복했던 순간을 담아주세요!</strong>
+              <strong style="font-size: 1.1vw"
+                >행복했던 순간을 담아주세요!</strong
+              >
             </div>
           </div>
         </div>
@@ -117,12 +151,22 @@
       @click="complete"
       data-bs-dismiss="modal"
       aria-label="Close"
-      style="color: #ffffff; background-color: #d2aa62; border: none; border-radius: 1vw"
+      style="
+        color: #ffffff;
+        background-color: #d2aa62;
+        border: none;
+        border-radius: 1vw;
+      "
       >저장
     </b-button>
   </b-modal>
   <div class="last">
-    <b-button v-show="elementVisible_4" class="button_3" size="md" @click="endthisPlanet()">
+    <b-button
+      v-show="elementVisible_4"
+      class="button_3"
+      size="md"
+      @click="endthisPlanet()"
+    >
       <div class="wave">
         <span style="--i: 1">하</span>
         <span style="--i: 2">하</span>
@@ -145,7 +189,8 @@
 
 <script>
 // import VueAudio from 'vue-audio'
-import { useMusicStore, usePlanetStore } from '@/store/index';
+import { useMusicStore } from "@/store/music";
+import { usePlanetStore } from "@/store/planet";
 export default {
   data() {
     return {
@@ -154,14 +199,14 @@ export default {
         imageUrl: null,
       },
       images: [
-        require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_1.svg'),
-        require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_2.svg'),
-        require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_3.svg'),
+        require("@/assets/PlanetSpeech/HappySpeech/happy_bubble_1.svg"),
+        require("@/assets/PlanetSpeech/HappySpeech/happy_bubble_2.svg"),
+        require("@/assets/PlanetSpeech/HappySpeech/happy_bubble_3.svg"),
       ],
       audios: [
         // require('@/assets/audio/flower-dance.mp3'),
         // require('@/assets/audio/motivational-day.mp3'),
-        require('@/assets/audio/mix_flower_moti.mp3'),
+        require("@/assets/audio/mix_flower_moti.mp3"),
       ],
       currentImage: 0,
       elementVisible: false,
@@ -170,7 +215,7 @@ export default {
       elementVisible_4: false,
       currentAudio: 0,
       mute: false,
-      answer: '',
+      answer: "",
     };
   },
   // components: {
@@ -205,7 +250,7 @@ export default {
       usePlanetStore().completePlanet(1, this.answer);
     },
     endthisPlanet() {
-      this.$router.push({ name: 'planetlist' });
+      this.$router.push({ name: "planetlist" });
     },
     // toggleMute() {
     //     var myAudio = document.getElementById('myaudios');
@@ -243,7 +288,8 @@ body {
 }
 
 .jumbotron {
-  background: url('@/assets/PlanetBackground/haha.svg') no-repeat center center fixed;
+  background: url("@/assets/PlanetBackground/haha.svg") no-repeat center center
+    fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -324,7 +370,7 @@ body {
 }
 
 .button_2::before {
-  content: '';
+  content: "";
   border-radius: 1000px;
   min-width: calc(300px + 12px);
   min-height: calc(60px + 12px);
@@ -365,7 +411,7 @@ body {
 }
 
 .button_3::before {
-  content: '';
+  content: "";
   border-radius: 1000px;
   min-width: calc(250px + 12px);
   min-height: calc(60px + 12px);

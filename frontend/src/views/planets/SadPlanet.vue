@@ -40,7 +40,12 @@
     <div class="waterdrop waterdrop-small"></div>
     <div class="waterdrop waterdrop-big"></div>
   </div>
-  <img v-show="!elementVisible_2" class="bubble" :src="images[currentImage]" alt="" />
+  <img
+    v-show="!elementVisible_2"
+    class="bubble"
+    :src="images[currentImage]"
+    alt=""
+  />
   <audio loop autoplay volume="0.3">
     <source src="@/assets/audio/mix_sad.mp3" type="audio/mp3" />
   </audio>
@@ -114,7 +119,14 @@
       style="cursor: pointer; float: right"
       alt=""
     />
-    <div style="font-size: 1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400">
+    <div
+      style="
+        font-size: 1.3vw;
+        margin-top: 5%;
+        margin-bottom: 3%;
+        font-weight: 400;
+      "
+    >
       슬펐던 기억들을 이곳에 적어주세요!
     </div>
     <b-container ref="form" style="margin-bottom: 3.8%">
@@ -133,13 +145,23 @@
       @click="complete"
       data-bs-dismiss="modal"
       aria-label="Close"
-      style="color: #ffffff; background-color: #25316d; border: none; border-radius: 1vw"
+      style="
+        color: #ffffff;
+        background-color: #25316d;
+        border: none;
+        border-radius: 1vw;
+      "
     >
       저장
     </b-button>
   </b-modal>
   <div class="last">
-    <b-button v-show="elementVisible_4" class="button_3" size="md" @click="endthisPlanet()">
+    <b-button
+      v-show="elementVisible_4"
+      class="button_3"
+      size="md"
+      @click="endthisPlanet()"
+    >
       <div class="wave">
         <span style="--i: 1">훌</span>
         <span style="--i: 2">쩍</span>
@@ -161,14 +183,15 @@
 </template>
 
 <script>
-import { useMusicStore, usePlanetStore } from '@/store/index';
+import { useMusicStore } from "@/store/music";
+import { usePlanetStore } from "@/store/planet";
 export default {
   data() {
     return {
       images: [
-        require('@/assets/PlanetSpeech/SadSpeech/sad_bubble_1.svg'),
-        require('@/assets/PlanetSpeech/SadSpeech/sad_bubble_2.svg'),
-        require('@/assets/PlanetSpeech/SadSpeech/sad_bubble_3.svg'),
+        require("@/assets/PlanetSpeech/SadSpeech/sad_bubble_1.svg"),
+        require("@/assets/PlanetSpeech/SadSpeech/sad_bubble_2.svg"),
+        require("@/assets/PlanetSpeech/SadSpeech/sad_bubble_3.svg"),
       ],
       currentImage: 0,
       elementVisible: false,
@@ -196,7 +219,7 @@ export default {
       usePlanetStore().completePlanet(2, this.answer);
     },
     endthisPlanet() {
-      this.$router.push({ name: 'planetlist' });
+      this.$router.push({ name: "planetlist" });
     },
   },
   updated() {
@@ -235,7 +258,8 @@ body {
 }
 
 .jumbotron {
-  background: url('@/assets/PlanetBackground/sad.svg') no-repeat center center fixed;
+  background: url("@/assets/PlanetBackground/sad.svg") no-repeat center center
+    fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -298,7 +322,7 @@ body {
 }
 
 .button_2::before {
-  content: '';
+  content: "";
   border-radius: 1000px;
   min-width: calc(220px + 12px);
   min-height: calc(60px + 12px);
@@ -338,7 +362,7 @@ body {
 }
 
 .button_3::before {
-  content: '';
+  content: "";
   border-radius: 1000px;
   min-width: calc(240px + 12px);
   min-height: calc(60px + 12px);
@@ -411,7 +435,7 @@ body {
 
 .waterdrop:before {
   position: absolute;
-  content: '';
+  content: "";
   display: block;
   top: -1px;
   right: 0;

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import index from "@/api/index";
-import { useAccountStore } from "@/store/index";
+import { useAccountStore } from "@/store/account";
 import axios from "axios";
 
 export const useGalleryStore = defineStore("gallery", {

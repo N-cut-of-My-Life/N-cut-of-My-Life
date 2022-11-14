@@ -13,7 +13,7 @@
 
 <script setup>
 import { useRoute } from "vue-router";
-import { useAccountStore } from "@/store/index";
+import { useAccountStore } from "@/store/account";
 
 const route = useRoute();
 const code = route.query.code;

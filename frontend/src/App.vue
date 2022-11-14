@@ -6,7 +6,7 @@
 
 <script setup>
 import PageLoader from "@/load/PageLoader.vue";
-import { useMusicStore } from "@/store/index";
+import { useMusicStore } from "@/store/music";
 import { watch } from "vue";
 
 const musicStore = useMusicStore();

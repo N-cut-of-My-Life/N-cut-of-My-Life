@@ -2,17 +2,31 @@
   <div class="jumbotron">
     <div class="title">이루지못 행성</div>
   </div>
-  <img v-show="!elementVisible_2" class="bubble" :src="images[currentImage]" alt="" />
+  <img
+    v-show="!elementVisible_2"
+    class="bubble"
+    :src="images[currentImage]"
+    alt=""
+  />
   <audio loop autoplay volume="0.3">
     <source src="@/assets/audio/mix_dream.mp3" type="audio/mp3" />
   </audio>
   <div class="other">
-    <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
+    <b-button
+      @click="gotoPage({ name: 'planetlist' })"
+      class="button_prev"
+      size="sm"
+    >
       <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
     </b-button>
   </div>
   <div class="jump">
-    <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
+    <b-button
+      @click="previousImage()"
+      class="button"
+      size="sm"
+      :disabled="currentImage === 0"
+    >
       뒤로
     </b-button>
     &nbsp;
@@ -26,7 +40,11 @@
     </b-button>
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
-    <b-button v-show="elementVisible && !elementVisible_3" class="button_2" size="md">
+    <b-button
+      v-show="elementVisible && !elementVisible_3"
+      class="button_2"
+      size="md"
+    >
       <div class="wave" v-b-modal.modal-dream>
         <span style="--i: 1">꿈</span>
         <span style="--i: 2">&nbsp;</span>
@@ -58,7 +76,14 @@
       style="cursor: pointer; float: right"
       alt=""
     />
-    <div style="font-size: 1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400">
+    <div
+      style="
+        font-size: 1.3vw;
+        margin-top: 5%;
+        margin-bottom: 3%;
+        font-weight: 400;
+      "
+    >
       아쉽게 이루지 못한 꿈을 이 곳에 적어주세요!
     </div>
     <b-container ref="form" style="margin-bottom: 3.8%">
@@ -78,12 +103,22 @@
       @click="complete"
       data-bs-dismiss="modal"
       aria-label="Close"
-      style="color: #ffffff; background-color: #b1afff; border: none; border-radius: 1vw"
+      style="
+        color: #ffffff;
+        background-color: #b1afff;
+        border: none;
+        border-radius: 1vw;
+      "
       >저장
     </b-button>
   </b-modal>
   <div class="last">
-    <b-button v-show="elementVisible_4" class="button_3" size="md" @click="endthisPlanet()">
+    <b-button
+      v-show="elementVisible_4"
+      class="button_3"
+      size="md"
+      @click="endthisPlanet()"
+    >
       <div class="wave">
         <span style="--i: 1">이</span>
         <span style="--i: 2">루</span>
@@ -105,22 +140,23 @@
 </template>
 
 <script>
-import { useMusicStore, usePlanetStore } from '@/store/index';
+import { useMusicStore } from "@/store/music";
+import { usePlanetStore } from "@/store/planet";
 export default {
   data() {
     return {
       images: [
-        require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_1.svg'),
-        require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_2.svg'),
-        require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_3.svg'),
-        require('@/assets/PlanetSpeech/DreamSpeech/dream_bubble_4.svg'),
+        require("@/assets/PlanetSpeech/DreamSpeech/dream_bubble_1.svg"),
+        require("@/assets/PlanetSpeech/DreamSpeech/dream_bubble_2.svg"),
+        require("@/assets/PlanetSpeech/DreamSpeech/dream_bubble_3.svg"),
+        require("@/assets/PlanetSpeech/DreamSpeech/dream_bubble_4.svg"),
       ],
       currentImage: 0,
       elementVisible: false,
       elementVisible_2: false,
       elementVisible_3: false,
       elementVisible_4: false,
-      answer: '',
+      answer: "",
     };
   },
   // created로 하면 생명주기가 더 앞 순위이기에 페이지가 열리고 바로 카운트된다.
@@ -148,7 +184,7 @@ export default {
       usePlanetStore().completePlanet(4, this.answer);
     },
     endthisPlanet() {
-      this.$router.push({ name: 'planetlist' });
+      this.$router.push({ name: "planetlist" });
     },
   },
   mounted() {
@@ -182,7 +218,8 @@ body {
 }
 
 .jumbotron {
-  background: url('@/assets/PlanetBackground/dream.svg') no-repeat center center fixed;
+  background: url("@/assets/PlanetBackground/dream.svg") no-repeat center center
+    fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -251,7 +288,7 @@ body {
 }
 
 .button_2::before {
-  content: '';
+  content: "";
   border-radius: 1000px;
   min-width: calc(190px + 12px);
   min-height: calc(60px + 12px);
@@ -292,7 +329,7 @@ body {
 }
 
 .button_3::before {
-  content: '';
+  content: "";
   border-radius: 1000px;
   min-width: calc(250px + 12px);
   min-height: calc(60px + 12px);
