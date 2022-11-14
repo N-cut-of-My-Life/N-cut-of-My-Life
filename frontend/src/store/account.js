@@ -6,6 +6,7 @@ export const useAccountStore = defineStore("account", {
   state: () => ({
     token: null,
     userInfo: {},
+    myArticles: [],
   }),
   getters: {
     isLogin(state) {
@@ -44,6 +45,16 @@ export const useAccountStore = defineStore("account", {
         method: "GET",
       }).then((res) => {
         console.log(res);
+      });
+    },
+    getMyArtilces() {
+      axios({
+        url: index.account.getMyArticles() + this.userInfo.userId,
+        method: "GET",
+        headers: { "X-AUTH-TOKEN": this.token },
+      }).then((res) => {
+        console.log(res.data);
+        this.myArticles = res.data.data;
       });
     },
   },
