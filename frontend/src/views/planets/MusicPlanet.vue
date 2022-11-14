@@ -65,7 +65,6 @@
   </div>
 </template>
 
-//
 <script setup>
 import MusicModal from "@/components/planets/MusicModal.vue";
 import { onMounted, onUpdated, ref } from "vue";
