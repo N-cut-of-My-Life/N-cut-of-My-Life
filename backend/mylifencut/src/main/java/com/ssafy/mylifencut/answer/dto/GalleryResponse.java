@@ -15,7 +15,7 @@ public class GalleryResponse {
 	private String imgUrl;
 	private String contents;
 	private Integer like;
-	private IsMine isMine = IsMine.FALSE;
+	private IsMine isMine;
 
 	public static GalleryResponse of(Answer answer) {
 		return GalleryResponse.builder()
@@ -24,6 +24,7 @@ public class GalleryResponse {
 			.userId(answer.getArticle().getUser().getId())
 			.contents(answer.getContents())
 			.like(answer.getLikes().size())
+			.isMine(IsMine.FALSE)
 			.build();
 	}
 
