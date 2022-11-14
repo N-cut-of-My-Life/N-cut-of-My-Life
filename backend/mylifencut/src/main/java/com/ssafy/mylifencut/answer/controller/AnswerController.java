@@ -74,11 +74,11 @@ public class AnswerController {
 		@ApiResponse(code = 200, message = "갤러리 조회 성공", response = GalleryResponse.class),
 		@ApiResponse(code = 400, message = "갤러리 조회 실패")
 	})
-	@GetMapping
-	public ResponseEntity<BaseResponse> readGallery() {
+	@GetMapping("/{userId}")
+	public ResponseEntity<BaseResponse> readGallery(@PathVariable("userId") Integer userId) {
 
 		return new ResponseEntity<>(
-			BaseResponse.from(true, READ_GALLERY_SUCCESS_MESSAGE, answerService.getGalleryList()),
+			BaseResponse.from(true, READ_GALLERY_SUCCESS_MESSAGE, answerService.getGalleryList(userId)),
 			HttpStatus.OK);
 	}
 
