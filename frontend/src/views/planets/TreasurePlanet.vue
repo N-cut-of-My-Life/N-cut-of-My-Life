@@ -157,7 +157,7 @@
       </b-button>
     </span>
   </b-modal>
-  <div class="last">
+  <div class="last_2">
     <b-button
       v-show="elementVisible_4"
       class="button_3"
@@ -321,7 +321,14 @@ body {
 .last {
   position: absolute;
   bottom: 8%;
-  left: 40.5%;
+  left: 41%;
+  margin: auto;
+}
+
+.last_2 {
+  position: absolute;
+  bottom: 8%;
+  left: 42%;
   margin: auto;
 }
 
