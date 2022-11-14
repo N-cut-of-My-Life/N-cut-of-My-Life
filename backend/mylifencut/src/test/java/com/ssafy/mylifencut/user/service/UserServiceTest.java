@@ -112,6 +112,7 @@ public class UserServiceTest {
 			final UserInfo userInfo = UserInfo.builder()
 				.email("apiTest@email.com")
 				.name("싸피")
+				.profileImage("PROFILE_IMAGE")
 				.build();
 
 			// when
@@ -120,6 +121,7 @@ public class UserServiceTest {
 			// then
 			assertEquals(userInfo.getEmail(), result.getEmail());
 			assertEquals(userInfo.getName(), result.getName());
+			assertEquals(userInfo.getProfileImage(), result.getProfileImage());
 		}
 
 		@Test
@@ -141,11 +143,7 @@ public class UserServiceTest {
 		void loginNewUser() {
 			// given
 			final UserInfo userInfo = newUserInfo();
-			final User user = User.builder()
-				.id(1)
-				.email(userInfo.getEmail())
-				.name(userInfo.getName())
-				.build();
+			final User user = User.from(userInfo);
 			doReturn(user).when(userRepository).save(any(User.class));
 
 			// when
@@ -155,6 +153,7 @@ public class UserServiceTest {
 			assertEquals(user.getId(), result.getId());
 			assertEquals(user.getEmail(), result.getEmail());
 			assertEquals(user.getName(), result.getName());
+			assertEquals(user.getProfileImage(), result.getProfileImage());
 		}
 
 		@Test
@@ -192,11 +191,7 @@ public class UserServiceTest {
 		void loginExistingUserSuccess() {
 			// given
 			final UserInfo userInfo = newUserInfo();
-			final User user = User.builder()
-				.id(1)
-				.email(email)
-				.name(name)
-				.build();
+			final User user = User.from(userInfo);
 			doReturn(Optional.of(user)).when(userRepository).findByEmail(email);
 
 			// when
@@ -206,6 +201,7 @@ public class UserServiceTest {
 			assertEquals(user.getId(), result.getId());
 			assertEquals(user.getEmail(), result.getEmail());
 			assertEquals(user.getName(), result.getName());
+			assertEquals(user.getProfileImage(), result.getProfileImage());
 		}
 
 		@Test
@@ -417,6 +413,7 @@ public class UserServiceTest {
 		return UserInfo.builder()
 			.email(email)
 			.name(name)
+			.profileImage("PROFILE_IMAGE")
 			.build();
 	}
 }
