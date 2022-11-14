@@ -27,7 +27,6 @@ export const usePlanetStore = defineStore("planet", {
         imgUrl: null,
         state: "CLOSE",
       });
-      console.log(imgFile);
       if (imgFile != null) {
         this.images.set(this.articleRequest.answers.length - 1, imgFile);
       }
