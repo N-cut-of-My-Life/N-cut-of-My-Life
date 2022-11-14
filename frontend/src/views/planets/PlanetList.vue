@@ -1,9 +1,11 @@
 <template>
-  <div class="title">행성 목록</div>
+  <div class="help-tip">
+    <p>3개 이상의 행성을 다녀오시면 여행을 마치실 수 있습니다!</p>
+  </div>
   <video muted autoplay loop playbackRate="1.0">
     <source src="@/assets/intro_video.mp4" type="video/mp4" />
   </video>
-  <audio muted loop controls autoplay volume="0.5">
+  <audio muted loop autoplay volume="0.5">
     <source src="@/assets/audio/daylight.mp3" type="audio/mp3" />
   </audio>
   <div class="other">
@@ -76,9 +78,25 @@
       v-b-tooltip.hover.top="'지니 행성'"
     />
   </div>
-  <b-button v-show="getMinimumConditionsMet() === true" @click="finishTravel">
-    <strong>여행마치기</strong>
-  </b-button>
+  <div class="last">
+    <b-button
+      class="button_2"
+      v-show="getMinimumConditionsMet() === true"
+      @click="finishTravel"
+    >
+      <div class="wave">
+        <span style="--i: 1">여</span>
+        <span style="--i: 2">행</span>
+        <span style="--i: 3">을</span>
+        <span style="--i: 4">&nbsp;</span>
+        <span style="--i: 5">마</span>
+        <span style="--i: 6">칠</span>
+        <span style="--i: 7">래</span>
+        <span style="--i: 8">요</span>
+        <span style="--i: 9">!</span>
+      </div>
+    </b-button>
+  </div>
 </template>
 
 <script>
@@ -97,6 +115,7 @@ export default {
     },
     finishTravel() {
       usePlanetStore().finishTravel();
+      this.$router.push({ name: "lastword" });
     },
     checkCompletedPlanet(planetId) {
       let completed = false;
@@ -151,6 +170,13 @@ body {
   border-color: #ffffff;
 }
 
+.last {
+  position: absolute;
+  bottom: 5%;
+  right: 3%;
+  margin: auto;
+}
+
 .other {
   position: absolute;
   left: 1%;
@@ -184,8 +210,8 @@ body {
   top: 50%;
   margin-top: -144.72px;
   margin-left: -86.14px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
 }
 
 .stars_line {
@@ -231,8 +257,8 @@ body {
   background-size: 512px 256px;
   margin-left: -128px;
   margin-top: -128px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_1 20s infinite linear;
   cursor: pointer;
 }
@@ -246,8 +272,8 @@ body {
   background-size: 512px 256px;
   margin-left: 40px;
   margin-top: -250px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_2 20s infinite linear;
   cursor: pointer;
 }
@@ -261,8 +287,8 @@ body {
   background-size: 512px 256px;
   margin-left: 20px;
   margin-top: -136px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_3 20s infinite linear;
   cursor: pointer;
 }
@@ -273,8 +299,8 @@ body {
   width: 256px;
   margin-left: 60px;
   margin-top: -170px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_4 20s infinite linear;
   cursor: pointer;
   background: rgb(20, 20, 20, 0) url("../../assets/planet/music.png") repeat-x
@@ -292,8 +318,8 @@ body {
   background-size: 512px 256px;
   margin-left: -100px;
   margin-top: 100px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_5 20s infinite linear;
   cursor: pointer;
 }
@@ -307,8 +333,8 @@ body {
   background-size: 512px 256px;
   margin-left: -188px;
   margin-top: -128px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_6 20s infinite linear;
   cursor: pointer;
 }
@@ -322,8 +348,8 @@ body {
   background-size: 512px 256px;
   margin-left: -128px;
   margin-top: -128px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_7 20s infinite linear;
   cursor: pointer;
 }
@@ -332,9 +358,9 @@ body {
   max-width: 15%;
   height: auto;
   margin-left: 50px;
-  margin-top: -46.3px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  margin-top: -0px;
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_8 20s infinite linear;
   cursor: pointer;
 }
@@ -386,15 +412,15 @@ body {
 }
 
 .complete {
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%) !important;
+  -webkit-filter: grayscale(100%) !important;
   pointer-events: none;
 }
 
-.complete:hover {
+/* .complete:hover {
   filter: none;
   -webkit-filter: none;
-}
+} */
 
 @keyframes blinker {
   50% {
@@ -491,6 +517,174 @@ body {
 
   to {
     transform: scale(1) rotate(315deg) translate(175%) rotate(359deg);
+  }
+}
+
+.button_2 {
+  border-radius: 0.8vw;
+  /* border-color: #81c6e8; */
+  background-color: #827397;
+  position: relative;
+  margin: 300px auto 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.button_2::before {
+  content: "";
+  border-radius: 1000px;
+  min-width: calc(190px + 12px);
+  min-height: calc(60px + 12px);
+  box-shadow: 0 0 60px #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  transition: all 0.3s ease-in-out 0s;
+  animation: ring 1.5s infinite;
+}
+
+.button_2:hover,
+.button_2:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.button_2:hover::before,
+.button_2:focus::before {
+  opacity: 1;
+}
+
+.button_2:hover::after,
+.button_2:focus::after {
+  animation: none;
+  display: none;
+}
+
+@keyframes ring {
+  0% {
+    width: fit-content;
+    height: fit-content;
+    opacity: 1;
+  }
+
+  100% {
+    width: fit-content;
+    height: fit-content;
+    opacity: 0;
+  }
+}
+
+.wave {
+  position: relative;
+  /* -webkit-box-reflect: below -1px linear-gradient(transparent, #FFFFFF); */
+}
+
+.wave span {
+  position: relative;
+  display: inline-block;
+  color: #ffffff;
+  font-size: 1.2vw;
+  text-transform: uppercase;
+  animation: wave 3s infinite;
+  animation-delay: calc(0.1s * var(--i));
+}
+
+@keyframes wave {
+  0%,
+  40%,
+  100% {
+    transform: translateY(0);
+  }
+
+  20% {
+    transform: translateY(-3px);
+  }
+}
+</style>
+<style>
+.help-tip {
+  position: absolute;
+  top: 1.4%;
+  right: 0.4%;
+  text-align: center;
+  background-color: #6e7c7c;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  line-height: 26px;
+  cursor: default;
+  padding-left: 2px;
+}
+
+.help-tip:before {
+  content: "?";
+  font-weight: bold;
+  color: #fff;
+}
+
+.help-tip:hover p {
+  display: block;
+  transform-origin: 100% 0%;
+  -webkit-animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.help-tip p {
+  display: none;
+  text-align: left;
+  background-color: #1e2021;
+  width: 24vw;
+  position: absolute;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  right: -4px;
+  color: #fff;
+  font-size: 1vw;
+  line-height: 1.4;
+  padding: 3px;
+}
+
+.help-tip p:before {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-bottom-color: #1e2021;
+  left: 20%;
+  top: 12px;
+}
+
+.help-tip p:after {
+  width: 100%;
+  height: 40px;
+  content: "";
+  position: absolute;
+  top: -40px;
+  left: 0;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  100% {
+    opacity: 100%;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 100%;
   }
 }
 </style>
