@@ -17,10 +17,21 @@ export const useGalleryStore = defineStore("gallery", {
       })
         .then((res) => {
           this.galleryList = res.data.data;
+          console.log(this.galleryList);
         })
         .catch((e) => {
           console.log("error", e);
         });
+    },
+
+    postLike(answerID, userID) {
+      axios({
+        url: index.answer.like(answerID, userID),
+        method: "POST",
+        headers: { "X-AUTH-TOKEN": useAccountStore().token },
+      }).then((res) => {
+        console.log(res);
+      });
     },
   },
 });
