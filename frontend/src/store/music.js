@@ -4,7 +4,7 @@ import { xml2json } from "xml-js";
 
 export const useMusicStore = defineStore("music", {
   state: () => ({
-    isMute: false,
+    isMute: true,
     songs: [],
   }),
   getters: {},
