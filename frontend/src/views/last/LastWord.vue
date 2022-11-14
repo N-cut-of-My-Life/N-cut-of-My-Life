@@ -164,8 +164,13 @@
 </template>
 
 <script setup>
-import { onUpdated, ref } from "vue";
+import { onUpdated, ref, onMounted } from "vue";
+import { useMusicStore } from "@/store/music";
 import { useRouter } from "vue-router";
+
+onMounted(() => {
+  useMusicStore().isSoundActive();
+});
 
 const router = useRouter();
 const images = [

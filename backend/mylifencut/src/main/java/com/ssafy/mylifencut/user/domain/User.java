@@ -45,6 +45,7 @@ public class User implements UserDetails {
 	private String email;
 
 	private String name;
+	private String profileImage;
 
 	@Builder.Default
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -62,6 +63,7 @@ public class User implements UserDetails {
 		return User.builder()
 			.name(userInfo.getName())
 			.email(userInfo.getEmail())
+			.profileImage(userInfo.getProfileImage())
 			.build();
 	}
 

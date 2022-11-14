@@ -25,6 +25,7 @@ class UserRepositoryTest {
 		final User user = User.builder()
 			.name("홍길동")
 			.email("ssafy@email.com")
+			.profileImage("IMAGE_URL")
 			.articles(Collections.emptyList())
 			.build();
 
@@ -34,6 +35,7 @@ class UserRepositoryTest {
 		// then
 		assertEquals(user.getName(), result.getName());
 		assertEquals(user.getEmail(), result.getEmail());
+		assertEquals(user.getProfileImage(), result.getProfileImage());
 		assertEquals(user.getArticles(), result.getArticles());
 	}
 
@@ -68,6 +70,7 @@ class UserRepositoryTest {
 		assertTrue(result.isPresent());
 		assertEquals(savedUser.getName(), result.get().getName());
 		assertEquals(savedUser.getEmail(), result.get().getEmail());
+		assertEquals(savedUser.getProfileImage(), result.get().getProfileImage());
 		assertEquals(savedUser.getArticles(), result.get().getArticles());
 	}
 }

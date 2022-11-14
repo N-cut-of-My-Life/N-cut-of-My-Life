@@ -1,6 +1,12 @@
 <template>
   <div class="other">
-    <b-button @click="router.push({ name: 'introfirstpage' })" class="button_prev" size="sm"> <strong>&lt;</strong>&nbsp;&nbsp;홈페이지 </b-button>
+    <b-button
+      @click="router.push({ name: 'introfirstpage' })"
+      class="button_prev"
+      size="sm"
+    >
+      <strong>&lt;</strong>&nbsp;&nbsp;홈페이지
+    </b-button>
   </div>
 
   <div class="jumbotron">
@@ -13,11 +19,26 @@
       <template #default="{ item }">
         <div class="common">
           <!-- api호출이 아닌 상태이기 떄문에 추후 변경:require 이후 코드 -->
-          <img v-if="item.img !== ''" :src="require(`@/assets/${item.img}`)" alt="" />
+          <img
+            v-if="item.img !== ''"
+            :src="require(`@/assets/${item.img}`)"
+            alt=""
+          />
           <span class="content">{{ item.content }}</span>
           <div class="like">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16" style="color: red">
-              <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-heart-fill"
+              viewBox="0 0 16 16"
+              style="color: red"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+              />
             </svg>
             {{ item.likes }}
           </div>
@@ -32,12 +53,20 @@
 import MasonryWall from "@yeger/vue-masonry-wall";
 import { useRouter } from "vue-router";
 import { useGalleryStore } from "@/store/gallery";
+import { useMusicStore } from "@/store/music";
+import { onMounted } from "vue";
 
+onMounted(() => {
+  useMusicStore().isSoundActive();
+});
 const router = useRouter();
 
 const galleryStore = useGalleryStore();
 const getStoreList = galleryStore.getGalleryList();
-console.log(getStoreList);
+getStoreList;
+
+console.log(galleryStore.galleryList.data);
+console.log(typeof galleryStore.galleryList);
 
 // 텍스트 길이, 이미지 크기에 따라
 // 텍스트 박스 잘 바뀌는지 확인하고자 더미데이터 생성
@@ -46,12 +75,14 @@ const items = [
   { content: "뷰다 뷰", img: "logo.png", likes: "0" },
   { content: "난 해낼 수 있어", img: "", likes: "100" },
   {
-    content: "누구보다 빠르게 난 남들과는 다르게 색다르게 리듬을 타는 비트 위에 나그네",
+    content:
+      "누구보다 빠르게 난 남들과는 다르게 색다르게 리듬을 타는 비트 위에 나그네",
     img: "",
     likes: "5",
   },
   {
-    content: "유후 앤 다하 잇츠 모얼 댄 라이크 L 다음 또 O 다음 나 예예예, 유후 앤 다하 잇츠 로얼 댄 라이크! 왓츠 애프터라이크",
+    content:
+      "유후 앤 다하 잇츠 모얼 댄 라이크 L 다음 또 O 다음 나 예예예, 유후 앤 다하 잇츠 로얼 댄 라이크! 왓츠 애프터라이크",
     img: "logo.png",
     likes: "33",
   },
@@ -73,6 +104,7 @@ const items = [
     likes: "3",
   },
 ];
+// const items = galleryStore.galleryList
 </script>
 
 <style scoped>
