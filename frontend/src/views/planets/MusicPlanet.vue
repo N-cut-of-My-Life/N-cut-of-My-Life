@@ -70,7 +70,8 @@
 import MusicModal from "@/components/planets/MusicModal.vue";
 import { onMounted, onUpdated, ref } from "vue";
 import { useRouter } from "vue-router";
-import { useMusicStore, usePlanetStore } from "@/store/music";
+import { useMusicStore } from "@/store/music";
+import { usePlanetStore } from "@/store/planet";
 
 const router = useRouter();
 
