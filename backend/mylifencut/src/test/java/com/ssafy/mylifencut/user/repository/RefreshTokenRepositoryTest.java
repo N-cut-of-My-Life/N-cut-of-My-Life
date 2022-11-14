@@ -1,17 +1,17 @@
 package com.ssafy.mylifencut.user.repository;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-import com.ssafy.mylifencut.user.domain.RefreshToken;
 import java.util.List;
 import java.util.Optional;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import com.ssafy.mylifencut.user.domain.RefreshToken;
 
 @DataJpaTest
 @DisplayName("[리프레쉬 토큰]")
@@ -70,7 +70,7 @@ class RefreshTokenRepositoryTest {
             final List<RefreshToken> result = refreshTokenRepository.findAllByUserId(userId);
 
             // then
-            assertEquals(result.size(), 0);
+            assertEquals(0, result.size());
         }
 
         @DisplayName("[성공]")
@@ -98,7 +98,7 @@ class RefreshTokenRepositoryTest {
             List<RefreshToken> result = refreshTokenRepository.findAllByUserId(userId);
 
             // then
-            assertEquals(result.size(), 2);
+            assertEquals(2, result.size());
             result.forEach(token -> {
                 assertEquals(token.getUserId(), userId);
             });

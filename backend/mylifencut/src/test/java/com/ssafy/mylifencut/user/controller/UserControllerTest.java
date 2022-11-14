@@ -95,13 +95,7 @@ public class UserControllerTest {
 				.accessToken("NEW_TOKEN")
 				.refreshToken("NEW_TOKEN")
 				.build();
-			final UserResponse userResponse = UserResponse.builder()
-				.userId(1)
-				.name("홍길동")
-				.email("ssafy@email.com")
-				.accessToken("NEW_TOKEN")
-				.profileImage("PROFILE_IMAGE")
-				.build();
+			final UserResponse userResponse = newUserResponse();
 
 			doReturn(jwtToken)
 				.when(userService)
@@ -200,13 +194,7 @@ public class UserControllerTest {
 				.accessToken("NEW_TOKEN")
 				.refreshToken("NEW_TOKEN")
 				.build();
-			final UserResponse userResponse = UserResponse.builder()
-				.userId(1)
-				.name("홍길동")
-				.email("ssafy@email.com")
-				.accessToken("NEW_TOKEN")
-				.profileImage("PROFILE_IMAGE")
-				.build();
+			final UserResponse userResponse = newUserResponse();
 			doReturn(token)
 				.when(userService)
 				.reissueToken(any());
@@ -238,5 +226,15 @@ public class UserControllerTest {
 			assertEquals(TOKEN_REISSUE_SUCCESS_MESSAGE, response.getMessage());
 			cookie().value("refreshToken", token.getRefreshToken());
 		}
+	}
+
+	private UserResponse newUserResponse() {
+		return UserResponse.builder()
+			.userId(1)
+			.name("홍길동")
+			.email("ssafy@email.com")
+			.accessToken("NEW_TOKEN")
+			.profileImage("PROFILE_IMAGE")
+			.build();
 	}
 }
