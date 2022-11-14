@@ -4,6 +4,7 @@
   </div>
   <div class="img-box">
     <img
+      v-show="!elementVisible_2"
       src="@/assets/genie_charac.png"
       class="img-genie genie-bounce"
       alt=""
@@ -12,23 +13,14 @@
   <audio loop autoplay volume="0.3">
     <source src="@/assets/audio/disco-funk-paradise.mp3" type="audio/mp3" />
   </audio>
-  <img class="bubble" :src="images[currentImage]" alt="" />
+  <img v-show="!elementVisible_2" class="bubble" :src="images[currentImage]" alt="" />
   <div class="other">
-    <b-button
-      @click="gotoPage({ name: 'planetlist' })"
-      class="button_prev"
-      size="sm"
-    >
+    <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
       <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
     </b-button>
   </div>
   <div class="jump">
-    <b-button
-      @click="previousImage()"
-      class="button"
-      size="sm"
-      :disabled="currentImage === 0"
-    >
+    <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
       뒤로
     </b-button>
     &nbsp;
@@ -42,7 +34,7 @@
     </b-button>
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
-    <b-button v-show="elementVisible" class="button_2" size="md">
+    <b-button v-show="elementVisible && !elementVisible_3" class="button_2" size="md">
       <div class="wave" v-b-modal.modal-genie>
         <span style="--i: 1">소</span>
         <span style="--i: 2">원</span>
@@ -75,14 +67,7 @@
       style="cursor: pointer; float: right"
       alt=""
     />
-    <div
-      style="
-        font-size: 1.3vw;
-        margin-top: 5%;
-        margin-bottom: 3%;
-        font-weight: 400;
-      "
-    >
+    <div style="font-size: 1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400">
       당신의 소원을 적어주세요!
     </div>
     <b-container ref="form" style="margin-bottom: 3.8%">
@@ -100,32 +85,50 @@
     <b-button
       text
       @click="complete"
-      style="
-        color: #ffffff;
-        background-color: #9985c6;
-        border: none;
-        border-radius: 1vw;
-      "
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw"
       >저장
     </b-button>
   </b-modal>
+  <div class="last">
+    <b-button v-show="elementVisible_4" class="button_3" size="md" @click="endthisPlanet()">
+      <div class="wave">
+        <span style="--i: 1">지</span>
+        <span style="--i: 2">니</span>
+        <span style="--i: 3">&nbsp;</span>
+        <span style="--i: 4">행</span>
+        <span style="--i: 5">성</span>
+        <span style="--i: 6">&nbsp;</span>
+        <span style="--i: 7">여</span>
+        <span style="--i: 8">행</span>
+        <span style="--i: 9">&nbsp;</span>
+        <span style="--i: 10">마</span>
+        <span style="--i: 11">치</span>
+        <span style="--i: 12">기</span>
+      </div>
+    </b-button>
+  </div>
 </template>
 
 <script>
-import { useMusicStore, usePlanetStore } from "@/store/index";
+import { useMusicStore, usePlanetStore } from '@/store/index';
 export default {
   data() {
     return {
       images: [
-        require("@/assets/PlanetSpeech/GenieSpeech/genie_bubble_1.svg"),
-        require("@/assets/PlanetSpeech/GenieSpeech/genie_bubble_2.svg"),
-        require("@/assets/PlanetSpeech/GenieSpeech/genie_bubble_3.svg"),
-        require("@/assets/PlanetSpeech/GenieSpeech/genie_bubble_4.svg"),
-        require("@/assets/PlanetSpeech/GenieSpeech/genie_bubble_5.svg"),
+        require('@/assets/PlanetSpeech/GenieSpeech/genie_bubble_1.svg'),
+        require('@/assets/PlanetSpeech/GenieSpeech/genie_bubble_2.svg'),
+        require('@/assets/PlanetSpeech/GenieSpeech/genie_bubble_3.svg'),
+        require('@/assets/PlanetSpeech/GenieSpeech/genie_bubble_4.svg'),
+        require('@/assets/PlanetSpeech/GenieSpeech/genie_bubble_5.svg'),
       ],
       currentImage: 0,
       elementVisible: false,
-      answer: "",
+      elementVisible_2: false,
+      elementVisible_3: false,
+      elementVisible_4: false,
+      answer: '',
     };
   },
   updated() {
@@ -146,7 +149,13 @@ export default {
       this.$router.push(link);
     },
     complete() {
+      this.elementVisible_2 = true;
+      this.elementVisible_3 = true;
+      setTimeout(() => (this.elementVisible_4 = true), 1000);
       usePlanetStore().completePlanet(7, this.answer);
+    },
+    endthisPlanet() {
+      this.$router.push({ name: 'planetlist' });
     },
   },
   mounted() {
@@ -218,8 +227,7 @@ body {
 }
 
 .jumbotron {
-  background: url("@/assets/PlanetBackground/genie.svg") no-repeat center center
-    fixed;
+  background: url('@/assets/PlanetBackground/genie.svg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -272,6 +280,13 @@ body {
   border-color: #ffffff;
 }
 
+.button_prev {
+  background-color: #ffffff;
+  color: #141414;
+  border-radius: 0.8vw;
+  border-color: #ffffff;
+}
+
 .button_2 {
   border-radius: 0.8vw;
   /* border-color: #81c6e8; */
@@ -282,15 +297,8 @@ body {
   transition: all 0.3s ease-in-out 0s;
 }
 
-.button_prev {
-  background-color: #ffffff;
-  color: #141414;
-  border-radius: 0.8vw;
-  border-color: #ffffff;
-}
-
 .button_2::before {
-  content: "";
+  content: '';
   border-radius: 1000px;
   min-width: calc(200px + 12px);
   min-height: calc(60px + 12px);
@@ -317,6 +325,47 @@ body {
 
 .button_2:hover::after,
 .button_2:focus::after {
+  animation: none;
+  display: none;
+}
+
+.button_3 {
+  border-radius: 0.8vw;
+  border: none;
+  background-color: #81c6e8;
+  position: relative;
+  margin: 300px auto 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.button_3::before {
+  content: '';
+  border-radius: 1000px;
+  min-width: calc(220px + 12px);
+  min-height: calc(60px + 12px);
+  box-shadow: 0 0 60px #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  transition: all 0.3s ease-in-out 0s;
+  animation: ring 1.5s infinite;
+}
+
+.button_3:hover,
+.button_3:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.button_3:hover::before,
+.button_3:focus::before {
+  opacity: 1;
+}
+
+.button_3:hover::after,
+.button_3:focus::after {
   animation: none;
   display: none;
 }

@@ -3,32 +3,16 @@
     <div class="title">하하호호 행성</div>
   </div>
   <!-- <vue-audio :file="audios[currentAudio]" autoplay/> -->
-  <audio
-    id="myaudios"
-    loop
-    autoplay
-    :src="audios[currentAudio]"
-    :muted="mute"
-    volume="0.3"
-  ></audio>
+  <audio id="myaudios" loop autoplay :src="audios[currentAudio]" :muted="mute" volume="0.3"></audio>
   <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
-  <img class="story" :src="images[currentImage]" alt="" />
+  <img v-show="!elementVisible_2" class="story" :src="images[currentImage]" alt="" />
   <div class="other">
-    <b-button
-      @click="gotoPage({ name: 'planetlist' })"
-      class="button_prev"
-      size="sm"
-    >
+    <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
       <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
     </b-button>
   </div>
   <div class="jump">
-    <b-button
-      @click="previousImage()"
-      class="button"
-      size="sm"
-      :disabled="currentImage === 0"
-    >
+    <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
       뒤로
     </b-button>
     &nbsp;
@@ -42,7 +26,7 @@
     </b-button>
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
-    <b-button v-show="elementVisible" class="button_2" size="md">
+    <b-button v-show="elementVisible && !elementVisible_3" class="button_2" size="md">
       <div class="wave" v-b-modal.modal-happy>
         <span style="--i: 1">가</span>
         <span style="--i: 2">장</span>
@@ -83,14 +67,7 @@
       style="cursor: pointer; float: right"
       alt=""
     />
-    <div
-      style="
-        font-size: 1.3vw;
-        margin-top: 5%;
-        margin-bottom: 2%;
-        font-weight: 400;
-      "
-    >
+    <div style="font-size: 1.3vw; margin-top: 5%; margin-bottom: 2%; font-weight: 400">
       가장 행복했던 순간을 이 곳에 적어주세요!
     </div>
     <b-button
@@ -119,9 +96,7 @@
           />
           <div v-else>
             <div style="margin-top: 1vh">
-              <strong style="font-size: 1.1vw"
-                >행복했던 순간을 담아주세요!</strong
-              >
+              <strong style="font-size: 1.1vw">행복했던 순간을 담아주세요!</strong>
             </div>
           </div>
         </div>
@@ -140,20 +115,37 @@
     <b-button
       text
       @click="complete"
-      style="
-        color: #ffffff;
-        background-color: #d2aa62;
-        border: none;
-        border-radius: 1vw;
-      "
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      style="color: #ffffff; background-color: #d2aa62; border: none; border-radius: 1vw"
       >저장
     </b-button>
   </b-modal>
+  <div class="last">
+    <b-button v-show="elementVisible_4" class="button_3" size="md" @click="endthisPlanet()">
+      <div class="wave">
+        <span style="--i: 1">하</span>
+        <span style="--i: 2">하</span>
+        <span style="--i: 3">호</span>
+        <span style="--i: 4">호</span>
+        <span style="--i: 5">&nbsp;</span>
+        <span style="--i: 6">행</span>
+        <span style="--i: 7">성</span>
+        <span style="--i: 8">&nbsp;</span>
+        <span style="--i: 9">여</span>
+        <span style="--i: 10">행</span>
+        <span style="--i: 11">&nbsp;</span>
+        <span style="--i: 12">마</span>
+        <span style="--i: 13">치</span>
+        <span style="--i: 14">기</span>
+      </div>
+    </b-button>
+  </div>
 </template>
 
 <script>
 // import VueAudio from 'vue-audio'
-import { useMusicStore, usePlanetStore } from "@/store/index";
+import { useMusicStore, usePlanetStore } from '@/store/index';
 export default {
   data() {
     return {
@@ -162,20 +154,23 @@ export default {
         imageUrl: null,
       },
       images: [
-        require("@/assets/PlanetSpeech/HappySpeech/happy_bubble_1.svg"),
-        require("@/assets/PlanetSpeech/HappySpeech/happy_bubble_2.svg"),
-        require("@/assets/PlanetSpeech/HappySpeech/happy_bubble_3.svg"),
+        require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_1.svg'),
+        require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_2.svg'),
+        require('@/assets/PlanetSpeech/HappySpeech/happy_bubble_3.svg'),
       ],
       audios: [
         // require('@/assets/audio/flower-dance.mp3'),
         // require('@/assets/audio/motivational-day.mp3'),
-        require("@/assets/audio/mix_flower_moti.mp3"),
+        require('@/assets/audio/mix_flower_moti.mp3'),
       ],
       currentImage: 0,
       elementVisible: false,
+      elementVisible_2: false,
+      elementVisible_3: false,
+      elementVisible_4: false,
       currentAudio: 0,
       mute: false,
-      answer: "",
+      answer: '',
     };
   },
   // components: {
@@ -204,9 +199,14 @@ export default {
       this.$router.push(link);
     },
     complete() {
+      this.elementVisible_2 = true;
+      this.elementVisible_3 = true;
+      setTimeout(() => (this.elementVisible_4 = true), 1000);
       usePlanetStore().completePlanet(1, this.answer);
     },
-
+    endthisPlanet() {
+      this.$router.push({ name: 'planetlist' });
+    },
     // toggleMute() {
     //     var myAudio = document.getElementById('myaudios');
     //     myAudio.muted = !myAudio.muted;
@@ -243,8 +243,7 @@ body {
 }
 
 .jumbotron {
-  background: url("@/assets/PlanetBackground/haha.svg") no-repeat center center
-    fixed;
+  background: url('@/assets/PlanetBackground/haha.svg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -325,7 +324,7 @@ body {
 }
 
 .button_2::before {
-  content: "";
+  content: '';
   border-radius: 1000px;
   min-width: calc(300px + 12px);
   min-height: calc(60px + 12px);
@@ -352,6 +351,47 @@ body {
 
 .button_2:hover::after,
 .button_2:focus::after {
+  animation: none;
+  display: none;
+}
+
+.button_3 {
+  border-radius: 0.8vw;
+  border: none;
+  background-color: orange;
+  position: relative;
+  margin: 300px auto 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.button_3::before {
+  content: '';
+  border-radius: 1000px;
+  min-width: calc(250px + 12px);
+  min-height: calc(60px + 12px);
+  box-shadow: 0 0 60px #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  transition: all 0.3s ease-in-out 0s;
+  animation: ring 1.5s infinite;
+}
+
+.button_3:hover,
+.button_3:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.button_3:hover::before,
+.button_3:focus::before {
+  opacity: 1;
+}
+
+.button_3:hover::after,
+.button_3:focus::after {
   animation: none;
   display: none;
 }

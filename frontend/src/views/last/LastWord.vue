@@ -2,21 +2,10 @@
   <video muted autoplay loop playbackRate="0.75" style="width: 100%">
     <source src="@/assets/space_window.mp4" type="video/mp4" />
   </video>
-  <audio
-    id="myaudios"
-    loop
-    autoplay
-    :src="audios[currentAudio]"
-    volume="0.2"
-  ></audio>
-  <img class="bubble" :src="images[currentImage]" alt="" />
-  <div class="jump">
-    <b-button
-      @click="previousImage()"
-      class="button"
-      size="sm"
-      :disabled="currentImage === 0"
-    >
+  <audio id="myaudios" loop autoplay :src="audios[currentAudio]" volume="0.2"></audio>
+  <img v-show="!elementVisible_2" class="bubble" :src="images[currentImage]" alt="" />
+  <div class="jump" v-show="!elementVisible_2">
+    <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
       뒤로
     </b-button>
     &nbsp;
@@ -31,7 +20,7 @@
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
     <b-button
-      v-show="elementVisible"
+      v-show="elementVisible && !elementVisible_3"
       class="button_2"
       size="md"
       href="#openModal-about"
@@ -83,14 +72,7 @@
       style="cursor: pointer; float: right"
       alt=""
     />
-    <div
-      style="
-        font-size: 1.3vw;
-        margin-top: 5%;
-        margin-bottom: 3%;
-        font-weight: 400;
-      "
-    >
+    <div style="font-size: 1.3vw; margin-top: 5%; margin-bottom: 3%; font-weight: 400">
       나에게 남길 마지막 말을 적어주세요!
     </div>
     <b-container ref="form" style="margin-bottom: 3.8%">
@@ -107,31 +89,66 @@
     <b-button
       text
       @click="submit"
-      style="
-        color: #ffffff;
-        background-color: #25316d;
-        border: none;
-        border-radius: 1vw;
-      "
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      style="color: #ffffff; background-color: #25316d; border: none; border-radius: 1vw"
     >
       저장
     </b-button>
   </b-modal>
+  <div class="last">
+    <b-button v-show="elementVisible_4" class="button_2" size="md" @click="gotoPrint">
+      <div class="wave">
+        <span style="--i: 1">수</span>
+        <span style="--i: 2">고</span>
+        <span style="--i: 3">하</span>
+        <span style="--i: 4">셨</span>
+        <span style="--i: 5">습</span>
+        <span style="--i: 6">니</span>
+        <span style="--i: 7">다</span>
+        <span style="--i: 8">!</span>
+        <span style="--i: 9">&nbsp;</span>
+        <span style="--i: 10">이</span>
+        <span style="--i: 11">제</span>
+        <span style="--i: 12">&nbsp;</span>
+        <span style="--i: 13">여</span>
+        <span style="--i: 14">행</span>
+        <span style="--i: 15">을</span>
+        <span style="--i: 16">&nbsp;</span>
+        <span style="--i: 17">돌</span>
+        <span style="--i: 18">아</span>
+        <span style="--i: 19">보</span>
+        <span style="--i: 20">러</span>
+        <span style="--i: 21">&nbsp;</span>
+        <span style="--i: 22">가</span>
+        <span style="--i: 23">볼</span>
+        <span style="--i: 24">까</span>
+        <span style="--i: 25">요</span>
+        <span style="--i: 26">?</span>
+      </div>
+    </b-button>
+  </div>
 </template>
 
 <script setup>
-import { onUpdated, ref } from "vue";
+import { onUpdated, ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 const images = [
-  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_1.svg"),
-  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_2.svg"),
-  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_3.svg"),
-  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_4.svg"),
-  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_5.svg"),
-  require("@/assets/PlanetSpeech/LastSpeech/last_bubble_6.svg"),
+  require('@/assets/PlanetSpeech/LastSpeech/last_bubble_1.svg'),
+  require('@/assets/PlanetSpeech/LastSpeech/last_bubble_2.svg'),
+  require('@/assets/PlanetSpeech/LastSpeech/last_bubble_3.svg'),
+  require('@/assets/PlanetSpeech/LastSpeech/last_bubble_4.svg'),
+  require('@/assets/PlanetSpeech/LastSpeech/last_bubble_5.svg'),
+  require('@/assets/PlanetSpeech/LastSpeech/last_bubble_6.svg'),
 ];
-const audios = [require("@/assets/audio/mix_last.mp3")];
+const audios = [require('@/assets/audio/mix_last.mp3')];
 let currentImage = ref(0);
 let elementVisible = ref(false);
+let elementVisible_2 = ref(false);
+let elementVisible_3 = ref(false);
+let elementVisible_4 = ref(false);
 const currentAudio = ref(0);
 
 const nextImage = () => {
@@ -139,6 +156,14 @@ const nextImage = () => {
 };
 const previousImage = () => {
   if (currentImage.value !== 0) currentImage.value--;
+};
+const submit = () => {
+  elementVisible_2.value = true;
+  elementVisible_3.value = true;
+  setTimeout(() => (elementVisible_4.value = true), 1000);
+};
+const gotoPrint = () => {
+  router.push({ name: 'resultprint' });
 };
 onUpdated(() => {
   if (currentImage.value == images.length - 1) {
@@ -205,7 +230,7 @@ body {
 }
 
 .button_2::before {
-  content: "";
+  content: '';
   border-radius: 1000px;
   min-width: calc(400px + 12px);
   min-height: calc(60px + 12px);
