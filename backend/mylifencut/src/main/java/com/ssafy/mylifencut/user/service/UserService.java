@@ -128,20 +128,16 @@ public class UserService {
 
 	public UserInfo getUserInfoFromKakaoProfile(String json) {
 		//Gson 라이브러리로 JSON파싱
-		JsonElement element = JsonParser.parseString(json);
+		JsonElement element = JsonParser.parseString(json).getAsJsonObject().get("kakao_account");
 
 		return UserInfo.builder()
-			.email(element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString())
+			.email(element.getAsJsonObject().get("email").getAsString())
 			.name(element.getAsJsonObject()
-				.get("kakao_account")
-				.getAsJsonObject()
 				.get("profile")
 				.getAsJsonObject()
 				.get("nickname")
 				.getAsString())
 			.profileImage(element.getAsJsonObject()
-				.get("kakao_account")
-				.getAsJsonObject()
 				.get("profile")
 				.getAsJsonObject()
 				.get("profile_image_url")
