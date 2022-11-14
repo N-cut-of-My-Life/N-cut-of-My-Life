@@ -60,20 +60,19 @@
 </template>
 
 <script setup>
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import { useMusicStore } from "@/store/music";
 import { onMounted } from "vue";
 
 const router = useRouter();
-const route = useRoute();
-const code = route.query.code;
 
 // 클릭 시 로켓 발사
 const rocketLaunch = () => {
-  console.log(code);
   const rocket = document.querySelector(".img-rocket");
   document.getElementById("cosmos").pause();
-  document.getElementById("burung").play();
+  if (useMusicStore().isMute === false) {
+    document.getElementById("burung").play();
+  }
   rocket.classList.remove("rocket-bounce");
   rocket.classList.add("rocket-launch");
   rocket.addEventListener("animationend", (event) => {
@@ -85,6 +84,7 @@ const rocketLaunch = () => {
 
 onMounted(() => {
   const isMute = useMusicStore().isMute;
+  console.log(isMute);
   if (isMute === true) {
     document.querySelector("#cosmos").muted = true;
     document.querySelector("#burung").muted = true;
