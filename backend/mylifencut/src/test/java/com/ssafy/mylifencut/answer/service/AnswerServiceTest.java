@@ -23,6 +23,7 @@ import com.ssafy.mylifencut.answer.dto.GalleryResponse;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
 import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.like.domain.IsLike;
+import com.ssafy.mylifencut.like.repository.LikeRepository;
 import com.ssafy.mylifencut.user.domain.User;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,13 +35,17 @@ class AnswerServiceTest {
 	@Mock
 	private AnswerRepository answerRepository;
 
+	@Mock
+	private LikeRepository likeRepository;
+
 	@Nested
 	@DisplayName("[갤러리 조회]")
-	class GalleryReadTest{
+	class GalleryReadTest {
 		@Test
 		@DisplayName("[성공] - 갤러리 조회")
 		void readGallery() {
 			//given
+			Integer userId = 3;
 			final LocalDateTime nowTime = LocalDateTime.now();
 			final User user = User.builder()
 				.id(1)
@@ -53,31 +58,37 @@ class AnswerServiceTest {
 					.name("유일권")
 					.build();
 			final Article article = Article.builder()
-					.user(user)
-					.answers(Collections.emptyList())
-					.createDate(nowTime)
-					.build();
+				.user(user)
+				.answers(Collections.emptyList())
+				.createDate(nowTime)
+				.build();
 			final Article article2 = Article.builder()
-					.user(user1)
-					.answers(Collections.emptyList())
-					.createDate(nowTime)
-					.build();
+				.user(user1)
+				.answers(Collections.emptyList())
+				.createDate(nowTime)
+				.build();
 			final List<IsLike> likes = new ArrayList<>();
-			likes.add(new IsLike());
-			likes.add(new IsLike());
+			final IsLike like1 = IsLike.builder()
+				.answer(Answer.builder().id(1).build())
+				.user(user1).build();
+			final IsLike like2 = IsLike.builder()
+				.answer(Answer.builder().id(2).build())
+				.user(user).build();
+			likes.add(like1);
+			likes.add(like2);
 			final Answer answer = Answer.builder()
-					.article(article)
-					.questionId(1)
-					.contents("답변 내용")
-					.state(State.CLOSE)
-					.likes(likes)
-					.build();
+				.article(article)
+				.questionId(1)
+				.contents("답변 내용")
+				.state(State.CLOSE)
+				.likes(likes)
+				.build();
 			doReturn(Arrays.asList(
-					Answer.builder().id(1).article(article).contents("답변 내용").likes(likes).state(State.OPEN).build(),
-					Answer.builder().id(2).article(article2).contents("답변 내용").likes(likes).state(State.OPEN).build()
+				Answer.builder().id(1).article(article).contents("답변 내용").likes(likes).state(State.OPEN).build(),
+				Answer.builder().id(2).article(article2).contents("답변 내용").likes(likes).state(State.OPEN).build()
 			)).when(answerRepository).findAllByState(State.OPEN);
 			//when
-			final List<GalleryResponse> result = answerService.getGalleryList();
+			final List<GalleryResponse> result = answerService.getGalleryList(userId);
 			//then
 			assertThat(result).hasSize(2);
 		}

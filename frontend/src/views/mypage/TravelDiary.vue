@@ -79,7 +79,13 @@ import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import "@splidejs/splide/dist/css/themes/splide-default.min.css";
 import MyModal from "@/components/mypage/MyModal.vue";
 import { useRouter } from "vue-router";
+import { useAccountStore } from "@/store/account";
+
 const router = useRouter();
+const accountStore = useAccountStore();
+const myArticles = accountStore.getMyArtilces();
+console.log(myArticles);
+
 const options = {
   perPage: 2,
   pauseOnHover: false,
