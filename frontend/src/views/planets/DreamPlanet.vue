@@ -112,7 +112,7 @@
       >저장
     </b-button>
   </b-modal>
-  <div class="last">
+  <div class="last_2">
     <b-button
       v-show="elementVisible_4"
       class="button_3"
@@ -250,6 +250,13 @@ body {
   position: absolute;
   bottom: 50%;
   left: 45%;
+  margin: auto;
+}
+
+.last_2 {
+  position: absolute;
+  bottom: 50%;
+  left: 43%;
   margin: auto;
 }
 

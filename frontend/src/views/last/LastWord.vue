@@ -270,7 +270,7 @@ body {
 .button_2::before {
   content: "";
   border-radius: 1000px;
-  min-width: calc(400px + 12px);
+  min-width: calc(410px + 12px);
   min-height: calc(60px + 12px);
   box-shadow: 0 0 60px #ffffff;
   position: absolute;
