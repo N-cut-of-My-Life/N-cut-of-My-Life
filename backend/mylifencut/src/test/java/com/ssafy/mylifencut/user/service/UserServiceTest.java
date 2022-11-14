@@ -386,6 +386,7 @@ public class UserServiceTest {
 				.id(1)
 				.email("ssafy@email.com")
 				.name("홍길동")
+				.profileImage("PROFILE_IMAGE")
 				.build();
 
 			doReturn(true)
@@ -405,6 +406,7 @@ public class UserServiceTest {
 			assertEquals(user.getId(), result.getUserId());
 			assertEquals(user.getEmail(), result.getEmail());
 			assertEquals(user.getName(), result.getName());
+			assertEquals(user.getProfileImage(), result.getProfileImage());
 			assertEquals(accessToken, result.getAccessToken());
 		}
 	}
