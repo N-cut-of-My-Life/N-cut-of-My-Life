@@ -1,6 +1,14 @@
 <template>
   <PageLoader />
-  <div class="mute" @click="musicStore.toggleMute()" v-if="route.path !== '/'">
+  <div
+    class="mute"
+    @click="musicStore.toggleMute()"
+    v-if="
+      route.path !== '/' &&
+      route.path !== '/traveldiary' &&
+      route.path !== '/resultprint'
+    "
+  >
     <svg
       v-if="musicStore.isMute === false"
       xmlns="http://www.w3.org/2000/svg"
