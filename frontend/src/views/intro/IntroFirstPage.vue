@@ -83,8 +83,12 @@ const rocketLaunch = () => {
 };
 
 onMounted(() => {
-  useMusicStore().toggleMute();
-  document.querySelector("#cosmos").muted = true;
+  const isMute = useMusicStore().isMute;
+  if (isMute === true) {
+    document.querySelector("#cosmos").muted = true;
+  } else {
+    document.querySelector("#cosmos").muted = false;
+  }
 });
 </script>
 
