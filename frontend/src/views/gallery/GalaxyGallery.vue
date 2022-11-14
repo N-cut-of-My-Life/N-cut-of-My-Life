@@ -15,7 +15,12 @@
       <source src="@/assets/audio/mix_gallery.mp3" type="audio/mp3" />
     </audio>
     <!-- masonry 영역 ver2 -->
-    <MasonryWall :items="items" :ssr-columns="1" :column-width="200" :gap="16">
+    <MasonryWall
+      :items="galleryStore.galleryList"
+      :ssr-columns="1"
+      :column-width="200"
+      :gap="16"
+    >
       <template #default="{ item }">
         <div class="common">
           <!-- api호출이 아닌 상태이기 떄문에 추후 변경:require 이후 코드 -->
@@ -54,17 +59,15 @@ import { onMounted } from "vue";
 import { useAccountStore } from "@/store/account";
 
 const userID = useAccountStore().userInfo.userId;
+const router = useRouter();
+
+const galleryStore = useGalleryStore();
+const GalleryArticles = galleryStore.getGalleryList(userID);
+GalleryArticles;
 
 onMounted(() => {
   useMusicStore().isSoundActive();
 });
-const router = useRouter();
-
-const galleryStore = useGalleryStore();
-const getStoreList = galleryStore.getGalleryList(userID);
-getStoreList;
-
-let items = galleryStore.galleryList;
 </script>
 
 <style scoped>
