@@ -229,7 +229,7 @@ export default {
   methods: {
     onUpload(e) {
       const file = e.target.files[0];
-      this.image = file;
+      this.item.image = file;
       this.item.imageUrl = URL.createObjectURL(file);
     },
     nextImage() {
@@ -247,7 +247,8 @@ export default {
       this.elementVisible_2 = true;
       this.elementVisible_3 = true;
       setTimeout(() => (this.elementVisible_4 = true), 1000);
-      usePlanetStore().completePlanet(1, this.answer);
+
+      usePlanetStore().completePlanet(1, this.answer, this.item.image);
     },
     endthisPlanet() {
       this.$router.push({ name: "planetlist" });

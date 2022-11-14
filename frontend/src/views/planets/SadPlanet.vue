@@ -131,6 +131,7 @@
     </div>
     <b-container ref="form" style="margin-bottom: 3.8%">
       <b-form-textarea
+        v-model="answer"
         id="content"
         placeholder=""
         rows="10"
@@ -198,6 +199,7 @@ export default {
       elementVisible_2: false,
       elementVisible_3: false,
       elementVisible_4: false,
+      answer: "",
     };
   },
   methods: {
