@@ -12,7 +12,12 @@
     volume="0.3"
   ></audio>
   <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
-  <img class="story" :src="images[currentImage]" alt="" />
+  <img
+    v-show="!elementVisible_2"
+    class="story"
+    :src="images[currentImage]"
+    alt=""
+  />
   <div class="other">
     <b-button
       @click="gotoPage({ name: 'planetlist' })"
@@ -42,7 +47,11 @@
     </b-button>
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
-    <b-button v-show="elementVisible" class="button_2" size="md">
+    <b-button
+      v-show="elementVisible && !elementVisible_3"
+      class="button_2"
+      size="md"
+    >
       <div class="wave" v-b-modal.modal-happy>
         <span style="--i: 1">가</span>
         <span style="--i: 2">장</span>
@@ -140,6 +149,8 @@
     <b-button
       text
       @click="complete"
+      data-bs-dismiss="modal"
+      aria-label="Close"
       style="
         color: #ffffff;
         background-color: #d2aa62;
@@ -149,11 +160,37 @@
       >저장
     </b-button>
   </b-modal>
+  <div class="last">
+    <b-button
+      v-show="elementVisible_4"
+      class="button_3"
+      size="md"
+      @click="endthisPlanet()"
+    >
+      <div class="wave">
+        <span style="--i: 1">하</span>
+        <span style="--i: 2">하</span>
+        <span style="--i: 3">호</span>
+        <span style="--i: 4">호</span>
+        <span style="--i: 5">&nbsp;</span>
+        <span style="--i: 6">행</span>
+        <span style="--i: 7">성</span>
+        <span style="--i: 8">&nbsp;</span>
+        <span style="--i: 9">여</span>
+        <span style="--i: 10">행</span>
+        <span style="--i: 11">&nbsp;</span>
+        <span style="--i: 12">마</span>
+        <span style="--i: 13">치</span>
+        <span style="--i: 14">기</span>
+      </div>
+    </b-button>
+  </div>
 </template>
 
 <script>
 // import VueAudio from 'vue-audio'
-import { useMusicStore, usePlanetStore } from "@/store/index";
+import { useMusicStore } from "@/store/music";
+import { usePlanetStore } from "@/store/planet";
 export default {
   data() {
     return {
@@ -173,6 +210,9 @@ export default {
       ],
       currentImage: 0,
       elementVisible: false,
+      elementVisible_2: false,
+      elementVisible_3: false,
+      elementVisible_4: false,
       currentAudio: 0,
       mute: false,
       answer: "",
@@ -204,9 +244,14 @@ export default {
       this.$router.push(link);
     },
     complete() {
+      this.elementVisible_2 = true;
+      this.elementVisible_3 = true;
+      setTimeout(() => (this.elementVisible_4 = true), 1000);
       usePlanetStore().completePlanet(1, this.answer);
     },
-
+    endthisPlanet() {
+      this.$router.push({ name: "planetlist" });
+    },
     // toggleMute() {
     //     var myAudio = document.getElementById('myaudios');
     //     myAudio.muted = !myAudio.muted;
@@ -352,6 +397,47 @@ body {
 
 .button_2:hover::after,
 .button_2:focus::after {
+  animation: none;
+  display: none;
+}
+
+.button_3 {
+  border-radius: 0.8vw;
+  border: none;
+  background-color: orange;
+  position: relative;
+  margin: 300px auto 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.button_3::before {
+  content: "";
+  border-radius: 1000px;
+  min-width: calc(250px + 12px);
+  min-height: calc(60px + 12px);
+  box-shadow: 0 0 60px #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  transition: all 0.3s ease-in-out 0s;
+  animation: ring 1.5s infinite;
+}
+
+.button_3:hover,
+.button_3:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.button_3:hover::before,
+.button_3:focus::before {
+  opacity: 1;
+}
+
+.button_3:hover::after,
+.button_3:focus::after {
   animation: none;
   display: none;
 }

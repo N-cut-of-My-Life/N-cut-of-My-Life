@@ -3,7 +3,7 @@
   <video muted autoplay loop playbackRate="1.0">
     <source src="@/assets/intro_video.mp4" type="video/mp4" />
   </video>
-  <audio muted loop controls autoplay volume="0.5">
+  <audio muted loop autoplay volume="0.5">
     <source src="@/assets/audio/daylight.mp3" type="audio/mp3" />
   </audio>
   <div class="other">
@@ -74,7 +74,8 @@
 </template>
 
 <script>
-import { useMusicStore, usePlanetStore } from "@/store/index";
+import { useMusicStore } from "@/store/music";
+import { usePlanetStore } from "@/store/planet";
 export default {
   methods: {
     gotoPage(link) {

@@ -2,7 +2,12 @@
   <div class="jumbotron">
     <div class="title">괜히글 행성</div>
   </div>
-  <img class="bubble" :src="images[currentImage]" alt="" />
+  <img
+    v-show="!elementVisible_2"
+    class="bubble"
+    :src="images[currentImage]"
+    alt=""
+  />
   <audio loop autoplay volume="0.3">
     <source src="@/assets/audio/mix_regret.mp3" type="audio/mp3" />
   </audio>
@@ -34,14 +39,9 @@
       다음
     </b-button>
   </div>
-  <div
-    v-if="currentImage === images.length - 1"
-    class="last"
-    data-bs-dismiss="modal"
-    aria-label="Close"
-  >
+  <div v-if="currentImage === images.length - 1" class="last">
     <b-button
-      v-show="elementVisible"
+      v-show="elementVisible && !elementVisible_3"
       class="button_2"
       size="md"
       v-b-modal.modal-regret
@@ -71,7 +71,7 @@
       data-bs-dismiss="modal"
       aria-label="Close"
       class="x_button"
-      src="@/assets/xButton/x_genie.svg"
+      src="@/assets/xButton/x_sad.svg"
       style="cursor: pointer; float: right"
       alt=""
     />
@@ -99,19 +99,46 @@
     </b-container>
     <b-button
       @click="complete"
+      data-bs-dismiss="modal"
+      aria-label="Close"
       style="
         color: #ffffff;
-        background-color: #9985c6;
+        background-color: #25316d;
         border: none;
         border-radius: 1vw;
       "
       >저장
     </b-button>
   </b-modal>
+  <div class="last_2">
+    <b-button
+      v-show="elementVisible_4"
+      class="button_3"
+      size="md"
+      @click="endthisPlanet()"
+    >
+      <div class="wave">
+        <span style="--i: 1">괜</span>
+        <span style="--i: 2">히</span>
+        <span style="--i: 3">글</span>
+        <span style="--i: 4">&nbsp;</span>
+        <span style="--i: 5">행</span>
+        <span style="--i: 6">성</span>
+        <span style="--i: 7">&nbsp;</span>
+        <span style="--i: 8">여</span>
+        <span style="--i: 9">행</span>
+        <span style="--i: 10">&nbsp;</span>
+        <span style="--i: 11">마</span>
+        <span style="--i: 12">치</span>
+        <span style="--i: 13">기</span>
+      </div>
+    </b-button>
+  </div>
 </template>
 
 <script>
-import { useMusicStore, usePlanetStore } from "@/store/index";
+import { useMusicStore } from "@/store/music";
+import { usePlanetStore } from "@/store/planet";
 export default {
   data() {
     return {
@@ -121,6 +148,9 @@ export default {
       ],
       currentImage: 0,
       elementVisible: false,
+      elementVisible_2: false,
+      elementVisible_3: false,
+      elementVisible_4: false,
       answer: "",
     };
   },
@@ -142,7 +172,13 @@ export default {
       this.$router.push(link);
     },
     complete() {
+      this.elementVisible_2 = true;
+      this.elementVisible_3 = true;
+      setTimeout(() => (this.elementVisible_4 = true), 1000);
       usePlanetStore().completePlanet(5, this.answer);
+    },
+    endthisPlanet() {
+      this.$router.push({ name: "planetlist" });
     },
   },
   mounted() {
@@ -213,6 +249,13 @@ body {
   margin: auto;
 }
 
+.last_2 {
+  position: absolute;
+  bottom: 52%;
+  left: 45%;
+  margin: auto;
+}
+
 .button {
   background-color: #a28dc4;
   color: #ffffff;
@@ -273,6 +316,46 @@ body {
   animation: none;
   display: none;
 }
+.button_3 {
+  border-radius: 0.8vw;
+  border: none;
+  background-color: #9cb4cc;
+  position: relative;
+  margin: 300px auto 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.button_3::before {
+  content: "";
+  border-radius: 1000px;
+  min-width: calc(220px + 12px);
+  min-height: calc(60px + 12px);
+  box-shadow: 0 0 60px #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  transition: all 0.3s ease-in-out 0s;
+  animation: ring 1.5s infinite;
+}
+
+.button_3:hover,
+.button_3:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.button_3:hover::before,
+.button_3:focus::before {
+  opacity: 1;
+}
+
+.button_3:hover::after,
+.button_3:focus::after {
+  animation: none;
+  display: none;
+}
 
 @keyframes ring {
   0% {
@@ -318,7 +401,7 @@ body {
 
 <style>
 #modal-regret .modal-content {
-  background-color: #b1afff;
+  background-color: #5f6f94;
 }
 
 #modal-regret .modal-header {

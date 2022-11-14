@@ -8,6 +8,7 @@ export default {
   account: {
     postLogin: () => HOST + USER + "login",
     getRefreshToken: () => HOST + USER + "token",
+    getMyArticles: () => HOST + ARTICLE,
   },
 
   answer: {

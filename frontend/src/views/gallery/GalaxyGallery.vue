@@ -52,11 +52,21 @@
 <script setup>
 import MasonryWall from "@yeger/vue-masonry-wall";
 import { useRouter } from "vue-router";
-import { useGalleryStore } from "@/store/index";
-const router = useRouter();
-const galleryStore = useGalleryStore();
+import { useGalleryStore } from "@/store/gallery";
+import { useMusicStore } from "@/store/music";
+import { onMounted } from "vue";
 
-galleryStore.getLastWord();
+onMounted(() => {
+  useMusicStore().isSoundActive();
+});
+const router = useRouter();
+
+const galleryStore = useGalleryStore();
+const getStoreList = galleryStore.getGalleryList();
+getStoreList;
+
+console.log(galleryStore.galleryList.data);
+console.log(typeof galleryStore.galleryList);
 
 // 텍스트 길이, 이미지 크기에 따라
 // 텍스트 박스 잘 바뀌는지 확인하고자 더미데이터 생성
@@ -94,6 +104,7 @@ const items = [
     likes: "3",
   },
 ];
+// const items = galleryStore.galleryList
 </script>
 
 <style scoped>
