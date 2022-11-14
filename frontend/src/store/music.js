@@ -13,7 +13,6 @@ export const useMusicStore = defineStore("music", {
       this.isMute = !this.isMute;
     },
     isSoundActive() {
-      console.log(this.isMute);
       if (this.isMute === true) {
         document.querySelector("audio").muted = true;
       } else {
