@@ -45,6 +45,7 @@ public class User implements UserDetails {
 	private String email;
 
 	private String name;
+	private String profileImage;
 
 	@Builder.Default
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
