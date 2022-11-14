@@ -14,13 +14,17 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { useAccountStore } from "@/store/account";
+import router from "@/router";
 
 const route = useRoute();
 const code = route.query.code;
 const accountStore = useAccountStore();
+// const router = useRouter();
+
+router.push({ name: "introfirstpage" });
 
 accountStore.kakaoLogin(code);
-const refreshToken = accountStore.refreshToken;
+// const refreshToken = accountStore.refreshToken;
 </script>
 
 <style></style>
