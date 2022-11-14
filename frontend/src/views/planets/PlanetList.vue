@@ -74,7 +74,8 @@
 </template>
 
 <script>
-import { useMusicStore, usePlanetStore } from "@/store/index";
+import { useMusicStore } from "@/store/music";
+import { usePlanetStore } from "@/store/planet";
 export default {
   methods: {
     gotoPage(link) {

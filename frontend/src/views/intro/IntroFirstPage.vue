@@ -61,7 +61,7 @@
 
 <script setup>
 import { useRouter, useRoute } from "vue-router";
-import { useMusicStore } from "@/store/index";
+import { useMusicStore } from "@/store/music";
 import { onMounted } from "vue";
 
 const router = useRouter();

@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { useMusicStore } from "@/store/index";
+import { useMusicStore } from "@/store/music";
 const musicStore = useMusicStore();
 let keyword = "";
 </script>
