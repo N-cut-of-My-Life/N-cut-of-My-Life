@@ -70,7 +70,7 @@
 import MusicModal from "@/components/planets/MusicModal.vue";
 import { onMounted, onUpdated, ref } from "vue";
 import { useRouter } from "vue-router";
-import { useMusicStore, usePlanetStore } from "@/store/index";
+import { useMusicStore, usePlanetStore } from "@/store/music";
 
 const router = useRouter();
 
@@ -100,7 +100,7 @@ const gotoPage = (link) => {
   router.push(link);
 };
 const complete = () => {
-  usePlanetStore().completePlanet(6);  //TODO answer 추가
+  usePlanetStore().completePlanet(6); //TODO answer 추가
 };
 onUpdated(() => {
   if (currentImage.value == images.length - 1) {

@@ -2,17 +2,31 @@
   <div class="jumbotron">
     <div class="title">반짝반짝 행성</div>
   </div>
-  <img v-show="!elementVisible_2" class="bubble" :src="images[currentImage]" alt="" />
+  <img
+    v-show="!elementVisible_2"
+    class="bubble"
+    :src="images[currentImage]"
+    alt=""
+  />
   <audio loop autoplay volume="0.3">
     <source src="@/assets/audio/shining-diamond.mp3" type="audio/mp3" />
   </audio>
   <div class="other">
-    <b-button @click="gotoPage({ name: 'planetlist' })" class="button_prev" size="sm">
+    <b-button
+      @click="gotoPage({ name: 'planetlist' })"
+      class="button_prev"
+      size="sm"
+    >
       <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
     </b-button>
   </div>
   <div class="jump">
-    <b-button @click="previousImage()" class="button" size="sm" :disabled="currentImage === 0">
+    <b-button
+      @click="previousImage()"
+      class="button"
+      size="sm"
+      :disabled="currentImage === 0"
+    >
       뒤로
     </b-button>
     &nbsp;
@@ -26,7 +40,11 @@
     </b-button>
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
-    <b-button v-show="elementVisible && !elementVisible_3" class="button_2" size="md">
+    <b-button
+      v-show="elementVisible && !elementVisible_3"
+      class="button_2"
+      size="md"
+    >
       <div class="wave" v-b-modal.modal-treasure>
         <span style="--i: 1">가</span>
         <span style="--i: 2">장</span>
@@ -69,7 +87,14 @@
       style="cursor: pointer; float: right"
       alt=""
     />
-    <div style="font-size: 1.3vw; margin-top: 5%; margin-bottom: 2%; font-weight: 400">
+    <div
+      style="
+        font-size: 1.3vw;
+        margin-top: 5%;
+        margin-bottom: 2%;
+        font-weight: 400;
+      "
+    >
       당신의 가장 소중한 물건을 적어주세요!
     </div>
     <b-button
@@ -98,7 +123,9 @@
           />
           <div v-else>
             <div style="margin-top: 1vh">
-              <strong style="font-size: 1.1vw">소중한 물건을 담아주세요!</strong>
+              <strong style="font-size: 1.1vw"
+                >소중한 물건을 담아주세요!</strong
+              >
             </div>
           </div>
         </div>
@@ -120,13 +147,23 @@
         @click="complete"
         data-bs-dismiss="modal"
         aria-label="Close"
-        style="color: #ffffff; background-color: #9985c6; border: none; border-radius: 1vw"
+        style="
+          color: #ffffff;
+          background-color: #9985c6;
+          border: none;
+          border-radius: 1vw;
+        "
         >저장
       </b-button>
     </span>
   </b-modal>
   <div class="last">
-    <b-button v-show="elementVisible_4" class="button_3" size="md" @click="endthisPlanet()">
+    <b-button
+      v-show="elementVisible_4"
+      class="button_3"
+      size="md"
+      @click="endthisPlanet()"
+    >
       <div class="wave">
         <span style="--i: 1">반</span>
         <span style="--i: 2">짝</span>
@@ -148,7 +185,8 @@
 </template>
 
 <script>
-import { useMusicStore, usePlanetStore } from '@/store/index';
+import { useMusicStore } from "@/store/music";
+import { usePlanetStore } from "@/store/planet";
 export default {
   data() {
     return {
@@ -157,18 +195,18 @@ export default {
         imageUrl: null,
       },
       images: [
-        require('@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_1.svg'),
-        require('@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_2.svg'),
-        require('@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_3.svg'),
-        require('@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_4.svg'),
-        require('@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_5.svg'),
+        require("@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_1.svg"),
+        require("@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_2.svg"),
+        require("@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_3.svg"),
+        require("@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_4.svg"),
+        require("@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_5.svg"),
       ],
       currentImage: 0,
       elementVisible: false,
       elementVisible_2: false,
       elementVisible_3: false,
       elementVisible_4: false,
-      answer: '',
+      answer: "",
     };
   },
   updated() {
@@ -200,7 +238,7 @@ export default {
       usePlanetStore().completePlanet(3, this.answer);
     },
     endthisPlanet() {
-      this.$router.push({ name: 'planetlist' });
+      this.$router.push({ name: "planetlist" });
     },
   },
   mounted() {
@@ -252,7 +290,8 @@ body {
   background-color: transparent;
 }
 .jumbotron {
-  background: url('@/assets/PlanetBackground/treasure.svg') no-repeat center center fixed;
+  background: url("@/assets/PlanetBackground/treasure.svg") no-repeat center
+    center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -313,7 +352,7 @@ body {
 }
 
 .button_2::before {
-  content: '';
+  content: "";
   border-radius: 1000px;
   min-width: calc(280px + 12px);
   min-height: calc(60px + 12px);
@@ -353,7 +392,7 @@ body {
 }
 
 .button_3::before {
-  content: '';
+  content: "";
   border-radius: 1000px;
   min-width: calc(240px + 12px);
   min-height: calc(60px + 12px);
