@@ -106,13 +106,13 @@ public class UserServiceTest {
 		@DisplayName("[성공] - 카카오 정보으로 UserInfo 생성")
 		void getUserInfoFromKakao() throws IOException {
 			// given
-			final URL url = new URL("https://my-json-server.typicode.com/qulip/apitest/userInfo");
+			final URL url = new URL("https://my-json-server.typicode.com/qulip/dbtest/userInfo");
 			final HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 			final String json = userService.getResult(conn);
 			final UserInfo userInfo = UserInfo.builder()
 				.email("apiTest@email.com")
 				.name("싸피")
-				.profileImage("PROFILE_IMAGE")
+				.profileImage("PROFILE_IMAGE_URL")
 				.build();
 
 			// when
