@@ -3,7 +3,7 @@
   <video muted autoplay loop playbackRate="1.0">
     <source src="@/assets/intro_video.mp4" type="video/mp4" />
   </video>
-  <audio muted loop autoplay volume="0.5">
+  <audio muted loop controls autoplay volume="0.5">
     <source src="@/assets/audio/daylight.mp3" type="audio/mp3" />
   </audio>
   <div class="other">
@@ -19,39 +19,46 @@
     <div class="planet"></div>
     <div
       class="planet"
-      @click="gotoPage({ name: 'sadplanet' })"
+      v-bind:class="{ complete: checkCompletedPlanet(2) }"
+      @click="gotoPage($event, { name: 'sadplanet' })"
       v-b-tooltip.hover.top="'훌쩍훌쩍 행성'"
     ></div>
     <div
       class="planet"
-      @click="gotoPage({ name: 'happyplanet' })"
+      v-bind:class="{ complete: checkCompletedPlanet(1) }"
+      @click="gotoPage($event, { name: 'happyplanet' })"
       v-b-tooltip.hover.left="'하하호호 행성'"
     ></div>
     <div
       class="planet"
-      @click="gotoPage({ name: 'musicplanet' })"
+      v-bind:class="{ complete: checkCompletedPlanet(6) }"
+      @click="gotoPage($event, { name: 'musicplanet' })"
       v-b-tooltip.hover.bottom="'둠칫둠칫 행성'"
     ></div>
     <div
       class="planet"
-      @click="gotoPage({ name: 'dreamplanet' })"
+      v-bind:class="{ complete: checkCompletedPlanet(4) }"
+      @click="gotoPage($event, { name: 'dreamplanet' })"
       v-b-tooltip.hover.top="'이루지못 행성'"
     ></div>
     <div
       class="planet"
-      @click="gotoPage({ name: 'regretplanet' })"
+      v-bind:class="{ complete: checkCompletedPlanet(5) }"
+      @click="gotoPage($event, { name: 'regretplanet' })"
       v-b-tooltip.hover.bottom="'괜히글 행성'"
     ></div>
     <div
       class="planet"
-      @click="gotoPage({ name: 'preciousplanet' })"
+      v-bind:class="{ complete: checkCompletedPlanet(8) }"
+      @click="gotoPage($event, { name: 'preciousplanet' })"
       v-b-tooltip.hover.top="'넌너무소중 행성'"
     ></div>
     <img
       class="planet"
+      v-bind:class="{ complete: checkCompletedPlanet(3) }"
       src="../../assets/planet/blink.png"
       alt=""
-      @click="gotoPage({ name: 'treasureplanet' })"
+      @click="gotoPage($event, { name: 'treasureplanet' })"
       v-b-tooltip.hover.right="'반짝반짝 행성'"
     />
     <img class="stars" src="../../assets/planet/stars.png" alt="" />
@@ -62,9 +69,10 @@
     />
     <img
       class="teapot"
+      v-bind:class="{ complete: checkCompletedPlanet(7) }"
       src="../../assets/planet/teapot.png"
       alt=""
-      @click="gotoPage({ name: 'genieplanet' })"
+      @click="gotoPage($event, { name: 'genieplanet' })"
       v-b-tooltip.hover.top="'지니 행성'"
     />
   </div>
@@ -78,7 +86,10 @@ import { useMusicStore } from "@/store/music";
 import { usePlanetStore } from "@/store/planet";
 export default {
   methods: {
-    gotoPage(link) {
+    gotoPage(event, link) {
+      if (event.target.classList.contains("complete")) {
+        return;
+      }
       this.$router.push(link);
     },
     getMinimumConditionsMet() {
@@ -86,6 +97,15 @@ export default {
     },
     finishTravel() {
       usePlanetStore().finishTravel();
+    },
+    checkCompletedPlanet(planetId) {
+      let completed = false;
+      usePlanetStore().articleRequest.answers.forEach((answer) => {
+        if (answer.questionId == planetId) {
+          completed = true;
+        }
+      });
+      return completed;
     },
   },
   mounted() {
@@ -363,6 +383,17 @@ body {
 .planet:nth-child(8):hover {
   -webkit-filter: none;
   filter: none;
+}
+
+.complete {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  pointer-events: none;
+}
+
+.complete:hover {
+  filter: none;
+  -webkit-filter: none;
 }
 
 @keyframes blinker {
