@@ -159,6 +159,7 @@
 
 <script>
 import html2pdf from "html2pdf.js";
+import { useMusicStore } from "@/store/music";
 
 export default {
   name: "submission-detail",
@@ -192,6 +193,9 @@ export default {
           compressPDF: true,
         },
       });
+    },
+    mounted() {
+      useMusicStore().isSoundActive();
     },
   },
 };

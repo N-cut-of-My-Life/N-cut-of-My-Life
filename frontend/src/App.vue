@@ -3,11 +3,7 @@
   <div
     class="mute"
     @click="musicStore.toggleMute()"
-    v-if="
-      route.path !== '/' &&
-      route.path !== '/traveldiary' &&
-      route.path !== '/resultprint'
-    "
+    v-if="route.path !== '/' && route.path !== '/traveldiary'"
   >
     <svg
       v-if="musicStore.isMute === false"
