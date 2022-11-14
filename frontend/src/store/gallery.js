@@ -9,9 +9,9 @@ export const useGalleryStore = defineStore("gallery", {
   }),
   getters: {},
   actions: {
-    getGalleryList() {
+    getGalleryList(userID) {
       axios({
-        url: index.answer.getLastWord(),
+        url: index.answer.getGallery(userID),
         method: "GET",
         headers: { "X-AUTH-TOKEN": useAccountStore().token },
       })

@@ -12,7 +12,7 @@ export default {
   },
 
   answer: {
-    getLastWord: () => HOST + ANSWER,
+    getGallery: (userID) => HOST + ANSWER + `${userID}`,
   },
 
   article: {

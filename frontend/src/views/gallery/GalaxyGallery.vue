@@ -55,6 +55,9 @@ import { useRouter } from "vue-router";
 import { useGalleryStore } from "@/store/gallery";
 import { useMusicStore } from "@/store/music";
 import { onMounted } from "vue";
+import { useAccountStore } from "@/store/account";
+
+const userID = useAccountStore().userInfo.userId;
 
 onMounted(() => {
   useMusicStore().isSoundActive();
@@ -62,11 +65,8 @@ onMounted(() => {
 const router = useRouter();
 
 const galleryStore = useGalleryStore();
-const getStoreList = galleryStore.getGalleryList();
+const getStoreList = galleryStore.getGalleryList(userID);
 getStoreList;
-
-console.log(galleryStore.galleryList.data);
-console.log(typeof galleryStore.galleryList);
 
 // 텍스트 길이, 이미지 크기에 따라
 // 텍스트 박스 잘 바뀌는지 확인하고자 더미데이터 생성
