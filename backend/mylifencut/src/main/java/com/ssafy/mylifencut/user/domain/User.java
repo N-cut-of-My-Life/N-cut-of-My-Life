@@ -63,6 +63,7 @@ public class User implements UserDetails {
 		return User.builder()
 			.name(userInfo.getName())
 			.email(userInfo.getEmail())
+			.profileImage(userInfo.getProfileImage())
 			.build();
 	}
 

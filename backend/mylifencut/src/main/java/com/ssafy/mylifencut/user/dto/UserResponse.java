@@ -16,6 +16,7 @@ public class UserResponse {
 	private Integer userId;
 	private String name;
 	private String email;
+	private String profileImage;
 
 	public static UserResponse of(String accessToken, User user) {
 		return UserResponse.builder()
