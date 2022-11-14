@@ -24,6 +24,7 @@ public class UserResponse {
 			.userId(user.getId())
 			.email(user.getEmail())
 			.name(user.getName())
+			.profileImage(user.getProfileImage())
 			.build();
 	}
 }
