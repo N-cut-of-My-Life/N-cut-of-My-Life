@@ -1,6 +1,6 @@
 <template>
   <div class="help-tip">
-    <p>3개 이상의 행성을 다녀오시면 여행을 마치실 수 있습니다!</p>
+    <p>&nbsp;3개 이상의 행성을 다녀오시면 여행을 마치실 수 있습니다!</p>
   </div>
   <video muted autoplay loop playbackRate="1.0">
     <source src="@/assets/intro_video.mp4" type="video/mp4" />
@@ -605,15 +605,15 @@ body {
 <style>
 .help-tip {
   position: absolute;
-  top: 1.4%;
-  right: 0.4%;
+  top: 2.5%;
+  right: 1%;
   text-align: center;
-  background-color: #6e7c7c;
+  background-color: #334756;
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  font-size: 14px;
-  line-height: 26px;
+  width: 2vw;
+  height: 2vw;
+  font-size: 1.1vw;
+  line-height: 2.1vw;
   cursor: default;
   padding-left: 2px;
 }
@@ -637,13 +637,13 @@ body {
   background-color: #1e2021;
   width: 24vw;
   position: absolute;
-  border-radius: 3px;
+  border-radius: 1vw;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
   right: -4px;
   color: #fff;
   font-size: 1vw;
   line-height: 1.4;
-  padding: 3px;
+  padding: 0.1vw;
 }
 
 .help-tip p:before {
