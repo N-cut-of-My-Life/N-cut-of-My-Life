@@ -19,7 +19,8 @@
       margin-top: 3.5%;
     "
   >
-    어서오세요, <span style="font-weight: 400">최재현</span>님
+    어서오세요, <span style="font-weight: 400">{{ userName }}</span
+    >님
   </div>
   <b-navbar toggleable="lg" style="float: right; margin-right: 50px">
     <b-navbar-nav>
@@ -62,9 +63,11 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { useMusicStore } from "@/store/music";
-import { onMounted } from "vue";
+import { useAccountStore } from "@/store/account";
+import { onMounted, ref } from "vue";
 
 const router = useRouter();
+const userName = ref("");
 
 // 클릭 시 로켓 발사
 const rocketLaunch = () => {
@@ -89,6 +92,8 @@ onMounted(() => {
   } else {
     document.querySelector("#cosmos").muted = false;
   }
+  userName.value = useAccountStore().userInfo.name;
+  console.log(useAccountStore().userInfo);
 });
 </script>
 
