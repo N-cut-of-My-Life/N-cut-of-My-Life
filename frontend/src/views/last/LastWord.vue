@@ -98,8 +98,27 @@
     >
       나에게 남길 마지막 말을 적어주세요!
     </div>
-    <b-container ref="form" style="margin-bottom: 3.8%">
+    <b-row
+      ><b-col cols="6"></b-col
+      ><b-col cols="4" style="text-align: right; padding-right: 0">
+        <span
+          style="
+            text-align: right;
+            float: right;
+            font-size: small;
+            color: aliceblue;
+          "
+          >은하갤러리 공유 여부</span
+        ></b-col
+      ><b-col cols="2" style="padding-left: 0">
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider round"></span> </label
+      ></b-col>
+    </b-row>
+    <b-container ref="form" style="margin-bottom: 3.8%; margin-top: 1%">
       <b-form-textarea
+        v-model="answer"
         id="content"
         placeholder=""
         rows="10"
@@ -111,7 +130,7 @@
     </b-container>
     <b-button
       text
-      @click="submit"
+      @click="finishTravel"
       data-bs-dismiss="modal"
       aria-label="Close"
       style="
@@ -166,7 +185,10 @@
 <script setup>
 import { onUpdated, ref, onMounted } from "vue";
 import { useMusicStore } from "@/store/music";
+import { usePlanetStore } from "@/store/planet";
 import { useRouter } from "vue-router";
+
+let answer = ref("");
 
 onMounted(() => {
   useMusicStore().isSoundActive();
@@ -195,10 +217,15 @@ const nextImage = () => {
 const previousImage = () => {
   if (currentImage.value !== 0) currentImage.value--;
 };
-const submit = () => {
+const complete = () => {
   elementVisible_2.value = true;
   elementVisible_3.value = true;
   setTimeout(() => (elementVisible_4.value = true), 1000);
+  usePlanetStore().completePlanet(9, answer);
+};
+const finishTravel = () => {
+  complete();
+  usePlanetStore().finishTravel();
 };
 const gotoPrint = () => {
   router.push({ name: "resultprint" });
@@ -354,6 +381,68 @@ video {
   height: auto;
   z-index: -100;
   background-size: cover;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 21px;
+  margin-right: 5%;
+  margin-bottom: 2%;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 17px;
+  width: 17px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(13px);
+  -ms-transform: translateX(13px);
+  transform: translateX(13px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 17px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
 </style>
 
