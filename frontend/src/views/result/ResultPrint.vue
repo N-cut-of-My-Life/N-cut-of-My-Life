@@ -1,8 +1,10 @@
 <template>
   <div ref="pdfarea">
+    <audio id="myaudios" loop autoplay volume="0.2">
+      <source src="@/assets/audio/out-of-time.mp3" type="audio/mp3" />
+    </audio>
     <section class="result-print">
       <button id="pdf-button-area" @click="exportToPDF">다운로드</button>
-
       <ol>
         <li>
           <div style="left: 0rem">
@@ -159,6 +161,7 @@
 
 <script>
 import html2pdf from "html2pdf.js";
+import { useMusicStore } from "@/store/music";
 
 export default {
   name: "submission-detail",
@@ -192,6 +195,9 @@ export default {
           compressPDF: true,
         },
       });
+    },
+    mounted() {
+      useMusicStore().isSoundActive();
     },
   },
 };

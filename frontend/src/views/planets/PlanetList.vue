@@ -1,5 +1,7 @@
 <template>
-  <div class="title">행성 목록</div>
+  <div class="help-tip">
+    <p>&nbsp;3개 이상의 행성을 다녀오시면 여행을 마치실 수 있습니다!</p>
+  </div>
   <video muted autoplay loop playbackRate="1.0">
     <source src="@/assets/intro_video.mp4" type="video/mp4" />
   </video>
@@ -8,7 +10,7 @@
   </audio>
   <div class="other">
     <b-button
-      @click="gotoPage({ name: 'introfirstpage' })"
+      @click="gotoPage($event, { name: 'introfirstpage' })"
       class="button_prev"
       size="sm"
     >
@@ -19,39 +21,46 @@
     <div class="planet"></div>
     <div
       class="planet"
-      @click="gotoPage({ name: 'sadplanet' })"
+      v-bind:class="{ complete: checkCompletedPlanet(2) }"
+      @click="gotoPage($event, { name: 'sadplanet' })"
       v-b-tooltip.hover.top="'훌쩍훌쩍 행성'"
     ></div>
     <div
       class="planet"
-      @click="gotoPage({ name: 'happyplanet' })"
+      v-bind:class="{ complete: checkCompletedPlanet(1) }"
+      @click="gotoPage($event, { name: 'happyplanet' })"
       v-b-tooltip.hover.left="'하하호호 행성'"
     ></div>
     <div
       class="planet"
-      @click="gotoPage({ name: 'musicplanet' })"
+      v-bind:class="{ complete: checkCompletedPlanet(6) }"
+      @click="gotoPage($event, { name: 'musicplanet' })"
       v-b-tooltip.hover.bottom="'둠칫둠칫 행성'"
     ></div>
     <div
       class="planet"
-      @click="gotoPage({ name: 'dreamplanet' })"
+      v-bind:class="{ complete: checkCompletedPlanet(4) }"
+      @click="gotoPage($event, { name: 'dreamplanet' })"
       v-b-tooltip.hover.top="'이루지못 행성'"
     ></div>
     <div
       class="planet"
-      @click="gotoPage({ name: 'regretplanet' })"
+      v-bind:class="{ complete: checkCompletedPlanet(5) }"
+      @click="gotoPage($event, { name: 'regretplanet' })"
       v-b-tooltip.hover.bottom="'괜히글 행성'"
     ></div>
     <div
       class="planet"
-      @click="gotoPage({ name: 'preciousplanet' })"
+      v-bind:class="{ complete: checkCompletedPlanet(8) }"
+      @click="gotoPage($event, { name: 'preciousplanet' })"
       v-b-tooltip.hover.top="'넌너무소중 행성'"
     ></div>
     <img
       class="planet"
+      v-bind:class="{ complete: checkCompletedPlanet(3) }"
       src="../../assets/planet/blink.png"
       alt=""
-      @click="gotoPage({ name: 'treasureplanet' })"
+      @click="gotoPage($event, { name: 'treasureplanet' })"
       v-b-tooltip.hover.right="'반짝반짝 행성'"
     />
     <img class="stars" src="../../assets/planet/stars.png" alt="" />
@@ -62,15 +71,32 @@
     />
     <img
       class="teapot"
+      v-bind:class="{ complete: checkCompletedPlanet(7) }"
       src="../../assets/planet/teapot.png"
       alt=""
-      @click="gotoPage({ name: 'genieplanet' })"
+      @click="gotoPage($event, { name: 'genieplanet' })"
       v-b-tooltip.hover.top="'지니 행성'"
     />
   </div>
-  <b-button v-show="getMinimumConditionsMet() === true" @click="finishTravel">
-    <strong>여행마치기</strong>
-  </b-button>
+  <div class="last">
+    <b-button
+      class="button_2"
+      v-show="getMinimumConditionsMet() === true"
+      @click="finishTravel"
+    >
+      <div class="wave">
+        <span style="--i: 1">여</span>
+        <span style="--i: 2">행</span>
+        <span style="--i: 3">을</span>
+        <span style="--i: 4">&nbsp;</span>
+        <span style="--i: 5">마</span>
+        <span style="--i: 6">칠</span>
+        <span style="--i: 7">래</span>
+        <span style="--i: 8">요</span>
+        <span style="--i: 9">!</span>
+      </div>
+    </b-button>
+  </div>
 </template>
 
 <script>
@@ -78,7 +104,10 @@ import { useMusicStore } from "@/store/music";
 import { usePlanetStore } from "@/store/planet";
 export default {
   methods: {
-    gotoPage(link) {
+    gotoPage(event, link) {
+      if (event.target.classList.contains("complete")) {
+        return;
+      }
       this.$router.push(link);
     },
     getMinimumConditionsMet() {
@@ -86,6 +115,16 @@ export default {
     },
     finishTravel() {
       usePlanetStore().finishTravel();
+      this.$router.push({ name: "lastword" });
+    },
+    checkCompletedPlanet(planetId) {
+      let completed = false;
+      usePlanetStore().articleRequest.answers.forEach((answer) => {
+        if (answer.questionId == planetId) {
+          completed = true;
+        }
+      });
+      return completed;
     },
   },
   mounted() {
@@ -131,6 +170,13 @@ body {
   border-color: #ffffff;
 }
 
+.last {
+  position: absolute;
+  bottom: 5%;
+  right: 3%;
+  margin: auto;
+}
+
 .other {
   position: absolute;
   left: 1%;
@@ -164,8 +210,8 @@ body {
   top: 50%;
   margin-top: -144.72px;
   margin-left: -86.14px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
 }
 
 .stars_line {
@@ -211,8 +257,8 @@ body {
   background-size: 512px 256px;
   margin-left: -128px;
   margin-top: -128px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_1 20s infinite linear;
   cursor: pointer;
 }
@@ -226,8 +272,8 @@ body {
   background-size: 512px 256px;
   margin-left: 40px;
   margin-top: -250px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_2 20s infinite linear;
   cursor: pointer;
 }
@@ -241,8 +287,8 @@ body {
   background-size: 512px 256px;
   margin-left: 20px;
   margin-top: -136px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_3 20s infinite linear;
   cursor: pointer;
 }
@@ -253,8 +299,8 @@ body {
   width: 256px;
   margin-left: 60px;
   margin-top: -170px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_4 20s infinite linear;
   cursor: pointer;
   background: rgb(20, 20, 20, 0) url("../../assets/planet/music.png") repeat-x
@@ -272,8 +318,8 @@ body {
   background-size: 512px 256px;
   margin-left: -100px;
   margin-top: 100px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_5 20s infinite linear;
   cursor: pointer;
 }
@@ -287,8 +333,8 @@ body {
   background-size: 512px 256px;
   margin-left: -188px;
   margin-top: -128px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_6 20s infinite linear;
   cursor: pointer;
 }
@@ -302,8 +348,8 @@ body {
   background-size: 512px 256px;
   margin-left: -128px;
   margin-top: -128px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_7 20s infinite linear;
   cursor: pointer;
 }
@@ -312,9 +358,9 @@ body {
   max-width: 15%;
   height: auto;
   margin-left: 50px;
-  margin-top: -46.3px;
-  filter: grayscale(75%);
-  -webkit-filter: grayscale(75%);
+  margin-top: -0px;
+  filter: grayscale(35%);
+  -webkit-filter: grayscale(35%);
   animation: rotation_8 20s infinite linear;
   cursor: pointer;
 }
@@ -364,6 +410,17 @@ body {
   -webkit-filter: none;
   filter: none;
 }
+
+.complete {
+  filter: grayscale(100%) !important;
+  -webkit-filter: grayscale(100%) !important;
+  pointer-events: none;
+}
+
+/* .complete:hover {
+  filter: none;
+  -webkit-filter: none;
+} */
 
 @keyframes blinker {
   50% {
@@ -460,6 +517,174 @@ body {
 
   to {
     transform: scale(1) rotate(315deg) translate(175%) rotate(359deg);
+  }
+}
+
+.button_2 {
+  border-radius: 0.8vw;
+  /* border-color: #81c6e8; */
+  background-color: #827397;
+  position: relative;
+  margin: 300px auto 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.button_2::before {
+  content: "";
+  border-radius: 1000px;
+  min-width: calc(190px + 12px);
+  min-height: calc(60px + 12px);
+  box-shadow: 0 0 60px #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  transition: all 0.3s ease-in-out 0s;
+  animation: ring 1.5s infinite;
+}
+
+.button_2:hover,
+.button_2:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.button_2:hover::before,
+.button_2:focus::before {
+  opacity: 1;
+}
+
+.button_2:hover::after,
+.button_2:focus::after {
+  animation: none;
+  display: none;
+}
+
+@keyframes ring {
+  0% {
+    width: fit-content;
+    height: fit-content;
+    opacity: 1;
+  }
+
+  100% {
+    width: fit-content;
+    height: fit-content;
+    opacity: 0;
+  }
+}
+
+.wave {
+  position: relative;
+  /* -webkit-box-reflect: below -1px linear-gradient(transparent, #FFFFFF); */
+}
+
+.wave span {
+  position: relative;
+  display: inline-block;
+  color: #ffffff;
+  font-size: 1.2vw;
+  text-transform: uppercase;
+  animation: wave 3s infinite;
+  animation-delay: calc(0.1s * var(--i));
+}
+
+@keyframes wave {
+  0%,
+  40%,
+  100% {
+    transform: translateY(0);
+  }
+
+  20% {
+    transform: translateY(-3px);
+  }
+}
+</style>
+<style>
+.help-tip {
+  position: absolute;
+  top: 2.5%;
+  right: 1%;
+  text-align: center;
+  background-color: #334756;
+  border-radius: 50%;
+  width: 2vw;
+  height: 2vw;
+  font-size: 1.1vw;
+  line-height: 2.1vw;
+  cursor: default;
+  padding-left: 2px;
+}
+
+.help-tip:before {
+  content: "?";
+  font-weight: bold;
+  color: #fff;
+}
+
+.help-tip:hover p {
+  display: block;
+  transform-origin: 100% 0%;
+  -webkit-animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.help-tip p {
+  display: none;
+  text-align: left;
+  background-color: #1e2021;
+  width: 24vw;
+  position: absolute;
+  border-radius: 1vw;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  right: -4px;
+  color: #fff;
+  font-size: 1vw;
+  line-height: 1.4;
+  padding: 0.1vw;
+}
+
+.help-tip p:before {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-bottom-color: #1e2021;
+  left: 20%;
+  top: 12px;
+}
+
+.help-tip p:after {
+  width: 100%;
+  height: 40px;
+  content: "";
+  position: absolute;
+  top: -40px;
+  left: 0;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  100% {
+    opacity: 100%;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 100%;
   }
 }
 </style>

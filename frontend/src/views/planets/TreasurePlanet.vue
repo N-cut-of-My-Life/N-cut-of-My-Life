@@ -157,7 +157,7 @@
       </b-button>
     </span>
   </b-modal>
-  <div class="last">
+  <div class="last_2">
     <b-button
       v-show="elementVisible_4"
       class="button_3"
@@ -217,7 +217,7 @@ export default {
   methods: {
     onUpload(e) {
       const file = e.target.files[0];
-      this.image = file;
+      this.item.image = file;
       this.item.imageUrl = URL.createObjectURL(file);
     },
     nextImage() {
@@ -235,7 +235,7 @@ export default {
       this.elementVisible_2 = true;
       this.elementVisible_3 = true;
       setTimeout(() => (this.elementVisible_4 = true), 1000);
-      usePlanetStore().completePlanet(3, this.answer);
+      usePlanetStore().completePlanet(3, this.answer, this.item.image);
     },
     endthisPlanet() {
       this.$router.push({ name: "planetlist" });
@@ -321,7 +321,14 @@ body {
 .last {
   position: absolute;
   bottom: 8%;
-  left: 40.5%;
+  left: 41%;
+  margin: auto;
+}
+
+.last_2 {
+  position: absolute;
+  bottom: 8%;
+  left: 42%;
   margin: auto;
 }
 

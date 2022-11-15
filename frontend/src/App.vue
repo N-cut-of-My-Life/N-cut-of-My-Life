@@ -3,11 +3,7 @@
   <div
     class="mute"
     @click="musicStore.toggleMute()"
-    v-if="
-      route.path !== '/' &&
-      route.path !== '/traveldiary' &&
-      route.path !== '/resultprint'
-    "
+    v-if="route.path !== '/' && route.path !== '/traveldiary'"
   >
     <svg
       v-if="musicStore.isMute === false"
@@ -81,8 +77,8 @@ body {
 
 .mute {
   position: absolute;
-  left: 2%;
-  bottom: 2%;
+  left: 1%;
+  bottom: 2.5%;
   margin: auto;
   color: white;
   cursor: pointer;

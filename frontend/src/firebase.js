@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/learn-more#config-object
@@ -18,39 +18,38 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // Initialize Cloud Storage and get a reference to the service
-getStorage(app);
-// const storage = getStorage(app);
-// const storageRef = ref(storage, 'hi/logo.png');
+const storage = getStorage(app);
 
-// 'file' comes from the Blob or File API
-// uploadBytes(storageRef, file).then(() => {
-//   console.log('Uploaded a blob or file!');
-// });
+export async function uploadToFirebase(fileLocation, file) {
+  const storageRef = ref(storage, fileLocation);
+  // 'file' comes from the Blob or File API
+  await uploadBytes(storageRef, file);
+  return await getFirebaseUrl(storageRef);
+}
 
-// Get the download URL
-// getDownloadURL(storageRef)
-//   .then((url) => {
-//     // Insert url into an <img> tag to "download"
-//     window.open(url)
-//   })
-//   .catch((error) => {
-//     // A full list of error codes is available at
-//     // https://firebase.google.com/docs/storage/web/handle-errors
-//     switch (error.code) {
-//       case 'storage/object-not-found':
-//         // File doesn't exist
-//         break;
-//       case 'storage/unauthorized':
-//         // User doesn't have permission to access the object
-//         break;
-//       case 'storage/canceled':
-//         // User canceled the upload
-//         break;
+export async function getFirebaseUrl(storageRef) {
+  // Get the download URL
+  try {
+    const url = await getDownloadURL(storageRef);
+    return url;
+  } catch (error) {
+    // A full list of error codes is available at
+    // https://firebase.google.com/docs/storage/web/handle-errors
+    switch (error.code) {
+      case "storage/object-not-found":
+        // File doesn't exist
+        break;
+      case "storage/unauthorized":
+        // User doesn't have permission to access the object
+        break;
+      case "storage/canceled":
+        // User canceled the upload
+        break;
 
-//       // ...
-
-//       case 'storage/unknown':
-//         // Unknown error occurred, inspect the server response
-//         break;
-//     }
-//   });
+      // ...
+      case "storage/unknown":
+        // Unknown error occurred, inspect the server response
+        break;
+    }
+  }
+}

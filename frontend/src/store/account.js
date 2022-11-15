@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import index from "@/api/index";
 import axios from "axios";
+import router from "@/router";
 
 export const useAccountStore = defineStore("account", {
   state: () => ({
@@ -14,9 +15,8 @@ export const useAccountStore = defineStore("account", {
     },
   },
   actions: {
-    kakaoLogin(code) {
-      console.log(this.token);
-      axios({
+    async kakaoLogin(code) {
+      await axios({
         url: index.account.postLogin(),
         method: "POST",
         data: {
@@ -24,14 +24,14 @@ export const useAccountStore = defineStore("account", {
         },
       })
         .then((res) => {
-          console.log(res.data);
           this.token = res.data.data.accessToken;
           this.userInfo.userId = res.data.data.userId;
           this.userInfo.name = res.data.data.name;
           this.userInfo.email = res.data.data.email;
+          router.replace({ name: "introfirstpage" });
           console.log(this.token);
           console.log(this.userInfo);
-          console.log(this.isLogin);
+          console.log("isLogin : ", this.isLogin);
         })
         // .then(router.push({ name: "introfirstpage" }))
         .catch((e) => {
