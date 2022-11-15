@@ -45,7 +45,7 @@
       class="button_2"
       size="md"
     >
-      <div class="wave" v-b-modal.modal-treasure>
+      <div class="wave" @click="modalShow = !modalShow">
         <span style="--i: 1">가</span>
         <span style="--i: 2">장</span>
         <span style="--i: 3">&nbsp;</span>
@@ -71,12 +71,13 @@
   </div>
 
   <b-modal
+    v-model="modalShow"
     id="modal-treasure"
     hide-header
     hide-footer
     centered
     no-stacking
-    :no-close-on-backdrop="true"
+    :no-close-on-backdrop="false"
     style="text-align: center; border-radius: 1vw"
   >
     <img
@@ -140,13 +141,14 @@
         style="border-radius: 1vw; background-color: #e3ecfc"
       >
       </b-form-textarea>
+      <div id="length_check">
+        {{ textLength }}
+      </div>
     </b-container>
     <span>
       <b-button
         text
         @click="complete"
-        data-bs-dismiss="modal"
-        aria-label="Close"
         style="
           color: #ffffff;
           background-color: #9985c6;
@@ -187,6 +189,7 @@
 <script>
 import { useMusicStore } from "@/store/music";
 import { usePlanetStore } from "@/store/planet";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -201,6 +204,7 @@ export default {
         require("@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_4.svg"),
         require("@/assets/PlanetSpeech/TreasureSpeech/treasure_bubble_5.svg"),
       ],
+      modalShow: false,
       currentImage: 0,
       elementVisible: false,
       elementVisible_2: false,
@@ -208,6 +212,11 @@ export default {
       elementVisible_4: false,
       answer: "",
     };
+  },
+  computed: {
+    textLength() {
+      return this.answer.length + "/255";
+    },
   },
   updated() {
     if (this.currentImage == this.images.length - 1) {
@@ -232,8 +241,18 @@ export default {
       this.$router.push(link);
     },
     complete() {
+      if (this.answer.length == 0 || this.answer.length > 255) {
+        Swal.fire({
+          icon: "error",
+          title: "일지 등록 실패! 😭",
+          text: "길이가 올바르지 않습니다.",
+          confirmButtonText: "확인",
+        });
+        return;
+      }
       this.elementVisible_2 = true;
       this.elementVisible_3 = true;
+      this.modalShow = false;
       setTimeout(() => (this.elementVisible_4 = true), 1000);
       usePlanetStore().completePlanet(3, this.answer, this.item.image);
     },
@@ -488,5 +507,10 @@ body {
   --bs-popover-arrow-width: 0rem;
   --bs-popover-arrow-height: 0rem;
   --bs-popover-body-margin-x: 1rem;
+}
+#length_check {
+  text-align: right;
+  font-size: 10px;
+  margin-top: 3px;
 }
 </style>
