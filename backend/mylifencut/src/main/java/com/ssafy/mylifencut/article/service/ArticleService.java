@@ -41,7 +41,7 @@ public class ArticleService {
 		if (articleRequest.getAnswers().size() < ArticleConstant.ANSWERS_MIN_SIZE) {
 			throw new AnswersSizeIsNotEnoughException();
 		}
-		Article article = articleRepository.save(Article.from(articleRequest, user));
+		Article article = articleRepository.save(Article.from(user));
 		articleRequest.getAnswers().stream()
 			.map(answerRegisterRequest -> Answer.from(answerRegisterRequest, article))
 			.forEach(answer -> {
