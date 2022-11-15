@@ -6,7 +6,6 @@ import static com.ssafy.mylifencut.user.UserConstant.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -143,9 +142,8 @@ class ArticleServiceTest {
 			final ArticleRequest request = ArticleRequest.builder()
 				.userId(userId)
 				.answers(answers)
-				.createDate(LocalDateTime.now())
 				.build();
-			final Article article = Article.from(request, User.builder().id(userId).name(userName).build());
+			final Article article = Article.from(User.builder().id(userId).name(userName).build());
 			doReturn(article).when(articleRepository).save(any(Article.class));
 
 			//when
@@ -168,9 +166,8 @@ class ArticleServiceTest {
 			final ArticleRequest request = ArticleRequest.builder()
 				.userId(userId)
 				.answers(answerRegisterRequests(ANSWERS_MIN_SIZE))
-				.createDate(LocalDateTime.now())
 				.build();
-			final Article article = Article.from(request, User.builder().id(userId).name(userName).build());
+			final Article article = Article.from(User.builder().id(userId).name(userName).build());
 			doReturn(article).when(articleRepository).save(any(Article.class));
 
 			//when
