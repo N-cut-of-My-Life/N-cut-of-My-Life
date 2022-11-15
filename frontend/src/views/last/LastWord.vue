@@ -99,6 +99,40 @@
     >
       나에게 남길 마지막 말을 적어주세요!
     </div>
+    <b-button
+      class="img-btn"
+      id="addon"
+      size="x-sm"
+      style="
+        margin-right: 3%;
+        border-color: #ffffff;
+        padding: 2px 4px;
+        color: #ffffff;
+        font-size: 0.7vw;
+        margin-bottom: 1%;
+      "
+      >사진 첨부
+    </b-button>
+    <b-container ref="form" style="margin-bottom: 3.8%">
+      <b-popover target="addon" placement="right" style="margin-left: 1%">
+        <input type="file" accept="image/*" @change="onUpload" />
+        <div>
+          <img
+            v-if="item.imageUrl"
+            :src="item.imageUrl"
+            style="margin-top: 2%; max-width: 16vw; height: auto"
+            alt=""
+          />
+          <div v-else>
+            <div style="margin-top: 1vh">
+              <strong style="font-size: 1.1vw"
+                >행복했던 순간을 담아주세요!</strong
+              >
+            </div>
+          </div>
+        </div>
+      </b-popover>
+    </b-container>
     <b-row
       ><b-col cols="6"></b-col
       ><b-col cols="4" style="text-align: right; padding-right: 0">
@@ -193,6 +227,7 @@ import Swal from "sweetalert2";
 
 let answer = ref("");
 let isOpenState = ref(false);
+let item = ref({ image: "hello", imageUrl: null });
 
 onMounted(() => {
   useMusicStore().isSoundActive();
@@ -221,6 +256,12 @@ let elementVisible_3 = ref(false);
 let elementVisible_4 = ref(false);
 const currentAudio = ref(0);
 
+const onUpload = (e) => {
+  const file = e.target.files[0];
+  item.value.image = file;
+  item.value.imageUrl = URL.createObjectURL(file);
+};
+
 const nextImage = () => {
   if (currentImage.value !== images.length - 1) currentImage.value++;
 };
@@ -243,8 +284,9 @@ const complete = () => {
   setTimeout(() => (elementVisible_4.value = true), 1000);
   usePlanetStore().completePlanet(
     9,
-    answer,
-    isOpenState.value ? "OPEN" : "CLOSE"
+    answer.value,
+    isOpenState.value ? "OPEN" : "CLOSE",
+    item.value.image
   );
 };
 const finishTravel = () => {
@@ -284,6 +326,18 @@ body {
   bottom: 10%;
   /* height: 50%; */
   margin: auto;
+}
+
+.img-btn {
+  /* left: 0%;
+    top: 0%; */
+  background-color: transparent;
+  float: right;
+  /* position: absolute; */
+}
+
+.img-btn:active {
+  background-color: transparent;
 }
 
 .jump {
