@@ -10,7 +10,7 @@
   </audio>
   <div class="other">
     <b-button
-      @click="gotoPage({ name: 'introfirstpage' })"
+      @click="gotoPage($event, { name: 'introfirstpage' })"
       class="button_prev"
       size="sm"
     >
