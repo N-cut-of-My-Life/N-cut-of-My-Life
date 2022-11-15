@@ -28,6 +28,7 @@ export const useAccountStore = defineStore("account", {
           this.userInfo.userId = res.data.data.userId;
           this.userInfo.name = res.data.data.name;
           this.userInfo.email = res.data.data.email;
+          this.userInfo.profileImage = res.data.data.profileImage;
           router.replace({ name: "introfirstpage" });
           console.log(this.token);
           console.log(this.userInfo);
@@ -47,7 +48,7 @@ export const useAccountStore = defineStore("account", {
         console.log(res);
       });
     },
-    getMyArtilces() {
+    getMyArticles() {
       axios({
         url: index.account.getMyArticles() + this.userInfo.userId,
         method: "GET",

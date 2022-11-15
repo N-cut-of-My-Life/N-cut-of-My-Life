@@ -82,7 +82,7 @@
     <b-button
       class="button_2"
       v-show="getMinimumConditionsMet() === true"
-      @click="finishTravel"
+      @click="gotoLastWord"
     >
       <div class="wave">
         <span style="--i: 1">여</span>
@@ -113,8 +113,7 @@ export default {
     getMinimumConditionsMet() {
       return usePlanetStore().minimumConditionsMet;
     },
-    finishTravel() {
-      usePlanetStore().finishTravel();
+    gotoLastWord() {
       this.$router.push({ name: "lastword" });
     },
     checkCompletedPlanet(planetId) {

@@ -53,7 +53,7 @@
       class="button_2"
       size="md"
     >
-      <div class="wave" v-b-modal.modal-precious>
+      <div class="wave" @click="modalShow = !modalShow">
         <span style="--i: 1">소</span>
         <span style="--i: 2">중</span>
         <span style="--i: 3">한</span>
@@ -73,7 +73,8 @@
     </b-button>
   </div>
   <b-modal
-    :no-close-on-backdrop="true"
+    v-model="modalShow"
+    :no-close-on-backdrop="false"
     id="modal-precious"
     centered
     no-stacking
@@ -127,12 +128,13 @@
         style="background-color: #fdfcfa; border: none"
       >
       </b-form-textarea>
+      <div id="length_check">
+        {{ textLength }}
+      </div>
     </b-container>
     <b-button
       text
       @click="complete"
-      data-bs-dismiss="modal"
-      aria-label="Close"
       style="
         color: #ffffff;
         background-color: #c6753e;
@@ -149,25 +151,30 @@
     alt=""
   />
   <div v-show="elementVisible_2" class="jump">
-    <b-button
-      @click="previousImage_2()"
-      variant="warning"
-      class="button"
-      size="sm"
-      :disabled="currentImage_2 === 0"
-    >
-      뒤로
-    </b-button>
-    &nbsp;
-    <b-button
-      @click="nextImage_2()"
-      variant="warning"
-      class="button"
-      size="sm"
-      :disabled="currentImage_2 === images_2.length - 1"
-    >
-      다음
-    </b-button>
+    <b-row>
+      <b-col>
+        <b-button
+          @click="previousImage_2()"
+          variant="warning"
+          class="button"
+          size="sm"
+          :disabled="currentImage_2 === 0"
+        >
+          뒤로
+        </b-button>
+      </b-col>
+      <b-col>
+        <b-button
+          @click="nextImage_2()"
+          variant="warning"
+          class="button"
+          size="sm"
+          :disabled="currentImage_2 === images_2.length - 1"
+        >
+          다음
+        </b-button>
+      </b-col>
+    </b-row>
   </div>
   <div class="last">
     <b-button
@@ -201,6 +208,7 @@
 import { useMusicStore } from "@/store/music";
 import { usePlanetStore } from "@/store/planet";
 import router from "@/router/index.js";
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -217,6 +225,7 @@ export default {
         require("@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_7.svg"),
         require("@/assets/PlanetSpeech/PreciousSpeech/precious_bubble_8.svg"),
       ],
+      modalShow: false,
       currentImage: 0,
       currentImage_2: 0,
       elementVisible: false,
@@ -225,8 +234,12 @@ export default {
       elementVisible_4: false,
       answer_dear: "",
       answer_content: "",
-      // modalShow: false
     };
+  },
+  computed: {
+    textLength() {
+      return this.answer_content.length + "/255";
+    },
   },
   methods: {
     nextImage() {
@@ -256,6 +269,16 @@ export default {
       // this.elementVisible_2 = true
     },
     complete() {
+      if (this.answer_content.length == 0 || this.answer_content.length > 255) {
+        Swal.fire({
+          icon: "error",
+          title: "일지 등록 실패! 😭",
+          text: "길이가 올바르지 않습니다.",
+          confirmButtonText: "확인",
+        });
+        return;
+      }
+      this.modalShow = false;
       this.submit();
       usePlanetStore().completePlanet(
         8,
@@ -513,5 +536,10 @@ body {
 .form-control {
   box-shadow: none !important;
   outline: none !important;
+}
+#length_check {
+  text-align: right;
+  font-size: 10px;
+  margin-top: 3px;
 }
 </style>

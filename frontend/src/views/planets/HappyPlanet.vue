@@ -28,23 +28,28 @@
     </b-button>
   </div>
   <div class="jump">
-    <b-button
-      @click="previousImage()"
-      class="button"
-      size="sm"
-      :disabled="currentImage === 0"
-    >
-      뒤로
-    </b-button>
-    &nbsp;
-    <b-button
-      @click="nextImage()"
-      class="button"
-      size="sm"
-      :disabled="currentImage === images.length - 1"
-    >
-      다음
-    </b-button>
+    <b-row>
+      <b-col>
+        <b-button
+          @click="previousImage()"
+          class="button"
+          size="sm"
+          :disabled="currentImage === 0"
+        >
+          뒤로
+        </b-button>
+      </b-col>
+      <b-col>
+        <b-button
+          @click="nextImage()"
+          class="button"
+          size="sm"
+          :disabled="currentImage === images.length - 1"
+        >
+          다음
+        </b-button>
+      </b-col>
+    </b-row>
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
     <b-button
@@ -52,7 +57,7 @@
       class="button_2"
       size="md"
     >
-      <div class="wave" v-b-modal.modal-happy>
+      <div class="wave" @click="modalShow = !modalShow">
         <span style="--i: 1">가</span>
         <span style="--i: 2">장</span>
         <span style="--i: 3">&nbsp;</span>
@@ -76,12 +81,13 @@
   </div>
 
   <b-modal
+    v-model="modalShow"
     centered
     no-stacking
     id="modal-happy"
     hide-header
     hide-footer
-    :no-close-on-backdrop="true"
+    :no-close-on-backdrop="false"
     style="text-align: center; border-radius: 1vw"
   >
     <img
@@ -145,12 +151,13 @@
         style="border-radius: 1vw; background-color: #f7eadb; border: none"
       >
       </b-form-textarea>
+      <div id="length_check">
+        {{ textLength }}
+      </div>
     </b-container>
     <b-button
       text
       @click="complete"
-      data-bs-dismiss="modal"
-      aria-label="Close"
       style="
         color: #ffffff;
         background-color: #d2aa62;
@@ -191,6 +198,7 @@
 // import VueAudio from 'vue-audio'
 import { useMusicStore } from "@/store/music";
 import { usePlanetStore } from "@/store/planet";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -208,6 +216,7 @@ export default {
         // require('@/assets/audio/motivational-day.mp3'),
         require("@/assets/audio/mix_flower_moti.mp3"),
       ],
+      modalShow: false,
       currentImage: 0,
       elementVisible: false,
       elementVisible_2: false,
@@ -217,6 +226,11 @@ export default {
       mute: false,
       answer: "",
     };
+  },
+  computed: {
+    textLength() {
+      return this.answer.length + "/255";
+    },
   },
   // components: {
   //     'vue-audio': VueAudio
@@ -244,11 +258,21 @@ export default {
       this.$router.push(link);
     },
     complete() {
+      if (this.answer.length == 0 || this.answer.length > 255) {
+        Swal.fire({
+          icon: "error",
+          title: "일지 등록 실패! 😭",
+          text: "길이가 올바르지 않습니다.",
+          confirmButtonText: "확인",
+        });
+        return;
+      }
       this.elementVisible_2 = true;
       this.elementVisible_3 = true;
+      this.modalShow = false;
       setTimeout(() => (this.elementVisible_4 = true), 1000);
 
-      usePlanetStore().completePlanet(1, this.answer, this.item.image);
+      usePlanetStore().completePlanet(1, this.answer, "CLOSE", this.item.image);
     },
     endthisPlanet() {
       this.$router.push({ name: "planetlist" });
@@ -500,5 +524,16 @@ body {
   --bs-popover-arrow-width: 0rem;
   --bs-popover-arrow-height: 0rem;
   --bs-popover-body-margin-x: 1rem;
+}
+
+#length_check {
+  text-align: right;
+  font-size: 10px;
+  margin-top: 3px;
+}
+
+.form-control {
+  box-shadow: none !important;
+  outline: none !important;
 }
 </style>

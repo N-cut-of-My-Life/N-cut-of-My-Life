@@ -80,11 +80,16 @@ import "@splidejs/splide/dist/css/themes/splide-default.min.css";
 import MyModal from "@/components/mypage/MyModal.vue";
 import { useRouter } from "vue-router";
 import { useAccountStore } from "@/store/account";
+import { onMounted, ref } from "vue-demi";
 
 const router = useRouter();
 const accountStore = useAccountStore();
-const myArticles = accountStore.getMyArtilces();
-console.log(myArticles);
+const myArticles = ref({});
+
+onMounted(() => {
+  accountStore.getMyArticles();
+  myArticles.value = accountStore.myArticles;
+});
 
 const options = {
   perPage: 2,

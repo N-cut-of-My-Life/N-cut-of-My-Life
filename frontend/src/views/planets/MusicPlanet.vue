@@ -22,23 +22,28 @@
     </b-button>
   </div>
   <div class="jump">
-    <b-button
-      @click="previousImage()"
-      class="button"
-      size="sm"
-      :disabled="currentImage === 0"
-    >
-      뒤로
-    </b-button>
-    &nbsp;
-    <b-button
-      @click="nextImage()"
-      class="button"
-      size="sm"
-      :disabled="currentImage === images.length - 1"
-    >
-      다음
-    </b-button>
+    <b-row>
+      <b-col>
+        <b-button
+          @click="previousImage()"
+          class="button"
+          size="sm"
+          :disabled="currentImage === 0"
+        >
+          뒤로
+        </b-button>
+      </b-col>
+      <b-col>
+        <b-button
+          @click="nextImage()"
+          class="button"
+          size="sm"
+          :disabled="currentImage === images.length - 1"
+        >
+          다음
+        </b-button>
+      </b-col>
+    </b-row>
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
     <b-button
@@ -61,7 +66,6 @@
         <span style="--i: 11">!</span>
       </div>
     </b-button>
-    <button @click="complete"></button>
   </div>
 </template>
 
@@ -70,10 +74,8 @@ import MusicModal from "@/components/planets/MusicModal.vue";
 import { onMounted, onUpdated, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useMusicStore } from "@/store/music";
-import { usePlanetStore } from "@/store/planet";
 
 const router = useRouter();
-
 const images = [
   require("@/assets/PlanetSpeech/MusicSpeech/music_bubble_1.svg"),
   require("@/assets/PlanetSpeech/MusicSpeech/music_bubble_2.svg"),
@@ -98,9 +100,6 @@ const previousImage = () => {
 };
 const gotoPage = (link) => {
   router.push(link);
-};
-const complete = () => {
-  usePlanetStore().completePlanet(6); //TODO answer 추가
 };
 onUpdated(() => {
   if (currentImage.value == images.length - 1) {
