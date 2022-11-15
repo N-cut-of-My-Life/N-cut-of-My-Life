@@ -76,9 +76,9 @@ export default {
         },
       });
     },
-    mounted() {
-      useMusicStore().isSoundActive();
-    },
+  },
+  mounted() {
+    useMusicStore().isSoundActive();
   },
 };
 </script>
