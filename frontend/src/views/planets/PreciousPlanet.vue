@@ -149,25 +149,30 @@
     alt=""
   />
   <div v-show="elementVisible_2" class="jump">
-    <b-button
-      @click="previousImage_2()"
-      variant="warning"
-      class="button"
-      size="sm"
-      :disabled="currentImage_2 === 0"
-    >
-      뒤로
-    </b-button>
-    &nbsp;
-    <b-button
-      @click="nextImage_2()"
-      variant="warning"
-      class="button"
-      size="sm"
-      :disabled="currentImage_2 === images_2.length - 1"
-    >
-      다음
-    </b-button>
+    <b-row>
+      <b-col>
+        <b-button
+          @click="previousImage_2()"
+          variant="warning"
+          class="button"
+          size="sm"
+          :disabled="currentImage_2 === 0"
+        >
+          뒤로
+        </b-button>
+      </b-col>
+      <b-col>
+        <b-button
+          @click="nextImage_2()"
+          variant="warning"
+          class="button"
+          size="sm"
+          :disabled="currentImage_2 === images_2.length - 1"
+        >
+          다음
+        </b-button>
+      </b-col>
+    </b-row>
   </div>
   <div class="last">
     <b-button
