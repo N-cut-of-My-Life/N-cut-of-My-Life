@@ -100,13 +100,33 @@
         margin-top: 5%;
         margin-bottom: 3%;
         font-weight: 400;
+        color: #ffffff;
       "
     >
       나에게 남길 마지막 말을 적어주세요!
     </div>
-    <b-row
-      ><b-col cols="6"></b-col
-      ><b-col cols="4" style="text-align: right; padding-right: 0">
+    <b-container ref="form" style="margin-bottom: 3.8%">
+      <b-popover target="addon" placement="right" style="margin-left: 1%">
+        <input type="file" accept="image/*" @change="onUpload" />
+        <div>
+          <img
+            v-if="item.imageUrl"
+            :src="item.imageUrl"
+            style="margin-top: 2%; max-width: 16vw; height: auto"
+            alt=""
+          />
+          <div v-else>
+            <div style="margin-top: 1vh">
+              <strong style="font-size: 1.1vw"
+                >행복했던 순간을 담아주세요!</strong
+              >
+            </div>
+          </div>
+        </div>
+      </b-popover>
+    </b-container>
+    <b-row style="width: 65%; float: right; margin-bottom: 1%"
+      ><b-col cols="6" style="text-align: right; padding-right: 0">
         <span
           style="
             text-align: right;
@@ -116,13 +136,27 @@
           "
           >은하갤러리 공유 여부</span
         ></b-col
-      ><b-col cols="2" style="padding-left: 0">
+      ><b-col cols="2" style="padding-right: 0; padding-left: 0">
         <label class="switch">
           <input type="checkbox" v-model="isOpenState" />
           <span class="slider round"></span> </label
       ></b-col>
+      <b-col cols="3" style="padding-left: 0; padding-right: 0">
+        <b-button
+          class="img-btn"
+          id="addon"
+          size="x-sm"
+          style="
+            border-color: #ffffff;
+            padding: 1px 2px;
+            color: #ffffff;
+            font-size: 0.7vw;
+          "
+          >사진 첨부
+        </b-button>
+      </b-col>
     </b-row>
-    <b-container ref="form" style="margin-bottom: 3.8%; margin-top: 1%">
+    <b-container ref="form" style="margin-bottom: 3.8%; margin-top: 2%">
       <b-form-textarea
         v-model="answer"
         id="content"
@@ -198,6 +232,7 @@ import Swal from "sweetalert2";
 
 let answer = ref("");
 let isOpenState = ref(false);
+let item = ref({ image: "hello", imageUrl: null });
 
 onMounted(() => {
   useMusicStore().isSoundActive();
@@ -226,6 +261,12 @@ let elementVisible_3 = ref(false);
 let elementVisible_4 = ref(false);
 const currentAudio = ref(0);
 
+const onUpload = (e) => {
+  const file = e.target.files[0];
+  item.value.image = file;
+  item.value.imageUrl = URL.createObjectURL(file);
+};
+
 const nextImage = () => {
   if (currentImage.value !== images.length - 1) currentImage.value++;
 };
@@ -248,8 +289,9 @@ const complete = () => {
   setTimeout(() => (elementVisible_4.value = true), 1000);
   usePlanetStore().completePlanet(
     9,
-    answer,
-    isOpenState.value ? "OPEN" : "CLOSE"
+    answer.value,
+    isOpenState.value ? "OPEN" : "CLOSE",
+    item.value.image
   );
 };
 const finishTravel = () => {
@@ -289,6 +331,18 @@ body {
   bottom: 10%;
   /* height: 50%; */
   margin: auto;
+}
+
+.img-btn {
+  /* left: 0%;
+    top: 0%; */
+  background-color: transparent;
+  float: right;
+  /* position: absolute; */
+}
+
+.img-btn:active {
+  background-color: transparent;
 }
 
 .jump {
@@ -444,8 +498,8 @@ video {
   content: "";
   height: 17px;
   width: 17px;
-  left: 4px;
-  bottom: 4px;
+  left: 2.5px;
+  bottom: 2px;
   background-color: white;
   -webkit-transition: 0.4s;
   transition: 0.4s;
@@ -473,10 +527,19 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+#length_check {
+  text-align: right;
+  font-size: small;
+}
 </style>
 
 <style>
 #modal-last .modal-content {
   background-color: #5f6f94;
+}
+.form-control {
+  box-shadow: none !important;
+  outline: none !important;
 }
 </style>
