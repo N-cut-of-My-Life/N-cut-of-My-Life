@@ -76,7 +76,7 @@ body {
 }
 
 .mute {
-  position: absolute;
+  position: fixed;
   left: 1%;
   bottom: 2.5%;
   margin: auto;
