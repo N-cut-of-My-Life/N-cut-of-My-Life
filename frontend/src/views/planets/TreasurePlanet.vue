@@ -21,23 +21,28 @@
     </b-button>
   </div>
   <div class="jump">
-    <b-button
-      @click="previousImage()"
-      class="button"
-      size="sm"
-      :disabled="currentImage === 0"
-    >
-      뒤로
-    </b-button>
-    &nbsp;
-    <b-button
-      @click="nextImage()"
-      class="button"
-      size="sm"
-      :disabled="currentImage === images.length - 1"
-    >
-      다음
-    </b-button>
+    <b-row>
+      <b-col>
+        <b-button
+          @click="previousImage()"
+          class="button"
+          size="sm"
+          :disabled="currentImage === 0"
+        >
+          뒤로
+        </b-button>
+      </b-col>
+      <b-col>
+        <b-button
+          @click="nextImage()"
+          class="button"
+          size="sm"
+          :disabled="currentImage === images.length - 1"
+        >
+          다음
+        </b-button>
+      </b-col>
+    </b-row>
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
     <b-button
@@ -254,7 +259,7 @@ export default {
       this.elementVisible_3 = true;
       this.modalShow = false;
       setTimeout(() => (this.elementVisible_4 = true), 1000);
-      usePlanetStore().completePlanet(3, this.answer, this.item.image);
+      usePlanetStore().completePlanet(3, this.answer, "CLOSE", this.item.image);
     },
     endthisPlanet() {
       this.$router.push({ name: "planetlist" });
@@ -508,9 +513,15 @@ body {
   --bs-popover-arrow-height: 0rem;
   --bs-popover-body-margin-x: 1rem;
 }
+
 #length_check {
   text-align: right;
   font-size: 10px;
   margin-top: 3px;
+}
+
+.form-control {
+  box-shadow: none !important;
+  outline: none !important;
 }
 </style>

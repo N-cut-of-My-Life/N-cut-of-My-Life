@@ -47,7 +47,7 @@ export const useAccountStore = defineStore("account", {
         console.log(res);
       });
     },
-    getMyArtilces() {
+    getMyArticles() {
       axios({
         url: index.account.getMyArticles() + this.userInfo.userId,
         method: "GET",

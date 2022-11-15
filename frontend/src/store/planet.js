@@ -15,7 +15,7 @@ export const usePlanetStore = defineStore("planet", {
     images: new Map(),
   }),
   actions: {
-    completePlanet(planetId, answer, imgFile) {
+    completePlanet(planetId, answer, openState = "CLOSE", imgFile) {
       this.completeCount++;
       if (this.completeCount === 3) {
         this.minimumConditionsMet = true;
@@ -25,7 +25,7 @@ export const usePlanetStore = defineStore("planet", {
         questionId: planetId,
         contents: answer,
         imgUrl: null,
-        state: "CLOSE",
+        state: openState,
       });
       if (imgFile != null) {
         this.images.set(this.articleRequest.answers.length - 1, imgFile);

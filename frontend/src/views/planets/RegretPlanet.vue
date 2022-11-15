@@ -21,23 +21,28 @@
     </b-button>
   </div>
   <div class="jump">
-    <b-button
-      @click="previousImage()"
-      class="button"
-      size="sm"
-      :disabled="currentImage === 0"
-    >
-      뒤로
-    </b-button>
-    &nbsp;
-    <b-button
-      @click="nextImage()"
-      class="button"
-      size="sm"
-      :disabled="currentImage === images.length - 1"
-    >
-      다음
-    </b-button>
+    <b-row>
+      <b-col>
+        <b-button
+          @click="previousImage()"
+          class="button"
+          size="sm"
+          :disabled="currentImage === 0"
+        >
+          뒤로
+        </b-button>
+      </b-col>
+      <b-col>
+        <b-button
+          @click="nextImage()"
+          class="button"
+          size="sm"
+          :disabled="currentImage === images.length - 1"
+        >
+          다음
+        </b-button>
+      </b-col>
+    </b-row>
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
     <b-button
@@ -430,9 +435,15 @@ body {
 #modal-regret .modal-header .btn-close {
   color: white;
 }
+
 #length_check {
   text-align: right;
   font-size: 10px;
   margin-top: 3px;
+}
+
+.form-control {
+  box-shadow: none !important;
+  outline: none !important;
 }
 </style>

@@ -21,13 +21,20 @@
         </ul>
       </div>
     </div>
+    <button class="complete_button" @click="complete"></button>
   </div>
 </template>
 
 <script setup>
 import { useMusicStore } from "@/store/music";
+import { usePlanetStore } from "@/store/planet";
+import { ref } from "vue";
 const musicStore = useMusicStore();
-let keyword = "";
+const complete = () => {
+  usePlanetStore().completePlanet(6); //TODO answer 추가
+};
+let keyword = ref("");
+
 </script>
 
 <style scoped>
@@ -146,5 +153,9 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.complete_button {
+  display: none;
 }
 </style>
