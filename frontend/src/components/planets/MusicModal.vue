@@ -26,8 +26,9 @@
 
 <script setup>
 import { useMusicStore } from "@/store/music";
+import { ref } from "vue";
 const musicStore = useMusicStore();
-let keyword = "";
+let keyword = ref("");
 </script>
 
 <style scoped>

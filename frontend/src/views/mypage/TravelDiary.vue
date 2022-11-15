@@ -83,7 +83,7 @@ import { useAccountStore } from "@/store/account";
 
 const router = useRouter();
 const accountStore = useAccountStore();
-const myArticles = accountStore.getMyArtilces();
+const myArticles = accountStore.getMyArticles();
 console.log(myArticles);
 
 const options = {
