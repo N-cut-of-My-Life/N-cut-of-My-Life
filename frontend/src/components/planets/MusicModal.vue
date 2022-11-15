@@ -2,18 +2,29 @@
   <!--modals-->
   <div id="openModal-about" class="modalDialog">
     <div>
-      <h1 style="text-align: center">음악 검색</h1>
+      <h2 style="text-align: center; margin-bottom: 2%">음악 검색</h2>
       <a href="#close" title="Close" class="close">X</a>
-      <input
-        class="search__input"
-        type="text"
-        placeholder="Search"
-        @keyup.enter="musicStore.getMusicData(keyword)"
-        v-model="keyword"
-      />
+      <div style="text-align: center">
+        <input
+          class="search__input"
+          type="text"
+          placeholder="Search"
+          @keyup.enter="musicStore.getMusicData(keyword)"
+          v-model="keyword"
+        />
+      </div>
       <div class="container">
-        <ul v-for="(song, index) in musicStore.songs" :key="index" class="song">
-          <img :src="song.image" :alt="song.title" />
+        <ul
+          v-for="(song, index) in musicStore.songs"
+          :key="index"
+          class="song"
+          style="padding: 0; border-radius: 0.5vw"
+        >
+          <img
+            :src="song.image"
+            :alt="song.title"
+            style="border-radius: 0.5vw"
+          />
           <div class="title-artist">
             <div class="title">{{ song.title }}</div>
             <div class="artist">{{ song.artist }}</div>
@@ -34,7 +45,6 @@ const complete = () => {
   usePlanetStore().completePlanet(6); //TODO answer 추가
 };
 let keyword = ref("");
-
 </script>
 
 <style scoped>
@@ -98,7 +108,7 @@ let keyword = ref("");
 
 /* search bar */
 .search__input {
-  width: 100%;
+  width: 97%;
   padding: 12px 24px;
 
   background-color: transparent;
@@ -153,6 +163,12 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-left: 2%;
+}
+
+.title {
+  margin-bottom: 3%;
+  font-weight: 600;
 }
 
 .complete_button {
