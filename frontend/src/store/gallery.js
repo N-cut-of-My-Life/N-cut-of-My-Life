@@ -32,6 +32,7 @@ export const useGalleryStore = defineStore("gallery", {
       })
         .then((res) => {
           console.log(res.data);
+          this.getGalleryList(userID);
         })
         .catch((err) => {
           console.log(err);
@@ -45,7 +46,8 @@ export const useGalleryStore = defineStore("gallery", {
         headers: { "X-AUTH-TOKEN": useAccountStore().token },
       })
         .then((res) => {
-          console.log(res);
+          console.log(res.data);
+          this.getGalleryList(userID);
         })
         .catch((err) => {
           console.log(err);
