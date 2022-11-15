@@ -20,7 +20,7 @@ export const usePlanetStore = defineStore("planet", {
       if (this.completeCount === 3) {
         this.minimumConditionsMet = true;
       }
-      this.articleRequest.userId = 1;
+      this.articleRequest.userId = useAccountStore().userInfo.userId;
       this.articleRequest.answers.push({
         questionId: planetId,
         contents: answer,
@@ -51,10 +51,7 @@ export const usePlanetStore = defineStore("planet", {
     },
     async saveImageToFirebase() {
       for (const [key, value] of this.images) {
-        let fileLocation =
-          "image/" +
-          Date.now().toString().trim() +
-          useAccountStore().userInfo.id;
+        let fileLocation = "image/" + Date.now().toString().trim() + useAccountStore().userInfo.id;
         console.log(fileLocation);
         await uploadToFirebase(fileLocation, value).then((url) => {
           this.articleRequest.answers.at(key).imgUrl = url;
