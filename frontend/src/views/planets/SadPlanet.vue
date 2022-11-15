@@ -60,25 +60,30 @@
     </b-button>
   </div>
   <div class="jump">
-    <b-button
-      @click="previousImage()"
-      variant="primary"
-      class="button"
-      size="sm"
-      :disabled="currentImage === 0"
-    >
-      뒤로
-    </b-button>
-    &nbsp;
-    <b-button
-      @click="nextImage()"
-      variant="primary"
-      class="button"
-      size="sm"
-      :disabled="currentImage === images.length - 1"
-    >
-      다음
-    </b-button>
+    <b-row>
+      <b-col>
+        <b-button
+          @click="previousImage()"
+          variant="primary"
+          class="button"
+          size="sm"
+          :disabled="currentImage === 0"
+        >
+          뒤로
+        </b-button>
+      </b-col>
+      <b-col>
+        <b-button
+          @click="nextImage()"
+          variant="primary"
+          class="button"
+          size="sm"
+          :disabled="currentImage === images.length - 1"
+        >
+          다음
+        </b-button>
+      </b-col>
+    </b-row>
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
     <b-button
@@ -704,5 +709,10 @@ body {
 <style>
 #modal-sad .modal-content {
   background-color: #5f6f94;
+}
+
+.form-control {
+  box-shadow: none !important;
+  outline: none !important;
 }
 </style>
