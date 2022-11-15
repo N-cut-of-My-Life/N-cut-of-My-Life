@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.article.dto.ArticleRequest;
 import com.ssafy.mylifencut.user.domain.User;
@@ -42,6 +43,7 @@ public class Article {
 	private List<Answer> answers = new ArrayList<>();
 
 	@Builder.Default
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	private LocalDateTime createDate = LocalDateTime.now();
 
 	public static Article from(ArticleRequest articleRequest, User user) {
