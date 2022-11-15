@@ -49,7 +49,7 @@
       v-show="elementVisible && !elementVisible_3"
       class="button_2"
       size="md"
-      v-b-modal.modal-regret
+      @click="modalShow = !modalShow"
     >
       <div class="wave">
         <span style="--i: 1">후</span>
@@ -64,13 +64,14 @@
   </div>
 
   <b-modal
+    v-model="modalShow"
     id="modal-regret"
     hide-header
     hide-footer
     centered
     no-stacking
     style="text-align: center; border-radius: 1vw"
-    :no-close-on-backdrop="true"
+    :no-close-on-backdrop="false"
   >
     <img
       data-bs-dismiss="modal"
@@ -101,11 +102,12 @@
         style="border-radius: 1vw; background-color: #e3ecfc"
       >
       </b-form-textarea>
+      <div id="length_check">
+        {{ textLength }}
+      </div>
     </b-container>
     <b-button
       @click="complete"
-      data-bs-dismiss="modal"
-      aria-label="Close"
       style="
         color: #ffffff;
         background-color: #25316d;
@@ -144,6 +146,7 @@
 <script>
 import { useMusicStore } from "@/store/music";
 import { usePlanetStore } from "@/store/planet";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -151,6 +154,7 @@ export default {
         require("@/assets/PlanetSpeech/RegretSpeech/regret_bubble_1.svg"),
         require("@/assets/PlanetSpeech/RegretSpeech/regret_bubble_2.svg"),
       ],
+      modalShow: false,
       currentImage: 0,
       elementVisible: false,
       elementVisible_2: false,
@@ -158,6 +162,11 @@ export default {
       elementVisible_4: false,
       answer: "",
     };
+  },
+  computed: {
+    textLength() {
+      return this.answer.length + "/255";
+    },
   },
   updated() {
     if (this.currentImage == this.images.length - 1) {
@@ -177,8 +186,18 @@ export default {
       this.$router.push(link);
     },
     complete() {
+      if (this.answer.length == 0 || this.answer.length > 255) {
+        Swal.fire({
+          icon: "error",
+          title: "일지 등록 실패! 😭",
+          text: "길이가 올바르지 않습니다.",
+          confirmButtonText: "확인",
+        });
+        return;
+      }
       this.elementVisible_2 = true;
       this.elementVisible_3 = true;
+      this.modalShow = false;
       setTimeout(() => (this.elementVisible_4 = true), 1000);
       usePlanetStore().completePlanet(5, this.answer);
     },
@@ -415,6 +434,12 @@ body {
 
 #modal-regret .modal-header .btn-close {
   color: white;
+}
+
+#length_check {
+  text-align: right;
+  font-size: 10px;
+  margin-top: 3px;
 }
 
 .form-control {

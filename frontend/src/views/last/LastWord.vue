@@ -39,9 +39,9 @@
       v-show="elementVisible && !elementVisible_3"
       class="button_2"
       size="md"
-      href="#openModal-about"
+      @click="modalShow = !modalShow"
     >
-      <div class="wave" v-b-modal.modal-last>
+      <div class="wave">
         <span style="--i: 1">나</span>
         <span style="--i: 2">에</span>
         <span style="--i: 3">게</span>
@@ -72,13 +72,14 @@
     </b-button>
   </div>
   <b-modal
+    v-model="modalShow"
     id="modal-last"
     hide-header
     hide-footer
     centered
     no-stacking
     style="text-align: center; border-radius: 1vw"
-    :no-close-on-backdrop="true"
+    :no-close-on-backdrop="false"
   >
     <img
       data-bs-dismiss="modal"
@@ -127,12 +128,13 @@
         style="border-radius: 1vw; background-color: #cfd4df"
       >
       </b-form-textarea>
+      <div id="length_check">
+        {{ textLength }}
+      </div>
     </b-container>
     <b-button
       text
       @click="finishTravel"
-      data-bs-dismiss="modal"
-      aria-label="Close"
       style="
         color: #ffffff;
         background-color: #25316d;
@@ -183,10 +185,11 @@
 </template>
 
 <script setup>
-import { onUpdated, ref, onMounted } from "vue";
+import { onUpdated, ref, onMounted, computed } from "vue";
 import { useMusicStore } from "@/store/music";
 import { usePlanetStore } from "@/store/planet";
 import { useRouter } from "vue-router";
+import Swal from "sweetalert2";
 
 let answer = ref("");
 let isOpenState = ref(false);
@@ -194,6 +197,12 @@ let isOpenState = ref(false);
 onMounted(() => {
   useMusicStore().isSoundActive();
 });
+
+const textLength = computed(() => {
+  return answer.value.length + "/255";
+});
+
+const modalShow = ref(false);
 
 const router = useRouter();
 const images = [
@@ -219,8 +228,18 @@ const previousImage = () => {
   if (currentImage.value !== 0) currentImage.value--;
 };
 const complete = () => {
+  if (answer.value.length == 0 || answer.value.length > 255) {
+    Swal.fire({
+      icon: "error",
+      title: "일지 등록 실패! 😭",
+      text: "길이가 올바르지 않습니다.",
+      confirmButtonText: "확인",
+    });
+    return;
+  }
   elementVisible_2.value = true;
   elementVisible_3.value = true;
+  modalShow.value = false;
   setTimeout(() => (elementVisible_4.value = true), 1000);
   usePlanetStore().completePlanet(
     9,
