@@ -100,6 +100,7 @@
     </div>
     <b-container ref="form" style="margin-bottom: 3.8%">
       <b-form-textarea
+        v-model="answer"
         id="content"
         placeholder=""
         rows="10"
@@ -111,7 +112,7 @@
     </b-container>
     <b-button
       text
-      @click="submit"
+      @click="finishTravel"
       data-bs-dismiss="modal"
       aria-label="Close"
       style="
@@ -166,7 +167,10 @@
 <script setup>
 import { onUpdated, ref, onMounted } from "vue";
 import { useMusicStore } from "@/store/music";
+import { usePlanetStore } from "@/store/planet";
 import { useRouter } from "vue-router";
+
+let answer = ref("");
 
 onMounted(() => {
   useMusicStore().isSoundActive();
@@ -195,10 +199,15 @@ const nextImage = () => {
 const previousImage = () => {
   if (currentImage.value !== 0) currentImage.value--;
 };
-const submit = () => {
+const complete = () => {
   elementVisible_2.value = true;
   elementVisible_3.value = true;
   setTimeout(() => (elementVisible_4.value = true), 1000);
+  usePlanetStore().completePlanet(9, answer);
+};
+const finishTravel = () => {
+  complete();
+  usePlanetStore().finishTravel();
 };
 const gotoPrint = () => {
   router.push({ name: "resultprint" });
