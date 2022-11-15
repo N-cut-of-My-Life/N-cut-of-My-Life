@@ -24,14 +24,32 @@ export const useGalleryStore = defineStore("gallery", {
         });
     },
 
-    postLike(answerID, userID) {
+    addLike(answerID, userID) {
       axios({
-        url: index.answer.like(answerID, userID),
+        url: index.answer.manageLike(answerID, userID),
         method: "POST",
         headers: { "X-AUTH-TOKEN": useAccountStore().token },
-      }).then((res) => {
-        console.log(res);
-      });
+      })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    deleteLike(answerID, userID) {
+      axios({
+        url: index.answer.manageLike(answerID, userID),
+        method: "DELETE",
+        headers: { "X-AUTH-TOKEN": useAccountStore().token },
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 });

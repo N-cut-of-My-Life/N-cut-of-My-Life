@@ -26,9 +26,9 @@
           <!-- api호출이 아닌 상태이기 떄문에 추후 변경:require 이후 코드 -->
           <img v-if="!item.imgUrl" :src="item.imgUrl" alt="" />
           <span class="content">{{ item.contents }}</span>
-          <div class="like">
+          <div class="like" @click="manageLike(item.answerId, item.isMine)">
             <svg
-              v-if="item.isMine === false"
+              v-if="item.isMine === 'FALSE'"
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
@@ -79,6 +79,15 @@ const galleryStore = useGalleryStore();
 const GalleryArticles = galleryStore.getGalleryList(userID);
 GalleryArticles;
 
+// let items = galleryStore.galleryList;
+
+const manageLike = (answerId, isMine) => {
+  if (isMine === "TRUE") {
+    galleryStore.deleteLike(answerId, userID);
+  } else {
+    galleryStore.addLike(answerId, userID);
+  }
+};
 onMounted(() => {
   useMusicStore().isSoundActive();
 });
@@ -137,5 +146,6 @@ onMounted(() => {
   text-align: end;
   padding: 10px 10px 5px 10px;
   margin-top: auto;
+  cursor: pointer;
 }
 </style>
