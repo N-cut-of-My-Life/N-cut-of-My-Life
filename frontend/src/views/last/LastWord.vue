@@ -112,7 +112,7 @@
         ></b-col
       ><b-col cols="2" style="padding-left: 0">
         <label class="switch">
-          <input type="checkbox" />
+          <input type="checkbox" v-model="isOpenState" />
           <span class="slider round"></span> </label
       ></b-col>
     </b-row>
@@ -189,6 +189,7 @@ import { usePlanetStore } from "@/store/planet";
 import { useRouter } from "vue-router";
 
 let answer = ref("");
+let isOpenState = ref(false);
 
 onMounted(() => {
   useMusicStore().isSoundActive();
@@ -221,7 +222,11 @@ const complete = () => {
   elementVisible_2.value = true;
   elementVisible_3.value = true;
   setTimeout(() => (elementVisible_4.value = true), 1000);
-  usePlanetStore().completePlanet(9, answer);
+  usePlanetStore().completePlanet(
+    9,
+    answer,
+    isOpenState.value ? "OPEN" : "CLOSE"
+  );
 };
 const finishTravel = () => {
   complete();

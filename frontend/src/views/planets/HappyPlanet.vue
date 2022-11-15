@@ -253,7 +253,7 @@ export default {
       this.elementVisible_3 = true;
       setTimeout(() => (this.elementVisible_4 = true), 1000);
 
-      usePlanetStore().completePlanet(1, this.answer, this.item.image);
+      usePlanetStore().completePlanet(1, this.answer, "CLOSE", this.item.image);
     },
     endthisPlanet() {
       this.$router.push({ name: "planetlist" });

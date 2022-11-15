@@ -12,7 +12,8 @@ export default {
   },
 
   answer: {
-    getLastWord: () => HOST + ANSWER,
+    getGallery: (userID) => HOST + ANSWER + `${userID}`,
+    manageLike: (answerID, userID) => HOST + ANSWER + `${answerID}/${userID}`,
   },
 
   article: {

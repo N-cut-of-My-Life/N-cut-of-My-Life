@@ -28,11 +28,13 @@
 <script setup>
 import { useMusicStore } from "@/store/music";
 import { usePlanetStore } from "@/store/planet";
+import { ref } from "vue";
 const musicStore = useMusicStore();
 const complete = () => {
   usePlanetStore().completePlanet(6); //TODO answer 추가
 };
-let keyword = "";
+let keyword = ref("");
+
 </script>
 
 <style scoped>
