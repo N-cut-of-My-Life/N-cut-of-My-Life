@@ -59,20 +59,22 @@
         <span style="--i: 10">지</span>
         <span style="--i: 11">막</span>
         <span style="--i: 12">&nbsp;</span>
-        <span style="--i: 13">말</span>
-        <span style="--i: 14">을</span>
-        <span style="--i: 15">&nbsp;</span>
-        <span style="--i: 16">이</span>
+        <span style="--i: 13">한</span>
+        <span style="--i: 14">마</span>
+        <span style="--i: 15">디</span>
+        <span style="--i: 16">를</span>
         <span style="--i: 17">&nbsp;</span>
-        <span style="--i: 18">곳</span>
-        <span style="--i: 19">에</span>
-        <span style="--i: 20">&nbsp;</span>
-        <span style="--i: 21">남</span>
-        <span style="--i: 22">겨</span>
-        <span style="--i: 23">주</span>
-        <span style="--i: 24">세</span>
-        <span style="--i: 25">요</span>
-        <span style="--i: 26">!</span>
+        <span style="--i: 18">이</span>
+        <span style="--i: 19">&nbsp;</span>
+        <span style="--i: 20">곳</span>
+        <span style="--i: 21">에</span>
+        <span style="--i: 22">&nbsp;</span>
+        <span style="--i: 23">남</span>
+        <span style="--i: 24">겨</span>
+        <span style="--i: 25">주</span>
+        <span style="--i: 26">세</span>
+        <span style="--i: 27">요</span>
+        <span style="--i: 28">!</span>
       </div>
     </b-button>
   </div>
@@ -103,7 +105,7 @@
         color: #ffffff;
       "
     >
-      나에게 남길 마지막 말을 적어주세요!
+      나에게 남길 마지막 한마디를 적어주세요!
     </div>
     <b-container ref="form" style="margin-bottom: 3.8%">
       <b-popover target="addon" placement="right" style="margin-left: 1%">
@@ -118,15 +120,15 @@
           <div v-else>
             <div style="margin-top: 1vh">
               <strong style="font-size: 1.1vw"
-                >행복했던 순간을 담아주세요!</strong
+                >남기고 싶은 사진을 담아주세요!</strong
               >
             </div>
           </div>
         </div>
       </b-popover>
     </b-container>
-    <b-row style="width: 65%; float: right; margin-bottom: 1%"
-      ><b-col cols="6" style="text-align: right; padding-right: 0">
+    <b-row style="width: 72%; float: right; margin-bottom: 1%"
+      ><b-col cols="5" style="text-align: right; padding-right: 0">
         <span
           style="
             text-align: right;
@@ -136,7 +138,17 @@
           "
           >은하갤러리 공유 여부</span
         ></b-col
-      ><b-col cols="2" style="padding-right: 0; padding-left: 0">
+      >
+      <b-col cols="1" style="padding: 0"
+        ><img
+          src="@/assets/questionbox.svg"
+          class="help-tip"
+          v-b-tooltip.hover.bottom="
+            '은하갤러리에서 여행자들과 마지막 한마디를 공유할 수 있습니다!'
+          "
+        />
+      </b-col>
+      <b-col cols="2" style="padding-right: 0; padding-left: 0">
         <label class="switch">
           <input type="checkbox" v-model="isOpenState" />
           <span class="slider round"></span> </label
@@ -227,13 +239,12 @@
 import { onUpdated, ref, onMounted, computed } from "vue";
 import { useMusicStore } from "@/store/music";
 import { usePlanetStore } from "@/store/planet";
-import { useResultStore } from "@/store/result";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 
 let answer = ref("");
-let isOpenState = ref(false);
-let item = ref({ image: "hello", imageUrl: null });
+let isOpenState = ref(true);
+let item = ref({ image: null, imageUrl: null });
 
 onMounted(() => {
   useMusicStore().isSoundActive();
@@ -300,8 +311,6 @@ const finishTravel = () => {
   usePlanetStore().finishTravel();
 };
 const gotoPrint = () => {
-  useResultStore().resultArticle = usePlanetStore().articleRequest;
-  useResultStore().from = "travel";
   router.push({ name: "resultprint" });
 };
 onUpdated(() => {
@@ -383,7 +392,7 @@ body {
 .button_2::before {
   content: "";
   border-radius: 1000px;
-  min-width: calc(410px + 12px);
+  min-width: calc(430px + 12px);
   min-height: calc(60px + 12px);
   box-shadow: 0 0 60px #ffffff;
   position: absolute;
@@ -534,6 +543,10 @@ input:checked + .slider:before {
 #length_check {
   text-align: right;
   font-size: small;
+}
+.help-tip {
+  width: 56%;
+  padding-bottom: 12px;
 }
 </style>
 
