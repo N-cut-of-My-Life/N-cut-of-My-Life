@@ -43,6 +43,7 @@ export default {
   data() {
     return {
       result: {},
+      from: "",
     };
   },
   methods: {
@@ -86,6 +87,9 @@ export default {
   mounted() {
     useMusicStore().isSoundActive();
     this.result = useResultStore().resultArticle;
+    this.from = useResultStore().from;
+    console.log(this.result);
+    console.log(this.from);
   },
 };
 </script>
