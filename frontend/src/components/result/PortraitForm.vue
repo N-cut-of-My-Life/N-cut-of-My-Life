@@ -6,11 +6,11 @@
     class="timeline haha"
   >
     <ul>
-      <li>
+      <li :style="[hahaShow ? { 'background-color': '#feb139' } : {}]">
         <span>하하호호행성</span>
-        <div class="content">
+        <div class="content" @mouseover="hahaShowPtag">
           <h3>가장 행복했던 때가 언제였는지 적어줘!</h3>
-          <p>
+          <p v-show="hahaShow">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s.
@@ -26,11 +26,19 @@
     class="timeline precious"
   >
     <ul>
-      <li>
+      <li
+        :style="[
+          preciousShow
+            ? {
+                'background-color': '#f6b8b8',
+              }
+            : {},
+        ]"
+      >
         <span>넌너무소중행성</span>
-        <div class="content">
+        <div class="content" @mouseover="preciousShowPtag">
           <h3>너에게 가장 소중한 사람은 누구니?</h3>
-          <p>
+          <p v-show="preciousShow">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s.
@@ -46,11 +54,11 @@
     class="timeline sad"
   >
     <ul>
-      <li>
+      <li :style="[sadShow ? { 'background-color': '#0a1931' } : {}]">
         <span>훌쩍훌쩍행성 </span>
-        <div class="content">
+        <div class="content" @mouseover="sadShowPtag">
           <h3>너의 가장 슬펐던 기억을 적어주겠니?</h3>
-          <p>
+          <p v-show="sadShow">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s.
@@ -66,11 +74,11 @@
     class="timeline treasure"
   >
     <ul>
-      <li>
+      <li :style="[treasureShow ? { 'background-color': '#ff7a00' } : {}]">
         <span>반짝반짝행성 </span>
-        <div class="content">
+        <div class="content" @mouseover="treasureShowPtag">
           <h3>가장 소중히 여기는 물건이 뭔지 적어주겠니?</h3>
-          <p>
+          <p v-show="treasureShow">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s.
@@ -86,11 +94,11 @@
     class="timeline dream"
   >
     <ul>
-      <li>
+      <li :style="[dreamShow ? { 'background-color': '#c56183' } : {}]">
         <span>이루지못행성 </span>
-        <div class="content">
+        <div class="content" @mouseover="dreamShowPtag">
           <h3>이루지 못한꿈은 무엇이 있니? 잠시 맡겨두어도 좋단다!</h3>
-          <p>
+          <p v-show="dreamShow">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s.
@@ -106,11 +114,11 @@
     class="timeline regret"
   >
     <ul>
-      <li>
+      <li :style="[regretShow ? { 'background-color': '#6d9886' } : {}]">
         <span>괜히글행성 </span>
-        <div class="content">
+        <div class="content" @mouseover="regretShowPtag">
           <h3>후회되는 일은 여기 있는 후회쓰레기통에 버리고 가렴</h3>
-          <p>
+          <p v-show="regretShow">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s.
@@ -126,11 +134,11 @@
     class="timeline dumchit"
   >
     <ul>
-      <li>
+      <li :style="[dumchitShow ? { 'background-color': '#f5c7a9' } : {}]">
         <span>둠칫둠칫행성</span>
-        <div class="content">
+        <div class="content" @mouseover="dumchitShowPtag">
           <h3>네가 가장 좋아하는 음악은 무엇이니?</h3>
-          <p>
+          <p v-show="dumchitShow">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s.
@@ -146,11 +154,11 @@
     class="timeline genie"
   >
     <ul>
-      <li>
+      <li :style="[genieShow ? { 'background-color': '#b270a2' } : {}]">
         <span>지니행성</span>
-        <div class="content">
+        <div class="content" @mouseover="genieShowPtag">
           <h3>너의 소원은 무엇이니? 무엇이든 좋으니 적어볼래?</h3>
-          <p>
+          <p v-show="genieShow">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s.
@@ -166,11 +174,11 @@
     class="timeline lastword"
   >
     <ul>
-      <li>
+      <li :style="[lastwordShow ? { 'background-color': '#d4f6cc' } : {}]">
         <span>나에게 하고 싶은 한마디</span>
-        <div class="content">
+        <div class="content" @mouseover="lastwordShowPtag">
           <h3>너에게 남기고 싶은 말이 있니?</h3>
-          <p>
+          <p v-show="lastwordShow">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s.
@@ -181,7 +189,71 @@
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  data() {
+    return {
+      hahaShow: false,
+      preciousShow: false,
+      sadShow: false,
+      treasureShow: false,
+      dreamShow: false,
+      regretShow: false,
+      dumchitShow: false,
+      genieShow: false,
+      lastwordShow: false,
+    };
+  },
+  methods: {
+    hahaShowPtag() {
+      if (!this.hahaShow) {
+        this.hahaShow = !this.hahaShow;
+      }
+    },
+    preciousShowPtag() {
+      if (!this.preciousShow) {
+        this.preciousShow = !this.preciousShow;
+      }
+    },
+    sadShowPtag() {
+      if (!this.sadShow) {
+        this.sadShow = !this.sadShow;
+      }
+    },
+    treasureShowPtag() {
+      if (!this.treasureShow) {
+        this.treasureShow = !this.treasureShow;
+      }
+    },
+    dreamShowPtag() {
+      if (!this.dreamShow) {
+        this.dreamShow = !this.dreamShow;
+      }
+    },
+    regretShowPtag() {
+      if (!this.regretShow) {
+        this.regretShow = !this.regretShow;
+      }
+    },
+    dumchitShowPtag() {
+      if (!this.dumchitShow) {
+        this.dumchitShow = !this.dumchitShow;
+      }
+    },
+    genieShowPtag() {
+      if (!this.genieShow) {
+        this.genieShow = !this.genieShow;
+      }
+    },
+    lastwordShowPtag() {
+      if (!this.lastwordShow) {
+        this.lastwordShow = !this.lastwordShow;
+        this.$emit("lastwordShowFromPortrait", this.lastwordShow);
+      }
+    },
+  },
+};
+</script>
 
 <style scoped>
 .timeline {
@@ -217,11 +289,10 @@
   padding: 0;
   font-size: 1rem;
   color: white;
-  opacity: 0;
 }
-.haha ul li:hover {
+/* .haha ul li:hover {
   background-color: #feb139;
-}
+} */
 .precious {
   background-image: url("@/assets/PlanetBackground/precious.svg");
   background-position: left bottom;
@@ -249,11 +320,10 @@
   padding: 0;
   font-size: 1rem;
   color: white;
-  opacity: 0;
 }
-.precious ul li:hover {
+/* .precious ul li:hover {
   background-color: #f6b8b8;
-}
+} */
 .sad {
   background-image: url("@/assets/PlanetBackground/sad_2.svg");
   background-position: right bottom;
@@ -281,7 +351,6 @@
   padding: 0;
   font-size: 1rem;
   color: white;
-  opacity: 0;
 }
 .sad ul li:hover {
   background-color: #0a1931;
@@ -313,7 +382,6 @@
   padding: 0;
   font-size: 1rem;
   color: white;
-  opacity: 0;
 }
 .treasure ul li:hover {
   background-color: #ff7a00;
@@ -345,7 +413,6 @@
   padding: 0;
   font-size: 1rem;
   color: #fb7b6b;
-  opacity: 0;
 }
 .dream ul li:hover {
   background-color: #c56183;
@@ -377,7 +444,6 @@
   padding: 0;
   font-size: 1rem;
   color: white;
-  opacity: 0;
 }
 .regret ul li:hover {
   background-color: #6d9886;
@@ -409,7 +475,6 @@
   padding: 0;
   font-size: 1rem;
   color: white;
-  opacity: 0;
 }
 .dumchit ul li:hover {
   background-color: #f5c7a9;
@@ -441,7 +506,6 @@
   padding: 0;
   font-size: 1rem;
   color: white;
-  opacity: 0;
 }
 .genie ul li:hover {
   background-color: #b270a2;
@@ -473,7 +537,6 @@
   padding: 0;
   font-size: 1rem;
   color: #100f0f;
-  opacity: 0;
 }
 .lastword ul li:hover {
   background-color: #d4f6cc;
@@ -499,9 +562,9 @@
   overflow: hidden;
 }
 
-.timeline ul li .content:hover p {
+/* .timeline ul li .content:hover p {
   opacity: 1;
-}
+} */
 .timeline ul li:before {
   position: absolute;
   content: "";

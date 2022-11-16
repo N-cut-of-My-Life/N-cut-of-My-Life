@@ -263,9 +263,4 @@
 .ctnt {
   overflow-wrap: normal;
 }
-.kakao-sharing-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 </style>
