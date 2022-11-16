@@ -222,9 +222,9 @@ body {
   width: 100%;
   font-family: "MapleStoryOTFBold";
   color: aliceblue;
-  transform: translate(-33%, -350%);
+  transform: translate(-25%, -350%);
 }
-.journal-img:hover {
+.journal:hover {
   scale: 1.05;
 }
 
