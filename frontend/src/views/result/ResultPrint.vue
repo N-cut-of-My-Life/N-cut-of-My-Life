@@ -8,7 +8,7 @@
     </audio>
   </div>
   <div class="btns">
-    <a id="pdf-button-area" @click="exportToPDF">결과 PDF로 저장하기</a>
+    <a id="pdf-button-area" @click="printPdf">결과 PDF로 저장하기</a>
     <a id="pdf-image-save" @click="printImage">결과 이미지 저장하기</a>
     <a id="kakaotalk-sharing-result-btn" @click="kakaoShare"
       >여행일지 공유하기</a
@@ -113,7 +113,7 @@ font-face {
   font-family: "kakao";
   src: url("@/fonts/KakaoBold.ttf") format("truetype");
 }
-pdf-image-save .button-go-home {
+.button-go-home {
   position: fixed;
   top: 48%;
   border: 0.5px solid white;
