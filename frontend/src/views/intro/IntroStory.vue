@@ -77,7 +77,6 @@
           <span style="--i: 4">떠</span>
           <span style="--i: 5">나</span>
           <span style="--i: 6">기</span>
-          <span style="--i: 7">!</span>
         </div>
       </router-link>
     </b-button>

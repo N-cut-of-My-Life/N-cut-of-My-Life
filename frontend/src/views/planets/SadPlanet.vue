@@ -232,8 +232,8 @@ export default {
       if (this.answer.length == 0 || this.answer.length > 255) {
         Swal.fire({
           icon: "error",
-          title: "일지 등록 실패! 😭",
-          text: "길이가 올바르지 않습니다.",
+          title: "등록 실패! 😭",
+          text: "텍스트 길이를 확인해 주세요!",
           confirmButtonText: "확인",
         });
         return;

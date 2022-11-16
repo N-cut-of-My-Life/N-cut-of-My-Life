@@ -26,25 +26,30 @@
     </b-button>
   </div>
   <div v-show="!elementVisible" class="jump">
-    <b-button
-      @click="previousImage()"
-      variant="warning"
-      class="button"
-      size="sm"
-      :disabled="currentImage === 0"
-    >
-      뒤로
-    </b-button>
-    &nbsp;
-    <b-button
-      @click="nextImage()"
-      variant="warning"
-      class="button"
-      size="sm"
-      :disabled="currentImage === images.length - 1"
-    >
-      다음
-    </b-button>
+    <b-row>
+      <b-col>
+        <b-button
+          @click="previousImage()"
+          variant="warning"
+          class="button"
+          size="sm"
+          :disabled="currentImage === 0"
+        >
+          뒤로
+        </b-button>
+      </b-col>
+      <b-col>
+        <b-button
+          @click="nextImage()"
+          variant="warning"
+          class="button"
+          size="sm"
+          :disabled="currentImage === images.length - 1"
+        >
+          다음
+        </b-button>
+      </b-col>
+    </b-row>
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
     <b-button
@@ -272,15 +277,22 @@ export default {
       // this.elementVisible_2 = true
     },
     complete() {
-      if (
-        this.answer_dear.length == 0 ||
+      if (this.answer_dear.length == 0) {
+        Swal.fire({
+          icon: "error",
+          title: "등록 실패! 😭",
+          text: "수신자를 작성해 주세요!",
+          confirmButtonText: "확인",
+        });
+        return;
+      } else if (
         this.answer_content == 0 ||
         this.answer.length > 255
       ) {
         Swal.fire({
           icon: "error",
-          title: "일지 등록 실패! 😭",
-          text: "길이가 올바르지 않습니다.",
+          title: "등록 실패! 😭",
+          text: "텍스트 길이를 확인해 주세요!",
           confirmButtonText: "확인",
         });
         return;
@@ -347,7 +359,7 @@ const trainLaunch = () => {
 <style scoped>
 .trainman {
   position: fixed;
-  top: 51%;
+  top: 54%;
   left: 78%;
 }
 
@@ -512,7 +524,7 @@ body {
 
 .train-launch {
   animation-name: launch;
-  animation-duration: 4s;
+  animation-duration: 3s;
   animation-timing-function: ease-in, ease-in-out;
   animation-fill-mode: forwards;
 }
