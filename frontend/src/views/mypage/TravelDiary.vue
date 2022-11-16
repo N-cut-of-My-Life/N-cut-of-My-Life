@@ -20,7 +20,9 @@
             <img src="@/assets/astronaut_riding.png" class="prof-photo" />
           </div>
           <div class="upper-right">
-            <div class="prof-id">test123@naver.com</div>
+            <div class="prof-id">
+              test123@naver.comㅁㄴㅇㄹㄴㅋㄹㄴㅇㅋㄴㄴㅇㅁㄹㅇ
+            </div>
             <div>로렘</div>
             <div>입숨</div>
           </div>
@@ -176,11 +178,13 @@ body {
 /* 페이지 재구성: 메인 파트 */
 .upper-part {
   display: flex;
-  justify-content: center;
-  width: 100%;
-  gap: 10%;
+  justify-content: space-between;
+  width: 70%;
+  margin: 0 18%;
 }
-
+.upper-right {
+  width: 70%;
+}
 .prof-photo {
   width: 200px;
   height: 200px;
