@@ -60,6 +60,11 @@ watch(
 <style>
 #app {
   font-family: "NanumBarunGothic", sans-serif !important;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
 }
 
 .v-application {
