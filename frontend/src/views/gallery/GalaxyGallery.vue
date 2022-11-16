@@ -99,6 +99,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: "KyoboHand";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 .other {
   position: absolute;
   left: 1%;
@@ -118,6 +125,8 @@ onMounted(() => {
   color: orange;
   font-size: 2vw;
   font-weight: 600;
+  margin-bottom: 2%;
+  font-family: KyoboHand;
 }
 
 .jumbotron {
@@ -146,15 +155,18 @@ onMounted(() => {
 }
 .item-image {
   max-width: 100%;
+  border-radius: 0.375rem;
 }
 
 .content {
   padding: 10px 10px 5px 10px;
+  font-family: KyoboHand;
 }
 .like {
   text-align: end;
   padding: 10px 10px 5px 10px;
   margin-top: auto;
   cursor: pointer;
+  font-family: KyoboHand;
 }
 </style>

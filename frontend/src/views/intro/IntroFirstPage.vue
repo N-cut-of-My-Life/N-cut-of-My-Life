@@ -31,7 +31,7 @@
       </b-nav-item>
       <b-nav-item>
         <router-link :to="{ name: 'traveldiary' }" class="nav-link">
-          나의 여행 일지
+          My Page
         </router-link>
       </b-nav-item>
       <b-nav-item>
