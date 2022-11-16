@@ -8,7 +8,7 @@
         <input
           class="search__input"
           type="text"
-          placeholder="Search"
+          placeholder="제목 + 가수로 검색해주세요!"
           @keyup.enter="musicStore.getMusicData(keyword)"
           v-model="keyword"
         />

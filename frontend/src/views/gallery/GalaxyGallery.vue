@@ -24,7 +24,12 @@
       <template #default="{ item }">
         <div class="common">
           <!-- api호출이 아닌 상태이기 떄문에 추후 변경:require 이후 코드 -->
-          <img v-if="!item.imgUrl" :src="item.imgUrl" alt="" />
+          <img
+            v-if="item.imgUrl"
+            :src="item.imgUrl"
+            alt=""
+            class="item-image"
+          />
           <span class="content">{{ item.contents }}</span>
           <div class="like" @click="manageLike(item.answerId, item.isMine)">
             <svg
@@ -139,6 +144,10 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
 }
+.item-image {
+  max-width: 100%;
+}
+
 .content {
   padding: 10px 10px 5px 10px;
 }

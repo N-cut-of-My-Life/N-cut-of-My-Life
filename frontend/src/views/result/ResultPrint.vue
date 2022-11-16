@@ -1,22 +1,14 @@
 <template>
   <button class="button-go-back" @click="goBack">〈</button>
   <button class="button-go-home" @click="goHome">Intro</button>
-  <div ref="pdfarea" class="wrapper">
+  <div ref="printArea" class="wrapper">
     <landscape-form></landscape-form>
     <portrait-form></portrait-form>
     <audio id="myaudios" loop autoplay volume="0.2">
       <source src="@/assets/audio/out-of-time.mp3" type="audio/mp3" />
     </audio>
-    <button id="pdf-button-area" @click="exportToPDF">다운로드</button>
   </div>
   <div class="kakao-sharing-btn">
-    <button id="kakaotalk-sharing-result-btn" @click="kakaoShare">
-      <img
-        src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-        alt="카카오톡 공유 보내기 버튼"
-      />
-      여행일지 카카오톡 공유하기
-    </button>
     <button id="kakaotalk-sharing-url-btn" @click="kakaoShare">
       <img
         src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
@@ -25,16 +17,27 @@
       친구에게도 인생N컷 추천하기
     </button>
   </div>
+  <button id="pdf-button-area" @click="printPdf">결과 PDF로 저장하기</button>
+  <button @click="printImage">결과 이미지 저장하기</button>
 </template>
 
 <script>
 import LandscapeForm from "@/components/result/LandscapeForm.vue";
 import PortraitForm from "@/components/result/PortraitForm.vue";
-import html2pdf from "html2pdf.js";
 import { useMusicStore } from "@/store/music";
+import { useResultStore } from "@/store/result";
+import html2pdf from "html2pdf.js";
+import { saveAs } from "file-saver";
 
 export default {
   name: "submission-detail",
+  data() {
+    return {
+      result: {},
+      from: "",
+      output: null,
+    };
+  },
   components: {
     LandscapeForm,
     PortraitForm,
@@ -52,8 +55,32 @@ export default {
         templateId: 85712,
       });
     },
-    exportToPDF() {
-      html2pdf(this.$refs.pdfarea, {
+    async printImage() {
+      const el = this.$refs.printArea;
+      const options = {
+        type: "dataURL",
+      };
+      this.output = await this.$html2canvas(el, options);
+      this.downloadItem(this.output);
+    },
+    async downloadItem(url) {
+      await useResultStore()
+        .downloadResultImage(url)
+        .then(() => {
+          const today = new Date();
+          const title =
+            "인생N컷_여행일지_" +
+            today.getFullYear() +
+            "" +
+            (today.getMonth() + 1) +
+            "" +
+            today.getDate() +
+            ".png";
+          saveAs(useResultStore().imageFile, title);
+        });
+    },
+    printPdf() {
+      html2pdf(this.$refs.printArea, {
         margin: 0,
         filename: "document.pdf",
         image: { type: "jpg", quality: 0.95 },
@@ -61,7 +88,7 @@ export default {
           scrollY: 0,
           scale: 1,
           dpi: 300,
-          letterRendering: true,
+          letterRendering: false,
           ignoreElements: function (element) {
             if (element.id == "pdf-button-area") {
               return true;
@@ -69,9 +96,9 @@ export default {
           },
         },
         jsPDF: {
-          orientation: "landscape",
+          orientation: "portrait",
           unit: "in",
-          format: [18, 8],
+          format: [18, 70],
           compressPDF: true,
         },
       });
@@ -79,6 +106,10 @@ export default {
   },
   mounted() {
     useMusicStore().isSoundActive();
+    this.result = useResultStore().resultArticle;
+    this.from = useResultStore().from;
+    console.log(this.result);
+    console.log(this.from);
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
-  <audio loop autoplay volume="0.5">
+  <!-- <audio loop autoplay volume="0.5">
     <source src="@/assets/audio/daylight.mp3" type="audio/mp3" />
-  </audio>
+  </audio> -->
   <video muted autoplay loop playbackRate="0.5">
     <source src="@/assets/space.mp4" type="video/mp4" />
   </video>
