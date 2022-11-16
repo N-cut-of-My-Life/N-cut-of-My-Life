@@ -161,6 +161,11 @@ onMounted(() => {
 .content {
   padding: 10px 10px 5px 10px;
   font-family: KyoboHand;
+  -webkit-touch-callout: all; /* iOS Safari */
+  -webkit-user-select: all; /* Safari */
+  -moz-user-select: all; /* Old versions of Firefox */
+  -ms-user-select: all; /* Internet Explorer/Edge */
+  user-select: all;
 }
 .like {
   text-align: end;
