@@ -227,6 +227,7 @@
 import { onUpdated, ref, onMounted, computed } from "vue";
 import { useMusicStore } from "@/store/music";
 import { usePlanetStore } from "@/store/planet";
+import { useResultStore } from "@/store/result";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 
@@ -299,6 +300,8 @@ const finishTravel = () => {
   usePlanetStore().finishTravel();
 };
 const gotoPrint = () => {
+  useResultStore().resultArticle = usePlanetStore().articleRequest;
+  useResultStore().from = "travel";
   router.push({ name: "resultprint" });
 };
 onUpdated(() => {

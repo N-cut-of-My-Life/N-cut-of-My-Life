@@ -242,8 +242,11 @@ export default {
     };
   },
   computed: {
+    answer() {
+      return this.answer_dear + "\n" + this.answer_content;
+    },
     textLength() {
-      return this.answer_content.length + "/255";
+      return this.answer.length - 1 + "/254";
     },
   },
   methods: {
@@ -283,8 +286,8 @@ export default {
         });
         return;
       } else if (
-        this.answer_content.length == 0 ||
-        this.answer_content.length + this.answer_dear.length > 255
+        this.answer_content == 0 ||
+        this.answer.length > 255
       ) {
         Swal.fire({
           icon: "error",
@@ -296,10 +299,7 @@ export default {
       }
       this.modalShow = false;
       this.submit();
-      usePlanetStore().completePlanet(
-        8,
-        this.answer_dear + "\n" + this.answer_content
-      );
+      usePlanetStore().completePlanet(8, this.answer);
     },
     trainLaunch() {
       this.elementVisible_2 = false;

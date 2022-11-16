@@ -32,12 +32,19 @@ import LandscapeForm from "@/components/result/LandscapeForm.vue";
 import PortraitForm from "@/components/result/PortraitForm.vue";
 import html2pdf from "html2pdf.js";
 import { useMusicStore } from "@/store/music";
+import { useResultStore } from "@/store/result";
 
 export default {
   name: "submission-detail",
   components: {
     LandscapeForm,
     PortraitForm,
+  },
+  data() {
+    return {
+      result: {},
+      from: "",
+    };
   },
   methods: {
     goBack() {
@@ -79,6 +86,10 @@ export default {
   },
   mounted() {
     useMusicStore().isSoundActive();
+    this.result = useResultStore().resultArticle;
+    this.from = useResultStore().from;
+    console.log(this.result);
+    console.log(this.from);
   },
 };
 </script>
