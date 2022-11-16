@@ -248,6 +248,7 @@ export default {
     lastwordShowPtag() {
       if (!this.lastwordShow) {
         this.lastwordShow = !this.lastwordShow;
+        this.$emit("lastwordShowFromPortrait", this.lastwordShow);
       }
     },
   },
