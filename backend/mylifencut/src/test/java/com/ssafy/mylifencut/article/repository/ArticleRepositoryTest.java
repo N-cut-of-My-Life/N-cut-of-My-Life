@@ -2,7 +2,6 @@ package com.ssafy.mylifencut.article.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,16 +43,15 @@ class ArticleRepositoryTest {
 		//given
 		final Article article1 = Article.builder()
 			.answers(Collections.emptyList())
-			.createDate(LocalDateTime.now())
 			.build();
 		final Article article2 = Article.builder()
 			.answers(Collections.emptyList())
-			.createDate(LocalDateTime.now())
 			.build();
 
 		//when
 		articleRepository.save(article1);
 		articleRepository.save(article2);
+
 		final List<Article> articles = articleRepository.findAll();
 
 		//then

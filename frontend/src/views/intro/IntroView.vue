@@ -1,7 +1,7 @@
 <template>
-  <audio loop autoplay volume="0.5">
+  <!-- <audio loop autoplay volume="0.5">
     <source src="@/assets/audio/daylight.mp3" type="audio/mp3" />
-  </audio>
+  </audio> -->
   <video muted autoplay loop playbackRate="0.5">
     <source src="@/assets/space.mp4" type="video/mp4" />
   </video>
@@ -35,21 +35,14 @@
       </div>
     </div>
 
-    <!-- <div class="login-btn">
-      <router-link
-        :to="{ name: 'introfirstpage' }"
+    <div class="login-btn">
+      <a
+        @click="login()"
         class="nav-link"
         style="text-decoration: none; color: inherit"
       >
         &nbsp;카카오 로그인
-      </router-link>
-    </div> -->
-    <div class="login-btn">
-      <div
-        @click="login()"
-        class="nav-link"
-        style="text-decoration: none; color: inherit"
-      ></div>
+      </a>
     </div>
   </div>
 </template>
@@ -180,8 +173,9 @@ video {
 
 .login-btn {
   text-align: center;
-  background-color: #fef01b;
-  border-radius: 10px;
+  color: rgba(0, 0, 0, 0.85);
+  background-color: #fee500;
+  border-radius: 12px;
   font-family: kakao;
   font-size: 1.5rem;
   width: 12%;

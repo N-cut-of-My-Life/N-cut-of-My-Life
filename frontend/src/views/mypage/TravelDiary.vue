@@ -1,5 +1,6 @@
 <template>
   <my-modal style="z-index: 5"></my-modal>
+  <!-- 돌아가기 버튼 -->
   <div class="other">
     <b-button
       @click="router.push({ name: 'introfirstpage' })"
@@ -14,12 +15,20 @@
     <div class="title">My Page</div>
     <main class="content">
       <section class="profile-part">
-        <div class="prof-photo-box">
-          <img src="@/assets/astronaut_riding.png" class="prof-photo" />
+        <div class="upper-part">
+          <div class="upper-image">
+            <img src="@/assets/astronaut_riding.png" class="prof-photo" />
+          </div>
+          <div class="upper-right">
+            <div class="prof-id">
+              test123@naver.comㅁㄴㅇㄹㄴㅋㄹㄴㅇㅋㄴㄴㅇㅁㄹㅇ
+            </div>
+            <div>로렘</div>
+            <div>입숨</div>
+          </div>
         </div>
-        <div class="prof-id">test123@naver.com</div>
         <div class="prof-journal-title">OO님의 여행일지</div>
-        <div>
+        <div class="carousel-part">
           <splide id="diary-carousel" :options="options">
             <template v-for="(n, index) in 4" :key="index">
               <splide-slide>
@@ -35,8 +44,8 @@
         </div>
       </section>
 
-      <section class="diary-part">
-        <!-- 상위 2개 아이템들 -->
+      <!-- <section class="diary-part">
+        상위 2개 아이템들
         <div class="upper-items">
           <div class="last-word">
             <img src="@/assets/post_paper.png" />
@@ -49,7 +58,7 @@
             <img src="@/assets/mailbox.png" class="letter-img" />
           </label>
         </div>
-        <!-- 일지 상세 -->
+        일지 상세
         <div class="below-part">
           <div class="strip">
             <div class="film">
@@ -69,7 +78,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
     </main>
   </div>
 </template>
@@ -92,7 +101,7 @@ onMounted(() => {
 });
 
 const options = {
-  perPage: 2,
+  perPage: 3,
   pauseOnHover: false,
   padding: "0.3rem",
   arrows: true,
@@ -155,43 +164,50 @@ body {
 
 .content {
   display: flex;
-  justify-content: space-between;
-  width: 80vw;
-  height: 80vh;
+  justify-content: center;
   margin: 2vh auto;
-}
-
-/* 왼쪽 파트 */
-.profile-part {
-  width: 37.5%;
-  display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2.5%;
+  width: 80%;
+  height: 80%;
+  margin-top: 3%;
 }
 
-.prof-photo-box {
-  width: 40%;
-  height: 30%;
-  border-radius: 70%;
-  overflow: hidden;
+/* 왼쪽 파트 */
+/* 페이지 재구성: 메인 파트 */
+.upper-part {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin: 0 18%;
 }
-
+.upper-right {
+  width: 70%;
+}
 .prof-photo {
-  width: 100%;
-  height: 100%;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 1px solid black;
   object-fit: cover;
 }
-
 .prof-id {
   font-family: "MaplestoryOTFBold";
   text-align: center;
   color: rgb(224, 227, 230);
 }
 
+.carousel-part {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
 .prof-journal-title {
   font-family: "MapleStoryOTFBold";
   font-size: 2rem;
+  text-align: center;
 }
 
 .prof-journals {
@@ -210,14 +226,15 @@ body {
   width: 100%;
   font-family: "MapleStoryOTFBold";
   color: aliceblue;
-  transform: translate(-33%, -350%);
+  transform: translate(-25%, -350%);
 }
-.journal-img:hover {
+.journal:hover {
   scale: 1.05;
 }
 
 /* 오른쪽 파트 */
-.diary-part {
+/* 페이지 재구성에 따라 주석처리, 혹시 다시 쓰일까봐 지우지는 않겠음 */
+/* .diary-part {
   width: 52%;
   display: flex;
   flex-direction: column;
@@ -316,7 +333,7 @@ body {
 .film img {
   max-width: 100%;
   border-radius: 2px;
-}
+} */
 </style>
 
 <style>

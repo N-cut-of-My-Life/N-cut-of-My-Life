@@ -1,50 +1,48 @@
 <template>
-  <button class="button-go-back" @click="goBack">〈</button>
-  <button class="button-go-home" @click="goHome">Intro</button>
-  <div ref="pdfarea" class="wrapper">
+  <button class="button-go-home" @click="goHome">Home</button>
+  <div ref="printArea" class="wrapper">
     <landscape-form></landscape-form>
     <portrait-form></portrait-form>
     <audio id="myaudios" loop autoplay volume="0.2">
       <source src="@/assets/audio/out-of-time.mp3" type="audio/mp3" />
     </audio>
-    <button id="pdf-button-area" @click="exportToPDF">다운로드</button>
   </div>
-  <div class="kakao-sharing-btn">
-    <button id="kakaotalk-sharing-result-btn" @click="kakaoShare">
-      <img
-        src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-        alt="카카오톡 공유 보내기 버튼"
-      />
-      여행일지 카카오톡 공유하기
-    </button>
-    <button id="kakaotalk-sharing-url-btn" @click="kakaoShare">
-      <img
-        src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-        alt="카카오톡 공유 보내기 버튼"
-      />
-      친구에게도 인생N컷 추천하기
-    </button>
+  <div class="btns">
+    <a id="pdf-button-area" @click="exportToPDF">결과 PDF로 저장하기</a>
+    <a id="pdf-image-save" @click="printImage">결과 이미지 저장하기</a>
+    <a id="kakaotalk-sharing-result-btn" @click="kakaoShare"
+      >여행일지 공유하기</a
+    >
+    <a id="kakaotalk-sharing-url-btn" @click="kakaoShare"
+      >친구에게 인생N컷 추천하기</a
+    >
   </div>
 </template>
 
 <script>
 import LandscapeForm from "@/components/result/LandscapeForm.vue";
 import PortraitForm from "@/components/result/PortraitForm.vue";
-import html2pdf from "html2pdf.js";
 import { useMusicStore } from "@/store/music";
+import { useResultStore } from "@/store/result";
+import html2pdf from "html2pdf.js";
+import { saveAs } from "file-saver";
 
 export default {
   name: "submission-detail",
+  data() {
+    return {
+      result: {},
+      from: "",
+      output: null,
+    };
+  },
   components: {
     LandscapeForm,
     PortraitForm,
   },
   methods: {
-    goBack() {
-      this.$router.go(-1);
-    },
     goHome() {
-      this.$router.push("/");
+      this.$router.push("/introfirstpage");
     },
     kakaoShare() {
       window.Kakao.Share.sendScrap({
@@ -52,8 +50,32 @@ export default {
         templateId: 85712,
       });
     },
-    exportToPDF() {
-      html2pdf(this.$refs.pdfarea, {
+    async printImage() {
+      const el = this.$refs.printArea;
+      const options = {
+        type: "dataURL",
+      };
+      this.output = await this.$html2canvas(el, options);
+      this.downloadItem(this.output);
+    },
+    async downloadItem(url) {
+      await useResultStore()
+        .downloadResultImage(url)
+        .then(() => {
+          const today = new Date();
+          const title =
+            "인생N컷_여행일지_" +
+            today.getFullYear() +
+            "" +
+            (today.getMonth() + 1) +
+            "" +
+            today.getDate() +
+            ".png";
+          saveAs(useResultStore().imageFile, title);
+        });
+    },
+    printPdf() {
+      html2pdf(this.$refs.printArea, {
         margin: 0,
         filename: "document.pdf",
         image: { type: "jpg", quality: 0.95 },
@@ -61,7 +83,7 @@ export default {
           scrollY: 0,
           scale: 1,
           dpi: 300,
-          letterRendering: true,
+          letterRendering: false,
           ignoreElements: function (element) {
             if (element.id == "pdf-button-area") {
               return true;
@@ -69,9 +91,9 @@ export default {
           },
         },
         jsPDF: {
-          orientation: "landscape",
+          orientation: "portrait",
           unit: "in",
-          format: [18, 8],
+          format: [18, 70],
           compressPDF: true,
         },
       });
@@ -79,48 +101,157 @@ export default {
   },
   mounted() {
     useMusicStore().isSoundActive();
+    this.result = useResultStore().resultArticle;
+    this.from = useResultStore().from;
+    console.log(this.result);
+    console.log(this.from);
   },
 };
 </script>
 <style scoped>
-.button-go-back {
+font-face {
+  font-family: "kakao";
+  src: url("@/fonts/KakaoBold.ttf") format("truetype");
+}
+pdf-image-save .button-go-home {
   position: fixed;
+  top: 48%;
   border: 0.5px solid white;
   background: transparent;
   color: white;
   border-radius: 10%;
-  margin: 28px 8px;
-  padding: 0px 10px 2px;
+  margin: 1rem 0.5rem;
+  padding: 0.25rem 0.25rem 0.5rem;
   font-size: 20px;
   font-family: Exo;
   z-index: 100;
-}
-.button-go-back:hover {
-  background-color: white;
-  color: #141414;
-}
-.button-go-home {
-  position: absolute;
-  top: 88%;
-  border: 0.5px solid white;
-  background: transparent;
-  color: white;
-  border-radius: 10%;
-  margin: 28px 8px;
-  padding: 6px 40px 8px;
-  font-size: 20px;
-  font-family: Exo;
 }
 .button-go-home:hover {
   background-color: white;
   color: #141414;
 }
-.kakao-sharing-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 .wrapper {
   overflow-x: hidden;
+}
+.btns {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  width: 2rem;
+  z-index: 100;
+  top: 10%;
+  right: 1%;
+  overflow: hidden;
+}
+.btns:hover {
+  width: 15.5rem;
+}
+#pdf-button-area {
+  margin: 0.25rem 0rem;
+  padding: 0.25rem 0rem 0.25rem;
+  font-size: 0rem;
+  color: rgba(0, 0, 0, 0.85);
+  border-radius: 12px;
+  height: auto;
+  padding: 0, 0.5rem;
+  background-color: #fee500;
+  font: kakao;
+  cursor: pointer;
+}
+.btns:hover > #pdf-button-area {
+  margin: 0.25rem;
+  padding: 0;
+  font-size: 1.125rem;
+}
+#pdf-button-area::before {
+  content: "";
+  background-image: url("@/assets/pdf_logo.png");
+  margin-left: 0.5rem;
+  background-size: 100% 100%;
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.25rem;
+}
+#pdf-image-save {
+  margin: 0.25rem 0rem;
+  padding: 0.25rem 0rem 0.25rem;
+  font-size: 0rem;
+  color: rgba(0, 0, 0, 0.85);
+  border-radius: 12px;
+  height: auto;
+  padding: 0, 0.5rem;
+  background-color: #fee500;
+  font: kakao;
+  cursor: pointer;
+}
+.btns:hover > #pdf-image-save {
+  margin: 0.25rem;
+  padding: 0;
+  font-size: 1.125rem;
+}
+#pdf-image-save::before {
+  content: "";
+  background-image: url("@/assets/pdf_logo.png");
+  margin-left: 0.5rem;
+  background-size: 100% 100%;
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.25rem;
+}
+#kakaotalk-sharing-result-btn {
+  margin: 0.25rem 0rem;
+  padding: 0.25rem 0rem 0.25rem;
+  font-size: 0rem;
+  color: rgba(0, 0, 0, 0.85);
+  border-radius: 12px;
+  height: auto;
+  padding: 0, 0.5rem;
+  background-color: #fee500;
+  font: kakao;
+  cursor: pointer;
+}
+.btns:hover > #kakaotalk-sharing-result-btn {
+  margin: 0.25rem;
+  padding: 0;
+  font-size: 1.125rem;
+}
+#kakaotalk-sharing-result-btn::before {
+  content: "";
+  background-image: url("@/assets/kakao_logo.png");
+  margin-left: 0.5rem;
+  background-size: 100% 100%;
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.25rem;
+}
+#kakaotalk-sharing-url-btn {
+  margin: 0.25rem 0rem;
+  padding: 0.25rem 0rem 0.25rem;
+  font-size: 0rem;
+  color: rgba(0, 0, 0, 0.85);
+  border-radius: 12px;
+  height: auto;
+  padding: 0, 0.5rem;
+  background-color: #fee500;
+  font: kakao;
+  cursor: pointer;
+}
+.btns:hover > #kakaotalk-sharing-url-btn {
+  margin: 0.25rem;
+  padding: 0;
+  font-size: 1.125rem;
+}
+#kakaotalk-sharing-url-btn::before {
+  content: "";
+  background-image: url("@/assets/kakao_logo.png");
+  margin-left: 0.5rem;
+  background-size: 100% 100%;
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.25rem;
 }
 </style>
