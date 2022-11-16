@@ -2,17 +2,17 @@
   <button class="button-go-home" @click="goHome">Home</button>
   <div ref="printArea" class="wrapper">
     <landscape-form></landscape-form>
-    <portrait-form></portrait-form>
+    <portrait-form
+      :lastwordShow="lastwordShow"
+      @lastwordShowFromPortrait="getLastwordShow"
+    ></portrait-form>
     <audio id="myaudios" loop autoplay volume="0.2">
       <source src="@/assets/audio/out-of-time.mp3" type="audio/mp3" />
     </audio>
   </div>
-  <div class="btns">
+  <div class="btns" v-show="lastwordShow">
     <a id="pdf-button-area" @click="printPdf">결과 PDF로 저장하기</a>
     <a id="pdf-image-save" @click="printImage">결과 이미지 저장하기</a>
-    <a id="kakaotalk-sharing-result-btn" @click="kakaoShare"
-      >여행일지 공유하기</a
-    >
     <a id="kakaotalk-sharing-url-btn" @click="kakaoShare"
       >친구에게 인생N컷 추천하기</a
     >
@@ -34,6 +34,7 @@ export default {
       result: {},
       from: "",
       output: null,
+      lastwordShow: false,
     };
   },
   components: {
@@ -41,6 +42,9 @@ export default {
     PortraitForm,
   },
   methods: {
+    getLastwordShow(lastwordShow) {
+      this.lastwordShow = lastwordShow;
+    },
     goHome() {
       this.$router.push("/introfirstpage");
     },
@@ -192,34 +196,7 @@ font-face {
 }
 #pdf-image-save::before {
   content: "";
-  background-image: url("@/assets/pdf_logo.png");
-  margin-left: 0.5rem;
-  background-size: 100% 100%;
-  display: inline-block;
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-right: 0.25rem;
-}
-#kakaotalk-sharing-result-btn {
-  margin: 0.25rem 0rem;
-  padding: 0.25rem 0rem 0.25rem;
-  font-size: 0rem;
-  color: rgba(0, 0, 0, 0.85);
-  border-radius: 12px;
-  height: auto;
-  padding: 0, 0.5rem;
-  background-color: #fee500;
-  font: kakao;
-  cursor: pointer;
-}
-.btns:hover > #kakaotalk-sharing-result-btn {
-  margin: 0.25rem;
-  padding: 0;
-  font-size: 1.125rem;
-}
-#kakaotalk-sharing-result-btn::before {
-  content: "";
-  background-image: url("@/assets/kakao_logo.png");
+  background-image: url("@/assets/image_logo.png");
   margin-left: 0.5rem;
   background-size: 100% 100%;
   display: inline-block;
