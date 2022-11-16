@@ -14,28 +14,55 @@
   <div class="jumbotron">
     <div class="title">My Page</div>
     <main class="content">
-      <section class="profile-part">
+      <section>
+        <div class="back-square"></div>
         <div class="upper-part">
           <div class="upper-image">
-            <img src="@/assets/astronaut_riding.png" class="prof-photo" />
+            <img :src="user.profileImage" class="prof-photo" />
           </div>
           <div class="upper-right">
-            <div class="prof-id">
-              test123@naver.comㅁㄴㅇㄹㄴㅋㄹㄴㅇㅋㄴㄴㅇㅁㄹㅇ
+            <div class="top">
+              <div class="userinfo">여행자 정보</div>
+              <div class="myinfo">
+                <div>{{ user.name }}({{ user.email }})</div>
+              </div>
             </div>
-            <div>로렘</div>
-            <div>입숨</div>
+            <div class="bottom">
+              <div class="bottom-item">
+                <div class="bottom-title">여행횟수</div>
+                <div class="bottom-info">3</div>
+              </div>
+              <div class="bottom-item">
+                <div class="bottom-title">당신의 보물함</div>
+                <div class="bottom-info">보관된 보물이 없습니다.</div>
+              </div>
+              <div class="bottom-item">
+                <div class="bottom-title">다녀온 행성</div>
+                <div class="bottom-info">3</div>
+              </div>
+              <div class="bottom-item">
+                <div class="bottom-title">당신의 소중한 사람</div>
+                <div class="bottom-info">은사님</div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="prof-journal-title">OO님의 여행일지</div>
+        <div class="prof-journal-title">
+          {{ user.name }}님의 여행일지({{ accountStore.myArticles.length }})
+        </div>
         <div class="carousel-part">
           <splide id="diary-carousel" :options="options">
-            <template v-for="(n, index) in 4" :key="index">
+            <template
+              v-for="(article, index) in accountStore.myArticles"
+              :key="index"
+            >
               <splide-slide>
                 <div class="prof-journals">
                   <div class="journal">
                     <img src="@/assets/space_diary.png" class="journal-img" />
-                    <div class="diary-title">2022년 11월 8일의 기록</div>
+                    <div class="diary-title">
+                      {{ article.createDate.slice(0, 10) }} 여행기록
+                    </div>
                   </div>
                 </div>
               </splide-slide>
@@ -50,7 +77,7 @@
           <div class="last-word">
             <img src="@/assets/post_paper.png" />
             <h1 class="text-shadow">
-              지금은 고민이 참 많을테지만, 언젠간 난 이겨낼거야
+              로렘 입숨
             </h1>
           </div>
 
@@ -89,16 +116,17 @@ import "@splidejs/splide/dist/css/themes/splide-default.min.css";
 import MyModal from "@/components/mypage/MyModal.vue";
 import { useRouter } from "vue-router";
 import { useAccountStore } from "@/store/account";
-import { onMounted, ref } from "vue-demi";
+// import { onMounted, ref } from "vue-demi";
 
 const router = useRouter();
 const accountStore = useAccountStore();
-const myArticles = ref({});
+// const myArticles = ref({});
+const user = accountStore.userInfo;
 
-onMounted(() => {
-  accountStore.getMyArticles();
-  myArticles.value = accountStore.myArticles;
-});
+accountStore.getMyArticles();
+// myArticles.value = accountStore.myArticles;
+console.log(accountStore.userInfo);
+// onMounted(() => {});
 
 const options = {
   perPage: 3,
@@ -121,6 +149,13 @@ const options = {
 @font-face {
   font-family: "ONE-Mobile-POP";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "ONE-Mobile-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-Regular.woff")
     format("woff");
   font-weight: normal;
   font-style: normal;
@@ -174,6 +209,13 @@ body {
   margin-top: 3%;
 }
 
+/* .back-square {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  z-index: 0;
+  background-color: aliceblue;
+} */
 /* 왼쪽 파트 */
 /* 페이지 재구성: 메인 파트 */
 .upper-part {
@@ -185,6 +227,45 @@ body {
 .upper-right {
   width: 70%;
 }
+.upper-right .top {
+  display: flex;
+  min-height: 25%;
+  gap: 20%;
+  margin-left: 12%;
+}
+.upper-right .top .userinfo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-family: "ONE-Mobile-Regular";
+}
+.upper-right .top .myinfo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-family: "MapleStoryOTFBold";
+}
+.bottom {
+  margin-top: 2%;
+  height: 80%;
+  display: grid;
+  grid-template-columns: 45% 45%;
+  grid-template-rows: 40% 40%;
+  justify-items: center;
+  align-items: center;
+  gap: 10px;
+}
+.bottom-title {
+  text-align: center;
+  font-family: "ONE-Mobile-Regular";
+  font-size: 1.1rem;
+}
+.bottom-info {
+  text-align: center;
+  font-family: "MaplestoryOTFBold";
+  font-size: 1.5rem;
+  color: azure;
+}
 .prof-photo {
   width: 200px;
   height: 200px;
@@ -192,11 +273,11 @@ body {
   border: 1px solid black;
   object-fit: cover;
 }
-.prof-id {
+/* .prof-id {
   font-family: "MaplestoryOTFBold";
   text-align: center;
   color: rgb(224, 227, 230);
-}
+} */
 
 .carousel-part {
   width: 70%;
