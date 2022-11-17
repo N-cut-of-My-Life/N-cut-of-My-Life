@@ -125,7 +125,7 @@ export default {
   }
 
   20% {
-    transform: translateY(-5px);
+    transform: translateY(-0.3125);
   }
 }
 
@@ -175,12 +175,12 @@ video {
   text-align: center;
   color: rgba(0, 0, 0, 0.85);
   background-color: #fee500;
-  border-radius: 12px;
+  border-radius: 0.75rem;
   font-family: kakao;
   font-size: 1.5rem;
   width: 12%;
   height: auto;
-  padding: 0 10px 0 10px;
+  padding: 0 0.625rem 0 0.625rem;
   cursor: pointer;
 }
 
