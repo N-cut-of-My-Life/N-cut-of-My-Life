@@ -30,6 +30,10 @@ class LikeServiceTest {
 
 	@InjectMocks
 	private LikeService likeService;
+
+	@Mock
+	private LikeService service;
+
 	@Mock
 	private LikeRepository likeRepository;
 
@@ -92,6 +96,7 @@ class LikeServiceTest {
 			//when
 			likeService.deleteLike(userId, answerId);
 			//then
+			verify(service, atMost(1)).deleteLike(userId, answerId);
 		}
 	}
 
