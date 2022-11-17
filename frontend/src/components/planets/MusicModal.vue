@@ -22,7 +22,7 @@
         >
           <img
             class="info"
-            :src="song.image"
+            :src="song.img"
             :alt="song.title"
             style="border-radius: 0.5vw"
           />
@@ -32,8 +32,8 @@
           </div>
         </ul>
       </div>
+      <button class="complete_button" @click="complete"></button>
     </div>
-    <button class="complete_button" @click="complete"></button>
   </div>
 </template>
 
@@ -42,8 +42,9 @@ import { useMusicStore } from "@/store/music";
 import { usePlanetStore } from "@/store/planet";
 import { ref } from "vue";
 const musicStore = useMusicStore();
+// const selected = ref();
 const complete = () => {
-  usePlanetStore().completePlanet(6); //TODO answer 추가
+  usePlanetStore().completePlanet(6);
 };
 let keyword = ref("");
 </script>
@@ -174,5 +175,13 @@ let keyword = ref("");
 
 .complete_button {
   display: none;
+}
+.container {
+  max-height: 300px;
+  overflow: scroll;
+}
+.complete_button {
+  height: 40px;
+  width: 40px;
 }
 </style>

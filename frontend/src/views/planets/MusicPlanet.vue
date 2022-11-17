@@ -51,6 +51,7 @@
       class="button_2"
       size="md"
       href="#openModal-about"
+      @click="useMusicStore().songs = []"
     >
       <div class="wave">
         <span style="--i: 1">음</span>
