@@ -107,7 +107,7 @@ class AnswerServiceTest {
 			final int galleryId = 1;
 			doThrow(GalleryNotFoundException.class)
 				.when(answerRepository)
-				.findById(1);
+				.findById(any());
 
 			// when
 
