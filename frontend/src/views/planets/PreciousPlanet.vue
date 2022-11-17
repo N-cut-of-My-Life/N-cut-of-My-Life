@@ -22,7 +22,7 @@
       class="button_prev"
       size="sm"
     >
-      <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
+      <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기 🪐
     </b-button>
   </div>
   <div v-show="!elementVisible" class="jump">
@@ -103,7 +103,7 @@
         font-weight: 400;
       "
     >
-      소중한 사람에게 짧은 편지를 남겨보세요!
+      소중한 사람에게 짧은 편지를 남겨보세요! 💌
     </div>
     <b-container ref="form" style="margin-bottom: 3.8%">
       <b-row style="margin-bottom: 3%">
@@ -285,10 +285,7 @@ export default {
           confirmButtonText: "확인",
         });
         return;
-      } else if (
-        this.answer_content == 0 ||
-        this.answer.length > 255
-      ) {
+      } else if (this.answer_content == 0 || this.answer.length > 255) {
         Swal.fire({
           icon: "error",
           title: "등록 실패! 😭",
