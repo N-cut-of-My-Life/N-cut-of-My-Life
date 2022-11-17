@@ -8,5 +8,6 @@ public class AnswerConstant {
 
 	public static final String READ_GALLERY_SUCCESS_MESSAGE = "갤러리가 조회되었습니다.";
 	public static final String CAN_NOT_BE_OPENED_ANSWER_ERROR_MESSAGE = "공개여부를 선택할 수 없는 답변입니다.";
+	public static final String GALLERY_NOT_FOUND_ERROR_MESSAGE = "갤러리 아이디가 올바르지 않습니다.";
 	public static final int OPENABLE_QUESTION_ID = 9;
 }
