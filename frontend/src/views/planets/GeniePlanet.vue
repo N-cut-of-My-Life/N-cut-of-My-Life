@@ -25,7 +25,7 @@
       class="button_prev"
       size="sm"
     >
-      <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
+      <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기 🪐
     </b-button>
   </div>
   <div class="jump">
@@ -99,7 +99,7 @@
         font-weight: 400;
       "
     >
-      당신의 소원을 적어주세요!
+      당신의 소원을 적어주세요! 🧞‍♂️
     </div>
     <b-container ref="form" style="margin-bottom: 3.8%">
       <b-form-textarea
