@@ -7,8 +7,10 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.GalleryResponse;
+import com.ssafy.mylifencut.answer.exception.GalleryNotFoundException;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
 import com.ssafy.mylifencut.like.domain.IsLike;
 import com.ssafy.mylifencut.like.repository.LikeRepository;
@@ -38,4 +40,13 @@ public class AnswerService {
 		return galleryResponses;
 	}
 
+	public GalleryResponse getGalleryOne(int userId, int answerId) {
+		Answer answer = answerRepository.findById(answerId)
+			.orElseThrow(GalleryNotFoundException::new);
+		GalleryResponse galleryResponse = GalleryResponse.of(answer);
+		if (likeRepository.findByUserIdAndAnswerId(userId, answerId).isPresent()) {
+			galleryResponse.setIsMine();
+		}
+		return galleryResponse;
+	}
 }
