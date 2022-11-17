@@ -20,7 +20,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.GalleryResponse;
+import com.ssafy.mylifencut.answer.dto.MusicResponse;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
+import com.ssafy.mylifencut.answer.util.KeyWordConverterToURI;
 import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.like.domain.IsLike;
 import com.ssafy.mylifencut.like.repository.LikeRepository;
@@ -91,6 +93,22 @@ class AnswerServiceTest {
 			final List<GalleryResponse> result = answerService.getGalleryList(userId);
 			//then
 			assertThat(result).hasSize(2);
+		}
+	}
+
+	@Nested
+	@DisplayName("[음악 조회]")
+	class SearchMusicTest {
+
+		@Test
+		@DisplayName("[성공] - 음악조회")
+		void searchMusic() throws Exception {
+			//given
+			String keyword = "가을타나봐";
+			String expectedApiUrl = KeyWordConverterToURI.converter(keyword);
+			List<MusicResponse> musicResponseList = answerService.searchMusic(expectedApiUrl);
+			//then
+			assertThat(musicResponseList).hasSize(10);
 		}
 	}
 }

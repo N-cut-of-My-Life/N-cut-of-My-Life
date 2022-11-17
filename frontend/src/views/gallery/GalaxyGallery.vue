@@ -161,11 +161,11 @@ onMounted(() => {
 .content {
   padding: 10px 10px 5px 10px;
   font-family: KyoboHand;
-  -webkit-touch-callout: all; /* iOS Safari */
-  -webkit-user-select: all; /* Safari */
-  -moz-user-select: all; /* Old versions of Firefox */
-  -ms-user-select: all; /* Internet Explorer/Edge */
-  user-select: all;
+  -webkit-touch-callout: text; /* iOS Safari */
+  -webkit-user-select: text; /* Safari */
+  -moz-user-select: text; /* Old versions of Firefox */
+  -ms-user-select: text; /* Internet Explorer/Edge */
+  user-select: text;
 }
 .like {
   text-align: end;
@@ -173,5 +173,28 @@ onMounted(() => {
   margin-top: auto;
   cursor: pointer;
   font-family: KyoboHand;
+}
+</style>
+
+<style>
+body::-webkit-scrollbar {
+  width: 0.8vw;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  /* background-color: #a1a1a1; */
+  /* background-color: #7895b2; */
+  /* background-color: #aebdca; */
+  background-color: #d2daff;
+}
+
+body::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
 }
 </style>
