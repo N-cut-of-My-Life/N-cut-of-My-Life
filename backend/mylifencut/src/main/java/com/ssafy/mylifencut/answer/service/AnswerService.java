@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -64,12 +65,11 @@ public class AnswerService {
 		headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" +
 			" AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
 		ResponseEntity<String> result = restTemplate.exchange(requestUri, HttpMethod.GET,
-			new HttpEntity<String>(headers),
-			String.class);
-
+			new HttpEntity<String>(headers), String.class);
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-		final InputStream stream = new ByteArrayInputStream(result.getBody().getBytes(StandardCharsets.UTF_8));
+		final InputStream stream = new ByteArrayInputStream(
+			Objects.requireNonNull(result.getBody()).getBytes(StandardCharsets.UTF_8));
 		Document doc = documentBuilder.parse(stream);
 		doc.getDocumentElement().normalize();
 		NodeList itemList = doc.getElementsByTagName("item");
