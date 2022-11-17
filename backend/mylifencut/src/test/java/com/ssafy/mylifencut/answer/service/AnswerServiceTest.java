@@ -21,6 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.GalleryResponse;
+import com.ssafy.mylifencut.answer.exception.GalleryNotFoundException;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
 import com.ssafy.mylifencut.article.domain.Article;
 import com.ssafy.mylifencut.like.domain.IsLike;
@@ -102,15 +103,16 @@ class AnswerServiceTest {
 		@DisplayName("[실패] - 없는 갤러리 조회")
 		void notFoundError() {
 			// given
-			final int id = 1;
-			doReturn(new GalleryNotFoundException)
+			final int userId = 1;
+			final int galleryId = 1;
+			doThrow(GalleryNotFoundException.class)
 				.when(answerRepository)
 				.findById(1);
 
 			// when
 
 			// then
-			assertThrows(GalleryNotFoundException.class, () -> answerRepository.findById(id));
+			assertThrows(GalleryNotFoundException.class, () -> answerService.getGalleryOne(userId, galleryId));
 		}
 	}
 }
