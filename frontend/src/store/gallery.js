@@ -9,10 +9,12 @@ export const useGalleryStore = defineStore("gallery", {
   },
   state: () => ({
     galleryList: [],
+    isLoading: true,
   }),
   getters: {},
   actions: {
     getGalleryList(userID) {
+      this.isLoading=true;
       axios({
         url: index.answer.getGallery(userID),
         method: "GET",
@@ -21,9 +23,11 @@ export const useGalleryStore = defineStore("gallery", {
         .then((res) => {
           this.galleryList = res.data.data;
           console.log(this.galleryList);
+          this.isLoading=false
         })
         .catch((e) => {
           console.log("error", e);
+          this.isLoading=false
         });
     },
 
