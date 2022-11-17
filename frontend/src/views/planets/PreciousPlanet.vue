@@ -302,7 +302,9 @@ export default {
       this.elementVisible_2 = false;
       const train = document.querySelector(".trainman");
       document.getElementById("mix_precious").pause();
-      document.getElementById("trainsound").play();
+      if (useMusicStore().isMute === false) {
+        document.getElementById("trainsound").play();
+      }
       train.classList.add("train-launch");
       train.addEventListener("animationend", (event) => {
         if (event.animationName.includes("launch")) {
@@ -323,10 +325,8 @@ export default {
     const isMute = useMusicStore().isMute;
     if (isMute === true) {
       document.querySelector("#mix_precious").muted = true;
-      document.querySelector("#trainsound").muted = true;
     } else {
       document.querySelector("#mix_precious").muted = false;
-      document.querySelector("#trainsound").muted = false;
     }
   },
 };
