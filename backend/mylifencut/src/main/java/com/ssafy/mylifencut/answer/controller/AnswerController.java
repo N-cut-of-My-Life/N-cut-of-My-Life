@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.mylifencut.answer.dto.GalleryResponse;
 import com.ssafy.mylifencut.answer.service.AnswerService;
+import com.ssafy.mylifencut.answer.util.KeyWordConverterToURI;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.like.service.LikeService;
 
@@ -92,5 +93,14 @@ public class AnswerController {
 			BaseResponse.from(true, READ_GALLERY_SUCCESS_MESSAGE, answerService.getGalleryOne(userId, answerId)),
 			HttpStatus.OK
 		);
+	}
+
+	@GetMapping("music/{keyword}")
+	public ResponseEntity<BaseResponse> searchMusic(@PathVariable("keyword") String keyword) throws Exception {
+		return new ResponseEntity<>(
+			BaseResponse.from(true, SEARCH_MUSIC_SUCCESS_MESSAGE,
+				answerService.searchMusic(KeyWordConverterToURI.converter(keyword))
+			), HttpStatus.OK);
+
 	}
 }

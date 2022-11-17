@@ -142,7 +142,7 @@
       <b-col cols="1" style="padding: 0"
         ><img
           src="@/assets/questionbox.svg"
-          class="help-tip"
+          class="tip"
           v-b-tooltip.hover.bottom="
             '은하갤러리에서 여행자들과 마지막 한마디를 공유할 수 있습니다!'
           "
@@ -548,7 +548,7 @@ input:checked + .slider:before {
   text-align: right;
   font-size: small;
 }
-.help-tip {
+.tip {
   width: 56%;
   padding-bottom: 12px;
 }

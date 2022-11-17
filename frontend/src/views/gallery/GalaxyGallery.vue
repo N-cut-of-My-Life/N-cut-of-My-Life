@@ -22,7 +22,7 @@
       :gap="16"
     >
       <template #default="{ item }">
-        <div class="common">
+        <div class="common" :style="randomBackgroundColor()">
           <!-- api호출이 아닌 상태이기 떄문에 추후 변경:require 이후 코드 -->
           <img
             v-if="item.imgUrl"
@@ -96,6 +96,22 @@ const manageLike = (answerId, isMine) => {
 onMounted(() => {
   useMusicStore().isSoundActive();
 });
+
+const randomBackgroundColor = () => {
+  const colors = [
+    "#ffeecd",
+    "#fff9d6",
+    "#daffcf",
+    "#dcfffd",
+    "#e1edff",
+    "#f0e7ff",
+    "#ffecfa",
+    "#ffe7e8",
+    "white",
+  ];
+  const idx = Math.floor(Math.random() * colors.length);
+  return "background-color: " + colors[idx];
+};
 </script>
 
 <style scoped>
@@ -114,7 +130,7 @@ onMounted(() => {
 }
 
 .button_prev {
-  background-color: #ffffff;
+  background-color: #e1edff;
   color: #141414;
   border-radius: 0.8vw;
   border-color: #ffffff;
@@ -122,7 +138,7 @@ onMounted(() => {
 .title {
   text-align: center;
   padding-top: 3%;
-  color: orange;
+  color: rgb(255, 188, 64);
   font-size: 2vw;
   font-weight: 600;
   margin-bottom: 2%;
@@ -161,11 +177,11 @@ onMounted(() => {
 .content {
   padding: 10px 10px 5px 10px;
   font-family: KyoboHand;
-  -webkit-touch-callout: all; /* iOS Safari */
-  -webkit-user-select: all; /* Safari */
-  -moz-user-select: all; /* Old versions of Firefox */
-  -ms-user-select: all; /* Internet Explorer/Edge */
-  user-select: all;
+  -webkit-touch-callout: text; /* iOS Safari */
+  -webkit-user-select: text; /* Safari */
+  -moz-user-select: text; /* Old versions of Firefox */
+  -ms-user-select: text; /* Internet Explorer/Edge */
+  user-select: text;
 }
 .like {
   text-align: end;
@@ -173,5 +189,26 @@ onMounted(() => {
   margin-top: auto;
   cursor: pointer;
   font-family: KyoboHand;
+}
+
+body::-webkit-scrollbar {
+  width: 0.8vw;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  /* background-color: #a1a1a1; */
+  /* background-color: #7895b2; */
+  /* background-color: #aebdca; */
+  background-color: #d2daff;
+}
+
+body::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
 }
 </style>
