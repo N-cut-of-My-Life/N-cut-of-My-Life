@@ -6,7 +6,7 @@
       :lastwordShow="lastwordShow"
       @lastwordShowFromPortrait="getLastwordShow"
     ></portrait-form>
-    <audio id="myaudios" loop autoplay volume="0.2">
+    <audio id="myaudios" loop autoplay volume="0.3">
       <source src="@/assets/audio/out-of-time.mp3" type="audio/mp3" />
     </audio>
   </div>
