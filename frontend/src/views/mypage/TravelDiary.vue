@@ -30,25 +30,37 @@
             <div class="bottom">
               <div class="bottom-item">
                 <div class="bottom-title">여행횟수</div>
-                <div class="bottom-info">3</div>
+                <div class="bottom-info">
+                  {{ accountStore.myArticles.length }}
+                </div>
               </div>
               <div class="bottom-item">
                 <div class="bottom-title">당신의 보물함</div>
                 <div class="bottom-info">보관된 보물이 없습니다.</div>
+                <!-- <div class="bottom-info">
+                  {{ accountStore.myArticles[idx].answers }}
+                </div> -->
               </div>
               <div class="bottom-item">
                 <div class="bottom-title">다녀온 행성</div>
-                <div class="bottom-info">3</div>
+                <div class="bottom-info">
+                  {{ accountStore.myArticles[idx].answers.length }}
+                </div>
               </div>
               <div class="bottom-item">
                 <div class="bottom-title">당신의 소중한 사람</div>
-                <div class="bottom-info">은사님</div>
+                <div class="bottom-info"></div>
               </div>
             </div>
           </div>
         </div>
-        <div class="prof-journal-title">
-          {{ user.name }}님의 여행일지({{ accountStore.myArticles.length }})
+        <div class="prof-slide-part">
+          <span class="prof-slide-title"
+            >{{ user.name }}님의 여행일지({{
+              accountStore.myArticles.length
+            }})</span
+          >
+          <span class="prof-slide-router">자세히 보기</span>
         </div>
         <div class="carousel-part">
           <splide id="diary-carousel" :options="options">
@@ -56,7 +68,7 @@
               v-for="(article, index) in accountStore.myArticles"
               :key="index"
             >
-              <splide-slide>
+              <splide-slide @click="getCurIdx(index)">
                 <div class="prof-journals">
                   <div class="journal">
                     <img src="@/assets/space_diary.png" class="journal-img" />
@@ -123,6 +135,10 @@ const accountStore = useAccountStore();
 // const myArticles = ref({});
 const user = accountStore.userInfo;
 
+let idx = 0;
+const getCurIdx = (index) => {
+  console.log(index);
+};
 accountStore.getMyArticles();
 // myArticles.value = accountStore.myArticles;
 console.log(accountStore.userInfo);
@@ -285,12 +301,22 @@ body {
   justify-content: center;
   margin: 0 auto;
 }
-.prof-journal-title {
+.prof-slide-part {
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+.prof-slide-title {
   font-family: "MapleStoryOTFBold";
   font-size: 2rem;
-  text-align: center;
 }
-
+.prof-slide-router {
+  font-family: "Courier New", Courier, monospace;
+  position: absolute;
+  top: 50%;
+  right: 1%;
+}
 .prof-journals {
   display: flex;
 }
