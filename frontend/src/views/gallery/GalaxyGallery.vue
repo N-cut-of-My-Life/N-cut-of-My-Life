@@ -17,6 +17,7 @@
   <audio loop autoplay volume="0.3">
     <source src="@/assets/audio/mix_gallery.mp3" type="audio/mp3" />
   </audio>
+  <img class="reloadBtn" @click="reload()" src="@/assets/refresh.png" />
   <!-- masonry 영역 ver2 -->
   <MasonryWall
     :items="[...galleryStore.galleryList].reverse()"
@@ -70,7 +71,6 @@
     </template>
   </MasonryWall>
   <!-- </div> -->
-
 </template>
 
 <script setup>
@@ -81,20 +81,24 @@ import { useMusicStore } from "@/store/music";
 import { onMounted } from "vue";
 import { useAccountStore } from "@/store/account";
 
-const userID = useAccountStore().userInfo.userId;
+const userId = useAccountStore().userInfo.userId;
 const router = useRouter();
 
 const galleryStore = useGalleryStore();
-const GalleryArticles = galleryStore.getGalleryList(userID);
+const GalleryArticles = galleryStore.getGalleryList(userId);
 GalleryArticles;
 
 // let items = galleryStore.galleryList;
 
+const reload = () => {
+  galleryStore.getGalleryList(userId);
+};
+
 const manageLike = (answerId, isMine) => {
   if (isMine === "TRUE") {
-    galleryStore.deleteLike(answerId, userID);
+    galleryStore.deleteLike(answerId, userId);
   } else {
-    galleryStore.addLike(answerId, userID);
+    galleryStore.addLike(answerId, userId);
   }
 };
 onMounted(() => {
@@ -175,6 +179,17 @@ video {
   margin: 0;
   padding: 0;
 } */
+
+.reloadBtn {
+  position: fixed;
+  bottom: 5%;
+  right: 3%;
+  width: 3em;
+}
+
+.reloadBtn:hover {
+  cursor: pointer;
+}
 
 /* masonry layout용 css */
 
