@@ -27,11 +27,11 @@ public class AnswerService {
 			.map(GalleryResponse::of)
 			.collect(Collectors.toList());
 
-		for (int i = 0; i < galleryResponses.size(); i++) {
+		for (GalleryResponse galleryResponse : galleryResponses) {
 			Optional<IsLike> result = likeRepository.findByUserIdAndAnswerId(userId,
-				galleryResponses.get(i).getAnswerId());
+				galleryResponse.getAnswerId());
 			if (result.isPresent()) {
-				galleryResponses.get(i).setIsMine();
+				galleryResponse.setIsMine();
 			}
 		}
 
