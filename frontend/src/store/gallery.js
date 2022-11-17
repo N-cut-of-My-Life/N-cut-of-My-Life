@@ -4,6 +4,9 @@ import { useAccountStore } from "@/store/account";
 import axios from "axios";
 
 export const useGalleryStore = defineStore("gallery", {
+  persist: {
+    storage: sessionStorage,
+  },
   state: () => ({
     galleryList: [],
   }),

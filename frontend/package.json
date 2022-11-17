@@ -25,6 +25,7 @@
     "imagesloaded": "^5.0.0",
     "jspdf": "^2.5.1",
     "pinia": "^2.0.23",
+    "pinia-plugin-persistedstate": "^2.4.0",
     "sweetalert2": "^11.6.8",
     "vue": "^3.2.13",
     "vue-audio": "^0.0.12",
