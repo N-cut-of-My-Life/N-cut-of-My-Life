@@ -4,6 +4,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline haha"
+    v-if="isAnswered[1]"
   >
     <ul>
       <li :style="[hahaShow ? { 'background-color': '#feb139' } : {}]">
@@ -11,9 +12,7 @@
         <div class="content" @mouseover="hahaShowPtag">
           <h3>가장 행복했던 때가 언제였는지 적어줘!</h3>
           <p v-show="hahaShow">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s.
+            {{ resultContents[1].contents }}
           </p>
         </div>
       </li>
@@ -24,6 +23,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline precious"
+    v-if="isAnswered[2]"
   >
     <ul>
       <li
@@ -39,9 +39,7 @@
         <div class="content" @mouseover="preciousShowPtag">
           <h3>너에게 가장 소중한 사람은 누구니?</h3>
           <p v-show="preciousShow">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s.
+            {{ resultContents[2].contents }}
           </p>
         </div>
       </li>
@@ -52,6 +50,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline sad"
+    v-if="isAnswered[3]"
   >
     <ul>
       <li :style="[sadShow ? { 'background-color': '#0a1931' } : {}]">
@@ -59,9 +58,7 @@
         <div class="content" @mouseover="sadShowPtag">
           <h3>너의 가장 슬펐던 기억을 적어주겠니?</h3>
           <p v-show="sadShow">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s.
+            {{ resultContents[3].contents }}
           </p>
         </div>
       </li>
@@ -72,6 +69,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline treasure"
+    v-if="isAnswered[4]"
   >
     <ul>
       <li :style="[treasureShow ? { 'background-color': '#ff7a00' } : {}]">
@@ -79,9 +77,7 @@
         <div class="content" @mouseover="treasureShowPtag">
           <h3>가장 소중히 여기는 물건이 뭔지 적어주겠니?</h3>
           <p v-show="treasureShow">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s.
+            {{ resultContents[4].contents }}
           </p>
         </div>
       </li>
@@ -92,6 +88,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline dream"
+    v-if="isAnswered[5]"
   >
     <ul>
       <li :style="[dreamShow ? { 'background-color': '#c56183' } : {}]">
@@ -99,9 +96,7 @@
         <div class="content" @mouseover="dreamShowPtag">
           <h3>이루지 못한꿈은 무엇이 있니? 잠시 맡겨두어도 좋단다!</h3>
           <p v-show="dreamShow">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s.
+            {{ resultContents[5].contents }}
           </p>
         </div>
       </li>
@@ -112,6 +107,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline regret"
+    v-if="isAnswered[6]"
   >
     <ul>
       <li :style="[regretShow ? { 'background-color': '#6d9886' } : {}]">
@@ -119,9 +115,7 @@
         <div class="content" @mouseover="regretShowPtag">
           <h3>후회되는 일은 여기 있는 후회쓰레기통에 버리고 가렴</h3>
           <p v-show="regretShow">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s.
+            {{ resultContents[6].contents }}
           </p>
         </div>
       </li>
@@ -132,6 +126,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline dumchit"
+    v-if="isAnswered[7]"
   >
     <ul>
       <li :style="[dumchitShow ? { 'background-color': '#f5c7a9' } : {}]">
@@ -139,9 +134,7 @@
         <div class="content" @mouseover="dumchitShowPtag">
           <h3>네가 가장 좋아하는 음악은 무엇이니?</h3>
           <p v-show="dumchitShow">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s.
+            {{ resultContents[7].contents }}
           </p>
         </div>
       </li>
@@ -152,6 +145,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline genie"
+    v-if="isAnswered[8]"
   >
     <ul>
       <li :style="[genieShow ? { 'background-color': '#b270a2' } : {}]">
@@ -159,9 +153,7 @@
         <div class="content" @mouseover="genieShowPtag">
           <h3>너의 소원은 무엇이니? 무엇이든 좋으니 적어볼래?</h3>
           <p v-show="genieShow">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s.
+            {{ resultContents[8].contents }}
           </p>
         </div>
       </li>
@@ -172,6 +164,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline lastword"
+    v-if="isAnswered[9]"
   >
     <ul>
       <li :style="[lastwordShow ? { 'background-color': '#d4f6cc' } : {}]">
@@ -179,9 +172,7 @@
         <div class="content" @mouseover="lastwordShowPtag">
           <h3>너에게 남기고 싶은 말이 있니?</h3>
           <p v-show="lastwordShow">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s.
+            {{ resultContents[9].contents }}
           </p>
         </div>
       </li>
@@ -190,9 +181,12 @@
 </template>
 
 <script>
+import { useResultStore } from "@/store/result";
 export default {
   data() {
     return {
+      isAnswered: [],
+      resultContents: [],
       hahaShow: false,
       preciousShow: false,
       sadShow: false,
@@ -203,6 +197,12 @@ export default {
       genieShow: false,
       lastwordShow: false,
     };
+  },
+  mounted() {
+    this.isAnswered = useResultStore().isInResult;
+    console.log(this.isAnswered);
+    this.resultContents = useResultStore().resultContents;
+    console.log(this.resultContents);
   },
   methods: {
     hahaShowPtag() {
