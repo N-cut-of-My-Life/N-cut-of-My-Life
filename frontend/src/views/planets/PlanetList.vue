@@ -328,7 +328,7 @@ body {
   height: 256px;
   max-width: 20%;
   max-height: auto;
-  background: #666 url("../../assets/planet/dearyou.png") repeat-x 0% 0%;
+  background: #666 url("../../assets/planet/forget.png") repeat-x 0% 0%;
   background-size: 512px 256px;
   margin-left: -188px;
   margin-top: -128px;
@@ -343,7 +343,7 @@ body {
   height: 256px;
   max-width: 20%;
   max-height: auto;
-  background: #666 url("../../assets/planet/forget.png") repeat-x 0% 0%;
+  background: #666 url("../../assets/planet/dearyou.png") repeat-x 0% 0%;
   background-size: 512px 256px;
   margin-left: -128px;
   margin-top: -128px;
