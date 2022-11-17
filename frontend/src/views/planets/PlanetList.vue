@@ -78,25 +78,24 @@
       v-b-tooltip.hover.top="'지니 행성'"
     />
   </div>
-  <div class="last">
-    <b-button
-      class="button_2"
-      v-show="getMinimumConditionsMet() === true"
-      @click="gotoLastWord"
-    >
-      <div class="wave">
-        <span style="--i: 1">여</span>
-        <span style="--i: 2">행</span>
-        <span style="--i: 3">을</span>
-        <span style="--i: 4">&nbsp;</span>
-        <span style="--i: 5">마</span>
-        <span style="--i: 6">칠</span>
-        <span style="--i: 7">래</span>
-        <span style="--i: 8">요</span>
-        <span style="--i: 9">!</span>
-      </div>
-    </b-button>
-  </div>
+
+  <b-button
+    class="button_2 last"
+    v-show="getMinimumConditionsMet() === true"
+    @click="gotoLastWord"
+  >
+    <div class="wave">
+      <span style="--i: 1">여</span>
+      <span style="--i: 2">행</span>
+      <span style="--i: 3">을</span>
+      <span style="--i: 4">&nbsp;</span>
+      <span style="--i: 5">마</span>
+      <span style="--i: 6">칠</span>
+      <span style="--i: 7">래</span>
+      <span style="--i: 8">요</span>
+      <span style="--i: 9">!</span>
+    </div>
+  </b-button>
 </template>
 
 <script>
@@ -328,7 +327,7 @@ body {
   height: 256px;
   max-width: 20%;
   max-height: auto;
-  background: #666 url("../../assets/planet/dearyou.png") repeat-x 0% 0%;
+  background: #666 url("../../assets/planet/forget.png") repeat-x 0% 0%;
   background-size: 512px 256px;
   margin-left: -188px;
   margin-top: -128px;
@@ -343,7 +342,7 @@ body {
   height: 256px;
   max-width: 20%;
   max-height: auto;
-  background: #666 url("../../assets/planet/forget.png") repeat-x 0% 0%;
+  background: #666 url("../../assets/planet/dearyou.png") repeat-x 0% 0%;
   background-size: 512px 256px;
   margin-left: -128px;
   margin-top: -128px;
@@ -523,7 +522,6 @@ body {
   border-radius: 0.8vw;
   /* border-color: #81c6e8; */
   background-color: #827397;
-  position: relative;
   margin: 300px auto 0;
   transition: all 0.3s ease-in-out 0s;
 }

@@ -24,7 +24,7 @@
       class="button_prev"
       size="sm"
     >
-      <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기
+      <strong>&lt;</strong>&nbsp;&nbsp;다른 행성 가기 🪐
     </b-button>
   </div>
   <div class="jump">
@@ -106,7 +106,7 @@
         font-weight: 400;
       "
     >
-      가장 행복했던 순간을 이 곳에 적어주세요!
+      가장 행복했던 순간을 이 곳에 적어주세요! 😊
     </div>
     <b-button
       class="img-btn"
