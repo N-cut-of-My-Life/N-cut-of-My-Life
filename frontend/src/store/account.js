@@ -8,6 +8,7 @@ export const useAccountStore = defineStore("account", {
     token: null,
     userInfo: {},
     myArticles: [],
+    planetVisited: 0,
   }),
   getters: {
     isLogin(state) {
@@ -56,6 +57,11 @@ export const useAccountStore = defineStore("account", {
       }).then((res) => {
         console.log(res.data);
         this.myArticles = res.data.data;
+        let visited = 0;
+        for (let item of res.data.data) {
+          visited = item.answers.length++;
+        }
+        this.planetVisited = visited;
       });
     },
   },
