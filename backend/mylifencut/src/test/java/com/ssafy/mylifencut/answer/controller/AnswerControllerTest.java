@@ -1,30 +1,13 @@
 package com.ssafy.mylifencut.answer.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.google.gson.Gson;
 import com.ssafy.mylifencut.answer.AnswerConstant;
@@ -40,6 +23,24 @@ import com.ssafy.mylifencut.like.dto.IsLikeResponse;
 import com.ssafy.mylifencut.like.exception.AlreadyLikeException;
 import com.ssafy.mylifencut.like.exception.NotExistLikeException;
 import com.ssafy.mylifencut.like.service.LikeService;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[답변 컨트롤러]")
@@ -251,12 +252,9 @@ class AnswerControllerTest {
 		@DisplayName("[실패] - 없는 갤러리 번호")
 		void notValidGallery() throws Exception {
 			// given
-			final String url = "/answer/";
+			final String url = "/answer/1/1";
 			final int userId = 1;
 			final int answerId = 1;
-			final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-			parameters.add("userId", Integer.toString(userId));
-			parameters.add("answerId", Integer.toString(answerId));
 			doThrow(new GalleryNotFoundException())
 				.when(answerService)
 				.getGalleryOne(1, 1);
@@ -264,7 +262,6 @@ class AnswerControllerTest {
 			// when
 			final ResultActions resultActions = mockMvc.perform(
 				MockMvcRequestBuilders.get(url)
-					.params(parameters)
 			);
 
 			// then
@@ -281,12 +278,9 @@ class AnswerControllerTest {
 		@DisplayName("[성공]")
 		void validGallery() throws Exception {
 			// given
-			final String url = "/answer/";
+			final String url = "/answer/1/1";
 			final int userId = 1;
 			final int answerId = 1;
-			final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-			parameters.add("userId", Integer.toString(userId));
-			parameters.add("answerId", Integer.toString(answerId));
 			final GalleryResponse galleryResponse = GalleryResponse.builder()
 				.id(1)
 				.userId(1)
@@ -303,7 +297,6 @@ class AnswerControllerTest {
 			// when
 			final ResultActions resultActions = mockMvc.perform(
 				MockMvcRequestBuilders.get(url)
-					.params(parameters)
 			);
 
 			// then
