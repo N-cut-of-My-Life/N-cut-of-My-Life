@@ -168,5 +168,54 @@ class AnswerServiceTest {
 			assertEquals(galleryResponse.getImgUrl(), result.getImgUrl());
 			assertEquals(galleryResponse.getIsMine(), result.getIsMine());
 		}
+
+		@Test
+		@DisplayName("[성공] - 갤러리 조회(좋아요 없는 경우)")
+		void myLikeIsNotIn() {
+			// given
+			final int userId = 1;
+			final int answerId = 1;
+			final LocalDateTime nowTime = LocalDateTime.now();
+			final User user = User.builder()
+				.id(userId)
+				.articles(Collections.emptyList())
+				.name("최주희")
+				.build();
+			final List<IsLike> likes = Collections.emptyList();
+			final Article article = Article.builder()
+				.id(answerId)
+				.user(user)
+				.answers(Collections.emptyList())
+				.createDate(nowTime)
+				.build();
+			final Answer answer = Answer.builder()
+				.id(answerId)
+				.article(article)
+				.questionId(1)
+				.contents("답변 내용")
+				.state(State.CLOSE)
+				.likes(likes)
+				.build();
+			GalleryResponse galleryResponse = GalleryResponse.of(answer);
+
+			doReturn(Optional.of(answer))
+				.when(answerRepository)
+				.findById(userId);
+			doReturn(Optional.empty())
+				.when(likeRepository)
+				.findByUserIdAndAnswerId(userId, answerId);
+
+			// when
+			GalleryResponse result = answerService.getGalleryOne(userId, answerId);
+
+			// then
+			assertEquals(galleryResponse.getId(), result.getId());
+			assertEquals(galleryResponse.getAnswerId(), result.getAnswerId());
+			assertEquals(galleryResponse.getLike(), result.getLike());
+			assertEquals(galleryResponse.getContents(), result.getContents());
+			assertEquals(galleryResponse.getUserId(), result.getUserId());
+			assertEquals(galleryResponse.getImgUrl(), result.getImgUrl());
+			assertEquals(galleryResponse.getIsMine(), result.getIsMine());
+		}
 	}
 }
