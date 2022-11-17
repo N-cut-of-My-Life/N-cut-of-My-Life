@@ -115,7 +115,7 @@ public class AnswerController {
 	})
 	@Operation(summary = "음악 검색", description = "검색어(keyword)를 이용해 노래 리스트를 검색합니다.")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "음악 검색 성공", response = GalleryResponse.class),
+			@ApiResponse(code = 200, message = "음악 검색 성공"),
 			@ApiResponse(code = 400, message = "음악 검색 실패")
 	})
 	@GetMapping("music/{keyword}")
