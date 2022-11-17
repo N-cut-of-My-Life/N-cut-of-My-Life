@@ -1,13 +1,28 @@
 package com.ssafy.mylifencut.answer.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.google.gson.Gson;
 import com.ssafy.mylifencut.answer.AnswerConstant;
@@ -23,24 +38,6 @@ import com.ssafy.mylifencut.like.dto.IsLikeResponse;
 import com.ssafy.mylifencut.like.exception.AlreadyLikeException;
 import com.ssafy.mylifencut.like.exception.NotExistLikeException;
 import com.ssafy.mylifencut.like.service.LikeService;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[답변 컨트롤러]")
@@ -194,7 +191,6 @@ class AnswerControllerTest {
 			final Integer userId = 3;
 			doReturn(Arrays.asList(
 				GalleryResponse.builder()
-					.id(1)
 					.userId(3)
 					.answerId(3)
 					.contents("답변내용")
@@ -202,7 +198,6 @@ class AnswerControllerTest {
 					.like(10)
 					.build(),
 				GalleryResponse.builder()
-					.id(2)
 					.userId(4)
 					.answerId(4)
 					.contents("답변내용이지롱")
@@ -210,7 +205,6 @@ class AnswerControllerTest {
 					.like(11)
 					.build(),
 				GalleryResponse.builder()
-					.id(3)
 					.userId(5)
 					.answerId(5)
 					.contents("답변내용입니당")
@@ -234,8 +228,7 @@ class AnswerControllerTest {
 			List<GalleryResponse> list = (List<GalleryResponse>)response.getData();
 			String[] contentsList = {"답변내용", "답변내용이지롱", "답변내용입니당"};
 			for (int i = 0; i < list.size(); i++) {
-				Map galleryResponse = (Map) list.get(i);
-				assertEquals((double)(i + 1), galleryResponse.get("id"));
+				Map galleryResponse = (Map)list.get(i);
 				assertEquals((double)(i + 3), galleryResponse.get("userId"));
 				assertEquals((double)(i + 10), galleryResponse.get("like"));
 				assertEquals("src/image", galleryResponse.get("imgUrl"));
@@ -282,7 +275,6 @@ class AnswerControllerTest {
 			final int userId = 1;
 			final int answerId = 1;
 			final GalleryResponse galleryResponse = GalleryResponse.builder()
-				.id(1)
 				.userId(1)
 				.answerId(1)
 				.contents("답변내용이지롱")
@@ -309,7 +301,6 @@ class AnswerControllerTest {
 			assertEquals(AnswerConstant.READ_GALLERY_SUCCESS_MESSAGE, response.getMessage());
 
 			Map map = (Map)response.getData();
-			assertEquals((double)galleryResponse.getId(), map.get("id"));
 			assertEquals((double)galleryResponse.getUserId(), map.get("userId"));
 			assertEquals((double)galleryResponse.getAnswerId(), map.get("answerId"));
 			assertEquals(galleryResponse.getContents(), map.get("contents"));
@@ -329,8 +320,9 @@ class AnswerControllerTest {
 			final String keyword = "sky";
 			final String url = "/answer/music/" + keyword;
 			List<MusicResponse> musicResponseList = new ArrayList<>();
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < 10; i++) {
 				musicResponseList.add(MusicResponse.builder().build());
+			}
 			doReturn(musicResponseList).when(answerService).searchMusic(KeyWordConverterToURI.converter(keyword));
 			//when
 			final ResultActions resultActions = mockMvc.perform(
