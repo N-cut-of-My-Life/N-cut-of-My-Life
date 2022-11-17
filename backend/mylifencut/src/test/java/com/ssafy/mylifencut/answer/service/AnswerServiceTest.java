@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -107,12 +108,65 @@ class AnswerServiceTest {
 			final int galleryId = 1;
 			doThrow(GalleryNotFoundException.class)
 				.when(answerRepository)
-				.findById(any());
+				.findById(userId);
 
 			// when
 
 			// then
 			assertThrows(GalleryNotFoundException.class, () -> answerService.getGalleryOne(userId, galleryId));
+		}
+
+		@Test
+		@DisplayName("[성공] - 갤러리 조회(좋아요 있는 경우)")
+		void myLikeIsIn() {
+			// given
+			final int userId = 1;
+			final int answerId = 1;
+			final LocalDateTime nowTime = LocalDateTime.now();
+			final User user = User.builder()
+				.id(userId)
+				.articles(Collections.emptyList())
+				.name("최주희")
+				.build();
+			final IsLike like = IsLike.builder()
+				.answer(Answer.builder().id(1).build())
+				.user(user).build();
+			final List<IsLike> likes = Collections.singletonList(like);
+			final Article article = Article.builder()
+				.id(answerId)
+				.user(user)
+				.answers(Collections.emptyList())
+				.createDate(nowTime)
+				.build();
+			final Answer answer = Answer.builder()
+				.id(answerId)
+				.article(article)
+				.questionId(1)
+				.contents("답변 내용")
+				.state(State.CLOSE)
+				.likes(likes)
+				.build();
+			GalleryResponse galleryResponse = GalleryResponse.of(answer);
+			galleryResponse.setIsMine();
+
+			doReturn(Optional.of(answer))
+				.when(answerRepository)
+				.findById(userId);
+			doReturn(Optional.of(like))
+				.when(likeRepository)
+				.findByUserIdAndAnswerId(any(), any());
+
+			// when
+			GalleryResponse result = answerService.getGalleryOne(userId, answerId);
+
+			// then
+			assertEquals(galleryResponse.getId(), result.getId());
+			assertEquals(galleryResponse.getAnswerId(), result.getAnswerId());
+			assertEquals(galleryResponse.getLike(), result.getLike());
+			assertEquals(galleryResponse.getContents(), result.getContents());
+			assertEquals(galleryResponse.getUserId(), result.getUserId());
+			assertEquals(galleryResponse.getImgUrl(), result.getImgUrl());
+			assertEquals(galleryResponse.getIsMine(), result.getIsMine());
 		}
 	}
 }
