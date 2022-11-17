@@ -3,6 +3,9 @@ import axios from "axios";
 import { xml2json } from "xml-js";
 
 export const useMusicStore = defineStore("music", {
+  persist: {
+    storage: sessionStorage,
+  },
   state: () => ({
     isMute: true,
     songs: [],
