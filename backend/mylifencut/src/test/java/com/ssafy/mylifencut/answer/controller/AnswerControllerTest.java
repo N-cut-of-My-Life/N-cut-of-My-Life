@@ -273,5 +273,53 @@ class AnswerControllerTest {
 			assertFalse(response.isSuccess());
 			assertEquals(AnswerConstant.GALLERY_NOT_FOUND_ERROR_MESSAGE, response.getMessage());
 		}
+
+		@Test
+		@DisplayName("[성공]")
+		void validGallery() throws Exception {
+			// given
+			final String url = "/answer/";
+			final int userId = 1;
+			final int answerId = 1;
+			final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+			parameters.add("userId", Integer.toString(userId));
+			parameters.add("answerId", Integer.toString(answerId));
+			final GalleryResponse galleryResponse = GalleryResponse.builder()
+				.id(1)
+				.userId(1)
+				.answerId(1)
+				.contents("답변내용이지롱")
+				.imgUrl("src/image")
+				.like(11)
+				.isMine(IsMine.FALSE)
+				.build();
+			doReturn(galleryResponse)
+				.when(answerService)
+				.getGalleryOne(userId, answerId);
+
+			// when
+			final ResultActions resultActions = mockMvc.perform(
+				MockMvcRequestBuilders.get(url)
+					.params(parameters)
+			);
+
+			// then
+			final BaseResponse response = gson.fromJson(resultActions.andReturn()
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+			resultActions.andExpect(status().isOk());
+			assertNotNull(response);
+			assertTrue(response.isSuccess());
+			assertEquals(AnswerConstant.READ_GALLERY_SUCCESS_MESSAGE, response.getMessage());
+			
+			Map map = (Map)response.getData();
+			assertEquals((double)galleryResponse.getId(), map.get("id"));
+			assertEquals((double)galleryResponse.getUserId(), map.get("userId"));
+			assertEquals((double)galleryResponse.getAnswerId(), map.get("answerId"));
+			assertEquals(galleryResponse.getContents(), map.get("contents"));
+			assertEquals(galleryResponse.getImgUrl(), map.get("imgUrl"));
+			assertEquals((double)galleryResponse.getLike(), map.get("like"));
+			assertEquals(galleryResponse.getIsMine().toString(), map.get("isMine"));
+		}
 	}
 }
