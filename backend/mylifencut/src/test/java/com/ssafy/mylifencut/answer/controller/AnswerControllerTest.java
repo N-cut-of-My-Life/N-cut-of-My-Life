@@ -247,10 +247,8 @@ class AnswerControllerTest {
 		void notValidGallery() throws Exception {
 			// given
 			final String url = "/answer";
-			final GalleryRequest galleryRequest = GalleryRequest.builder()
-				.userId(1)
-				.answerId(1)
-				.build();
+			final int userId = 1;
+			final int answerId = 1;
 			final GalleryResponse galleryResponse = GalleryResponse.builder()
 				.id(1)
 				.userId(1)
