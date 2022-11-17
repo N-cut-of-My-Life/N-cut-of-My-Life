@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.google.gson.Gson;
 import com.ssafy.mylifencut.answer.AnswerConstant;
 import com.ssafy.mylifencut.answer.dto.GalleryResponse;
+import com.ssafy.mylifencut.answer.dto.MusicResponse;
 import com.ssafy.mylifencut.answer.service.AnswerService;
+import com.ssafy.mylifencut.answer.util.KeyWordConverterToURI;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
 import com.ssafy.mylifencut.common.dto.BaseResponse;
 import com.ssafy.mylifencut.like.LikeConstant;
@@ -231,14 +234,41 @@ class AnswerControllerTest {
 			String[] contentsList = {"답변내용", "답변내용이지롱", "답변내용입니당"};
 			for (int i = 0; i < list.size(); i++) {
 				Map galleryResponse = (Map) list.get(i);
-				assertEquals((double) (i + 1), galleryResponse.get("id"));
-				assertEquals((double) (i + 3), galleryResponse.get("userId"));
-				assertEquals((double) (i + 10), galleryResponse.get("like"));
+				assertEquals((double)(i + 1), galleryResponse.get("id"));
+				assertEquals((double)(i + 3), galleryResponse.get("userId"));
+				assertEquals((double)(i + 10), galleryResponse.get("like"));
 				assertEquals("src/image", galleryResponse.get("imgUrl"));
-				assertEquals((double) (i + 3), galleryResponse.get("answerId"));
+				assertEquals((double)(i + 3), galleryResponse.get("answerId"));
 				assertEquals(contentsList[i], galleryResponse.get("contents"));
 			}
 		}
 	}
 
+	@Nested
+	@DisplayName("[음악 검색]")
+	class SearchMusicTest {
+		@Test
+		@DisplayName("[성공] - 음악 검색")
+		void searchMusic() throws Exception {
+			//given
+			final String keyword = "sky";
+			final String url = "/answer/music/" + keyword;
+			List<MusicResponse> musicResponseList = new ArrayList<>();
+			for (int i = 0; i < 10; i++)
+				musicResponseList.add(MusicResponse.builder().build());
+			doReturn(musicResponseList).when(answerService).searchMusic(KeyWordConverterToURI.converter(keyword));
+			//when
+			final ResultActions resultActions = mockMvc.perform(
+				MockMvcRequestBuilders.get(url)
+			);
+			final BaseResponse response = gson.fromJson(resultActions.andReturn()
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+			//then
+			resultActions.andExpect(status().isOk());
+			assertNotNull(response);
+			assertTrue(response.isSuccess());
+			assertEquals(AnswerConstant.SEARCH_MUSIC_SUCCESS_MESSAGE, response.getMessage());
+		}
+	}
 }
