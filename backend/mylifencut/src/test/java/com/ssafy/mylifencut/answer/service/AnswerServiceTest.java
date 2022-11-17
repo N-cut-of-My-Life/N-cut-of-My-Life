@@ -1,6 +1,7 @@
 package com.ssafy.mylifencut.answer.service;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
@@ -55,8 +56,8 @@ class AnswerServiceTest {
 			final User user1 = User.builder()
 				.id(2)
 				.articles(Collections.emptyList())
-					.name("유일권")
-					.build();
+				.name("유일권")
+				.build();
 			final Article article = Article.builder()
 				.user(user)
 				.answers(Collections.emptyList())
@@ -91,6 +92,25 @@ class AnswerServiceTest {
 			final List<GalleryResponse> result = answerService.getGalleryList(userId);
 			//then
 			assertThat(result).hasSize(2);
+		}
+	}
+
+	@Nested
+	@DisplayName("[갤러리 단건 조회]")
+	class GalleryReadOneTest {
+		@Test
+		@DisplayName("[실패] - 없는 갤러리 조회")
+		void notFoundError() {
+			// given
+			final int id = 1;
+			doReturn(new GalleryNotFoundException)
+				.when(answerRepository)
+				.findById(1);
+
+			// when
+
+			// then
+			assertThrows(GalleryNotFoundException.class, () -> answerRepository.findById(id));
 		}
 	}
 }
