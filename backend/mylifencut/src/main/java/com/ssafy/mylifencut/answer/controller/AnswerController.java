@@ -84,6 +84,18 @@ public class AnswerController {
 			HttpStatus.OK);
 	}
 
+
+	@ApiImplicitParams({
+			@ApiImplicitParam(
+					name = "X-AUTH-TOKEN",
+					value = "AccessToken",
+					required = true, dataType = "String", paramType = "header")
+	})
+	@Operation(summary = "갤러리 단건 조회", description = "답변 번호(answerId)와 유저 아이디(userId)를 이용하여 공개여부(STATE)가 OPEN 인 답변을 조회합니다. ")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "갤러리 단건 조회 성공", response = GalleryResponse.class),
+			@ApiResponse(code = 400, message = "갤러리 단건 조회 실패")
+	})
 	@GetMapping("/")
 	public ResponseEntity<BaseResponse> readGalleryOne(
 		@RequestParam(name = "userId") Integer userId,
@@ -95,6 +107,17 @@ public class AnswerController {
 		);
 	}
 
+	@ApiImplicitParams({
+			@ApiImplicitParam(
+					name = "X-AUTH-TOKEN",
+					value = "AccessToken",
+					required = true, dataType = "String", paramType = "header")
+	})
+	@Operation(summary = "음악 검색", description = "검색어(keyword)를 이용해 노래 리스트를 검색합니다.")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "음악 검색 성공", response = GalleryResponse.class),
+			@ApiResponse(code = 400, message = "음악 검색 실패")
+	})
 	@GetMapping("music/{keyword}")
 	public ResponseEntity<BaseResponse> searchMusic(@PathVariable("keyword") String keyword) throws Exception {
 		return new ResponseEntity<>(
