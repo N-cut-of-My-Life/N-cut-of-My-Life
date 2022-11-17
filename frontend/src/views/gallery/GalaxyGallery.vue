@@ -16,7 +16,7 @@
     </audio>
     <!-- masonry 영역 ver2 -->
     <MasonryWall
-      :items="galleryStore.galleryList.reverse()"
+      :items="[...galleryStore.galleryList].reverse()"
       :ssr-columns="1"
       :column-width="200"
       :gap="16"
