@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import com.google.gson.Gson;
 import com.ssafy.mylifencut.answer.AnswerConstant;
@@ -246,16 +248,20 @@ class AnswerControllerTest {
 		@DisplayName("[실패] - 없는 갤러리 번호")
 		void notValidGallery() throws Exception {
 			// given
-			final String url = "/answer";
+			final String url = "/answer/";
 			final int userId = 1;
 			final int answerId = 1;
-			doThrow(GalleryNotFoundException.class)
+			final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+			parameters.add("userId", Integer.toString(userId));
+			parameters.add("answerId", Integer.toString(answerId));
+			doThrow(new GalleryNotFoundException())
 				.when(answerService)
-				.getGalleryOne(userId, answerId);
+				.getGalleryOne(1, 1);
 
 			// when
 			final ResultActions resultActions = mockMvc.perform(
 				MockMvcRequestBuilders.get(url)
+					.params(parameters)
 			);
 
 			// then
