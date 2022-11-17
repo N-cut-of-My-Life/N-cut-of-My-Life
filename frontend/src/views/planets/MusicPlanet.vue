@@ -11,7 +11,7 @@
     volume="0.2"
   ></audio>
   <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
-  <img :src="images[currentImage]" alt="" />
+  <img class="bubble" :src="images[currentImage]" alt="" />
   <div class="other">
     <b-button
       @click="gotoPage({ name: 'planetlist' })"
@@ -129,7 +129,7 @@ body {
   margin: 0;
 }
 
-img {
+.bubble {
   position: absolute;
   top: 0;
   left: 0;

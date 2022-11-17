@@ -21,6 +21,7 @@
           style="padding: 0; border-radius: 0.5vw"
         >
           <img
+            class="info"
             :src="song.image"
             :alt="song.title"
             style="border-radius: 0.5vw"
@@ -154,7 +155,7 @@ let keyword = ref("");
   margin: 10px auto;
 }
 
-img {
+.info {
   width: 10%;
   height: auto;
 }
