@@ -32,7 +32,7 @@
                 <div class="bottom-title">총 여행횟수</div>
               </div>
               <div class="bottom-item">
-                <div class="bottom-title">다녀온 행성 수</div>
+                <div class="bottom-title">행성 방문 횟수</div>
               </div>
               <div class="bottom-item">
                 <div class="bottom-info">
@@ -41,7 +41,9 @@
               </div>
               <div class="bottom-item">
                 <div class="bottom-info">
-                  {{ accountStore.myArticles[idx]?.answers?.length - 1 }}
+                  {{
+                    accountStore.planetVisited - accountStore.myArticles?.length
+                  }}
                 </div>
               </div>
             </div>
@@ -88,14 +90,12 @@ import MyModal from "@/components/mypage/MyModal.vue";
 import { useRouter } from "vue-router";
 import { useAccountStore } from "@/store/account";
 import { ref } from "vue";
-// import { onMounted, ref } from "vue-demi";
 
 const router = useRouter();
 const accountStore = useAccountStore();
 // const myArticles = ref({});
 const user = accountStore.userInfo;
 
-let idx = ref(0);
 let isClicked = ref(false);
 const getCurIdx = (index) => {
   console.log(index);
@@ -103,8 +103,8 @@ const getCurIdx = (index) => {
 };
 accountStore.getMyArticles();
 // myArticles.value = accountStore.myArticles;
+
 console.log(accountStore.userInfo);
-// onMounted(() => {});
 
 const options = {
   perPage: 3,
