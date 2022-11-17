@@ -29,8 +29,8 @@ import org.springframework.util.MultiValueMap;
 import com.google.gson.Gson;
 import com.ssafy.mylifencut.answer.AnswerConstant;
 import com.ssafy.mylifencut.answer.dto.GalleryResponse;
-import com.ssafy.mylifencut.answer.exception.GalleryNotFoundException;
 import com.ssafy.mylifencut.answer.dto.MusicResponse;
+import com.ssafy.mylifencut.answer.exception.GalleryNotFoundException;
 import com.ssafy.mylifencut.answer.service.AnswerService;
 import com.ssafy.mylifencut.answer.util.KeyWordConverterToURI;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
@@ -326,6 +326,7 @@ class AnswerControllerTest {
 		}
 	}
 
+	@Nested
 	@DisplayName("[음악 검색]")
 	class SearchMusicTest {
 		@Test

@@ -22,8 +22,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.GalleryResponse;
-import com.ssafy.mylifencut.answer.exception.GalleryNotFoundException;
 import com.ssafy.mylifencut.answer.dto.MusicResponse;
+import com.ssafy.mylifencut.answer.exception.GalleryNotFoundException;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
 import com.ssafy.mylifencut.answer.util.KeyWordConverterToURI;
 import com.ssafy.mylifencut.article.domain.Article;
@@ -221,6 +221,7 @@ class AnswerServiceTest {
 		}
 	}
 
+	@Nested
 	@DisplayName("[음악 조회]")
 	class SearchMusicTest {
 
