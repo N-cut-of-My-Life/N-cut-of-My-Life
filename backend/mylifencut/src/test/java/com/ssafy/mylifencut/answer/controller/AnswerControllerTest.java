@@ -249,14 +249,6 @@ class AnswerControllerTest {
 			final String url = "/answer";
 			final int userId = 1;
 			final int answerId = 1;
-			final GalleryResponse galleryResponse = GalleryResponse.builder()
-				.id(1)
-				.userId(1)
-				.answerId(1)
-				.contents("답변내용이지롱")
-				.imgUrl("src/image")
-				.like(11)
-				.build();
 			doThrow(GalleryNotFoundException.class)
 				.when(answerService)
 				.getGalleryOne(userId, answerId);
@@ -276,5 +268,4 @@ class AnswerControllerTest {
 			assertEquals(AnswerConstant.GALLERY_NOT_FOUND_ERROR_MESSAGE, response.getMessage());
 		}
 	}
-
 }
