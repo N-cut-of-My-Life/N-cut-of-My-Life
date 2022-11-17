@@ -1,8 +1,21 @@
 package com.ssafy.mylifencut.answer.controller;
 
-import static com.ssafy.mylifencut.answer.AnswerConstant.*;
-import static com.ssafy.mylifencut.like.LikeConstant.*;
+import static com.ssafy.mylifencut.answer.AnswerConstant.READ_GALLERY_SUCCESS_MESSAGE;
+import static com.ssafy.mylifencut.answer.AnswerConstant.SEARCH_MUSIC_SUCCESS_MESSAGE;
+import static com.ssafy.mylifencut.like.LikeConstant.CREATE_LIKE_SUCCESS_MESSAGE;
+import static com.ssafy.mylifencut.like.LikeConstant.DELETE_LIKE_SUCCESS_MESSAGE;
 
+import com.ssafy.mylifencut.answer.dto.GalleryResponse;
+import com.ssafy.mylifencut.answer.service.AnswerService;
+import com.ssafy.mylifencut.answer.util.KeyWordConverterToURI;
+import com.ssafy.mylifencut.common.dto.BaseResponse;
+import com.ssafy.mylifencut.like.service.LikeService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,21 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.ssafy.mylifencut.answer.dto.GalleryResponse;
-import com.ssafy.mylifencut.answer.service.AnswerService;
-import com.ssafy.mylifencut.answer.util.KeyWordConverterToURI;
-import com.ssafy.mylifencut.common.dto.BaseResponse;
-import com.ssafy.mylifencut.like.service.LikeService;
-
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.v3.oas.annotations.Operation;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/answer")
@@ -96,14 +95,14 @@ public class AnswerController {
 			@ApiResponse(code = 200, message = "갤러리 단건 조회 성공", response = GalleryResponse.class),
 			@ApiResponse(code = 400, message = "갤러리 단건 조회 실패")
 	})
-	@GetMapping("/")
+	@GetMapping("/{answerId}/{userId}")
 	public ResponseEntity<BaseResponse> readGalleryOne(
-		@RequestParam(name = "userId") Integer userId,
-		@RequestParam(name = "answerId") Integer answerId) {
+			@PathVariable("userId") Integer userId,
+			@PathVariable("answerId") Integer answerId) {
 
 		return new ResponseEntity<>(
-			BaseResponse.from(true, READ_GALLERY_SUCCESS_MESSAGE, answerService.getGalleryOne(userId, answerId)),
-			HttpStatus.OK
+				BaseResponse.from(true, READ_GALLERY_SUCCESS_MESSAGE, answerService.getGalleryOne(userId, answerId)),
+				HttpStatus.OK
 		);
 	}
 

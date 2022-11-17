@@ -162,7 +162,6 @@ class AnswerServiceTest {
 			GalleryResponse result = answerService.getGalleryOne(userId, answerId);
 
 			// then
-			assertEquals(galleryResponse.getId(), result.getId());
 			assertEquals(galleryResponse.getAnswerId(), result.getAnswerId());
 			assertEquals(galleryResponse.getLike(), result.getLike());
 			assertEquals(galleryResponse.getContents(), result.getContents());
@@ -211,7 +210,6 @@ class AnswerServiceTest {
 			GalleryResponse result = answerService.getGalleryOne(userId, answerId);
 
 			// then
-			assertEquals(galleryResponse.getId(), result.getId());
 			assertEquals(galleryResponse.getAnswerId(), result.getAnswerId());
 			assertEquals(galleryResponse.getLike(), result.getLike());
 			assertEquals(galleryResponse.getContents(), result.getContents());
