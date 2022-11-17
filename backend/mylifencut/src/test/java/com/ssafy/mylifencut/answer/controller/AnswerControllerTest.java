@@ -259,7 +259,7 @@ class AnswerControllerTest {
 				.build();
 			doThrow(GalleryNotFoundException.class)
 				.when(answerService)
-				.getGalleryOne(1, 1);
+				.getGalleryOne(userId, answerId);
 
 			// when
 			final ResultActions resultActions = mockMvc.perform(
