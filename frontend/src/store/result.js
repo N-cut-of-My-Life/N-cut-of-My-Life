@@ -2,6 +2,9 @@ import { defineStore } from "pinia";
 import axios from "axios";
 
 export const useResultStore = defineStore("result", {
+  persist: {
+    storage: sessionStorage,
+  },
   state: () => ({
     from: "",
     resultArticle: [],
