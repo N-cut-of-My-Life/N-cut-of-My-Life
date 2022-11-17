@@ -25,8 +25,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.GalleryResponse;
+import com.ssafy.mylifencut.answer.exception.GalleryNotFoundException;
 import com.ssafy.mylifencut.answer.dto.MusicResponse;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
 import com.ssafy.mylifencut.like.domain.IsLike;
@@ -46,15 +48,25 @@ public class AnswerService {
 			.map(GalleryResponse::of)
 			.collect(Collectors.toList());
 
-		for (int i = 0; i < galleryResponses.size(); i++) {
+		for (GalleryResponse galleryResponse : galleryResponses) {
 			Optional<IsLike> result = likeRepository.findByUserIdAndAnswerId(userId,
-				galleryResponses.get(i).getAnswerId());
+				galleryResponse.getAnswerId());
 			if (result.isPresent()) {
-				galleryResponses.get(i).SetIsMine();
+				galleryResponse.setIsMine();
 			}
 		}
 
 		return galleryResponses;
+	}
+
+	public GalleryResponse getGalleryOne(int userId, int answerId) {
+		Answer answer = answerRepository.findById(answerId)
+			.orElseThrow(GalleryNotFoundException::new);
+		GalleryResponse galleryResponse = GalleryResponse.of(answer);
+		if (likeRepository.findByUserIdAndAnswerId(userId, answerId).isPresent()) {
+			galleryResponse.setIsMine();
+		}
+		return galleryResponse;
 	}
 
 	public List<MusicResponse> searchMusic(String requestUri) throws Exception {

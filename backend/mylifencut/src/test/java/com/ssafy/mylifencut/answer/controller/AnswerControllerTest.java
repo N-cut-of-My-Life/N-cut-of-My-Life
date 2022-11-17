@@ -23,11 +23,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import com.google.gson.Gson;
 import com.ssafy.mylifencut.answer.AnswerConstant;
 import com.ssafy.mylifencut.answer.dto.GalleryResponse;
 import com.ssafy.mylifencut.answer.dto.MusicResponse;
+import com.ssafy.mylifencut.answer.exception.GalleryNotFoundException;
 import com.ssafy.mylifencut.answer.service.AnswerService;
 import com.ssafy.mylifencut.answer.util.KeyWordConverterToURI;
 import com.ssafy.mylifencut.common.aop.ExceptionAdvice;
@@ -37,7 +40,6 @@ import com.ssafy.mylifencut.like.dto.IsLikeResponse;
 import com.ssafy.mylifencut.like.exception.AlreadyLikeException;
 import com.ssafy.mylifencut.like.exception.NotExistLikeException;
 import com.ssafy.mylifencut.like.service.LikeService;
-
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[답변 컨트롤러]")
@@ -65,7 +67,7 @@ class AnswerControllerTest {
 
 	@Nested
 	@DisplayName("[좋아요 추가]")
-	class LikeRegisterTest{
+	class LikeRegisterTest {
 		@Test
 		@DisplayName("[실패] - 이미 좋아요가 추가된 답변에 좋아요 등록")
 		void alreadyLike() throws Exception {
@@ -79,20 +81,19 @@ class AnswerControllerTest {
 				.createLike(userId, answerId);
 			//when
 			final ResultActions resultActions = mockMvc.perform(
-					MockMvcRequestBuilders.post(url)
-							.contentType(MediaType.APPLICATION_JSON)
+				MockMvcRequestBuilders.post(url)
+					.contentType(MediaType.APPLICATION_JSON)
 			);
 			//then
 			resultActions.andExpect(status().isBadRequest());
 
 			final BaseResponse response = gson.fromJson(resultActions.andReturn()
-					.getResponse()
-					.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 			Map map = (Map)response.getData();
 			assertNull(response.getData());
 			assertFalse(response.isSuccess());
 			assertEquals(LikeConstant.ALREADY_LIKE_EXIST_ERROR_MESSAGE, response.getMessage());
-
 
 		}
 
@@ -131,7 +132,7 @@ class AnswerControllerTest {
 
 	@Nested
 	@DisplayName("[좋아요 삭제]")
-	class DeleteLikeTest{
+	class DeleteLikeTest {
 		@Test
 		@DisplayName("[실패] - 좋아요가 눌리지 않은 답변에 좋아요 삭제 시도")
 		void notExistLike() throws Exception {
@@ -145,7 +146,7 @@ class AnswerControllerTest {
 			//when
 			final ResultActions resultActions = mockMvc.perform(
 				MockMvcRequestBuilders.delete(url)
-							.contentType(MediaType.APPLICATION_JSON)
+					.contentType(MediaType.APPLICATION_JSON)
 			);
 			//then
 			resultActions.andExpect(status().isBadRequest());
@@ -172,19 +173,18 @@ class AnswerControllerTest {
 			resultActions.andExpect(status().isNoContent());
 			final BaseResponse response = gson.fromJson(resultActions.andReturn()
 				.getResponse()
-					.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
 			Map map = (Map)response.getData();
 			assertNull(response.getData());
 			assertTrue(response.isSuccess());
 			assertEquals(LikeConstant.DELETE_LIKE_SUCCESS_MESSAGE, response.getMessage());
-
 
 		}
 	}
 
 	@Nested
 	@DisplayName("[갤러리 조회]")
-	class ReadGalleryTest{
+	class ReadGalleryTest {
 		@Test
 		@DisplayName("[성공] - 갤러리 조회")
 		void readGallery() throws Exception {
@@ -241,6 +241,88 @@ class AnswerControllerTest {
 				assertEquals((double)(i + 3), galleryResponse.get("answerId"));
 				assertEquals(contentsList[i], galleryResponse.get("contents"));
 			}
+		}
+	}
+
+	@Nested
+	@DisplayName("[답변 단건 조회]")
+	class GalleryReadOneTest {
+		@Test
+		@DisplayName("[실패] - 없는 갤러리 번호")
+		void notValidGallery() throws Exception {
+			// given
+			final String url = "/answer/";
+			final int userId = 1;
+			final int answerId = 1;
+			final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+			parameters.add("userId", Integer.toString(userId));
+			parameters.add("answerId", Integer.toString(answerId));
+			doThrow(new GalleryNotFoundException())
+				.when(answerService)
+				.getGalleryOne(1, 1);
+
+			// when
+			final ResultActions resultActions = mockMvc.perform(
+				MockMvcRequestBuilders.get(url)
+					.params(parameters)
+			);
+
+			// then
+			final BaseResponse response = gson.fromJson(resultActions.andReturn()
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+			resultActions.andExpect(status().isBadRequest());
+			assertNotNull(response);
+			assertFalse(response.isSuccess());
+			assertEquals(AnswerConstant.GALLERY_NOT_FOUND_ERROR_MESSAGE, response.getMessage());
+		}
+
+		@Test
+		@DisplayName("[성공]")
+		void validGallery() throws Exception {
+			// given
+			final String url = "/answer/";
+			final int userId = 1;
+			final int answerId = 1;
+			final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+			parameters.add("userId", Integer.toString(userId));
+			parameters.add("answerId", Integer.toString(answerId));
+			final GalleryResponse galleryResponse = GalleryResponse.builder()
+				.id(1)
+				.userId(1)
+				.answerId(1)
+				.contents("답변내용이지롱")
+				.imgUrl("src/image")
+				.like(11)
+				.isMine(IsMine.FALSE)
+				.build();
+			doReturn(galleryResponse)
+				.when(answerService)
+				.getGalleryOne(userId, answerId);
+
+			// when
+			final ResultActions resultActions = mockMvc.perform(
+				MockMvcRequestBuilders.get(url)
+					.params(parameters)
+			);
+
+			// then
+			final BaseResponse response = gson.fromJson(resultActions.andReturn()
+				.getResponse()
+				.getContentAsString(StandardCharsets.UTF_8), BaseResponse.class);
+			resultActions.andExpect(status().isOk());
+			assertNotNull(response);
+			assertTrue(response.isSuccess());
+			assertEquals(AnswerConstant.READ_GALLERY_SUCCESS_MESSAGE, response.getMessage());
+
+			Map map = (Map)response.getData();
+			assertEquals((double)galleryResponse.getId(), map.get("id"));
+			assertEquals((double)galleryResponse.getUserId(), map.get("userId"));
+			assertEquals((double)galleryResponse.getAnswerId(), map.get("answerId"));
+			assertEquals(galleryResponse.getContents(), map.get("contents"));
+			assertEquals(galleryResponse.getImgUrl(), map.get("imgUrl"));
+			assertEquals((double)galleryResponse.getLike(), map.get("like"));
+			assertEquals(galleryResponse.getIsMine().toString(), map.get("isMine"));
 		}
 	}
 

@@ -28,7 +28,7 @@ public class GalleryResponse {
 			.build();
 	}
 
-	public void SetIsMine() {
+	public void setIsMine() {
 		this.isMine = IsMine.TRUE;
 	}
 }
