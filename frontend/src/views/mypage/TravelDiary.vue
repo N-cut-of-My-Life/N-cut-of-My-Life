@@ -29,7 +29,7 @@
             </div>
             <div class="bottom">
               <div class="bottom-item">
-                <div class="bottom-title">여행횟수</div>
+                <div class="bottom-title">총 여행횟수</div>
               </div>
               <div class="bottom-item">
                 <div class="bottom-title">다녀온 행성 수</div>
@@ -49,7 +49,7 @@
         </div>
         <div class="prof-slide-part">
           <span class="prof-slide-title"
-            >{{ user.name }}님의 여행일지({{
+            >{{ user.name }}님의 여행기록({{
               accountStore.myArticles.length
             }})</span
           >
@@ -95,7 +95,7 @@ const accountStore = useAccountStore();
 // const myArticles = ref({});
 const user = accountStore.userInfo;
 
-let idx = ref(1);
+let idx = ref(0);
 let isClicked = ref(false);
 const getCurIdx = (index) => {
   console.log(index);
