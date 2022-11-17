@@ -31,7 +31,7 @@ public class AnswerService {
 			Optional<IsLike> result = likeRepository.findByUserIdAndAnswerId(userId,
 				galleryResponses.get(i).getAnswerId());
 			if (result.isPresent()) {
-				galleryResponses.get(i).SetIsMine();
+				galleryResponses.get(i).setIsMine();
 			}
 		}
 
