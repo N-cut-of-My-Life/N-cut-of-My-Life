@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -28,8 +29,8 @@ import org.w3c.dom.NodeList;
 import com.ssafy.mylifencut.answer.domain.Answer;
 import com.ssafy.mylifencut.answer.domain.State;
 import com.ssafy.mylifencut.answer.dto.GalleryResponse;
-import com.ssafy.mylifencut.answer.exception.GalleryNotFoundException;
 import com.ssafy.mylifencut.answer.dto.MusicResponse;
+import com.ssafy.mylifencut.answer.exception.GalleryNotFoundException;
 import com.ssafy.mylifencut.answer.repository.AnswerRepository;
 import com.ssafy.mylifencut.like.domain.IsLike;
 import com.ssafy.mylifencut.like.repository.LikeRepository;
@@ -78,7 +79,10 @@ public class AnswerService {
 			" AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
 		ResponseEntity<String> result = restTemplate.exchange(requestUri, HttpMethod.GET,
 			new HttpEntity<String>(headers), String.class);
+
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+		documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		final InputStream stream = new ByteArrayInputStream(
 			Objects.requireNonNull(result.getBody()).getBytes(StandardCharsets.UTF_8));
