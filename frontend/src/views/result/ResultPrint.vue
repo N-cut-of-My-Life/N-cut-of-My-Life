@@ -31,7 +31,6 @@ export default {
   name: "submission-detail",
   data() {
     return {
-      result: {},
       from: "",
       output: null,
       lastwordShow: false,
@@ -105,9 +104,7 @@ export default {
   },
   mounted() {
     useMusicStore().isSoundActive();
-    this.result = useResultStore().resultArticle;
     this.from = useResultStore().from;
-    console.log(this.result);
     console.log(this.from);
   },
 };
