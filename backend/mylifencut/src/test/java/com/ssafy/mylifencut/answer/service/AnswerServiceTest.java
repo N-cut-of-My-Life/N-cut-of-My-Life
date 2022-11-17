@@ -100,20 +100,12 @@ class AnswerServiceTest {
 	@DisplayName("[음악 조회]")
 	class SearchMusicTest {
 
-		/*@Mock
-		private MockRestServiceServer mockServer;*/
-
 		@Test
 		@DisplayName("[성공] - 음악조회")
 		void searchMusic() throws Exception {
 			//given
 			String keyword = "가을타나봐";
 			String expectedApiUrl = KeyWordConverterToURI.converter(keyword);
-		/*	mockServer
-				.expect(requestTo(expectedApiUrl))
-				.andExpect(method(HttpMethod.GET))
-				.andRespond(withSuccess(SEARCH_MUSIC_RESPONSE, MediaType.APPLICATION_ATOM_XML));*/
-			//when
 			List<MusicResponse> musicResponseList = answerService.searchMusic(expectedApiUrl);
 			//then
 			assertThat(musicResponseList).hasSize(10);
