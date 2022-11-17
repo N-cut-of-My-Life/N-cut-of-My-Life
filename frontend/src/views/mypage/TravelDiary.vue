@@ -14,7 +14,7 @@
   <div class="jumbotron">
     <div class="title">My Page</div>
     <main class="content">
-      <section>
+      <section style="width: 100%">
         <div class="back-square"></div>
         <div class="upper-part">
           <div class="upper-image">
@@ -29,19 +29,21 @@
             </div>
             <div class="bottom">
               <div class="bottom-item">
-                <div class="bottom-title">여행횟수</div>
+                <div class="bottom-title">총 여행횟수</div>
               </div>
               <div class="bottom-item">
-                <div class="bottom-title">다녀온 행성 수</div>
+                <div class="bottom-title">행성 방문 횟수</div>
               </div>
               <div class="bottom-item">
                 <div class="bottom-info">
-                  {{ accountStore.myArticles.length }}
+                  {{ accountStore.myArticles?.length }}
                 </div>
               </div>
               <div class="bottom-item">
                 <div class="bottom-info">
-                  {{ accountStore.myArticles[idx].answers.length - 1 }}
+                  {{
+                    accountStore.planetVisited - accountStore.myArticles?.length
+                  }}
                 </div>
               </div>
             </div>
@@ -49,7 +51,7 @@
         </div>
         <div class="prof-slide-part">
           <span class="prof-slide-title"
-            >{{ user.name }}님의 여행일지({{
+            >{{ user.name }}님의 여행기록({{
               accountStore.myArticles.length
             }})</span
           >
@@ -60,7 +62,7 @@
         <div class="carousel-part">
           <splide id="diary-carousel" :options="options">
             <template
-              v-for="(article, index) in accountStore.myArticles"
+              v-for="(article, index) in [...accountStore.myArticles].reverse()"
               :key="index"
             >
               <splide-slide @click="getCurIdx(index)">
@@ -77,42 +79,6 @@
           </splide>
         </div>
       </section>
-
-      <!-- <section class="diary-part">
-        상위 2개 아이템들
-        <div class="upper-items">
-          <div class="last-word">
-            <img src="@/assets/post_paper.png" />
-            <h1 class="text-shadow">
-              로렘 입숨
-            </h1>
-          </div>
-
-          <label class="l-button letter" for="lightbox-1">
-            <img src="@/assets/mailbox.png" class="letter-img" />
-          </label>
-        </div>
-        일지 상세
-        <div class="below-part">
-          <div class="strip">
-            <div class="film">
-              <div class="film__frame">
-                <img src="https://via.placeholder.com/1920x1080" />
-              </div>
-            </div>
-            <div class="film">
-              <div class="film__frame">
-                <img src="https://via.placeholder.com/1920x1080" />
-              </div>
-            </div>
-            <div class="film">
-              <div class="film__frame">
-                <img src="https://via.placeholder.com/1920x1080" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> -->
     </main>
   </div>
 </template>
@@ -124,14 +90,12 @@ import MyModal from "@/components/mypage/MyModal.vue";
 import { useRouter } from "vue-router";
 import { useAccountStore } from "@/store/account";
 import { ref } from "vue";
-// import { onMounted, ref } from "vue-demi";
 
 const router = useRouter();
 const accountStore = useAccountStore();
 // const myArticles = ref({});
 const user = accountStore.userInfo;
 
-let idx = ref(1);
 let isClicked = ref(false);
 const getCurIdx = (index) => {
   console.log(index);
@@ -139,8 +103,8 @@ const getCurIdx = (index) => {
 };
 accountStore.getMyArticles();
 // myArticles.value = accountStore.myArticles;
+
 console.log(accountStore.userInfo);
-// onMounted(() => {});
 
 const options = {
   perPage: 3,
@@ -447,6 +411,9 @@ body {
 
 <style>
 /* 캐러셀용 스타일 태그입니다. */
+#diary-carousel {
+  width: 100%;
+}
 .splide__arrow--prev {
   left: -2em;
 }
