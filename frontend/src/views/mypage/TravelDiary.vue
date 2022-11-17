@@ -30,26 +30,19 @@
             <div class="bottom">
               <div class="bottom-item">
                 <div class="bottom-title">여행횟수</div>
+              </div>
+              <div class="bottom-item">
+                <div class="bottom-title">다녀온 행성 수</div>
+              </div>
+              <div class="bottom-item">
                 <div class="bottom-info">
                   {{ accountStore.myArticles.length }}
                 </div>
               </div>
               <div class="bottom-item">
-                <div class="bottom-title">당신의 보물함</div>
-                <div class="bottom-info">보관된 보물이 없습니다.</div>
-                <!-- <div class="bottom-info">
-                  {{ accountStore.myArticles[idx].answers }}
-                </div> -->
-              </div>
-              <div class="bottom-item">
-                <div class="bottom-title">다녀온 행성</div>
                 <div class="bottom-info">
-                  {{ accountStore.myArticles[idx].answers.length }}
+                  {{ accountStore.myArticles[idx].answers.length - 1 }}
                 </div>
-              </div>
-              <div class="bottom-item">
-                <div class="bottom-title">당신의 소중한 사람</div>
-                <div class="bottom-info"></div>
               </div>
             </div>
           </div>
@@ -60,7 +53,9 @@
               accountStore.myArticles.length
             }})</span
           >
-          <span class="prof-slide-router">자세히 보기</span>
+          <span class="prof-slide-router" v-if="isClicked === true"
+            >자세히 보기 >></span
+          >
         </div>
         <div class="carousel-part">
           <splide id="diary-carousel" :options="options">
@@ -128,6 +123,7 @@ import "@splidejs/splide/dist/css/themes/splide-default.min.css";
 import MyModal from "@/components/mypage/MyModal.vue";
 import { useRouter } from "vue-router";
 import { useAccountStore } from "@/store/account";
+import { ref } from "vue";
 // import { onMounted, ref } from "vue-demi";
 
 const router = useRouter();
@@ -135,9 +131,11 @@ const accountStore = useAccountStore();
 // const myArticles = ref({});
 const user = accountStore.userInfo;
 
-let idx = 0;
+let idx = ref(1);
+let isClicked = ref(false);
 const getCurIdx = (index) => {
   console.log(index);
+  isClicked.value = true;
 };
 accountStore.getMyArticles();
 // myArticles.value = accountStore.myArticles;
@@ -262,25 +260,29 @@ body {
   font-family: "MapleStoryOTFBold";
 }
 .bottom {
-  margin-top: 2%;
   height: 80%;
   display: grid;
   grid-template-columns: 45% 45%;
   grid-template-rows: 40% 40%;
   justify-items: center;
-  align-items: center;
   gap: 10px;
+}
+.bottom-item:nth-child(1) {
+  align-self: end;
+}
+.bottom-item:nth-child(2) {
+  align-self: end;
 }
 .bottom-title {
   text-align: center;
-  font-family: "ONE-Mobile-Regular";
-  font-size: 1.1rem;
+  font-family: "ONE-Mobile-POP";
+  font-size: 1.3rem;
 }
 .bottom-info {
   text-align: center;
   font-family: "MaplestoryOTFBold";
-  font-size: 1.5rem;
-  color: azure;
+  font-size: 2.5rem;
+  color: rgb(248, 30, 88);
 }
 .prof-photo {
   width: 200px;
@@ -312,7 +314,7 @@ body {
   font-size: 2rem;
 }
 .prof-slide-router {
-  font-family: "Courier New", Courier, monospace;
+  font-family: "ONE-Mobile-Regular";
   position: absolute;
   top: 50%;
   right: 1%;
