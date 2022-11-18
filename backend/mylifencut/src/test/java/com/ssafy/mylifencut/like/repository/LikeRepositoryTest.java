@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -95,6 +96,7 @@ class LikeRepositoryTest {
 			//when
 			likeRepository.delete(isLike);
 			//then
+			assertEquals(Optional.empty(), likeRepository.findById(isLike.getId()));
 		}
 	}
 

@@ -23,8 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import com.google.gson.Gson;
 import com.ssafy.mylifencut.answer.AnswerConstant;
@@ -193,7 +191,6 @@ class AnswerControllerTest {
 			final Integer userId = 3;
 			doReturn(Arrays.asList(
 				GalleryResponse.builder()
-					.id(1)
 					.userId(3)
 					.answerId(3)
 					.contents("답변내용")
@@ -201,7 +198,6 @@ class AnswerControllerTest {
 					.like(10)
 					.build(),
 				GalleryResponse.builder()
-					.id(2)
 					.userId(4)
 					.answerId(4)
 					.contents("답변내용이지롱")
@@ -209,7 +205,6 @@ class AnswerControllerTest {
 					.like(11)
 					.build(),
 				GalleryResponse.builder()
-					.id(3)
 					.userId(5)
 					.answerId(5)
 					.contents("답변내용입니당")
@@ -233,8 +228,7 @@ class AnswerControllerTest {
 			List<GalleryResponse> list = (List<GalleryResponse>)response.getData();
 			String[] contentsList = {"답변내용", "답변내용이지롱", "답변내용입니당"};
 			for (int i = 0; i < list.size(); i++) {
-				Map galleryResponse = (Map) list.get(i);
-				assertEquals((double)(i + 1), galleryResponse.get("id"));
+				Map galleryResponse = (Map)list.get(i);
 				assertEquals((double)(i + 3), galleryResponse.get("userId"));
 				assertEquals((double)(i + 10), galleryResponse.get("like"));
 				assertEquals("src/image", galleryResponse.get("imgUrl"));
@@ -251,12 +245,9 @@ class AnswerControllerTest {
 		@DisplayName("[실패] - 없는 갤러리 번호")
 		void notValidGallery() throws Exception {
 			// given
-			final String url = "/answer/";
+			final String url = "/answer/1/1";
 			final int userId = 1;
 			final int answerId = 1;
-			final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-			parameters.add("userId", Integer.toString(userId));
-			parameters.add("answerId", Integer.toString(answerId));
 			doThrow(new GalleryNotFoundException())
 				.when(answerService)
 				.getGalleryOne(1, 1);
@@ -264,7 +255,6 @@ class AnswerControllerTest {
 			// when
 			final ResultActions resultActions = mockMvc.perform(
 				MockMvcRequestBuilders.get(url)
-					.params(parameters)
 			);
 
 			// then
@@ -281,14 +271,10 @@ class AnswerControllerTest {
 		@DisplayName("[성공]")
 		void validGallery() throws Exception {
 			// given
-			final String url = "/answer/";
+			final String url = "/answer/1/1";
 			final int userId = 1;
 			final int answerId = 1;
-			final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-			parameters.add("userId", Integer.toString(userId));
-			parameters.add("answerId", Integer.toString(answerId));
 			final GalleryResponse galleryResponse = GalleryResponse.builder()
-				.id(1)
 				.userId(1)
 				.answerId(1)
 				.contents("답변내용이지롱")
@@ -303,7 +289,6 @@ class AnswerControllerTest {
 			// when
 			final ResultActions resultActions = mockMvc.perform(
 				MockMvcRequestBuilders.get(url)
-					.params(parameters)
 			);
 
 			// then
@@ -316,7 +301,6 @@ class AnswerControllerTest {
 			assertEquals(AnswerConstant.READ_GALLERY_SUCCESS_MESSAGE, response.getMessage());
 
 			Map map = (Map)response.getData();
-			assertEquals((double)galleryResponse.getId(), map.get("id"));
 			assertEquals((double)galleryResponse.getUserId(), map.get("userId"));
 			assertEquals((double)galleryResponse.getAnswerId(), map.get("answerId"));
 			assertEquals(galleryResponse.getContents(), map.get("contents"));
@@ -336,8 +320,9 @@ class AnswerControllerTest {
 			final String keyword = "sky";
 			final String url = "/answer/music/" + keyword;
 			List<MusicResponse> musicResponseList = new ArrayList<>();
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < 10; i++) {
 				musicResponseList.add(MusicResponse.builder().build());
+			}
 			doReturn(musicResponseList).when(answerService).searchMusic(KeyWordConverterToURI.converter(keyword));
 			//when
 			final ResultActions resultActions = mockMvc.perform(
