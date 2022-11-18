@@ -142,7 +142,7 @@ const complete = () => {
   elementVisible_2.value = true;
   elementVisible_3.value = true;
   elementVisible_5.value = true;
-  setTimeout(() => (elementVisible_4.value = true), 2000);
+  setTimeout(() => (elementVisible_4.value = true), 1000);
 };
 const endthisPlanet = () => {
   elementVisible.value = false;

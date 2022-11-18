@@ -23,13 +23,14 @@
     <div v-if="modalShow == true" class="img-modal">
       <img class="selected-img" :src="selectedImage" />
     </div>
-    <img
-      v-if="modalShow == true"
-      class="modal-x-btn"
-      src="@/assets/xButton/x_genie.svg"
-      alt=""
-      @click="toggleModal()"
-    />
+    <div class="modal-x-btn">
+      <img
+        v-if="modalShow == true"
+        src="@/assets/xButton/x_galaxy.svg"
+        alt=""
+        @click="toggleModal()"
+      />
+    </div>
     <!-- masonry 영역 ver2 -->
     <MasonryWall
       :items="[...galleryStore.galleryList].reverse()"
@@ -294,7 +295,8 @@ video {
 }
 
 .selected-img {
-  width: 30%;
+  width: auto;
+  max-height: 100vh;
   margin: auto;
 }
 
@@ -302,6 +304,8 @@ video {
   cursor: pointer;
   float: right;
   position: fixed;
+  top: 2%;
+  right: 1%;
 }
 
 @keyframes fadein {
@@ -355,6 +359,60 @@ video {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-moz-keyframes fadeout {
+  /* Firefox */
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes fadeout {
+  /* Safari and Chrome */
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-o-keyframes fadeout {
+  /* Opera */
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-moz-keyframes fadeout {
+  /* Firefox */
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 </style>

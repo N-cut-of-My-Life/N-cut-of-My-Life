@@ -20,24 +20,6 @@
         >
           <br />
           <h3>Something</h3>
-          <ul
-            v-for="(song, index) in musicStore.songs"
-            :key="index"
-            class="song"
-            style="padding: 0; border-radius: 0.5vw"
-            @click="select(song)"
-          >
-            <img
-              class="info"
-              :src="song.img"
-              :alt="song.title"
-              style="border-radius: 0.5vw"
-            />
-            <div class="title-artist">
-              <div class="title">{{ song.title }}</div>
-              <div class="artist">{{ song.artist }}</div>
-            </div>
-          </ul>
         </div>
         <div v-else>
           <ul
