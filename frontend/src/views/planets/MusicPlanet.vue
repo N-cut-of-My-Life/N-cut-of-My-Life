@@ -52,7 +52,7 @@
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
     <b-button
-      v-show="elementVisible"
+      v-show="elementVisible && !elementVisible_5"
       class="button_2"
       size="md"
       href="#openModal-about"
@@ -73,7 +73,7 @@
       </div>
     </b-button>
   </div>
-  <div class="last">
+  <div class="last_2">
     <b-button
       v-show="elementVisible_4"
       class="button_3"
@@ -124,6 +124,7 @@ let elementVisible = ref(false);
 let elementVisible_2 = ref(false);
 let elementVisible_3 = ref(false);
 let elementVisible_4 = ref(false);
+let elementVisible_5 = ref(false);
 const currentAudio = ref(0);
 
 const nextImage = () => {
@@ -140,9 +141,11 @@ const complete = () => {
   elementVisible.value = false;
   elementVisible_2.value = true;
   elementVisible_3.value = true;
+  elementVisible_5.value = true;
   setTimeout(() => (elementVisible_4.value = true), 2000);
 };
 const endthisPlanet = () => {
+  elementVisible.value = false;
   router.push({ name: "planetlist" });
 };
 onUpdated(() => {
@@ -224,7 +227,14 @@ body {
 .last {
   position: absolute;
   bottom: 15%;
-  left: 45%;
+  left: 44.5%;
+  margin: auto;
+}
+
+.last_2 {
+  position: absolute;
+  bottom: 15%;
+  left: 43%;
   margin: auto;
 }
 
@@ -266,6 +276,30 @@ body {
   animation: ring 1.5s infinite;
 }
 
+.button_3 {
+  border-radius: 1vw;
+  border: none;
+  background-color: orange;
+  position: relative;
+  margin: 300px auto 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.button_3::before {
+  content: "";
+  border-radius: 1000px;
+  min-width: calc(250px + 12px);
+  min-height: calc(60px + 12px);
+  box-shadow: 0 0 60px #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  transition: all 0.3s ease-in-out 0s;
+  animation: ring 1.5s infinite;
+}
+
 .button_2:hover,
 .button_2:focus {
   color: #313133;
@@ -279,6 +313,23 @@ body {
 
 .button_2:hover::after,
 .button_2:focus::after {
+  animation: none;
+  display: none;
+}
+
+.button_3:hover,
+.button_3:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.button_3:hover::before,
+.button_3:focus::before {
+  opacity: 1;
+}
+
+.button_3:hover::after,
+.button_3:focus::after {
   animation: none;
   display: none;
 }
