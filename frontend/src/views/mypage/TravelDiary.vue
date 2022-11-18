@@ -56,7 +56,11 @@
           <span class="prof-slide-title">
             {{ user.name }}님의 여행기록({{ accountStore.myArticles.length }})
           </span>
-          <span class="prof-slide-router" v-if="isClicked === true">
+          <span
+            class="prof-slide-router"
+            v-if="isClicked === true"
+            @click="toResultPage"
+          >
             자세히 보기 >>
           </span>
         </div>
@@ -66,7 +70,7 @@
               v-for="(article, index) in [...accountStore.myArticles].reverse()"
               :key="index"
             >
-              <splide-slide @click="getCurIdx(index)">
+              <splide-slide @click="getCurIdx(index, article)">
                 <div class="prof-journals">
                   <div class="journal">
                     <img src="@/assets/space_diary.png" class="journal-img" />
@@ -107,20 +111,31 @@ import "@splidejs/splide/dist/css/themes/splide-default.min.css";
 import MyModal from "@/components/mypage/MyModal.vue";
 import { useRouter } from "vue-router";
 import { useAccountStore } from "@/store/account";
+import { useResultStore } from "@/store/result";
 import { ref } from "vue";
 
 const router = useRouter();
 const accountStore = useAccountStore();
-// const myArticles = ref({});
+const resultStore = useResultStore();
 const user = accountStore.userInfo;
 
 let isClicked = ref(false);
-const getCurIdx = (index) => {
+let clickedArticle = {};
+const getCurIdx = (index, article) => {
   console.log(index);
   isClicked.value = true;
+  clickedArticle = article;
+  console.log(clickedArticle);
 };
 accountStore.getMyArticles();
 // myArticles.value = accountStore.myArticles;
+
+const toResultPage = () => {
+  resultStore.resultArticle = clickedArticle.answers;
+  resultStore.from = "myPage";
+  resultStore.isExsitingAnswer();
+  router.push("resultprint");
+};
 
 console.log(accountStore.userInfo);
 
