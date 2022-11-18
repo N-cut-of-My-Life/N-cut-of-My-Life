@@ -41,7 +41,9 @@
               </div>
               <div class="bottom-item">
                 <div class="bottom-info">
-                  {{ accountStore.planetVisited }}
+                  {{
+                    accountStore.planetVisited - accountStore.myArticles?.length
+                  }}
                 </div>
               </div>
             </div>
