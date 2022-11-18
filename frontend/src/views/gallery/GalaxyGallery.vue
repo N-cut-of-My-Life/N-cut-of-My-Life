@@ -1,6 +1,6 @@
 <template>
   <GalleryLoader v-if="isLoading"></GalleryLoader>
-  <div>
+  <div v-else>
     <video muted autoplay loop playbackRate="0.9">
       <source src="@/assets/galaxy.mp4" type="video/mp4" />
     </video>
@@ -80,20 +80,24 @@ import { onMounted } from 'vue';
 import { useAccountStore } from '@/store/account';
 import GalleryLoader from '@/load/GalleryLoader.vue';
 
-const userID = useAccountStore().userInfo.userId;
+const userId = useAccountStore().userInfo.userId;
 const router = useRouter();
 
 const galleryStore = useGalleryStore();
-const GalleryArticles = galleryStore.getGalleryList(userID);
+const GalleryArticles = galleryStore.getGalleryList(userId);
 GalleryArticles;
 
 // let items = galleryStore.galleryList;
 
+const reload = () => {
+  galleryStore.getGalleryList(userId);
+};
+
 const manageLike = (answerId, isMine) => {
-  if (isMine === 'TRUE') {
-    galleryStore.deleteLike(answerId, userID);
+  if (isMine === "TRUE") {
+    galleryStore.deleteLike(answerId, userId);
   } else {
-    galleryStore.addLike(answerId, userID);
+    galleryStore.addLike(answerId, userId);
   }
 };
 onMounted(() => {
@@ -188,6 +192,17 @@ video {
   margin: 0;
   padding: 0;
 } */
+
+.reloadBtn {
+  position: fixed;
+  bottom: 5%;
+  right: 3%;
+  width: 3em;
+}
+
+.reloadBtn:hover {
+  cursor: pointer;
+}
 
 /* masonry layout용 css */
 

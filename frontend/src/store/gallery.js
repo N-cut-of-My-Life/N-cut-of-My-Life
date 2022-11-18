@@ -16,7 +16,7 @@ export const useGalleryStore = defineStore("gallery", {
     getGalleryList(userID) {
       this.isLoading=true;
       axios({
-        url: index.answer.getGallery(userID),
+        url: index.answer.getGalleryList(userId),
         method: "GET",
         headers: { "X-AUTH-TOKEN": useAccountStore().token },
       })
@@ -30,31 +30,49 @@ export const useGalleryStore = defineStore("gallery", {
           this.isLoading=false
         });
     },
-
-    addLike(answerID, userID) {
+    getGalleryOne(answerId, userId) {
       axios({
-        url: index.answer.manageLike(answerID, userID),
+        url: index.answer.getGalleryOne(answerId, userId),
+        method: "GET",
+        headers: { "X-AUTH-TOKEN": useAccountStore().token },
+      })
+        .then((res) => {
+          for (let gallery of this.galleryList) {
+            if (gallery.answerId == res.data.data.answerId) {
+              gallery.like = res.data.data.like;
+              gallery.isMine = res.data.data.isMine;
+              break;
+            }
+          }
+        })
+        .catch((e) => {
+          console.log("error", e);
+        });
+    },
+    addLike(answerId, userId) {
+      axios({
+        url: index.answer.manageLike(answerId, userId),
         method: "POST",
         headers: { "X-AUTH-TOKEN": useAccountStore().token },
       })
         .then((res) => {
           console.log(res.data);
-          this.getGalleryList(userID);
+          this.getGalleryOne(answerId, userId);
         })
         .catch((err) => {
           console.log(err);
         });
     },
 
-    deleteLike(answerID, userID) {
+    deleteLike(answerId, userId) {
       axios({
-        url: index.answer.manageLike(answerID, userID),
+        url: index.answer.manageLike(answerId, userId),
         method: "DELETE",
         headers: { "X-AUTH-TOKEN": useAccountStore().token },
       })
         .then((res) => {
           console.log(res.data);
-          this.getGalleryList(userID);
+          this.getGalleryOne(answerId, userId);
         })
         .catch((err) => {
           console.log(err);

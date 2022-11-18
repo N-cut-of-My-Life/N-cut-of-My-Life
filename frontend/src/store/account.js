@@ -4,6 +4,10 @@ import axios from "axios";
 import router from "@/router";
 
 export const useAccountStore = defineStore("account", {
+  persist: {
+    storage: sessionStorage,
+    paths: ["userInfo", "myArticles", "planetVisited"],
+  },
   state: () => ({
     token: null,
     userInfo: {},
