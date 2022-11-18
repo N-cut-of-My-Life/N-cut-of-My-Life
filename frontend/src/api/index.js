@@ -12,8 +12,9 @@ export default {
   },
 
   answer: {
-    getGallery: (userID) => HOST + ANSWER + `${userID}`,
-    manageLike: (answerID, userID) => HOST + ANSWER + `${answerID}/${userID}`,
+    getGalleryList : (userId) => HOST + ANSWER + `${userId}`,
+    getGalleryOne : (answerId, userId) => HOST + ANSWER + `${answerId}/${userId}`,
+    manageLike: (answerId, userId) => HOST + ANSWER + `${answerId}/${userId}`,
   },
 
   article: {
