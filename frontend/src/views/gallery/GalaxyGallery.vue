@@ -5,7 +5,11 @@
       <source src="@/assets/galaxy.mp4" type="video/mp4" />
     </video>
     <div class="other">
-      <b-button @click="router.push({ name: 'introfirstpage' })" class="button_prev" size="sm">
+      <b-button
+        @click="router.push({ name: 'introfirstpage' })"
+        class="button_prev"
+        size="sm"
+      >
         <strong>&lt;</strong>&nbsp;&nbsp;HOME
       </b-button>
     </div>
@@ -15,6 +19,7 @@
     <audio loop autoplay volume="0.3">
       <source src="@/assets/audio/mix_gallery.mp3" type="audio/mp3" />
     </audio>
+    <img class="reloadBtn" @click="reload()" src="@/assets/refresh.png" />
     <!-- masonry 영역 ver2 -->
     <MasonryWall
       :items="[...galleryStore.galleryList].reverse()"
@@ -25,7 +30,12 @@
       <template #default="{ item }">
         <div class="common" :style="randomBackgroundColor()">
           <!-- api호출이 아닌 상태이기 떄문에 추후 변경:require 이후 코드 -->
-          <img v-if="item.imgUrl" :src="item.imgUrl" alt="" class="item-image" />
+          <img
+            v-if="item.imgUrl"
+            :src="item.imgUrl"
+            alt=""
+            class="item-image"
+          />
           <span class="content">{{ item.contents }}</span>
           <b-row>
             <b-col cols="8"></b-col>
@@ -72,13 +82,13 @@
 </template>
 
 <script setup>
-import MasonryWall from '@yeger/vue-masonry-wall';
-import { useRouter } from 'vue-router';
-import { useGalleryStore } from '@/store/gallery';
-import { useMusicStore } from '@/store/music';
-import { onMounted } from 'vue';
-import { useAccountStore } from '@/store/account';
-import GalleryLoader from '@/load/GalleryLoader.vue';
+import MasonryWall from "@yeger/vue-masonry-wall";
+import { useRouter } from "vue-router";
+import { useGalleryStore } from "@/store/gallery";
+import { useMusicStore } from "@/store/music";
+import { onMounted } from "vue";
+import { useAccountStore } from "@/store/account";
+import GalleryLoader from "@/load/GalleryLoader.vue";
 
 const userId = useAccountStore().userInfo.userId;
 const router = useRouter();
@@ -106,38 +116,38 @@ onMounted(() => {
 
 const randomBackgroundColor = () => {
   const colors = [
-    '#ffeecd',
-    '#fff9d6',
+    "#ffeecd",
+    "#fff9d6",
     // '#daffcf',
-    '#dcfffd',
-    '#e1edff',
-    '#f0e7ff',
-    '#ffecfa',
-    '#ffe7e8',
+    "#dcfffd",
+    "#e1edff",
+    "#f0e7ff",
+    "#ffecfa",
+    "#ffe7e8",
     // 'white',
-    '#ffe1e1',
-    '#fffad7',
-    '#cdf0ea',
-    '#fff5e4',
-    '#d6efed',
-    '#d3cedf',
-    '#f1f0c0',
-    '#fefbe7',
-    '#d3dedc',
-    '#eed7ce',
-    '#ded9c4',
-    '#f9f9f9',
+    "#ffe1e1",
+    "#fffad7",
+    "#cdf0ea",
+    "#fff5e4",
+    "#d6efed",
+    "#d3cedf",
+    "#f1f0c0",
+    "#fefbe7",
+    "#d3dedc",
+    "#eed7ce",
+    "#ded9c4",
+    "#f9f9f9",
   ];
   const idx = Math.floor(Math.random() * colors.length);
-  return 'background-color: ' + colors[idx];
+  return "background-color: " + colors[idx];
 };
 </script>
 
 <style scoped>
 @font-face {
-  font-family: 'KyoboHand';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff')
-    format('woff');
+  font-family: "KyoboHand";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
