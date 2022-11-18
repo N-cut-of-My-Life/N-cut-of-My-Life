@@ -53,7 +53,7 @@
             </p>
           </div>
           <div v-show="preciousShow">
-            <img :src="images[8]" />
+            <img :src="images[2]" />
           </div>
         </div>
       </li>
@@ -77,7 +77,7 @@
             </p>
           </div>
           <div v-show="sadShow">
-            <img :src="images[2]" />
+            <img :src="images[3]" />
           </div>
         </div>
       </li>
@@ -129,7 +129,7 @@
             </p>
           </div>
           <div v-show="dreamShow">
-            <img :src="images[4]" />
+            <img :src="images[5]" />
           </div>
         </div>
       </li>
@@ -153,7 +153,7 @@
             </p>
           </div>
           <div v-show="regretShow">
-            <img :src="images[5]" />
+            <img :src="images[6]" />
           </div>
         </div>
       </li>
@@ -177,7 +177,7 @@
             </p>
           </div>
           <div v-show="dumchitShow">
-            <img :src="images[6]" />
+            <img :src="images[7]" />
           </div>
         </div>
       </li>
@@ -201,7 +201,7 @@
             </p>
           </div>
           <div v-show="genieShow">
-            <img :src="images[7]" />
+            <img :src="images[8]" />
           </div>
         </div>
       </li>
