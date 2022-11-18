@@ -21,4 +21,8 @@ export default {
     getDiary: (userID) => HOST + ARTICLE + `${userID}`,
     postDiary: () => HOST + ARTICLE,
   },
+
+  music: {
+    getMusic: (keyword) => HOST + ANSWER + "music/" + `${keyword}`,
+  },
 };

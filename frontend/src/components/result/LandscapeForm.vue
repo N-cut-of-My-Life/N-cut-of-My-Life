@@ -124,10 +124,13 @@
             너의 소원은 무엇이니?<br />무엇이든 좋으니 적어볼래?
           </p>
         </div>
-        <img src="@/assets/space.svg" style="position: absolute; top: -10rem" />
+        <img
+          src="@/assets/space.svg"
+          style="position: absolute; left: 5rem; top: -10rem"
+        />
         <img
           src="@/assets/genie.svg"
-          style="position: absolute; top: 10rem; left: 4rem"
+          style="position: absolute; top: 10rem; left: 2.4rem"
         />
       </li>
     </ol>
@@ -136,29 +139,16 @@
 
 <script></script>
 <style scoped>
-.genie::before {
-  border-block-width: 0px !important;
-}
-
 .planet {
   position: absolute;
-}
-
-.result-print ol li:nth-child(odd) img {
-  top: 10vh;
-  left: 50%;
-}
-
-.result-print ol li:nth-child(even) img {
-  left: 50%;
-  bottom: 10vh;
 }
 
 .result-print {
   display: -webkit-flex;
   display: flex;
+  width: 100vw;
   height: 100vh;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   overflow: hidden;
   background: black;
   -webkit-align-items: center;
@@ -169,34 +159,34 @@
 .result-print ol {
   -webkit-flex: 1;
   flex: 1;
-  font-size: 0;
-  width: 100vw;
+  /* font-size: 0; */
+  /* width: 100vw; */
   padding: 15rem 0;
-  transition: all 1s;
+  /* transition: all 1s; */
 }
 .result-print ol li {
   position: relative;
   display: inline-block;
-  list-style-type: none;
-  width: 11.2%;
+  /* list-style-type: none; */
+  width: 12rem;
   height: 0.5rem;
   background: #fff;
 }
 .result-print ol li:first-child {
-  width: 8%;
+  width: 8rem;
 }
 .result-print ol li:last-child {
-  width: 12%;
+  width: 10rem;
 }
 .result-print ol li:not(:first-child) {
-  margin-left: 1rem;
+  margin-left: 0rem;
 }
 .result-print ol li:not(:last-child)::after {
   content: "";
   position: absolute;
   top: 50%;
-  left: calc(100% - 0.5rem);
-  bottom: 0;
+  left: calc(100% - 0.6rem);
+  /* bottom: 0; */
   width: 2rem;
   height: 2rem;
   transform: translateY(-50%);
@@ -204,14 +194,27 @@
   background: linear-gradient(to right, #f3f3f3, #b5b5b5);
   z-index: 20;
 }
+.result-print ol li:nth-child(1) img {
+  top: 4rem;
+  left: 2.4rem;
+}
+.result-print ol li:not(:first-child):nth-child(odd) img {
+  top: 4rem;
+  left: 6rem;
+}
+
+.result-print ol li:nth-child(even) img {
+  left: 6.2rem;
+  bottom: 5rem;
+}
 .result-print ol li div {
   position: absolute;
-  left: calc(50% - 2.5rem);
+  left: 4rem;
   width: 16rem;
   padding: 1rem;
   padding-left: 5rem;
   font-size: 1rem;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   color: white;
   background: transparent;
 }
@@ -219,7 +222,7 @@
 .result-print ol li:first-child div::before {
   content: "";
   position: absolute;
-  top: 100%;
+  /* top: 50%; */
   left: 8.2rem;
   width: 0;
   height: 0;
@@ -230,7 +233,7 @@
 .result-print ol li:not(:first-child) div::before {
   content: "";
   position: absolute;
-  top: 100%;
+  /* top: 100%; */
   left: 8.2rem;
   width: 0;
   height: 0;
@@ -262,5 +265,8 @@
 }
 .ctnt {
   overflow-wrap: normal;
+}
+.genie::before {
+  border-block-width: 0px !important;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <music-modal></music-modal>
+  <music-modal @complete="complete"></music-modal>
   <div class="jumbotron">
     <div class="title">둠칫둠칫 행성</div>
   </div>
@@ -11,7 +11,12 @@
     volume="0.2"
   ></audio>
   <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
-  <img class="bubble" :src="images[currentImage]" alt="" />
+  <img
+    class="bubble"
+    :src="images[currentImage]"
+    alt=""
+    v-show="!elementVisible_2"
+  />
   <div class="other">
     <b-button
       @click="gotoPage({ name: 'planetlist' })"
@@ -47,10 +52,11 @@
   </div>
   <div v-if="currentImage === images.length - 1" class="last">
     <b-button
-      v-show="elementVisible"
+      v-show="elementVisible && !elementVisible_5"
       class="button_2"
       size="md"
       href="#openModal-about"
+      @click="useMusicStore().songs = []"
     >
       <div class="wave">
         <span style="--i: 1">음</span>
@@ -64,6 +70,31 @@
         <span style="--i: 9">가</span>
         <span style="--i: 10">기</span>
         <span style="--i: 11">!</span>
+      </div>
+    </b-button>
+  </div>
+  <div class="last_2">
+    <b-button
+      v-show="elementVisible_4"
+      class="button_3"
+      size="md"
+      @click="endthisPlanet()"
+    >
+      <div class="wave">
+        <span style="--i: 1">둠</span>
+        <span style="--i: 2">칫</span>
+        <span style="--i: 3">둠</span>
+        <span style="--i: 4">칫</span>
+        <span style="--i: 5">&nbsp;</span>
+        <span style="--i: 6">행</span>
+        <span style="--i: 7">성</span>
+        <span style="--i: 8">&nbsp;</span>
+        <span style="--i: 9">여</span>
+        <span style="--i: 10">행</span>
+        <span style="--i: 11">&nbsp;</span>
+        <span style="--i: 12">마</span>
+        <span style="--i: 13">치</span>
+        <span style="--i: 14">기</span>
       </div>
     </b-button>
   </div>
@@ -90,6 +121,10 @@ const audios = [
 ];
 let currentImage = ref(0);
 let elementVisible = ref(false);
+let elementVisible_2 = ref(false);
+let elementVisible_3 = ref(false);
+let elementVisible_4 = ref(false);
+let elementVisible_5 = ref(false);
 const currentAudio = ref(0);
 
 const nextImage = () => {
@@ -100,6 +135,18 @@ const previousImage = () => {
 };
 const gotoPage = (link) => {
   router.push(link);
+};
+const complete = () => {
+  console.log("EMIT");
+  elementVisible.value = false;
+  elementVisible_2.value = true;
+  elementVisible_3.value = true;
+  elementVisible_5.value = true;
+  setTimeout(() => (elementVisible_4.value = true), 2000);
+};
+const endthisPlanet = () => {
+  elementVisible.value = false;
+  router.push({ name: "planetlist" });
 };
 onUpdated(() => {
   if (currentImage.value == images.length - 1) {
@@ -180,7 +227,14 @@ body {
 .last {
   position: absolute;
   bottom: 15%;
-  left: 45%;
+  left: 44.5%;
+  margin: auto;
+}
+
+.last_2 {
+  position: absolute;
+  bottom: 15%;
+  left: 43%;
   margin: auto;
 }
 
@@ -222,6 +276,30 @@ body {
   animation: ring 1.5s infinite;
 }
 
+.button_3 {
+  border-radius: 1vw;
+  border: none;
+  background-color: orange;
+  position: relative;
+  margin: 300px auto 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.button_3::before {
+  content: "";
+  border-radius: 1000px;
+  min-width: calc(250px + 12px);
+  min-height: calc(60px + 12px);
+  box-shadow: 0 0 60px #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  transition: all 0.3s ease-in-out 0s;
+  animation: ring 1.5s infinite;
+}
+
 .button_2:hover,
 .button_2:focus {
   color: #313133;
@@ -235,6 +313,23 @@ body {
 
 .button_2:hover::after,
 .button_2:focus::after {
+  animation: none;
+  display: none;
+}
+
+.button_3:hover,
+.button_3:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.button_3:hover::before,
+.button_3:focus::before {
+  opacity: 1;
+}
+
+.button_3:hover::after,
+.button_3:focus::after {
   animation: none;
   display: none;
 }

@@ -1,5 +1,6 @@
 <template>
-  <div style="display: grid">
+  <GalleryLoader v-if="isLoading"></GalleryLoader>
+  <div v-else style="display: grid">
     <video muted autoplay loop playbackRate="0.9" style="width: 100%">
       <source src="@/assets/galaxy.mp4" type="video/mp4" />
     </video>
@@ -9,7 +10,7 @@
         class="button_prev"
         size="sm"
       >
-        <strong>&lt;</strong>&nbsp;&nbsp;홈페이지
+        <strong>&lt;</strong>&nbsp;&nbsp;HOME
       </b-button>
     </div>
 
@@ -88,9 +89,6 @@
       </template>
     </MasonryWall>
   </div>
-  <!-- <div v-if="modalShow == true">
-    안녕하세요!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  </div> -->
 </template>
 
 <script setup>
@@ -99,6 +97,7 @@ import { useGalleryStore } from "@/store/gallery";
 import { useMusicStore } from "@/store/music";
 import { ref, onMounted } from "vue";
 import { useAccountStore } from "@/store/account";
+import GalleryLoader from "@/load/GalleryLoader.vue";
 
 const userId = useAccountStore().userInfo.userId;
 const router = useRouter();
@@ -131,13 +130,25 @@ const randomBackgroundColor = () => {
   const colors = [
     "#ffeecd",
     "#fff9d6",
-    "#daffcf",
+    // '#daffcf',
     "#dcfffd",
     "#e1edff",
     "#f0e7ff",
     "#ffecfa",
     "#ffe7e8",
-    "white",
+    // 'white',
+    "#ffe1e1",
+    "#fffad7",
+    "#cdf0ea",
+    "#fff5e4",
+    "#d6efed",
+    "#d3cedf",
+    "#f1f0c0",
+    "#fefbe7",
+    "#d3dedc",
+    "#eed7ce",
+    "#ded9c4",
+    "#f9f9f9",
   ];
   const idx = Math.floor(Math.random() * colors.length);
   return "background-color: " + colors[idx];
@@ -178,7 +189,7 @@ const toggleModal = () => {
   background-color: #e1edff;
   color: #141414;
   border-radius: 0.8vw;
-  border-color: #ffffff;
+  border: none;
 }
 .title {
   text-align: center;
@@ -188,19 +199,21 @@ const toggleModal = () => {
   font-size: 2vw;
   font-weight: 600;
   margin-bottom: 2%;
+  margin-top: 0;
   font-family: KyoboHand;
 }
 
 video {
   position: fixed;
-  width: 100%;
-  min-height: 100vh;
-  width: 100%;
+  min-width: 100%;
+  width: auto;
+  height: auto;
+  min-height: 100%;
   z-index: -100;
   background-size: cover;
-  -webkit-background-size: cover;
+  /* -webkit-background-size: cover;
   -moz-background-size: cover;
-  -o-background-size: cover;
+  -o-background-size: cover; */
   margin: 0;
   padding: 0;
 }
@@ -254,6 +267,7 @@ video {
   -moz-user-select: text; /* Old versions of Firefox */
   -ms-user-select: text; /* Internet Explorer/Edge */
   user-select: text;
+  font-size: 1.2vw;
 }
 .like {
   text-align: end;
