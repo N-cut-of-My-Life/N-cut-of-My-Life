@@ -47,8 +47,9 @@
 <script setup>
 import { useMusicStore } from "@/store/music";
 import { usePlanetStore } from "@/store/planet";
-import { ref } from "vue";
+import { defineEmits, ref } from "vue";
 import Swal from "sweetalert2";
+const emit = defineEmits(["complete"]);
 const musicStore = useMusicStore();
 let selected = "";
 const complete = () => {
@@ -64,6 +65,7 @@ const complete = () => {
     });
     return;
   }
+  emit("complete");
   usePlanetStore().completePlanet(6, selected);
 };
 let keyword = ref("");

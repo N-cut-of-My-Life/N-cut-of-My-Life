@@ -1,5 +1,5 @@
 <template>
-  <music-modal></music-modal>
+  <music-modal @complete="complete"></music-modal>
   <div class="jumbotron">
     <div class="title">둠칫둠칫 행성</div>
   </div>
@@ -11,7 +11,12 @@
     volume="0.2"
   ></audio>
   <!-- <a href="javascript:void(0);" @click="toggleMute()">Mute/Unmute</a> -->
-  <img class="bubble" :src="images[currentImage]" alt="" />
+  <img
+    class="bubble"
+    :src="images[currentImage]"
+    alt=""
+    v-show="!elementVisible_2"
+  />
   <div class="other">
     <b-button
       @click="gotoPage({ name: 'planetlist' })"
@@ -68,6 +73,31 @@
       </div>
     </b-button>
   </div>
+  <div class="last">
+    <b-button
+      v-show="elementVisible_4"
+      class="button_3"
+      size="md"
+      @click="endthisPlanet()"
+    >
+      <div class="wave">
+        <span style="--i: 1">둠</span>
+        <span style="--i: 2">칫</span>
+        <span style="--i: 3">둠</span>
+        <span style="--i: 4">칫</span>
+        <span style="--i: 5">&nbsp;</span>
+        <span style="--i: 6">행</span>
+        <span style="--i: 7">성</span>
+        <span style="--i: 8">&nbsp;</span>
+        <span style="--i: 9">여</span>
+        <span style="--i: 10">행</span>
+        <span style="--i: 11">&nbsp;</span>
+        <span style="--i: 12">마</span>
+        <span style="--i: 13">치</span>
+        <span style="--i: 14">기</span>
+      </div>
+    </b-button>
+  </div>
 </template>
 
 <script setup>
@@ -91,6 +121,9 @@ const audios = [
 ];
 let currentImage = ref(0);
 let elementVisible = ref(false);
+let elementVisible_2 = ref(false);
+let elementVisible_3 = ref(false);
+let elementVisible_4 = ref(false);
 const currentAudio = ref(0);
 
 const nextImage = () => {
@@ -101,6 +134,16 @@ const previousImage = () => {
 };
 const gotoPage = (link) => {
   router.push(link);
+};
+const complete = () => {
+  console.log("EMIT");
+  elementVisible.value = false;
+  elementVisible_2.value = true;
+  elementVisible_3.value = true;
+  setTimeout(() => (elementVisible_4.value = true), 2000);
+};
+const endthisPlanet = () => {
+  router.push({ name: "planetlist" });
 };
 onUpdated(() => {
   if (currentImage.value == images.length - 1) {
