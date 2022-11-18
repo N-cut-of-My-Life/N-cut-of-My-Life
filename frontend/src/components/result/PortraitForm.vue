@@ -32,7 +32,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline precious"
-    v-if="isAnswered[2]"
+    v-if="isAnswered[8]"
   >
     <ul>
       <li
@@ -49,11 +49,11 @@
           <div>
             <h3>너에게 가장 소중한 사람은 누구니?</h3>
             <p v-show="preciousShow">
-              {{ resultContents[2].contents }}
+              {{ resultContents[8].contents }}
             </p>
           </div>
           <div v-show="preciousShow">
-            <img :src="images[2]" />
+            <img :src="images[8]" />
           </div>
         </div>
       </li>
@@ -64,7 +64,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline sad"
-    v-if="isAnswered[3]"
+    v-if="isAnswered[2]"
   >
     <ul>
       <li :style="[sadShow ? { 'background-color': '#0a1931' } : {}]">
@@ -73,11 +73,11 @@
           <div>
             <h3>너의 가장 슬펐던 기억을 적어주겠니?</h3>
             <p v-show="sadShow">
-              {{ resultContents[3].contents }}
+              {{ resultContents[2].contents }}
             </p>
           </div>
           <div v-show="sadShow">
-            <img :src="images[3]" />
+            <img :src="images[2]" />
           </div>
         </div>
       </li>
@@ -88,7 +88,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline treasure"
-    v-if="isAnswered[4]"
+    v-if="isAnswered[3]"
   >
     <ul>
       <li :style="[treasureShow ? { 'background-color': '#ff7a00' } : {}]">
@@ -97,13 +97,13 @@
           <div>
             <h3>가장 소중히 여기는 물건이 뭔지 적어주겠니?</h3>
             <p v-show="treasureShow">
-              {{ resultContents[4].contents }}
+              {{ resultContents[3].contents }}
             </p>
           </div>
           <div v-show="treasureShow">
             <img
               :src="[
-                resultContents[4].imgUrl ? resultContents[4].imgUrl : images[4],
+                resultContents[3].imgUrl ? resultContents[3].imgUrl : images[4],
               ]"
             />
           </div>
@@ -116,7 +116,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline dream"
-    v-if="isAnswered[5]"
+    v-if="isAnswered[4]"
   >
     <ul>
       <li :style="[dreamShow ? { 'background-color': '#c56183' } : {}]">
@@ -125,11 +125,11 @@
           <div>
             <h3>이루지 못한꿈은 무엇이 있니? 잠시 맡겨두어도 좋단다!</h3>
             <p v-show="dreamShow">
-              {{ resultContents[5].contents }}
+              {{ resultContents[4].contents }}
             </p>
           </div>
           <div v-show="dreamShow">
-            <img :src="images[5]" />
+            <img :src="images[4]" />
           </div>
         </div>
       </li>
@@ -140,7 +140,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline regret"
-    v-if="isAnswered[6]"
+    v-if="isAnswered[5]"
   >
     <ul>
       <li :style="[regretShow ? { 'background-color': '#6d9886' } : {}]">
@@ -149,11 +149,11 @@
           <div>
             <h3>후회되는 일은 여기 있는 후회쓰레기통에 버리고 가렴</h3>
             <p v-show="regretShow">
-              {{ resultContents[6].contents }}
+              {{ resultContents[5].contents }}
             </p>
           </div>
           <div v-show="regretShow">
-            <img :src="images[6]" />
+            <img :src="images[5]" />
           </div>
         </div>
       </li>
@@ -164,7 +164,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline dumchit"
-    v-if="isAnswered[7]"
+    v-if="isAnswered[6]"
   >
     <ul>
       <li :style="[dumchitShow ? { 'background-color': '#f5c7a9' } : {}]">
@@ -173,11 +173,11 @@
           <div>
             <h3>네가 가장 좋아하는 음악은 무엇이니?</h3>
             <p v-show="dumchitShow">
-              {{ resultContents[7].contents }}
+              {{ resultContents[6].contents }}
             </p>
           </div>
           <div v-show="dumchitShow">
-            <img :src="images[7]" />
+            <img :src="images[6]" />
           </div>
         </div>
       </li>
@@ -188,7 +188,7 @@
     data-aos-offset="50"
     data-aos-easing="ease-in-sine"
     class="timeline genie"
-    v-if="isAnswered[8]"
+    v-if="isAnswered[7]"
   >
     <ul>
       <li :style="[genieShow ? { 'background-color': '#b270a2' } : {}]">
@@ -197,11 +197,11 @@
           <div>
             <h3>너의 소원은 무엇이니? 무엇이든 좋으니 적어볼래?</h3>
             <p v-show="genieShow">
-              {{ resultContents[8].contents }}
+              {{ resultContents[7].contents }}
             </p>
           </div>
           <div v-show="genieShow">
-            <img :src="images[8]" />
+            <img :src="images[7]" />
           </div>
         </div>
       </li>
