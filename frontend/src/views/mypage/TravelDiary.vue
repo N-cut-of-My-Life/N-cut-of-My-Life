@@ -14,7 +14,7 @@
   <div class="jumbotron">
     <div class="title">My Page</div>
     <main class="content">
-      <section style="width: 100%">
+      <section>
         <div class="back-square"></div>
         <div class="upper-part">
           <div class="upper-image">
@@ -49,7 +49,10 @@
             </div>
           </div>
         </div>
-        <div class="prof-slide-part">
+        <div
+          class="prof-slide-part"
+          v-if="accountStore.myArticles.length !== 0"
+        >
           <span class="prof-slide-title"
             >{{ user.name }}님의 여행기록({{
               accountStore.myArticles.length
@@ -59,7 +62,7 @@
             >자세히 보기 >></span
           >
         </div>
-        <div class="carousel-part">
+        <div class="carousel-part" v-if="accountStore.myArticles.length !== 0">
           <splide id="diary-carousel" :options="options">
             <template
               v-for="(article, index) in [...accountStore.myArticles].reverse()"
@@ -77,6 +80,23 @@
               </splide-slide>
             </template>
           </splide>
+        </div>
+        <!-- 아무것도 없을 때 -->
+        <div class="for-new-user" v-else>
+          <div class="img-container">
+            <img src="@/assets/rocket.png" alt="" class="no-info-img" />
+          </div>
+          <div class="no-info-box">
+            <h3 class="no-info-title">여행 기록이 없습니다</h3>
+            <p class="no-info-text">여행을 떠나보세요!</p>
+            <b-button
+              class="no-info-button"
+              size="md"
+              @click="router.push({ name: 'introfirstpage' })"
+            >
+              HOME
+            </b-button>
+          </div>
         </div>
       </section>
     </main>
@@ -138,8 +158,19 @@ const options = {
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: "KyoboHand";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 body {
   margin: 0;
+}
+section {
+  width: 100%;
+  height: 100%;
 }
 .other {
   position: absolute;
@@ -305,108 +336,47 @@ body {
   scale: 1.05;
 }
 
-/* 오른쪽 파트 */
-/* 페이지 재구성에 따라 주석처리, 혹시 다시 쓰일까봐 지우지는 않겠음 */
-/* .diary-part {
-  width: 52%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.for-new-user {
+  width: 70%;
+  margin: 0 auto;
 }
-
-.upper-items {
+.img-container {
   display: flex;
-}
-
-.last-word {
-  position: relative;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
+  margin: 1% auto;
+  width: 30%;
+  height: 80%;
 }
-
-.last-word img {
-  width: 100%;
+.no-info-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-.text-shadow {
-  font-family: "MapleStoryOTFBold";
-  font-size: 1.5rem;
-  color: black;
-  position: absolute;
-  width: 75%;
-  top: 40%;
-  left: 15%;
-  word-wrap: break-word;
+.no-info-img {
+  width: 90%;
+  background: #bebaba71;
+  border-radius: 15%;
 }
-
-.l-button {
-  display: inline-block;
-  margin: 0;
-  padding: 10px 15px;
+.no-info-box {
+  width: 35%;
+  margin: 0 auto;
+}
+.no-info-title {
+  color: #ffffff;
+  font-weight: 400;
+  font-family: "KyoboHand";
+}
+.no-info-text {
+  color: #ffffffd3;
+  font-family: "KyoboHand";
+}
+.no-info-button {
+  background-color: #ce0ca4;
   border: none;
-  color: #fff;
-  text-align: center;
-  font-size: 14px;
-  font-weight: bold;
-  -webkit-transition: 0.3s all ease-in-out;
-  transition: 0.3s all ease-in-out;
 }
-
-.letter-img {
-  width: 15vw;
-  transform: rotate(180deg) scaleY(-1);
+.no-info-button:active {
+  background-color: #70095a;
 }
-
-.letter-img:hover {
-  scale: 1.1;
-}
-
-.strip {
-  display: flex;
-}
-
-.strip + .strip {
-  margin-top: 1rem;
-}
-
-.film {
-  aspect-ratio: 16 / 9;
-  background: #000;
-  background-image: linear-gradient(to right, #fff, #fff),
-    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
-    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
-    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
-    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
-    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
-    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
-    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
-    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
-    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
-    linear-gradient(to right, #fff, #fff), linear-gradient(to right, #fff, #fff),
-    linear-gradient(to right, #fff, #fff);
-
-  background-repeat: no-repeat;
-  background-position: 5% 5%, 15% 5%, 25% 5%, 35% 5%, 45% 5%, 55% 5%, 65% 5%,
-    75% 5%, 85% 5%, 95% 5%, 5% 95%, 15% 95%, 25% 95%, 35% 95%, 45% 95%, 55% 95%,
-    65% 95%, 75% 95%, 85% 95%, 95% 95%;
-
-  background-size: 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%,
-    5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%, 5% 8%,
-    5% 8%, 5% 8%;
-}
-
-.film__frame {
-  padding: 13% 5%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.film img {
-  max-width: 100%;
-  border-radius: 2px;
-} */
 </style>
 
 <style>
