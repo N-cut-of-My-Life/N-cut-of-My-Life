@@ -53,14 +53,12 @@
           class="prof-slide-part"
           v-if="accountStore.myArticles.length !== 0"
         >
-          <span class="prof-slide-title"
-            >{{ user.name }}님의 여행기록({{
-              accountStore.myArticles.length
-            }})</span
-          >
-          <span class="prof-slide-router" v-if="isClicked === true"
-            >자세히 보기 >></span
-          >
+          <span class="prof-slide-title">
+            {{ user.name }}님의 여행기록({{ accountStore.myArticles.length }})
+          </span>
+          <span class="prof-slide-router" v-if="isClicked === true">
+            자세히 보기 >>
+          </span>
         </div>
         <div class="carousel-part" v-if="accountStore.myArticles.length !== 0">
           <splide id="diary-carousel" :options="options">
