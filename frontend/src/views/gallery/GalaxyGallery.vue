@@ -1,7 +1,7 @@
 <template>
   <GalleryLoader v-if="isLoading"></GalleryLoader>
-  <div v-else>
-    <video muted autoplay loop playbackRate="0.9">
+  <div v-else style="display: grid">
+    <video muted autoplay loop playbackRate="0.9" style="width: 100%">
       <source src="@/assets/galaxy.mp4" type="video/mp4" />
     </video>
     <div class="other">
@@ -20,6 +20,16 @@
       <source src="@/assets/audio/mix_gallery.mp3" type="audio/mp3" />
     </audio>
     <img class="reloadBtn" @click="reload()" src="@/assets/refresh.png" />
+    <div v-if="modalShow == true" class="img-modal">
+      <img class="selected-img" :src="selectedImage" />
+    </div>
+    <img
+      v-if="modalShow == true"
+      class="modal-x-btn"
+      src="@/assets/xButton/x_genie.svg"
+      alt=""
+      @click="toggleModal()"
+    />
     <!-- masonry 영역 ver2 -->
     <MasonryWall
       :items="[...galleryStore.galleryList].reverse()"
@@ -35,6 +45,7 @@
             :src="item.imgUrl"
             alt=""
             class="item-image"
+            @click="showImgModal(item.imgUrl)"
           />
           <span class="content">{{ item.contents }}</span>
           <b-row>
@@ -77,16 +88,14 @@
         </div>
       </template>
     </MasonryWall>
-    <!-- </div> -->
   </div>
 </template>
 
 <script setup>
-import MasonryWall from "@yeger/vue-masonry-wall";
 import { useRouter } from "vue-router";
 import { useGalleryStore } from "@/store/gallery";
 import { useMusicStore } from "@/store/music";
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useAccountStore } from "@/store/account";
 import GalleryLoader from "@/load/GalleryLoader.vue";
 
@@ -96,6 +105,9 @@ const router = useRouter();
 const galleryStore = useGalleryStore();
 const GalleryArticles = galleryStore.getGalleryList(userId);
 GalleryArticles;
+
+let modalShow = ref(false);
+let selectedImage = ref("");
 
 // let items = galleryStore.galleryList;
 
@@ -141,9 +153,24 @@ const randomBackgroundColor = () => {
   const idx = Math.floor(Math.random() * colors.length);
   return "background-color: " + colors[idx];
 };
+
+const showImgModal = (imgUrl) => {
+  console.log("!!!hello");
+  toggleModal();
+  selectedImage.value = imgUrl;
+  console.log(modalShow.value);
+  console.log(selectedImage.value);
+};
+
+const toggleModal = () => {
+  modalShow.value = !modalShow.value;
+};
 </script>
 
 <style scoped>
+.body {
+  height: 100vh;
+}
 @font-face {
   font-family: "KyoboHand";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff")
@@ -229,6 +256,7 @@ video {
 .item-image {
   max-width: 100%;
   border-radius: 0.375rem;
+  cursor: pointer;
 }
 
 .content {
@@ -248,6 +276,85 @@ video {
   cursor: pointer;
   font-family: KyoboHand;
   display: block;
+}
+
+.img-modal {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  justify-content: center;
+  text-align: center;
+  background-color: #14141495;
+  display: flex;
+  animation: fadein 0.5s;
+  -moz-animation: fadein 0.5s; /* Firefox */
+  -webkit-animation: fadein 0.5s; /* Safari and Chrome */
+  -o-animation: fadein 0.5s;
+}
+
+.selected-img {
+  width: 30%;
+  margin: auto;
+}
+
+.modal-x-btn {
+  cursor: pointer;
+  float: right;
+  position: fixed;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadein {
+  /* Firefox */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadein {
+  /* Safari and Chrome */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadein {
+  /* Opera */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadein {
+  /* Firefox */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>
 
