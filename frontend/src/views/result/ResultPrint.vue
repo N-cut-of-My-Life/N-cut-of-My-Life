@@ -6,7 +6,7 @@
       :lastwordShow="lastwordShow"
       @lastwordShowFromPortrait="getLastwordShow"
     ></portrait-form>
-    <audio id="myaudios" loop autoplay volume="0.2">
+    <audio id="myaudios" loop autoplay volume="0.3">
       <source src="@/assets/audio/out-of-time.mp3" type="audio/mp3" />
     </audio>
   </div>
@@ -31,7 +31,6 @@ export default {
   name: "submission-detail",
   data() {
     return {
-      result: {},
       from: "",
       output: null,
       lastwordShow: false,
@@ -105,9 +104,7 @@ export default {
   },
   mounted() {
     useMusicStore().isSoundActive();
-    this.result = useResultStore().resultArticle;
     this.from = useResultStore().from;
-    console.log(this.result);
     console.log(this.from);
   },
 };

@@ -19,9 +19,11 @@
           :key="index"
           class="song"
           style="padding: 0; border-radius: 0.5vw"
+          @click="select(song)"
         >
           <img
-            :src="song.image"
+            class="info"
+            :src="song.img"
             :alt="song.title"
             style="border-radius: 0.5vw"
           />
@@ -31,20 +33,47 @@
           </div>
         </ul>
       </div>
+      <button
+        class="submit_button"
+        @click="complete"
+        onclick="location.href='#close'"
+      >
+        완료
+      </button>
     </div>
-    <button class="complete_button" @click="complete"></button>
   </div>
 </template>
 
 <script setup>
 import { useMusicStore } from "@/store/music";
 import { usePlanetStore } from "@/store/planet";
-import { ref } from "vue";
+import { defineEmits, ref } from "vue";
+import Swal from "sweetalert2";
+const emit = defineEmits(["complete"]);
 const musicStore = useMusicStore();
+let selected = "";
 const complete = () => {
-  usePlanetStore().completePlanet(6); //TODO answer 추가
+  console.log(selected);
+  if (selected === "") {
+    Swal.fire({
+      icon: "error",
+      title: "등록 실패! 😭",
+      text: "음악을 선택해 주세요!",
+      confirmButtonText: "확인",
+    }).then(() => {
+      window.location = "#openModal-about";
+    });
+    return;
+  }
+  emit("complete");
+  usePlanetStore().completePlanet(6, selected);
 };
 let keyword = ref("");
+const select = (song) => {
+  console.log(song);
+  selected = song.artist + " - " + song.title;
+  console.log(selected);
+};
 </script>
 
 <style scoped>
@@ -154,7 +183,7 @@ let keyword = ref("");
   margin: 10px auto;
 }
 
-img {
+.info {
   width: 10%;
   height: auto;
 }
@@ -173,5 +202,13 @@ img {
 
 .complete_button {
   display: none;
+}
+.container {
+  max-height: 300px;
+  overflow: scroll;
+}
+.submit_button {
+  height: 40px;
+  border: 15px;
 }
 </style>

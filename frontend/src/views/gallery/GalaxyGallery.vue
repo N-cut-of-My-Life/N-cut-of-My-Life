@@ -1,28 +1,34 @@
 <template>
-  <div class="other">
-    <b-button
-      @click="router.push({ name: 'introfirstpage' })"
-      class="button_prev"
-      size="sm"
-    >
-      <strong>&lt;</strong>&nbsp;&nbsp;홈페이지
-    </b-button>
-  </div>
+  <GalleryLoader v-if="isLoading"></GalleryLoader>
+  <div v-else>
+    <video muted autoplay loop playbackRate="0.9">
+      <source src="@/assets/galaxy.mp4" type="video/mp4" />
+    </video>
+    <div class="other">
+      <b-button
+        @click="router.push({ name: 'introfirstpage' })"
+        class="button_prev"
+        size="sm"
+      >
+        <strong>&lt;</strong>&nbsp;&nbsp;HOME
+      </b-button>
+    </div>
 
-  <div class="jumbotron">
+    <!-- <div class="jumbotron"> -->
     <div class="title">은 하 갤 러 리</div>
     <audio loop autoplay volume="0.3">
       <source src="@/assets/audio/mix_gallery.mp3" type="audio/mp3" />
     </audio>
+    <img class="reloadBtn" @click="reload()" src="@/assets/refresh.png" />
     <!-- masonry 영역 ver2 -->
     <MasonryWall
-      :items="galleryStore.galleryList"
+      :items="[...galleryStore.galleryList].reverse()"
       :ssr-columns="1"
       :column-width="200"
       :gap="16"
     >
       <template #default="{ item }">
-        <div class="common">
+        <div class="common" :style="randomBackgroundColor()">
           <!-- api호출이 아닌 상태이기 떄문에 추후 변경:require 이후 코드 -->
           <img
             v-if="item.imgUrl"
@@ -31,41 +37,47 @@
             class="item-image"
           />
           <span class="content">{{ item.contents }}</span>
-          <div class="like" @click="manageLike(item.answerId, item.isMine)">
-            <svg
-              v-if="item.isMine === 'FALSE'"
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-heart"
-              viewBox="0 0 16 16"
+          <b-row>
+            <b-col cols="8"></b-col>
+            <b-col cols="4">
+              <div class="like" @click="manageLike(item.answerId, item.isMine)">
+                <svg
+                  v-if="item.isMine === 'FALSE'"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-heart"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
+                  />
+                </svg>
+                <svg
+                  v-else
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-heart-fill"
+                  viewBox="0 0 16 16"
+                  style="color: red"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                  />
+                </svg>
+                {{ item.like }}
+              </div></b-col
             >
-              <path
-                d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
-              />
-            </svg>
-            <svg
-              v-else
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-heart-fill"
-              viewBox="0 0 16 16"
-              style="color: red"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
-              />
-            </svg>
-            {{ item.like }}
-          </div>
+          </b-row>
           <!-- 댓글 공간 -->
         </div>
       </template>
     </MasonryWall>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -76,26 +88,59 @@ import { useGalleryStore } from "@/store/gallery";
 import { useMusicStore } from "@/store/music";
 import { onMounted } from "vue";
 import { useAccountStore } from "@/store/account";
+import GalleryLoader from "@/load/GalleryLoader.vue";
 
-const userID = useAccountStore().userInfo.userId;
+const userId = useAccountStore().userInfo.userId;
 const router = useRouter();
 
 const galleryStore = useGalleryStore();
-const GalleryArticles = galleryStore.getGalleryList(userID);
+const GalleryArticles = galleryStore.getGalleryList(userId);
 GalleryArticles;
 
 // let items = galleryStore.galleryList;
 
+const reload = () => {
+  galleryStore.getGalleryList(userId);
+};
+
 const manageLike = (answerId, isMine) => {
   if (isMine === "TRUE") {
-    galleryStore.deleteLike(answerId, userID);
+    galleryStore.deleteLike(answerId, userId);
   } else {
-    galleryStore.addLike(answerId, userID);
+    galleryStore.addLike(answerId, userId);
   }
 };
 onMounted(() => {
   useMusicStore().isSoundActive();
 });
+
+const randomBackgroundColor = () => {
+  const colors = [
+    "#ffeecd",
+    "#fff9d6",
+    // '#daffcf',
+    "#dcfffd",
+    "#e1edff",
+    "#f0e7ff",
+    "#ffecfa",
+    "#ffe7e8",
+    // 'white',
+    "#ffe1e1",
+    "#fffad7",
+    "#cdf0ea",
+    "#fff5e4",
+    "#d6efed",
+    "#d3cedf",
+    "#f1f0c0",
+    "#fefbe7",
+    "#d3dedc",
+    "#eed7ce",
+    "#ded9c4",
+    "#f9f9f9",
+  ];
+  const idx = Math.floor(Math.random() * colors.length);
+  return "background-color: " + colors[idx];
+};
 </script>
 
 <style scoped>
@@ -114,22 +159,39 @@ onMounted(() => {
 }
 
 .button_prev {
-  background-color: #ffffff;
+  background-color: #e1edff;
   color: #141414;
   border-radius: 0.8vw;
-  border-color: #ffffff;
+  border: none;
 }
 .title {
   text-align: center;
   padding-top: 3%;
-  color: orange;
+  /* color: rgb(255, 188, 64); */
+  color: #b1b2ff;
   font-size: 2vw;
   font-weight: 600;
   margin-bottom: 2%;
+  margin-top: 0;
   font-family: KyoboHand;
 }
 
-.jumbotron {
+video {
+  position: fixed;
+  min-width: 100%;
+  width: auto;
+  height: auto;
+  min-height: 100%;
+  z-index: -100;
+  background-size: cover;
+  /* -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover; */
+  margin: 0;
+  padding: 0;
+}
+
+/* .jumbotron {
   background: url("@/assets/galaxy_gallery.svg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -139,6 +201,17 @@ onMounted(() => {
   min-height: 100vh;
   margin: 0;
   padding: 0;
+} */
+
+.reloadBtn {
+  position: fixed;
+  bottom: 5%;
+  right: 3%;
+  width: 3em;
+}
+
+.reloadBtn:hover {
+  cursor: pointer;
 }
 
 /* masonry layout용 css */
@@ -161,11 +234,12 @@ onMounted(() => {
 .content {
   padding: 10px 10px 5px 10px;
   font-family: KyoboHand;
-  -webkit-touch-callout: all; /* iOS Safari */
-  -webkit-user-select: all; /* Safari */
-  -moz-user-select: all; /* Old versions of Firefox */
-  -ms-user-select: all; /* Internet Explorer/Edge */
-  user-select: all;
+  -webkit-touch-callout: text; /* iOS Safari */
+  -webkit-user-select: text; /* Safari */
+  -moz-user-select: text; /* Old versions of Firefox */
+  -ms-user-select: text; /* Internet Explorer/Edge */
+  user-select: text;
+  font-size: 1.2vw;
 }
 .like {
   text-align: end;
@@ -173,5 +247,29 @@ onMounted(() => {
   margin-top: auto;
   cursor: pointer;
   font-family: KyoboHand;
+  display: block;
+}
+</style>
+
+<style>
+body::-webkit-scrollbar {
+  width: 0.8vw;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  /* background-color: #a1a1a1; */
+  /* background-color: #7895b2; */
+  /* background-color: #aebdca; */
+  background-color: #d2daff;
+}
+
+body::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
 }
 </style>

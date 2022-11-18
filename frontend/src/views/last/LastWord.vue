@@ -142,7 +142,7 @@
       <b-col cols="1" style="padding: 0"
         ><img
           src="@/assets/questionbox.svg"
-          class="help-tip"
+          class="tip"
           v-b-tooltip.hover.bottom="
             '은하갤러리에서 여행자들과 마지막 한마디를 공유할 수 있습니다!'
           "
@@ -239,6 +239,7 @@
 import { onUpdated, ref, onMounted, computed } from "vue";
 import { useMusicStore } from "@/store/music";
 import { usePlanetStore } from "@/store/planet";
+import { useResultStore } from "@/store/result";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 
@@ -311,6 +312,9 @@ const finishTravel = () => {
   usePlanetStore().finishTravel();
 };
 const gotoPrint = () => {
+  useResultStore().resultArticle = usePlanetStore().articleRequest.answers;
+  useResultStore().from = "travel";
+  useResultStore().isExsitingAnswer();
   router.push({ name: "resultprint" });
 };
 onUpdated(() => {
@@ -544,7 +548,7 @@ input:checked + .slider:before {
   text-align: right;
   font-size: small;
 }
-.help-tip {
+.tip {
   width: 56%;
   padding-bottom: 12px;
 }

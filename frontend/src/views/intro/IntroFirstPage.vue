@@ -65,6 +65,8 @@ import { useRouter } from "vue-router";
 import { useMusicStore } from "@/store/music";
 import { useAccountStore } from "@/store/account";
 import { onMounted, ref } from "vue";
+import { usePlanetStore } from "@/store/planet";
+import { useResultStore } from "@/store/result";
 
 const router = useRouter();
 const userName = ref("");
@@ -76,6 +78,9 @@ const rocketLaunch = () => {
   if (useMusicStore().isMute === false) {
     document.getElementById("burung").play();
   }
+  usePlanetStore().$reset();
+  useResultStore().$reset();
+
   rocket.classList.remove("rocket-bounce");
   rocket.classList.add("rocket-launch");
   rocket.addEventListener("animationend", (event) => {

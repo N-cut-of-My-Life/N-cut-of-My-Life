@@ -5,6 +5,9 @@ import axios from "axios";
 import { uploadToFirebase } from "@/firebase.js";
 
 export const usePlanetStore = defineStore("planet", {
+  persist: {
+    storage: sessionStorage,
+  },
   state: () => ({
     completeCount: 0,
     minimumConditionsMet: false,
@@ -51,7 +54,10 @@ export const usePlanetStore = defineStore("planet", {
     },
     async saveImageToFirebase() {
       for (const [key, value] of this.images) {
-        let fileLocation = "image/" + Date.now().toString().trim() + useAccountStore().userInfo.id;
+        let fileLocation =
+          "image/" +
+          Date.now().toString().trim() +
+          useAccountStore().userInfo.id;
         console.log(fileLocation);
         await uploadToFirebase(fileLocation, value).then((url) => {
           this.articleRequest.answers.at(key).imgUrl = url;
