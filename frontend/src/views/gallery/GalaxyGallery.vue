@@ -1,16 +1,12 @@
 <template>
   <GalleryLoader v-if="isLoading"></GalleryLoader>
-  <div v-else>
-    <video muted autoplay loop playbackRate="0.9" style="width: 100%">
+  <div>
+    <video muted autoplay loop playbackRate="0.9">
       <source src="@/assets/galaxy.mp4" type="video/mp4" />
     </video>
     <div class="other">
-      <b-button
-        @click="router.push({ name: 'introfirstpage' })"
-        class="button_prev"
-        size="sm"
-      >
-        <strong>&lt;</strong>&nbsp;&nbsp;홈페이지
+      <b-button @click="router.push({ name: 'introfirstpage' })" class="button_prev" size="sm">
+        <strong>&lt;</strong>&nbsp;&nbsp;HOME
       </b-button>
     </div>
 
@@ -29,12 +25,7 @@
       <template #default="{ item }">
         <div class="common" :style="randomBackgroundColor()">
           <!-- api호출이 아닌 상태이기 떄문에 추후 변경:require 이후 코드 -->
-          <img
-            v-if="item.imgUrl"
-            :src="item.imgUrl"
-            alt=""
-            class="item-image"
-          />
+          <img v-if="item.imgUrl" :src="item.imgUrl" alt="" class="item-image" />
           <span class="content">{{ item.contents }}</span>
           <b-row>
             <b-col cols="8"></b-col>
@@ -81,13 +72,13 @@
 </template>
 
 <script setup>
-import MasonryWall from "@yeger/vue-masonry-wall";
-import { useRouter } from "vue-router";
-import { useGalleryStore } from "@/store/gallery";
-import { useMusicStore } from "@/store/music";
-import { onMounted } from "vue";
-import { useAccountStore } from "@/store/account";
-import GalleryLoader from "@/load/GalleryLoader.vue";
+import MasonryWall from '@yeger/vue-masonry-wall';
+import { useRouter } from 'vue-router';
+import { useGalleryStore } from '@/store/gallery';
+import { useMusicStore } from '@/store/music';
+import { onMounted } from 'vue';
+import { useAccountStore } from '@/store/account';
+import GalleryLoader from '@/load/GalleryLoader.vue';
 
 const userID = useAccountStore().userInfo.userId;
 const router = useRouter();
@@ -99,7 +90,7 @@ GalleryArticles;
 // let items = galleryStore.galleryList;
 
 const manageLike = (answerId, isMine) => {
-  if (isMine === "TRUE") {
+  if (isMine === 'TRUE') {
     galleryStore.deleteLike(answerId, userID);
   } else {
     galleryStore.addLike(answerId, userID);
@@ -111,26 +102,38 @@ onMounted(() => {
 
 const randomBackgroundColor = () => {
   const colors = [
-    "#ffeecd",
-    "#fff9d6",
-    "#daffcf",
-    "#dcfffd",
-    "#e1edff",
-    "#f0e7ff",
-    "#ffecfa",
-    "#ffe7e8",
-    "white",
+    '#ffeecd',
+    '#fff9d6',
+    // '#daffcf',
+    '#dcfffd',
+    '#e1edff',
+    '#f0e7ff',
+    '#ffecfa',
+    '#ffe7e8',
+    // 'white',
+    '#ffe1e1',
+    '#fffad7',
+    '#cdf0ea',
+    '#fff5e4',
+    '#d6efed',
+    '#d3cedf',
+    '#f1f0c0',
+    '#fefbe7',
+    '#d3dedc',
+    '#eed7ce',
+    '#ded9c4',
+    '#f9f9f9',
   ];
   const idx = Math.floor(Math.random() * colors.length);
-  return "background-color: " + colors[idx];
+  return 'background-color: ' + colors[idx];
 };
 </script>
 
 <style scoped>
 @font-face {
-  font-family: "KyoboHand";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff")
-    format("woff");
+  font-family: 'KyoboHand';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff')
+    format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -145,7 +148,7 @@ const randomBackgroundColor = () => {
   background-color: #e1edff;
   color: #141414;
   border-radius: 0.8vw;
-  border-color: #ffffff;
+  border: none;
 }
 .title {
   text-align: center;
@@ -155,19 +158,21 @@ const randomBackgroundColor = () => {
   font-size: 2vw;
   font-weight: 600;
   margin-bottom: 2%;
+  margin-top: 0;
   font-family: KyoboHand;
 }
 
 video {
   position: fixed;
-  width: 100%;
-  min-height: 100vh;
-  width: 100%;
+  min-width: 100%;
+  width: auto;
+  height: auto;
+  min-height: 100%;
   z-index: -100;
   background-size: cover;
-  -webkit-background-size: cover;
+  /* -webkit-background-size: cover;
   -moz-background-size: cover;
-  -o-background-size: cover;
+  -o-background-size: cover; */
   margin: 0;
   padding: 0;
 }
@@ -209,6 +214,7 @@ video {
   -moz-user-select: text; /* Old versions of Firefox */
   -ms-user-select: text; /* Internet Explorer/Edge */
   user-select: text;
+  font-size: 1.2vw;
 }
 .like {
   text-align: end;
