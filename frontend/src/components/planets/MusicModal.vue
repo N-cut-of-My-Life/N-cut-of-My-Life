@@ -3,7 +3,7 @@
   <div id="openModal-about" class="modalDialog">
     <div>
       <h2 style="text-align: center; margin-bottom: 2%">음악 검색</h2>
-      <a href="#close" title="Close" class="close">X</a>
+      <a href="#close" title="Close" class="close">x</a>
       <div style="text-align: center">
         <input
           class="search__input"
@@ -14,32 +14,66 @@
         />
       </div>
       <div class="container">
-        <ul
-          v-for="(song, index) in musicStore.songs"
-          :key="index"
-          class="song"
-          style="padding: 0; border-radius: 0.5vw"
-          @click="select(song)"
+        <div
+          v-if="!musicStore.isSearch"
+          style="margin-left: 2%; margin-right: 2%"
         >
-          <img
-            class="info"
-            :src="song.img"
-            :alt="song.title"
-            style="border-radius: 0.5vw"
-          />
-          <div class="title-artist">
-            <div class="title">{{ song.title }}</div>
-            <div class="artist">{{ song.artist }}</div>
-          </div>
-        </ul>
+          <br />
+          <h3>Something</h3>
+          <ul
+            v-for="(song, index) in musicStore.songs"
+            :key="index"
+            class="song"
+            style="padding: 0; border-radius: 0.5vw"
+            @click="select(song)"
+          >
+            <img
+              class="info"
+              :src="song.img"
+              :alt="song.title"
+              style="border-radius: 0.5vw"
+            />
+            <div class="title-artist">
+              <div class="title">{{ song.title }}</div>
+              <div class="artist">{{ song.artist }}</div>
+            </div>
+          </ul>
+        </div>
+        <div v-else>
+          <ul
+            v-for="(song, index) in musicStore.songs"
+            :key="index"
+            class="song"
+            style="padding: 0; border-radius: 0.5vw"
+            @click="select(song)"
+          >
+            <img
+              class="info"
+              :src="song.img"
+              :alt="song.title"
+              style="border-radius: 0.5vw"
+            />
+            <div class="title-artist">
+              <div class="title">{{ song.title }}</div>
+              <div class="artist">{{ song.artist }}</div>
+            </div>
+          </ul>
+        </div>
       </div>
-      <button
-        class="submit_button"
-        @click="complete"
-        onclick="location.href='#close'"
+      <!-- v-show="elementVisible" -->
+      <div
+        v-if="musicStore.isSearch"
+        style="text-align: center; margin-top: 2.8%"
       >
-        완료
-      </button>
+        <b-button
+          size="sm"
+          class="submit_button"
+          @click="complete"
+          onclick="location.href='#close'"
+        >
+          완료
+        </b-button>
+      </div>
     </div>
   </div>
 </template>
@@ -69,7 +103,9 @@ const complete = () => {
   usePlanetStore().completePlanet(6, selected);
 };
 let keyword = ref("");
+// let elementVisible = ref(false);
 const select = (song) => {
+  // elementVisible.value = true;
   console.log(song);
   selected = song.artist + " - " + song.title;
   console.log(selected);
@@ -114,13 +150,13 @@ const select = (song) => {
   font-family: Arial, Helvetica, sans-serif;
   background: #f26d7d;
   color: #fff;
-  line-height: 25px;
+  line-height: 10px;
   position: absolute;
-  right: -12px;
+  right: -9px;
   text-align: center;
   top: -10px;
-  width: 34px;
-  height: 34px;
+  width: 20px;
+  height: 20px;
   text-decoration: none;
   font-weight: bold;
   -webkit-border-radius: 50%;
@@ -183,6 +219,11 @@ const select = (song) => {
   margin: 10px auto;
 }
 
+h3 {
+  font-size: 1.2vw;
+  font-weight: 500;
+  margin-bottom: 1.5%;
+}
 .info {
   width: 10%;
   height: auto;
@@ -205,10 +246,35 @@ const select = (song) => {
 }
 .container {
   max-height: 300px;
-  overflow: scroll;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 .submit_button {
-  height: 40px;
-  border: 15px;
+  border: 1vw;
+  background-color: #d9adad;
+  padding-left: 1%;
+  padding-right: 1%;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+}
+</style>
+
+<style>
+.container::-webkit-scrollbar {
+  width: 0.8vw;
+}
+.container::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.container::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  /* background-color: #a1a1a1; */
+  /* background-color: #7895b2; */
+  /* background-color: #aebdca; */
+  background-color: #efdad7;
+}
+.container::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
 }
 </style>

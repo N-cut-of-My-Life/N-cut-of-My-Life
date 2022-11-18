@@ -201,6 +201,7 @@ const toggleModal = () => {
   margin-bottom: 2%;
   margin-top: 0;
   font-family: KyoboHand;
+  font-size: 2.7vw;
 }
 
 video {
@@ -267,7 +268,7 @@ video {
   -moz-user-select: text; /* Old versions of Firefox */
   -ms-user-select: text; /* Internet Explorer/Edge */
   user-select: text;
-  font-size: 1.2vw;
+  font-size: 1vw;
 }
 .like {
   text-align: end;

@@ -9,6 +9,7 @@ export const useMusicStore = defineStore("music", {
   },
   state: () => ({
     isMute: true,
+    isSearch: false,
     songs: [],
   }),
   getters: {},
@@ -25,6 +26,7 @@ export const useMusicStore = defineStore("music", {
     },
 
     getMusicData(keyword) {
+      this.isSearch = false;
       axios({
         url: index.music.getMusic(keyword),
         method: "GET",
@@ -56,6 +58,7 @@ export const useMusicStore = defineStore("music", {
         //   }
         // }
         // this.songs = songsList;
+        this.isSearch = true;
         this.songs = res.data.data;
         console.log(this.songs);
       });
