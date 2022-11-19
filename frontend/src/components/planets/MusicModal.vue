@@ -67,10 +67,11 @@ import { defineEmits, ref } from "vue";
 import Swal from "sweetalert2";
 const emit = defineEmits(["complete"]);
 const musicStore = useMusicStore();
-let selected = "";
+let selectedName = "";
+let selectedAlbum = "";
 const complete = () => {
-  console.log(selected);
-  if (selected === "") {
+  console.log(selectedName);
+  if (selectedName === "") {
     Swal.fire({
       icon: "error",
       title: "등록 실패! 😭",
@@ -82,23 +83,20 @@ const complete = () => {
     return;
   }
   emit("complete");
-  usePlanetStore().completePlanet(6, selected);
+  usePlanetStore().completePlanet(6, selectedName, "CLOSE", selectedAlbum);
 };
 let keyword = ref("");
-// let elementVisible = ref(false);
 const select = (song) => {
-  // elementVisible.value = true;
-  console.log(song);
-  selected = song.artist + " - " + song.title;
-  console.log(selected);
+  selectedName = song.artist + " - " + song.title;
+  selectedAlbum = song.img;
 };
 
-window.addEventListener('click', (event) => {
-  if(event.target.id === 'openModal-about'){
-    console.log('바깥임')
-    window.location = '#close'
+window.addEventListener("click", (event) => {
+  if (event.target.id === "openModal-about") {
+    console.log("바깥임");
+    window.location = "#close";
   }
-})
+});
 </script>
 
 <style scoped>
