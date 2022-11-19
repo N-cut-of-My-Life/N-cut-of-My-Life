@@ -1,7 +1,7 @@
 <template>
   <GalleryLoader v-if="isLoading"></GalleryLoader>
-  <div v-else style="display: grid">
-    <video muted autoplay loop playbackRate="0.9" style="width: 100%">
+  <div v-else style="display: grid; padding: 0; margin: 0">
+    <video muted autoplay loop playbackRate="0.9">
       <source src="@/assets/galaxy.mp4" type="video/mp4" />
     </video>
     <div class="other">
@@ -165,12 +165,12 @@ const toggleModal = () => {
   modalShow.value = !modalShow.value;
 };
 
-window.addEventListener('click', (event) => {
-  console.log(event.target.id)
-  if(event.target.id === 'modal-outside'){
-    toggleModal()
+window.addEventListener("click", (event) => {
+  console.log(event.target.id);
+  if (event.target.id === "modal-outside") {
+    toggleModal();
   }
-})
+});
 </script>
 
 <style scoped>
@@ -212,17 +212,14 @@ window.addEventListener('click', (event) => {
 
 video {
   position: fixed;
+  right: 0;
+  bottom: 0;
   min-width: 100%;
+  min-height: 100%;
   width: auto;
   height: auto;
-  min-height: 100%;
   z-index: -100;
   background-size: cover;
-  /* -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover; */
-  margin: 0;
-  padding: 0;
 }
 
 /* .jumbotron {

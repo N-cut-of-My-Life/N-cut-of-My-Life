@@ -272,7 +272,7 @@ body {
 .bubble {
   position: absolute;
   right: 26%;
-  top: 20%;
+  top: 29%;
   /* height: 50%; */
   margin: auto;
 }

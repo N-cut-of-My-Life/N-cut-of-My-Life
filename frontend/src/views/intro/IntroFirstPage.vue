@@ -46,7 +46,7 @@
       </b-nav-item>
     </b-navbar-nav>
   </b-navbar>
-  <br /><br /><br /><br /><br />
+  <br /><br /><br /><br /><br /><br />
   <div class="img-box">
     <img
       src="@/assets/astronaut_riding.png"
@@ -54,7 +54,7 @@
       alt=""
     />
   </div>
-  <br /><br /><br /><br />
+  <br /><br /><br /><br /><br /><br />
   <div class="box">
     <div class="start-btn" @click="rocketLaunch">여행 시작하기</div>
   </div>

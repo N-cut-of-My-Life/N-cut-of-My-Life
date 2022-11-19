@@ -2,13 +2,15 @@
   <!--modals-->
   <div id="openModal-about" class="modalDialog">
     <div class="modal-container">
-      <h2 style="text-align: center; margin-bottom: 2%">음악 검색</h2>
+      <!-- <h2 style="text-align: center; margin-bottom: 3%; font-size: 1.8vw">
+        가장 좋아하는 음악 검색
+      </h2> -->
       <a href="#close" title="Close" class="close">x</a>
       <div style="text-align: center">
         <input
           class="search__input"
           type="text"
-          placeholder="제목 + 가수로 검색해주세요!"
+          placeholder="가장 좋아하시는 음악을 '제목 + 가수'로 검색해주세요!"
           @keyup.enter="musicStore.getMusicData(keyword)"
           v-model="keyword"
         />
@@ -18,15 +20,14 @@
           v-if="!musicStore.isSearch"
           style="margin-left: 2%; margin-right: 2%"
         >
-          <br />
-          <h3>Something</h3>
+          <!-- <h3>Something</h3> -->
         </div>
-        <div v-else>
+        <div v-else style="margin-top: 2%">
           <ul
             v-for="(song, index) in musicStore.songs"
             :key="index"
             class="song"
-            style="padding: 0; border-radius: 0.5vw"
+            style="padding: 0; border-radius: 0.5vw; cursor: pointer"
             @click="select(song)"
           >
             <img
@@ -53,7 +54,7 @@
           @click="complete"
           onclick="location.href='#close'"
         >
-          완료
+          저장
         </b-button>
       </div>
     </div>
@@ -93,12 +94,12 @@ const select = (song) => {
   console.log(selected);
 };
 
-window.addEventListener('click', (event) => {
-  if(event.target.id === 'openModal-about'){
-    console.log('바깥임')
-    window.location = '#close'
+window.addEventListener("click", (event) => {
+  if (event.target.id === "openModal-about") {
+    console.log("바깥임");
+    window.location = "#close";
   }
-})
+});
 </script>
 
 <style scoped>
@@ -127,7 +128,7 @@ window.addEventListener('click', (event) => {
   pointer-events: auto;
 }
 .modalDialog > div {
-  max-width: 800px;
+  max-width: 40vw;
   width: 90%;
   position: relative;
   margin: 10% auto;
@@ -214,7 +215,7 @@ h3 {
   margin-bottom: 1.5%;
 }
 .info {
-  width: 10%;
+  width: 9%;
   height: auto;
 }
 
@@ -226,8 +227,14 @@ h3 {
 }
 
 .title {
-  margin-bottom: 3%;
+  /* margin-bottom: 3%; */
   font-weight: 600;
+  font-size: 0.9vw;
+  /* margin-bottom: 1%; */
+}
+
+.artist {
+  font-size: 0.8vw;
 }
 
 .complete_button {
@@ -250,7 +257,7 @@ h3 {
 
 <style>
 .container::-webkit-scrollbar {
-  width: 0.8vw;
+  width: 0.6vw;
 }
 .container::-webkit-scrollbar-track {
   background-color: transparent;
