@@ -227,7 +227,7 @@ body {
   /* top: 0;
     left: 0; */
   right: 24%;
-  bottom: 18%;
+  bottom: 21%;
   /* height: 50%; */
   margin: auto;
 }

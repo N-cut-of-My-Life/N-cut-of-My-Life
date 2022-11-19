@@ -119,7 +119,7 @@
           />
           <div v-else>
             <div style="margin-top: 1vh">
-              <strong style="font-size: 1.1vw"
+              <strong style="font-size: 1vw"
                 >남기고 싶은 사진을 담아주세요!</strong
               >
             </div>
