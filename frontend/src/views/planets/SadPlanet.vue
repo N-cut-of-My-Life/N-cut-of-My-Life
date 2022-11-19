@@ -268,8 +268,8 @@ body {
   position: absolute;
   /* top: 0;
     left: 0; */
-  right: 22%;
-  bottom: 34%;
+  right: 15%;
+  bottom: 24%;
   /* height: 50%; */
   margin: auto;
 }
