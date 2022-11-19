@@ -20,8 +20,8 @@
       <source src="@/assets/audio/mix_gallery.mp3" type="audio/mp3" />
     </audio>
     <img class="reloadBtn" @click="reload()" src="@/assets/refresh.png" />
-    <div v-if="modalShow == true" class="img-modal">
-      <img class="selected-img" :src="selectedImage" />
+    <div v-if="modalShow == true" class="img-modal" id="modal-outside">
+      <img class="selected-img" id="selected" :src="selectedImage" />
     </div>
     <div class="modal-x-btn">
       <img
@@ -40,7 +40,6 @@
     >
       <template #default="{ item }">
         <div class="common" :style="randomBackgroundColor()">
-          <!-- api호출이 아닌 상태이기 떄문에 추후 변경:require 이후 코드 -->
           <img
             v-if="item.imgUrl"
             :src="item.imgUrl"
@@ -85,7 +84,6 @@
               </div></b-col
             >
           </b-row>
-          <!-- 댓글 공간 -->
         </div>
       </template>
     </MasonryWall>
@@ -166,6 +164,13 @@ const showImgModal = (imgUrl) => {
 const toggleModal = () => {
   modalShow.value = !modalShow.value;
 };
+
+window.addEventListener('click', (event) => {
+  console.log(event.target.id)
+  if(event.target.id === 'modal-outside'){
+    toggleModal()
+  }
+})
 </script>
 
 <style scoped>

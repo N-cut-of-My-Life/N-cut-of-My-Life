@@ -1,7 +1,7 @@
 <template>
   <!--modals-->
   <div id="openModal-about" class="modalDialog">
-    <div>
+    <div class="modal-container">
       <h2 style="text-align: center; margin-bottom: 2%">음악 검색</h2>
       <a href="#close" title="Close" class="close">x</a>
       <div style="text-align: center">
@@ -92,6 +92,13 @@ const select = (song) => {
   selected = song.artist + " - " + song.title;
   console.log(selected);
 };
+
+window.addEventListener('click', (event) => {
+  if(event.target.id === 'openModal-about'){
+    console.log('바깥임')
+    window.location = '#close'
+  }
+})
 </script>
 
 <style scoped>
