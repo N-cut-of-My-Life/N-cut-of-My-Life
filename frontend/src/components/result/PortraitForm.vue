@@ -49,7 +49,8 @@
           <div>
             <h3>너에게 가장 소중한 사람은 누구니?</h3>
             <p v-show="preciousShow">
-              {{ resultContents[8].contents }}
+              To. {{ resultContents[8].contents.split("\n")[0] }}<br />
+              {{ resultContents[8].contents.split("\n")[1] }}
             </p>
           </div>
           <div v-show="preciousShow">
