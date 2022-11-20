@@ -532,7 +532,7 @@ body {
   }
 
   100% {
-    transform: translate(-450px, 300px);
+    transform: translate(-400px, 300px);
   }
 }
 </style>
