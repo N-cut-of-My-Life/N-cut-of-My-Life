@@ -276,11 +276,9 @@ export default {
       ],
     };
   },
-  mounted() {
+  created() {
     this.isAnswered = useResultStore().isInResult;
-    console.log(this.isAnswered);
     this.resultContents = useResultStore().resultContents;
-    console.log(this.resultContents);
   },
   methods: {
     hahaShowPtag() {
