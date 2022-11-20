@@ -18,9 +18,9 @@
           </div>
           <div v-show="hahaShow">
             <img
-              :src="[
-                resultContents[1].imgUrl ? resultContents[1].imgUrl : images[1],
-              ]"
+              :src="
+                resultContents[1].imgUrl ? resultContents[1].imgUrl : images[1]
+              "
             />
           </div>
         </div>
@@ -178,7 +178,11 @@
             </p>
           </div>
           <div v-show="dumchitShow">
-            <img :src="images[6]" />
+            <img
+              :src="
+                resultContents[6].imgUrl ? resultContents[6].imgUrl : images[6]
+              "
+            />
           </div>
         </div>
       </li>
@@ -227,11 +231,9 @@
           </div>
           <div v-show="lastwordShow">
             <img
-              :src="[
-                resultContents[9].imgeUrl
-                  ? resultContents[9].imgUrl
-                  : images[9],
-              ]"
+              :src="
+                resultContents[9].imgUrl ? resultContents[9].imgUrl : images[9]
+              "
             />
           </div>
         </div>
@@ -284,7 +286,6 @@ export default {
     hahaShowPtag() {
       if (!this.hahaShow) {
         this.hahaShow = !this.hahaShow;
-        console.log(this.resultContents[1]);
       }
     },
     preciousShowPtag() {
