@@ -88,6 +88,7 @@ const routes = [
     path: "/resultprint",
     name: "resultprint",
     component: () => import("@/views/result/ResultPrint.vue"),
+    meta: { authNotReq: true },
   },
   {
     path: "/pagenotfound",

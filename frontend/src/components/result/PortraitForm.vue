@@ -263,13 +263,13 @@ export default {
       images: [
         require("@/assets/result/haha.png"),
         require("@/assets/result/haha.png"),
-        require("@/assets/result/precious.png"),
         require("@/assets/result/sad.png"),
         require("@/assets/result/treasure.png"),
         require("@/assets/result/dream.png"),
         require("@/assets/result/regret.png"),
         require("@/assets/result/dumchit.png"),
         require("@/assets/result/genie.png"),
+        require("@/assets/result/precious.png"),
         require("@/assets/result/lastword.png"),
       ],
     };
