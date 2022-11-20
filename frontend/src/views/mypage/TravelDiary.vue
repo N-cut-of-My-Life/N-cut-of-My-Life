@@ -12,7 +12,7 @@
   </div>
 
   <div class="jumbotron">
-    <div class="title">My Page</div>
+    <div class="title">마 이 페 이 지</div>
     <main class="content">
       <section>
         <div class="back-square"></div>
@@ -55,13 +55,6 @@
         >
           <span class="prof-slide-title">
             {{ user.name }}님의 여행기록({{ accountStore.myArticles.length }})
-          </span>
-          <span
-            class="prof-slide-router"
-            v-if="isClicked === true"
-            @click="toResultPage"
-          >
-            자세히 보기 >>
           </span>
         </div>
         <div class="carousel-part" v-if="accountStore.myArticles.length !== 0">
@@ -126,6 +119,7 @@ const getCurIdx = (index, article) => {
   isClicked.value = true;
   clickedArticle = article;
   console.log(clickedArticle);
+  toResultPage();
 };
 accountStore.getMyArticles();
 // myArticles.value = accountStore.myArticles;
@@ -165,10 +159,10 @@ const options = {
   font-style: normal;
 }
 @font-face {
-  font-family: "ONE-Mobile-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-Regular.woff")
-    format("woff");
-  font-weight: normal;
+  font-family: "MICEGothic Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2")
+    format("woff2");
+  font-weight: 700;
   font-style: normal;
 }
 @font-face {
@@ -213,10 +207,15 @@ section {
 
 .title {
   text-align: center;
-  padding-top: 3%;
-  color: aliceblue;
+  padding-top: 2%;
+  /* color: rgb(255, 188, 64); */
+  color: rgb(255, 94, 0);
   font-size: 2vw;
-  font-weight: 600;
+  font-weight: bolder;
+  margin-bottom: 1%;
+  margin-top: 0;
+  font-family: KyoboHand;
+  font-size: 2.7vw;
 }
 
 .content {
@@ -259,13 +258,13 @@ section {
   display: flex;
   align-items: center;
   font-size: 1.5rem;
-  font-family: "ONE-Mobile-Regular";
+  font-family: "MICEGothic Bold";
 }
 .upper-right .top .myinfo {
   display: flex;
   align-items: center;
-  font-size: 1.5rem;
-  font-family: "MapleStoryOTFBold";
+  font-size: 1.3rem;
+  font-family: "MICEGothic Bold";
 }
 .bottom {
   height: 80%;
@@ -288,15 +287,14 @@ section {
 }
 .bottom-info {
   text-align: center;
-  font-family: "MaplestoryOTFBold";
-  font-size: 2.5rem;
+  font-family: "MapleStoryOTFBold";
+  font-size: 1.5rem;
   color: rgb(248, 30, 88);
 }
 .prof-photo {
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  border: 1px solid black;
   object-fit: cover;
 }
 /* .prof-id {
@@ -329,6 +327,7 @@ section {
 }
 .prof-journals {
   display: flex;
+  cursor: pointer;
 }
 
 .journal-img {
