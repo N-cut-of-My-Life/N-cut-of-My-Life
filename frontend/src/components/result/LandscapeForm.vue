@@ -68,11 +68,7 @@
           <h5>둠칫둠칫행성</h5>
           <p>네가 가장 좋아하는 음악은 무엇이니?</p>
         </div>
-        <img
-          class="planet"
-          src="@\assets\planet\music.png"
-          style="width: 100%"
-        />
+        <img class="planet" src="@\assets\planet\music.png" />
       </li>
       <li :style="resultNum">
         <div class="genie" v-if="isAnswered[7]">

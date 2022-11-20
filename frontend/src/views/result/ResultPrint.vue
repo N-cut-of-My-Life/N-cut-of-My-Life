@@ -110,10 +110,11 @@ export default {
       });
     },
   },
+  created() {
+    this.from = useResultStore().from;
+  },
   mounted() {
     useMusicStore().isSoundActive();
-    this.from = useResultStore().from;
-    console.log(this.from);
   },
 };
 </script>

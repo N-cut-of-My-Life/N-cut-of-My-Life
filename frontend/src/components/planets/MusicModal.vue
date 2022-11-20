@@ -93,7 +93,7 @@ const complete = () => {
     return;
   }
   emit("complete");
-  usePlanetStore().completePlanet(6, selectedName, "CLOSE", selectedAlbum);
+  usePlanetStore().completeMusicPlanet(6, selectedName, "CLOSE", selectedAlbum);
 };
 
 const select = (song, index) => {

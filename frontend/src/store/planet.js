@@ -34,6 +34,25 @@ export const usePlanetStore = defineStore("planet", {
         this.images.set(this.articleRequest.answers.length - 1, imgFile);
       }
     },
+    completeMusicPlanet(planetId, answer, openState = "CLOSE", imgUrl) {
+      this.completeCount++;
+      if (this.completeCount === 3) {
+        this.minimumConditionsMet = true;
+      }
+      this.articleRequest.userId = useAccountStore().userInfo.userId;
+      this.articleRequest.answers.push({
+        questionId: planetId,
+        contents: answer,
+        imgUrl: imgUrl,
+        state: openState,
+      });
+      if (imgUrl != null) {
+        this.images.set(
+          this.articleRequest.answers.length - 1,
+          new Blob(imgUrl)
+        );
+      }
+    },
     async finishTravel() {
       await this.saveImageToFirebase().then(() => {
         axios({
