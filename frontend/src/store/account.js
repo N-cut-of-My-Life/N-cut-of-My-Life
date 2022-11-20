@@ -45,13 +45,18 @@ export const useAccountStore = defineStore("account", {
           // router.push({ name: "intro" })
         });
     },
-    refreshToken() {
-      axios({
+    async refreshToken() {
+      await axios({
         url: index.account.getRefreshToken(),
         method: "GET",
-      }).then((res) => {
-        console.log(res);
-      });
+      })
+        .then((res) => {
+          console.log(res);
+          this.token = res.data.data;
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
     },
     getMyArticles() {
       axios({
