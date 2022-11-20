@@ -6,10 +6,11 @@
       @lastwordShowFromPortrait="getLastwordShow"
     ></portrait-form>
     <audio id="myaudios" loop autoplay volume="0.3">
-      <source src="@/assets/audio/out-of-time.mp3" type="audio/mp3" />
+      <source src="@/assets/audio/mix_result.mp3" type="audio/mp3" />
     </audio>
   </div>
   <div class="btns">
+    <a id="button-go-gallery" @click="goGallery">은하갤러리</a>
     <a id="button-go-home" @click="goHome">Home</a>
     <a id="kakaotalk-sharing-url-btn" @click="kakaoShare" v-show="lastwordShow"
       >친구에게 인생N컷 추천하기</a
@@ -50,6 +51,9 @@ export default {
     },
     goHome() {
       this.$router.push("/introfirstpage");
+    },
+    goGallery() {
+      this.$router.push("/galaxygallery");
     },
     kakaoShare() {
       window.Kakao.Share.sendScrap({
@@ -106,10 +110,11 @@ export default {
       });
     },
   },
+  created() {
+    this.from = useResultStore().from;
+  },
   mounted() {
     useMusicStore().isSoundActive();
-    this.from = useResultStore().from;
-    console.log(this.from);
   },
 };
 </script>
@@ -156,6 +161,36 @@ font-face {
 #button-go-home::before {
   content: "";
   background-image: url("@/assets/house.png");
+  margin-left: 0.5rem;
+  background-size: 100% 100%;
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+}
+#button-go-gallery {
+  margin: 0.25rem 0rem;
+  padding: 0.75rem 0rem 0.75rem 0.25rem;
+  font-size: 0rem;
+  color: rgba(0, 0, 0, 0.85);
+  border-radius: 12px;
+  height: auto;
+  background-color: #fee500;
+  font: kakao;
+  cursor: pointer;
+}
+
+.btns:hover > #button-go-gallery {
+  padding: 0.5rem 0 0.5rem 0.25rem;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+}
+#button-go-gallery:hover {
+  background-color: white;
+}
+#button-go-gallery::before {
+  content: "";
+  background-image: url("@/assets/galaxy_icon.png");
   margin-left: 0.5rem;
   background-size: 100% 100%;
   display: inline-block;
@@ -249,5 +284,24 @@ font-face {
   width: 1.5rem;
   height: 1.5rem;
   margin-right: 0.5rem;
+}
+</style>
+<style>
+body::-webkit-scrollbar {
+  width: 0.8vw;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #d2daff;
+}
+
+body::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
 }
 </style>
