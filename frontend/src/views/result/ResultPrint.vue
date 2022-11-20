@@ -1,5 +1,4 @@
 <template>
-  <button class="button-go-home" @click="goHome">Home</button>
   <div ref="printArea" class="wrapper">
     <landscape-form></landscape-form>
     <portrait-form
@@ -10,11 +9,16 @@
       <source src="@/assets/audio/out-of-time.mp3" type="audio/mp3" />
     </audio>
   </div>
-  <div class="btns" v-show="lastwordShow">
-    <a id="pdf-button-area" @click="printPdf">결과 PDF로 저장하기</a>
-    <a id="pdf-image-save" @click="printImage">결과 이미지 저장하기</a>
-    <a id="kakaotalk-sharing-url-btn" @click="kakaoShare"
+  <div class="btns">
+    <a id="button-go-home" @click="goHome">Home</a>
+    <a id="kakaotalk-sharing-url-btn" @click="kakaoShare" v-show="lastwordShow"
       >친구에게 인생N컷 추천하기</a
+    >
+    <a id="pdf-image-save" v-show="lastwordShow" @click="printImage"
+      >결과 이미지 저장하기</a
+    >
+    <a id="pdf-button-area" v-show="lastwordShow" @click="printPdf"
+      >결과 PDF로 저장하기</a
     >
   </div>
 </template>
@@ -114,55 +118,69 @@ font-face {
   font-family: "kakao";
   src: url("@/fonts/KakaoBold.ttf") format("truetype");
 }
-.button-go-home {
-  position: fixed;
-  top: 48%;
-  border: 0.5px solid white;
-  background: transparent;
-  color: white;
-  border-radius: 10%;
-  margin: 1rem 0.5rem;
-  padding: 0.25rem 0.25rem 0.5rem;
-  font-size: 20px;
-  font-family: Exo;
-  z-index: 100;
-}
-.button-go-home:hover {
-  background-color: white;
-  color: #141414;
-}
 .wrapper {
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 .btns {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   position: fixed;
-  width: 2rem;
+  width: 3rem;
   z-index: 100;
-  top: 10%;
+  bottom: 10%;
   right: 1%;
   overflow: hidden;
 }
 .btns:hover {
-  width: 15.5rem;
+  width: 17rem;
 }
-#pdf-button-area {
+#button-go-home {
   margin: 0.25rem 0rem;
-  padding: 0.25rem 0rem 0.25rem;
+  padding: 0.75rem 0rem 0.75rem 0.25rem;
   font-size: 0rem;
   color: rgba(0, 0, 0, 0.85);
   border-radius: 12px;
   height: auto;
-  padding: 0, 0.5rem;
+  background-color: #fee500;
+  font: kakao;
+  cursor: pointer;
+}
+.btns:hover > #button-go-home {
+  padding: 0.5rem 0 0.5rem 0.25rem;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+}
+#button-go-home:hover {
+  background-color: white;
+}
+#button-go-home::before {
+  content: "";
+  background-image: url("@/assets/house.png");
+  margin-left: 0.5rem;
+  background-size: 100% 100%;
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+}
+#pdf-button-area {
+  margin: 0.25rem 0rem;
+  padding: 0.75rem 0rem 0.75rem 0.25rem;
+  font-size: 0rem;
+  color: rgba(0, 0, 0, 0.85);
+  border-radius: 12px;
+  height: auto;
   background-color: #fee500;
   font: kakao;
   cursor: pointer;
 }
 .btns:hover > #pdf-button-area {
-  margin: 0.25rem;
-  padding: 0;
-  font-size: 1.125rem;
+  padding: 0.5rem 0 0.5rem 0.25rem;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+}
+#pdf-button-area:hover {
+  background-color: white;
 }
 #pdf-button-area::before {
   content: "";
@@ -170,26 +188,28 @@ font-face {
   margin-left: 0.5rem;
   background-size: 100% 100%;
   display: inline-block;
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-right: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
 }
 #pdf-image-save {
   margin: 0.25rem 0rem;
-  padding: 0.25rem 0rem 0.25rem;
+  padding: 0.75rem 0rem 0.75rem 0.25rem;
   font-size: 0rem;
   color: rgba(0, 0, 0, 0.85);
   border-radius: 12px;
   height: auto;
-  padding: 0, 0.5rem;
   background-color: #fee500;
   font: kakao;
   cursor: pointer;
 }
 .btns:hover > #pdf-image-save {
-  margin: 0.25rem;
-  padding: 0;
-  font-size: 1.125rem;
+  padding: 0.5rem 0 0.5rem 0.25rem;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+}
+#pdf-image-save:hover {
+  background-color: white;
 }
 #pdf-image-save::before {
   content: "";
@@ -197,26 +217,28 @@ font-face {
   margin-left: 0.5rem;
   background-size: 100% 100%;
   display: inline-block;
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-right: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
 }
 #kakaotalk-sharing-url-btn {
   margin: 0.25rem 0rem;
-  padding: 0.25rem 0rem 0.25rem;
+  padding: 0.75rem 0rem 0.75rem 0.25rem;
   font-size: 0rem;
   color: rgba(0, 0, 0, 0.85);
   border-radius: 12px;
   height: auto;
-  padding: 0, 0.5rem;
   background-color: #fee500;
   font: kakao;
   cursor: pointer;
 }
 .btns:hover > #kakaotalk-sharing-url-btn {
-  margin: 0.25rem;
-  padding: 0;
-  font-size: 1.125rem;
+  padding: 0.5rem 0 0.5rem 0.25rem;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+}
+#kakaotalk-sharing-url-btn:hover {
+  background-color: white;
 }
 #kakaotalk-sharing-url-btn::before {
   content: "";
@@ -224,8 +246,8 @@ font-face {
   margin-left: 0.5rem;
   background-size: 100% 100%;
   display: inline-block;
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-right: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
 }
 </style>

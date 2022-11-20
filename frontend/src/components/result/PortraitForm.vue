@@ -49,7 +49,8 @@
           <div>
             <h3>너에게 가장 소중한 사람은 누구니?</h3>
             <p v-show="preciousShow">
-              {{ resultContents[8].contents }}
+              To. {{ resultContents[8].contents.split("\n")[0] }}<br />
+              {{ resultContents[8].contents.split("\n")[1] }}
             </p>
           </div>
           <div v-show="preciousShow">
@@ -262,13 +263,13 @@ export default {
       images: [
         require("@/assets/result/haha.png"),
         require("@/assets/result/haha.png"),
-        require("@/assets/result/precious.png"),
         require("@/assets/result/sad.png"),
         require("@/assets/result/treasure.png"),
         require("@/assets/result/dream.png"),
         require("@/assets/result/regret.png"),
         require("@/assets/result/dumchit.png"),
         require("@/assets/result/genie.png"),
+        require("@/assets/result/precious.png"),
         require("@/assets/result/lastword.png"),
       ],
     };
