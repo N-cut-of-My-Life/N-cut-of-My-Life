@@ -11,7 +11,7 @@
           class="search__input"
           type="text"
           placeholder="가장 좋아하시는 음악을 '제목 + 가수'로 검색해주세요!"
-          @keyup.enter="musicStore.getMusicData(keyword)"
+          @keyup.enter="search(keyword)"
           v-model="keyword"
         />
       </div>
@@ -27,8 +27,8 @@
             v-for="(song, index) in musicStore.songs"
             :key="index"
             class="song"
-            style="padding: 0; border-radius: 0.5vw; cursor: pointer"
-            @click="select(song)"
+            :class="{ 'selected-song': index === selectedIndex }"
+            @click="select(song, index)"
           >
             <img
               class="info"
@@ -68,8 +68,17 @@ import { defineEmits, ref } from "vue";
 import Swal from "sweetalert2";
 const emit = defineEmits(["complete"]);
 const musicStore = useMusicStore();
+
 let selectedName = "";
 let selectedAlbum = "";
+let selectedIndex = ref(-1);
+let keyword = ref("");
+
+const search = (keyword) => {
+  selectedIndex.value = -1;
+  musicStore.getMusicData(keyword);
+};
+
 const complete = () => {
   console.log(selectedName);
   if (selectedName === "") {
@@ -86,8 +95,9 @@ const complete = () => {
   emit("complete");
   usePlanetStore().completePlanet(6, selectedName, "CLOSE", selectedAlbum);
 };
-let keyword = ref("");
-const select = (song) => {
+
+const select = (song, index) => {
+  selectedIndex.value = index;
   selectedName = song.artist + " - " + song.title;
   selectedAlbum = song.img;
 };
@@ -202,9 +212,15 @@ window.addEventListener("click", (event) => {
 
 /* 검색 결과 */
 .song {
-  border: 1px solid black;
+  border: 0.1vw solid black;
   display: flex;
   margin: 10px auto;
+  padding: 0;
+  cursor: pointer;
+}
+
+.selected-song {
+  border: 0.3vw solid rgb(255, 183, 29);
 }
 
 h3 {
