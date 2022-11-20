@@ -124,8 +124,8 @@ router.afterEach(async (to) => {
     console.log("go");
     await useAccountStore().refreshToken();
     if (token === null) {
-      alert("로그인 필요");
       router.push({ name: "intro" });
+      alert("로그인 필요");
     }
   }
 });
