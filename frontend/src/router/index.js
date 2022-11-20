@@ -119,10 +119,9 @@ router.afterEach(async (to) => {
     }) ||
     token != null
   ) {
-    console.log("go to next ", to.fullPath);
+    useAccountStore().refreshToken();
     // next(to.fullPath);
   } else {
-    console.log("go");
     await useAccountStore().refreshToken();
     if (token === null) {
       router.push({ name: "intro" });
