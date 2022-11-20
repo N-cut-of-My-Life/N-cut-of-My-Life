@@ -6,7 +6,7 @@
     <source src="@/assets/audio/cosmos.mp3" type="audio/mp3">
   </audio> -->
   <audio id="cosmos" loop autoplay volume="0.7">
-    <source src="@/assets/audio/new-horizons.mp3" type="audio/mp3" />
+    <source src="@/assets/audio/mix_ifp.mp3" type="audio/mp3" />
   </audio>
   <audio id="burung" volume="0.3">
     <source src="@/assets/audio/nitro-activation.mp3" type="audio/mp3" />
