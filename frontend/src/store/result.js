@@ -30,11 +30,24 @@ export const useResultStore = defineStore("result", {
       });
     },
     isExsitingAnswer() {
+      this.isInResult = [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ];
+      this.resultContents = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
       this.resultArticle.forEach((data) => {
         this.isInResult[data.questionId] = true;
         this.resultContents[data.questionId] = {
           contents: data.contents,
-          imageUrl: data.imageUrl,
+          imgUrl: data.imgUrl,
         };
       });
     },

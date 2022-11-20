@@ -1,6 +1,6 @@
 <template>
   <GalleryLoader v-if="isLoading"></GalleryLoader>
-  <div v-else>
+  <div v-else style="display: grid; padding: 0; margin: 0">
     <video muted autoplay loop playbackRate="0.9">
       <source src="@/assets/galaxy.mp4" type="video/mp4" />
     </video>
@@ -20,6 +20,17 @@
       <source src="@/assets/audio/mix_gallery.mp3" type="audio/mp3" />
     </audio>
     <img class="reloadBtn" @click="reload()" src="@/assets/refresh.png" />
+    <div v-if="modalShow == true" class="img-modal" id="modal-outside">
+      <img class="selected-img" id="selected" :src="selectedImage" />
+    </div>
+    <div class="modal-x-btn">
+      <img
+        v-if="modalShow == true"
+        src="@/assets/xButton/x_galaxy.svg"
+        alt=""
+        @click="toggleModal()"
+      />
+    </div>
     <!-- masonry 영역 ver2 -->
     <MasonryWall
       :items="[...galleryStore.galleryList].reverse()"
@@ -29,12 +40,12 @@
     >
       <template #default="{ item }">
         <div class="common" :style="randomBackgroundColor()">
-          <!-- api호출이 아닌 상태이기 떄문에 추후 변경:require 이후 코드 -->
           <img
             v-if="item.imgUrl"
             :src="item.imgUrl"
             alt=""
             class="item-image"
+            @click="showImgModal(item.imgUrl)"
           />
           <span class="content">{{ item.contents }}</span>
           <b-row>
@@ -73,20 +84,17 @@
               </div></b-col
             >
           </b-row>
-          <!-- 댓글 공간 -->
         </div>
       </template>
     </MasonryWall>
-    <!-- </div> -->
   </div>
 </template>
 
 <script setup>
-import MasonryWall from "@yeger/vue-masonry-wall";
 import { useRouter } from "vue-router";
 import { useGalleryStore } from "@/store/gallery";
 import { useMusicStore } from "@/store/music";
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useAccountStore } from "@/store/account";
 import GalleryLoader from "@/load/GalleryLoader.vue";
 
@@ -96,6 +104,9 @@ const router = useRouter();
 const galleryStore = useGalleryStore();
 const GalleryArticles = galleryStore.getGalleryList(userId);
 GalleryArticles;
+
+let modalShow = ref(false);
+let selectedImage = ref("");
 
 // let items = galleryStore.galleryList;
 
@@ -141,9 +152,31 @@ const randomBackgroundColor = () => {
   const idx = Math.floor(Math.random() * colors.length);
   return "background-color: " + colors[idx];
 };
+
+const showImgModal = (imgUrl) => {
+  console.log("!!!hello");
+  toggleModal();
+  selectedImage.value = imgUrl;
+  console.log(modalShow.value);
+  console.log(selectedImage.value);
+};
+
+const toggleModal = () => {
+  modalShow.value = !modalShow.value;
+};
+
+window.addEventListener("click", (event) => {
+  console.log(event.target.id);
+  if (event.target.id === "modal-outside") {
+    toggleModal();
+  }
+});
 </script>
 
 <style scoped>
+.body {
+  height: 100vh;
+}
 @font-face {
   font-family: "KyoboHand";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff")
@@ -174,21 +207,19 @@ const randomBackgroundColor = () => {
   margin-bottom: 2%;
   margin-top: 0;
   font-family: KyoboHand;
+  font-size: 2.7vw;
 }
 
 video {
   position: fixed;
+  right: 0;
+  bottom: 0;
   min-width: 100%;
+  min-height: 100%;
   width: auto;
   height: auto;
-  min-height: 100%;
   z-index: -100;
   background-size: cover;
-  /* -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover; */
-  margin: 0;
-  padding: 0;
 }
 
 /* .jumbotron {
@@ -229,6 +260,7 @@ video {
 .item-image {
   max-width: 100%;
   border-radius: 0.375rem;
+  cursor: pointer;
 }
 
 .content {
@@ -239,7 +271,7 @@ video {
   -moz-user-select: text; /* Old versions of Firefox */
   -ms-user-select: text; /* Internet Explorer/Edge */
   user-select: text;
-  font-size: 1.2vw;
+  font-size: 1vw;
 }
 .like {
   text-align: end;
@@ -248,6 +280,146 @@ video {
   cursor: pointer;
   font-family: KyoboHand;
   display: block;
+}
+
+.img-modal {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  justify-content: center;
+  text-align: center;
+  background-color: #14141495;
+  display: flex;
+  animation: fadein 0.5s;
+  -moz-animation: fadein 0.5s; /* Firefox */
+  -webkit-animation: fadein 0.5s; /* Safari and Chrome */
+  -o-animation: fadein 0.5s;
+}
+
+.selected-img {
+  width: auto;
+  max-height: 100vh;
+  margin: auto;
+}
+
+.modal-x-btn {
+  cursor: pointer;
+  float: right;
+  position: fixed;
+  top: 2%;
+  right: 1%;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadein {
+  /* Firefox */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadein {
+  /* Safari and Chrome */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadein {
+  /* Opera */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadein {
+  /* Firefox */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-moz-keyframes fadeout {
+  /* Firefox */
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes fadeout {
+  /* Safari and Chrome */
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-o-keyframes fadeout {
+  /* Opera */
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-moz-keyframes fadeout {
+  /* Firefox */
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 </style>
 

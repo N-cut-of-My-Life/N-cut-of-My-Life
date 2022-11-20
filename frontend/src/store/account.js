@@ -63,7 +63,7 @@ export const useAccountStore = defineStore("account", {
         this.myArticles = res.data.data;
         let visited = 0;
         for (let item of res.data.data) {
-          visited = item.answers.length++;
+          visited += item.answers.length;
         }
         this.planetVisited = visited;
       });

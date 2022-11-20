@@ -25,8 +25,8 @@
   <b-navbar toggleable="lg" style="float: right; margin-right: 50px">
     <b-navbar-nav>
       <b-nav-item>
-        <router-link :to="{ name: 'lastword' }" class="nav-link">
-          나에게 하는 한마디
+        <router-link :to="{ name: 'galaxygallery' }" class="nav-link">
+          은하갤러리
         </router-link>
       </b-nav-item>
       <b-nav-item>
@@ -34,19 +34,9 @@
           My Page
         </router-link>
       </b-nav-item>
-      <b-nav-item>
-        <router-link :to="{ name: 'galaxygallery' }" class="nav-link">
-          은하갤러리
-        </router-link>
-      </b-nav-item>
-      <b-nav-item>
-        <router-link :to="{ name: 'planetlist' }" class="nav-link">
-          행성 목록
-        </router-link>
-      </b-nav-item>
     </b-navbar-nav>
   </b-navbar>
-  <br /><br /><br /><br /><br />
+  <br /><br /><br /><br /><br /><br />
   <div class="img-box">
     <img
       src="@/assets/astronaut_riding.png"
@@ -54,7 +44,7 @@
       alt=""
     />
   </div>
-  <br /><br /><br /><br />
+  <br /><br /><br /><br /><br /><br />
   <div class="box">
     <div class="start-btn" @click="rocketLaunch">여행 시작하기</div>
   </div>

@@ -1,45 +1,62 @@
 <template>
   <!--modals-->
   <div id="openModal-about" class="modalDialog">
-    <div>
-      <h2 style="text-align: center; margin-bottom: 2%">음악 검색</h2>
-      <a href="#close" title="Close" class="close">X</a>
+    <div class="modal-container">
+      <!-- <h2 style="text-align: center; margin-bottom: 3%; font-size: 1.8vw">
+        가장 좋아하는 음악 검색
+      </h2> -->
+      <a href="#close" title="Close" class="close">x</a>
       <div style="text-align: center">
         <input
           class="search__input"
           type="text"
-          placeholder="제목 + 가수로 검색해주세요!"
-          @keyup.enter="musicStore.getMusicData(keyword)"
+          placeholder="가장 좋아하시는 음악을 '제목 + 가수'로 검색해주세요!"
+          @keyup.enter="search(keyword)"
           v-model="keyword"
         />
       </div>
       <div class="container">
-        <ul
-          v-for="(song, index) in musicStore.songs"
-          :key="index"
-          class="song"
-          style="padding: 0; border-radius: 0.5vw"
-          @click="select(song)"
+        <div
+          v-if="!musicStore.isSearch"
+          style="margin-left: 2%; margin-right: 2%"
         >
-          <img
-            class="info"
-            :src="song.img"
-            :alt="song.title"
-            style="border-radius: 0.5vw"
-          />
-          <div class="title-artist">
-            <div class="title">{{ song.title }}</div>
-            <div class="artist">{{ song.artist }}</div>
-          </div>
-        </ul>
+          <!-- <h3>Something</h3> -->
+        </div>
+        <div v-else style="margin-top: 2%">
+          <ul
+            v-for="(song, index) in musicStore.songs"
+            :key="index"
+            class="song"
+            :class="{ 'selected-song': index === selectedIndex }"
+            @click="select(song, index)"
+          >
+            <img
+              class="info"
+              :src="song.img"
+              :alt="song.title"
+              style="border-radius: 0.5vw"
+            />
+            <div class="title-artist">
+              <div class="title">{{ song.title }}</div>
+              <div class="artist">{{ song.artist }}</div>
+            </div>
+          </ul>
+        </div>
       </div>
-      <button
-        class="submit_button"
-        @click="complete"
-        onclick="location.href='#close'"
+      <!-- v-show="elementVisible" -->
+      <div
+        v-if="musicStore.isSearch"
+        style="text-align: center; margin-top: 2.8%"
       >
-        완료
-      </button>
+        <b-button
+          size="sm"
+          class="submit_button"
+          @click="complete"
+          onclick="location.href='#close'"
+        >
+          저장
+        </b-button>
+      </div>
     </div>
   </div>
 </template>
@@ -51,10 +68,20 @@ import { defineEmits, ref } from "vue";
 import Swal from "sweetalert2";
 const emit = defineEmits(["complete"]);
 const musicStore = useMusicStore();
-let selected = "";
+
+let selectedName = "";
+let selectedAlbum = "";
+let selectedIndex = ref(-1);
+let keyword = ref("");
+
+const search = (keyword) => {
+  selectedIndex.value = -1;
+  musicStore.getMusicData(keyword);
+};
+
 const complete = () => {
-  console.log(selected);
-  if (selected === "") {
+  console.log(selectedName);
+  if (selectedName === "") {
     Swal.fire({
       icon: "error",
       title: "등록 실패! 😭",
@@ -66,14 +93,21 @@ const complete = () => {
     return;
   }
   emit("complete");
-  usePlanetStore().completePlanet(6, selected);
+  usePlanetStore().completePlanet(6, selectedName, "CLOSE", selectedAlbum);
 };
-let keyword = ref("");
-const select = (song) => {
-  console.log(song);
-  selected = song.artist + " - " + song.title;
-  console.log(selected);
+
+const select = (song, index) => {
+  selectedIndex.value = index;
+  selectedName = song.artist + " - " + song.title;
+  selectedAlbum = song.img;
 };
+
+window.addEventListener("click", (event) => {
+  if (event.target.id === "openModal-about") {
+    console.log("바깥임");
+    window.location = "#close";
+  }
+});
 </script>
 
 <style scoped>
@@ -102,7 +136,7 @@ const select = (song) => {
   pointer-events: auto;
 }
 .modalDialog > div {
-  max-width: 800px;
+  max-width: 40vw;
   width: 90%;
   position: relative;
   margin: 10% auto;
@@ -114,13 +148,13 @@ const select = (song) => {
   font-family: Arial, Helvetica, sans-serif;
   background: #f26d7d;
   color: #fff;
-  line-height: 25px;
+  line-height: 10px;
   position: absolute;
-  right: -12px;
+  right: -9px;
   text-align: center;
   top: -10px;
-  width: 34px;
-  height: 34px;
+  width: 20px;
+  height: 20px;
   text-decoration: none;
   font-weight: bold;
   -webkit-border-radius: 50%;
@@ -178,13 +212,24 @@ const select = (song) => {
 
 /* 검색 결과 */
 .song {
-  border: 1px solid black;
+  border: 0.1vw solid black;
   display: flex;
   margin: 10px auto;
+  padding: 0;
+  cursor: pointer;
 }
 
+.selected-song {
+  border: 0.3vw solid rgb(255, 183, 29);
+}
+
+h3 {
+  font-size: 1.2vw;
+  font-weight: 500;
+  margin-bottom: 1.5%;
+}
 .info {
-  width: 10%;
+  width: 9%;
   height: auto;
 }
 
@@ -196,8 +241,14 @@ const select = (song) => {
 }
 
 .title {
-  margin-bottom: 3%;
+  /* margin-bottom: 3%; */
   font-weight: 600;
+  font-size: 0.9vw;
+  /* margin-bottom: 1%; */
+}
+
+.artist {
+  font-size: 0.8vw;
 }
 
 .complete_button {
@@ -205,10 +256,35 @@ const select = (song) => {
 }
 .container {
   max-height: 300px;
-  overflow: scroll;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 .submit_button {
-  height: 40px;
-  border: 15px;
+  border: 1vw;
+  background-color: #d9adad;
+  padding-left: 1%;
+  padding-right: 1%;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+}
+</style>
+
+<style>
+.container::-webkit-scrollbar {
+  width: 0.6vw;
+}
+.container::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.container::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  /* background-color: #a1a1a1; */
+  /* background-color: #7895b2; */
+  /* background-color: #aebdca; */
+  background-color: #efdad7;
+}
+.container::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
 }
 </style>
