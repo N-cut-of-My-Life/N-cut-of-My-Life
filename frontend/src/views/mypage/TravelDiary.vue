@@ -56,13 +56,6 @@
           <span class="prof-slide-title">
             {{ user.name }}님의 여행기록({{ accountStore.myArticles.length }})
           </span>
-          <span
-            class="prof-slide-router"
-            v-if="isClicked === true"
-            @click="toResultPage"
-          >
-            자세히 보기 >>
-          </span>
         </div>
         <div class="carousel-part" v-if="accountStore.myArticles.length !== 0">
           <splide id="diary-carousel" :options="options">
@@ -126,6 +119,7 @@ const getCurIdx = (index, article) => {
   isClicked.value = true;
   clickedArticle = article;
   console.log(clickedArticle);
+  toResultPage();
 };
 accountStore.getMyArticles();
 // myArticles.value = accountStore.myArticles;
