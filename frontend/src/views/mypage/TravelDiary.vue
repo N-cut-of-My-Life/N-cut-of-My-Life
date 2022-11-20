@@ -333,6 +333,7 @@ section {
 }
 .prof-journals {
   display: flex;
+  cursor: pointer;
 }
 
 .journal-img {
