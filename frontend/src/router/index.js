@@ -119,12 +119,12 @@ router.afterEach(async (to) => {
     }) ||
     token != null
   ) {
+    // useAccountStore().refreshToken();
     console.log("go to next ", to.fullPath);
     // next(to.fullPath);
   } else {
-    console.log("go");
     await useAccountStore().refreshToken();
-    if (token === null) {
+    if (useAccountStore().token === null) {
       router.push({ name: "intro" });
       alert("로그인 필요");
     }
