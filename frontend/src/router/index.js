@@ -123,7 +123,7 @@ router.afterEach(async (to) => {
     // next(to.fullPath);
   } else {
     await useAccountStore().refreshToken();
-    if (token === null) {
+    if (useAccountStore().token === null) {
       router.push({ name: "intro" });
       alert("로그인 필요");
     }
