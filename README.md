@@ -10,7 +10,7 @@
   2022.10.11 ~ 2022.11.21
   <br><br>
 
-[Notion](https://sunset-offer-934.notion.site/N-3d2ec3e6d83d4ed0b01358e786997664) | [UCC]()
+[Notion](https://sunset-offer-934.notion.site/N-3d2ec3e6d83d4ed0b01358e786997664) | [UCC](https://youtu.be/WBYv4XM9sJ4)
 
 </div>
 <br/>
