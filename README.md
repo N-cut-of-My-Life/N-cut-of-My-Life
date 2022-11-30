@@ -87,9 +87,9 @@
 
 ## 서비스 구조 및 흐름도 🔍
 
-<img width="849" alt="image" src="https://user-images.githubusercontent.com/60915285/202860971-ab6f91b4-6972-4766-93b0-c11737fc6cdd.png">
+<img width="600" alt="image" src="https://user-images.githubusercontent.com/60915285/202860971-ab6f91b4-6972-4766-93b0-c11737fc6cdd.png">
 
-<img width="849" alt="image" src="https://user-images.githubusercontent.com/60915285/202861130-96bc17ff-3b8f-4742-bc37-9b4ae14d43ee.png">
+<img width="600" alt="image" src="https://user-images.githubusercontent.com/60915285/202861130-96bc17ff-3b8f-4742-bc37-9b4ae14d43ee.png">
 
 <br><br>
 
@@ -99,7 +99,7 @@
 
 소셜(카카오) 로그인이 가능합니다.<br>
 jwt 로그인으로 구현하였습니다.<br>
-![카카오로그인](/uploads/9600a6a73648db2bbbe1ef2a266a455f/카카오로그인.gif)
+![카카오로그인](https://user-images.githubusercontent.com/60915285/204684570-dcf30d53-9865-4223-9b02-a5e454055af9.gif)
 <br><br>
 
 ### 2. 인트로
@@ -115,35 +115,39 @@ jwt 로그인으로 구현하였습니다.<br>
 
 - 하하호호 행성 :
   살면서 가장 행복했던 일은 무었이었나요?<br>
-  ![하하호호행성](/uploads/f2cebdcc92801b427a90bd9114c0f17d/하하호호행성.gif)
+  ![하하호호행성 (1)](https://user-images.githubusercontent.com/60915285/204685550-0732445f-e328-4e45-a522-2af7686c6329.gif)
 - 훌쩍훌쩍 행성 :  
    살면서 가장 슬펐던 일은 무었이었나요?<br>
-  ![훌쩍훌쩍행성](/uploads/43e00303340009532d49ab122b162879/훌쩍훌쩍행성.gif)
+  ![훌쩍훌쩍행성](https://user-images.githubusercontent.com/60915285/204684811-dc34dcd6-9400-49c5-ab1d-090b23d1b275.gif)
 - 반짝반짝 행성 :
   나에게 보물 1호는?<br>
-  ![반짝반짝행성](/uploads/3a0e0674ec9372b593a3ad86c7c2d6be/반짝반짝행성.gif)
+![반짝반짝행성](https://user-images.githubusercontent.com/60915285/204684874-c90064ce-a318-4cb9-9d1f-fcfd41174d6b.gif)
 - 이루지못행성 :
   이루지 못한 꿈이 있나요?<br>
-  ![이루지못행성](/uploads/05b68963dba4935fda7f0f03cc22e75d/이루지못행성.gif)
+  ![이루지못행성](https://user-images.githubusercontent.com/60915285/204684914-af8b12c3-376a-4f31-9e34-0f2694b06b62.gif)
 - 괜히글행성 :
   후회되는 일이 있나요? 후회를 버리고 가세요!<br>
-  ![괜히글행성](/uploads/7036b28a5a98f66425f3b769387b6989/괜히글행성.gif)
+  ![괜히글행성](https://user-images.githubusercontent.com/60915285/204685105-3d038df2-f258-44e5-8db4-d83268b8508f.gif)
+
 - 둠칫둠칫행성 :
   나만의 인생 노래가 있나요?<br>
-  ![둠칫둠칫행성](/uploads/ad5be043fc8dfe4ef4a312f2674a001e/둠칫둠칫행성.gif)
+  ![둠칫둠칫행성](https://user-images.githubusercontent.com/60915285/204685131-f5681607-317e-445b-9c84-b964d08f973f.gif)
 
 - 지니행성 :
   이루고 싶은 소원이 있나요??<br>
-  ![지니행성](/uploads/d2dbd54f68fc6ad03b595a46475eaa9c/지니행성.gif)
+  ![지니행성](https://user-images.githubusercontent.com/60915285/204685210-6b4e8ed4-47a5-460e-b5c0-7138d8fb1a48.gif)
+
 - 넌너무소중행성 :
   누구보다 소중한 나에게 한마디!<br>
-  ![넌너무소중행성](/uploads/85f834f64fe862a73b8bc26e47522000/넌너무소중행성.gif)
-  <br><br>
+  ![넌너무소중행성](https://user-images.githubusercontent.com/60915285/204685219-ac710546-3b89-4449-b6b7-1e05b8dded37.gif)
+
+<br><br>
 
 ### 4. 나에게 남기는 한마디
 
 행성 방문을 마치고 세상의 끝에서 나에게 남기고 싶은 한마디를 적어주세요!<br>
-![나에게하는한마디](/uploads/6e75f31ad5a58b6d5bd923a1792a1be9/나에게하는한마디.gif)
+![나에게하는한마디](https://user-images.githubusercontent.com/60915285/204685239-533340f3-f41f-40f9-bca5-5a64503f6e55.gif)
+
 <br><br>
 
 ### 5. 여행일지
@@ -171,12 +175,12 @@ jwt 로그인으로 구현하였습니다.<br>
 - [와이어프레임(Figma)](https://www.figma.com/file/jKFjqyaXvcYGDIyHLq5BYl/B105?node-id=0%3A1&t=04b1XfOPTZ72lgKM-1)
 - [기능 명세서](https://sunset-offer-934.notion.site/d4233d99c403414f81e9da5306e2a9b2?v=0ba1cfc3542e4e05bc9ea5da4a309934)
 - [API 명세서](https://sunset-offer-934.notion.site/8ba5e0dfb8bc4b69819fbbdc978fe168?v=81f9aad2d5af4ae7913dd7edecd18c8a)
-- [ERD](hhttps://www.erdcloud.com/d/P7es8HWTE43zREonr)
+- [ERD](https://www.erdcloud.com/d/P7es8HWTE43zREonr)
 - [회의록](https://sunset-offer-934.notion.site/864cc75cf62f46db88d5fed1cd93c392)
 - [데일리 스크럼](https://sunset-offer-934.notion.site/74a1a2fd88574e98a9b18b3a0547d4c8)
-- [포팅 메뉴얼]()
-- [외부 API 문서]()
-- [시연 시나리오]()
+- [포팅 메뉴얼](https://github.com/N-cut-of-My-Life/N-cut-of-My-Life/blob/main/exec/01_%EC%9E%90%EC%9C%A8PJT_%EB%8C%80%EC%A0%841%EB%B0%98_B105_%EB%B9%8C%EB%93%9C_%EB%B0%8F_%ED%8F%AC%ED%8C%85_%EB%AC%B8%EC%84%9C.pdf)
+- [외부 API 문서](https://github.com/N-cut-of-My-Life/N-cut-of-My-Life/blob/main/exec/02_%EC%9E%90%EC%9C%A8PJT_%EB%8C%80%EC%A0%841%EB%B0%98_B105_%EC%99%B8%EB%B6%80_API_%EC%82%AC%EC%9A%A9.pdf)
+- [시연 시나리오](https://github.com/N-cut-of-My-Life/N-cut-of-My-Life/blob/main/exec/04_%EC%9E%90%EC%9C%A8PJT_%EB%8C%80%EC%A0%841%EB%B0%98_B105_%EC%8B%9C%EC%97%B0_%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4.pdf)
 
 <br><br>
 
