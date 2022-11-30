@@ -191,7 +191,7 @@ jwt 로그인으로 구현하였습니다.<br>
 - 모든 의견을 존중하기!
 - 함께 성장하기 위한 코드 리뷰
 - 단순한 기능 구현 보다는 좋은 코드를 작성하려 노력하기
-<
+<br>
   <img width="600" src="https://user-images.githubusercontent.com/60915285/202886678-41bb6126-16c1-4ec8-b30f-84e885ac267c.png">
   <img width="600" src="https://user-images.githubusercontent.com/60915285/202887021-09f36d65-84ab-4acf-9342-d4b21674fe20.png">
   <img width="600" src="https://user-images.githubusercontent.com/60915285/202887023-6c58a4f1-3435-40ec-8ef2-903533ca1fdc.png">
