@@ -106,8 +106,9 @@ jwt 로그인으로 구현하였습니다.<br>
 ### 2. 인트로
 
 안내 문구와 함께 인생을 회상하는 추억여행을 시작합니다.<br>
-![인트로](https://user-images.githubusercontent.com/77991314/202927464-7692c44a-0d8e-490b-a35f-4a2781a3840c.gif)
+![인트로](https://user-images.githubusercontent.com/77991314/204714229-e5530e42-3274-435d-9423-e4655cf0d990.gif)
 <br><br>
+
 
 ### 3. 행성 방문
 
@@ -116,7 +117,7 @@ jwt 로그인으로 구현하였습니다.<br>
 
 - 하하호호 행성 :
   살면서 가장 행복했던 일은 무었이었나요?<br>
-  ![하하호호행성 (1)](https://user-images.githubusercontent.com/60915285/204685550-0732445f-e328-4e45-a522-2af7686c6329.gif)
+  ![하하호호행성 (1)](https://user-images.githubusercontent.com/77991314/204713644-3891f543-1850-4741-92e6-2eef98693b14.gif)
 - 훌쩍훌쩍 행성 :  
    살면서 가장 슬펐던 일은 무었이었나요?<br>
   ![훌쩍훌쩍행성](https://user-images.githubusercontent.com/60915285/204684811-dc34dcd6-9400-49c5-ab1d-090b23d1b275.gif)
@@ -147,13 +148,25 @@ jwt 로그인으로 구현하였습니다.<br>
 ### 4. 나에게 남기는 한마디
 
 행성 방문을 마치고 세상의 끝에서 나에게 남기고 싶은 한마디를 적어주세요!<br>
+
 ![나에게하는한마디](https://user-images.githubusercontent.com/60915285/204685239-533340f3-f41f-40f9-bca5-5a64503f6e55.gif)
 
 <br><br>
 
 ### 5. 여행일지
 
-여행하는 동안 방문했던 행성들의 답변들을 예쁜 폼으로 기록해두었습니다!<br> 여행일지를 이미지/pdf로 저장할 수 있습니다.<br> 또 카카오톡으로 친구에게 "인생N컷"을 추천할 수도 있습니다!
+여행하는 동안 방문했던 행성들의 답변들을 예쁜 폼으로 기록해두었습니다!<br> 
+
+![결과](https://user-images.githubusercontent.com/77991314/204716864-e19391d5-7acd-444b-a182-804c0b7f9b09.gif)
+
+여행일지를 이미지/pdf로 저장할 수 있습니다.<br> 
+
+![사진](https://user-images.githubusercontent.com/77991314/204719799-54d32546-51d6-4bd8-8114-716c79dacd19.gif)
+
+또 카카오톡으로 친구에게 "인생N컷"을 추천할 수도 있습니다! <br>
+
+![카카오톡 공유하기](https://user-images.githubusercontent.com/77991314/204719274-d50658ac-97d1-447f-820c-59a1a4ad40fb.gif)
+
 
 <br><br>
 
@@ -166,8 +179,13 @@ jwt 로그인으로 구현하였습니다.<br>
 ### 7. 마이페이지
 
 마이페이지에서는 내 정보, 최근 나의 여행 횟수 및 행성 방문 횟수를 확인할 수 있습니다.<br>
-그리고, 여행일지 목록들을 살펴볼 수가 있습니다!
-특정 여행일지를 누르면 상세정보로 들어가게 됩니다.
+그리고, 여행일지 목록들을 살펴볼 수가 있습니다!<br>
+
+![마이페이지(1)](https://user-images.githubusercontent.com/77991314/204721313-377e3f11-ee4a-48ae-97d7-4eb475f95216.gif)
+
+특정 여행일지를 누르면 상세정보로 들어가게 됩니다.<br>
+
+![마이페이지(2)](https://user-images.githubusercontent.com/77991314/204721150-3679b2fa-201c-45ab-ae92-9964ecf95b92.gif)
 
 <br><br>
 
