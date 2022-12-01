@@ -46,6 +46,8 @@
 `Spring Boot 2.7.5` <br>
 `Gradle 7.5` <br>
 `JPA 2.7.5` <br>
+`Mockito` <br>
+`JUnit5` <br>
 `Postgresql 12.12` <br>
 `Swagger2 3.0.0` <br>
 
